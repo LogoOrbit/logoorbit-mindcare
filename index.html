@@ -3,6 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2BBDC9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1b13" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=yes">
+
+<!-- PERFORMANCE / RESOURCE HINTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://wa.me">
+
+<!-- ICONS / PWA -->
+<link rel="icon" href="mindcare.png" type="image/png">
+<link rel="apple-touch-icon" href="mindcare.png">
+<link rel="manifest" href="site.webmanifest">
 
 <!-- PRIMARY SEO -->
 <title>MindCare Services® | Psychotherapy & Mental Health Clinic in Karachi, Pakistan</title>
@@ -17,7 +31,8 @@
 <meta property="og:url" content="https://themindcareservices.com/">
 <meta property="og:title" content="MindCare Services® | Psychotherapy & Mental Health Clinic in Karachi">
 <meta property="og:description" content="Real support, real people. Evidence-based psychotherapy and mental health services in Karachi. Founded by Shaista Tariq, PPA Member.">
-<meta property="og:image" content="https://github.com/LogoOrbit/cinegmafilms/blob/main/MindCare.png?raw=true">
+<meta property="og:image" content="https://themindcareservices.com/mindcare.png">
+<meta property="og:image:alt" content="MindCare Services® — Psychotherapy & Mental Health Clinic in Karachi">
 <meta property="og:locale" content="en_PK">
 <meta property="og:site_name" content="MindCare Services®">
 
@@ -25,6 +40,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MindCare Services® | Psychotherapy Karachi">
 <meta name="twitter:description" content="Evidence-based mental health support in Karachi. Individual therapy, family counseling & more. Book a free consultation.">
+<meta name="twitter:image" content="https://themindcareservices.com/mindcare.png">
 
 <!-- SCHEMA MARKUP — LocalBusiness + MedicalClinic -->
 <script type="application/ld+json">
@@ -38,8 +54,8 @@
       "alternateName": "MindCare Services Karachi",
       "description": "MindCare Services® is a psychotherapy and mental health firm based in Karachi, Pakistan, offering evidence-based psychological support including individual psychotherapy, family counseling, speech therapy, physiotherapy, occupational therapy, behavioral therapy, and diagnostic assessments.",
       "url": "https://themindcareservices.com",
-      "logo": "https://github.com/LogoOrbit/cinegmafilms/blob/main/MindCare.png?raw=true",
-      "image": "https://github.com/LogoOrbit/cinegmafilms/blob/main/MindCare.png?raw=true",
+      "logo": "https://themindcareservices.com/mindcare.png",
+      "image": "https://themindcareservices.com/mindcare.png",
       "telephone": "+92-327-2337631",
       "email": "traineegenes@gmail.com",
       "address": {
@@ -161,10 +177,43 @@
         },
         {
           "@type": "Question",
+          "name": "Is my information kept confidential?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Absolutely. Everything you share with MindCare Services® is 100% confidential and is never disclosed to anyone. Your privacy and comfort are central to how we work."}
+        },
+        {
+          "@type": "Question",
           "name": "Is MindCare Services a PPA certified clinic?",
           "acceptedAnswer": {"@type": "Answer", "text": "Yes. MindCare Services® is led by Shaista Tariq, a verified Member of the Pakistan Psychological Association (PPA)."}
         }
       ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://themindcareservices.com/"},
+        {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://themindcareservices.com/#services"},
+        {"@type": "ListItem", "position": 3, "name": "About", "item": "https://themindcareservices.com/#about"},
+        {"@type": "ListItem", "position": 4, "name": "Book a Consultation", "item": "https://themindcareservices.com/contact"}
+      ]
+    },
+    {
+      "@type": "Service",
+      "serviceType": "Psychotherapy & Mental Health Care",
+      "provider": {"@id": "https://themindcareservices.com/#clinic"},
+      "areaServed": {"@type": "City", "name": "Karachi"},
+      "audience": {"@type": "MedicalAudience", "audienceType": "Adults, Adolescents, Families"},
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "MindCare Services",
+        "itemListElement": [
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Individual Psychotherapy"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Family & Relationship Counseling"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Speech Therapy"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Physiotherapy"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Occupational Therapy"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Behavioral Therapy"}}
+        ]
+      }
     }
   ]
 }
@@ -188,8 +237,39 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; }
+
+/* ── ACCESSIBILITY ── */
+.skip-link {
+  position: absolute; left: 12px; top: -60px; z-index: 10001;
+  background: var(--teal); color: #fff; padding: 10px 18px;
+  border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+  text-decoration: none; transition: top 0.2s;
+}
+.skip-link:focus { top: 12px; }
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--teal-dark); outline-offset: 2px; border-radius: 6px;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ── SCROLL PROGRESS ── */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  background: linear-gradient(90deg, var(--teal), var(--green));
+  z-index: 1001; transition: width 0.1s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .fade-up { opacity: 1 !important; transform: none !important; }
+}
 
 /* ── NAVBAR ── */
 nav {
@@ -633,8 +713,58 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
 /* ── LOADING ── */
 .btn-primary.loading { pointer-events: none; opacity: 0.75; }
 
+/* ── TRUST BAR ── */
+#trust { background: white; padding: 40px 5%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.trust-inner {
+  max-width: 1160px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center;
+}
+.trust-item .t-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--teal); line-height: 1; }
+.trust-item .t-lbl { font-size: 0.82rem; color: var(--gray); margin-top: 6px; }
+
+/* ── WHY US ── */
+#why { background: var(--off-white); }
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 20px; }
+.why-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: transform .25s, box-shadow .25s; }
+.why-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(43,189,201,.1); }
+.why-card .why-icon { width: 46px; height: 46px; border-radius: 12px; background: var(--teal-light); color: var(--teal-dark); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 14px; }
+.why-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+.why-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+/* ── FAQ ── */
+#faq { background: white; }
+.faq-list { max-width: 780px; margin: 0 auto; }
+.faq-item { border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; overflow: hidden; background: var(--off-white); }
+.faq-q {
+  width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+  padding: 18px 22px; font-family: 'DM Sans', sans-serif; font-size: 0.98rem;
+  font-weight: 600; color: var(--dark); display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.faq-q::after { content: '+'; font-size: 1.5rem; color: var(--teal); flex-shrink: 0; transition: transform .25s; line-height: 1; }
+.faq-item.open .faq-q::after { transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.faq-a p { padding: 0 22px 18px; font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+
+/* ── DARK MODE ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --white: #0e1b13; --off-white: #12241a; --dark: #eaf4ee;
+    --gray: #9db3a6; --border: #234034; --teal-light: #13312f;
+    --green-light: #16281a;
+  }
+  body { background: #0e1b13; }
+  nav { background: rgba(14,27,19,0.9); }
+  .mobile-menu { background: #0e1b13; }
+  .hero-card, .service-card, .team-card, .why-card, .stat-bar,
+  .collab-form-box, .faq-item, .hero-badge { background: #12241a; }
+  #home { background: linear-gradient(135deg,#0e1b13 0%,#12241a 55%,#0e1b13 100%); }
+  .form-group input, .form-group textarea, .form-group select { background: #0e1b13; color: var(--dark); }
+  .founder-quote { background: #13312f; }
+}
+
 /* ── MOBILE ── */
 @media (max-width: 960px) {
+  .trust-inner { grid-template-columns: repeat(2, 1fr); gap: 28px; }
   .hero-inner { grid-template-columns: 1fr; gap: 36px; }
   .hero-visual { order: 1; }
   .about-grid, .collab-layout { grid-template-columns: 1fr; gap: 40px; }
@@ -663,6 +793,9 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
 </head>
 <body>
 
+<a href="#home" class="skip-link">Skip to main content</a>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
 <!-- TOAST -->
 <div class="toast" id="toast">✓ Request sent! We'll be in touch soon.</div>
 
@@ -677,10 +810,10 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
 </div>
 
 <!-- NAVBAR -->
-<nav id="navbar">
-  <a href="#home" class="nav-logo">
-    <img src="https://github.com/LogoOrbit/cinegmafilms/blob/main/MindCare.png?raw=true"
-         alt="MindCare Services® Logo"
+<nav id="navbar" aria-label="Primary navigation">
+  <a href="#home" class="nav-logo" aria-label="MindCare Services home">
+    <img src="mindcare.png" width="120" height="58"
+         alt="MindCare Services® — psychotherapy and mental health clinic in Karachi"
          onerror="this.style.display='none';document.getElementById('nav-logo-text').style.display='flex'">
     <span class="nav-logo-text" id="nav-logo-text" style="display:none">MIND<span>CARE</span></span>
   </a>
@@ -692,9 +825,9 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
     <li><a href="#collaborations">Collaborate</a></li>
     <li><a href="contact.html" class="nav-cta">Book Consultation</a></li>
   </ul>
-  <div class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+  <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" style="background:none;border:none">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
 
 <!-- MOBILE MENU -->
@@ -775,6 +908,16 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
       </div>
       <p class="stats-note">PPA membership verified · Serving Karachi since founding</p>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ TRUST BAR ═══════════════════════════════ -->
+<section id="trust" aria-label="Why families trust MindCare">
+  <div class="trust-inner">
+    <div class="trust-item fade-up"><div class="t-num">7+</div><div class="t-lbl">Multidisciplinary Specialists</div></div>
+    <div class="trust-item fade-up"><div class="t-num">10</div><div class="t-lbl">Therapy &amp; Clinical Services</div></div>
+    <div class="trust-item fade-up"><div class="t-num">PPA</div><div class="t-lbl">Association-Verified Founder</div></div>
+    <div class="trust-item fade-up"><div class="t-num">100%</div><div class="t-lbl">Confidential &amp; Judgment-Free</div></div>
   </div>
 </section>
 
@@ -908,6 +1051,23 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
   </div>
 </section>
 
+<!-- ═══════════════════════════════ WHY US ═══════════════════════════════ -->
+<section id="why">
+  <div class="section-inner">
+    <div class="section-header centered fade-up">
+      <span class="section-tag">Why MindCare</span>
+      <h2 class="section-title">Care You Can Actually Feel</h2>
+      <p class="section-sub">We combine clinical rigor with genuine human warmth — so getting help never feels clinical or cold.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card fade-up"><div class="why-icon" aria-hidden="true">🎓</div><h3>Evidence-Based</h3><p>Every session draws on proven frameworks like CBT, not guesswork — led by a PPA-member founder.</p></div>
+      <div class="why-card fade-up"><div class="why-icon" aria-hidden="true">🫶</div><h3>Judgment-Free</h3><p>No problem is “too small.” We meet you exactly where you are, with warmth and zero pressure.</p></div>
+      <div class="why-card fade-up"><div class="why-icon" aria-hidden="true">🧩</div><h3>All Under One Roof</h3><p>Psychology, speech, physio, occupational &amp; behavioral therapy — coordinated, holistic care.</p></div>
+      <div class="why-card fade-up"><div class="why-icon" aria-hidden="true">🔒</div><h3>Fully Confidential</h3><p>Your story stays yours. Everything you share is private and never disclosed to anyone.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════════════════ TEAM ═══════════════════════════════ -->
 <section id="team">
   <div class="section-inner">
@@ -953,6 +1113,39 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
         <h3>Shafeeq Langhar</h3>
         <div class="role">Psychologist</div>
         <div class="cred">Clinical Psychology · Individual & Group Therapy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FAQ ═══════════════════════════════ -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-header centered fade-up">
+      <span class="section-tag">Good to Know</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-sub">Everything you might want to know before reaching out.</p>
+    </div>
+    <div class="faq-list fade-up">
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">What services does MindCare Services offer in Karachi?</button>
+        <div class="faq-a"><p>MindCare Services® offers individual psychotherapy, family counseling, speech therapy, physiotherapy, occupational therapy, behavioral therapy, dental consultations, diagnostic assessments, remedial home sessions for special needs, and corporate awareness sessions — all under one roof in Karachi.</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">Who is the founder of MindCare Services?</button>
+        <div class="faq-a"><p>MindCare Services® was founded by Shaista Tariq, a Psychotherapist, Mental Health Consultant &amp; Educator, and a verified Member of the Pakistan Psychological Association (PPA).</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">How do I book a consultation at MindCare Services?</button>
+        <div class="faq-a"><p>You can book a free consultation by calling <a href="tel:+923272337631">+92 327 2337631</a>, messaging us on WhatsApp, or filling out the booking form on our <a href="contact.html">contact page</a>. We typically respond within a few hours.</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">Is my information kept confidential?</button>
+        <div class="faq-a"><p>Absolutely. Everything you share with us is 100% confidential and is never disclosed to anyone. Your privacy and comfort are central to how we work.</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">Is MindCare Services a PPA-certified clinic?</button>
+        <div class="faq-a"><p>Yes. MindCare Services® is led by Shaista Tariq, a verified Member of the Pakistan Psychological Association (PPA), and our care follows evidence-based professional standards.</p></div>
       </div>
     </div>
   </div>
@@ -1048,7 +1241,9 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
       <h4>Company</h4>
       <ul>
         <li><a href="#about">About Us</a></li>
+        <li><a href="#why">Why MindCare</a></li>
         <li><a href="#team">Our Team</a></li>
+        <li><a href="#faq">FAQ</a></li>
         <li><a href="#collaborations">Collaborate</a></li>
         <li><a href="contact.html">Book Appointment</a></li>
       </ul>
@@ -1072,9 +1267,24 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
 </footer>
 
 <script>
-// Navbar scroll shadow
+// Navbar scroll shadow + scroll progress bar
+const progressBar = document.getElementById('scrollProgress');
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+  if (progressBar) progressBar.style.width = Math.min(scrolled * 100, 100) + '%';
+}, { passive: true });
+
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  const btn = item.querySelector('.faq-q');
+  const ans = item.querySelector('.faq-a');
+  btn.addEventListener('click', () => {
+    const isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+    ans.style.maxHeight = isOpen ? ans.scrollHeight + 'px' : null;
+  });
 });
 
 // Mobile menu toggle
@@ -1083,6 +1293,8 @@ function toggleMenu() {
   menuOpen = !menuOpen;
   const menu = document.getElementById('mobileMenu');
   const spans = document.querySelectorAll('.hamburger span');
+  const burger = document.querySelector('.hamburger');
+  if (burger) burger.setAttribute('aria-expanded', menuOpen);
   if (menuOpen) {
     menu.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1150,7 +1362,7 @@ function submitCollab() {
 
 // Active nav link highlighting
 window.addEventListener('scroll', () => {
-  const sections = ['home','services','about','team','collaborations'];
+  const sections = ['home','services','about','why','team','faq','collaborations'];
   let current = '';
   sections.forEach(id => {
     const el = document.getElementById(id);
