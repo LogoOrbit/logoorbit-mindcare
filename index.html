@@ -23,7 +23,7 @@
 <meta name="description" content="MindCare Services® is Karachi's trusted psychotherapy and mental wellness clinic. Founded by Shaista Tariq (PPA Member). Individual therapy, family counseling, speech therapy, physiotherapy & more. Book a free consultation today.">
 <meta name="keywords" content="psychotherapy Karachi, mental health Pakistan, therapist Karachi, psychologist Karachi, counseling Karachi, MindCare Services, Shaista Tariq psychotherapist, family counseling Karachi, speech therapy Karachi, anxiety depression therapy Pakistan">
 <meta name="author" content="MindCare Services®">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <link rel="canonical" href="https://themindcareservices.com/">
 
 <!-- OPEN GRAPH -->
@@ -52,6 +52,7 @@
       "@id": "https://themindcareservices.com/#clinic",
       "name": "MindCare Services®",
       "alternateName": "MindCare Services Karachi",
+      "slogan": "Keeping Your Peace",
       "description": "MindCare Services® is a psychotherapy and mental health firm based in Karachi, Pakistan, offering evidence-based psychological support including individual psychotherapy, family counseling, speech therapy, physiotherapy, occupational therapy, behavioral therapy, and diagnostic assessments.",
       "url": "https://themindcareservices.com",
       "logo": "https://themindcareservices.com/mindcare.png",
@@ -76,7 +77,12 @@
       "priceRange": "$$",
       "currenciesAccepted": "PKR",
       "paymentAccepted": "Cash, Bank Transfer",
-      "openingHours": "Mo-Sa 09:00-19:00",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "09:00",
+        "closes": "19:00"
+      },
       "sameAs": [
         "https://www.instagram.com/mindcare.services/",
         "https://www.linkedin.com/company/mindcare-services/"
@@ -150,12 +156,24 @@
       "url": "https://themindcareservices.com",
       "name": "MindCare Services®",
       "description": "Karachi's trusted psychotherapy and mental health clinic",
+      "inLanguage": "en-PK",
       "publisher": {"@id": "https://themindcareservices.com/#clinic"},
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://themindcareservices.com/?s={search_term_string}",
         "query-input": "required name=search_term_string"
       }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://themindcareservices.com/#webpage",
+      "url": "https://themindcareservices.com/",
+      "name": "MindCare Services® | Psychotherapy & Mental Health Clinic in Karachi, Pakistan",
+      "isPartOf": {"@id": "https://themindcareservices.com/#website"},
+      "about": {"@id": "https://themindcareservices.com/#clinic"},
+      "primaryImageOfPage": {"@type": "ImageObject", "url": "https://themindcareservices.com/mindcare.png"},
+      "inLanguage": "en-PK",
+      "speakable": {"@type": "SpeakableSpecification", "cssSelector": ["h1", ".hero-lede"]}
     },
     {
       "@type": "FAQPage",
@@ -177,6 +195,11 @@
         },
         {
           "@type": "Question",
+          "name": "What happens in the first therapy session?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Your first session at MindCare Services® is a relaxed conversation. Your therapist listens to what's going on, answers your questions, and together you agree on a plan that feels right — there is no pressure and nothing you have to prepare."}
+        },
+        {
+          "@type": "Question",
           "name": "Is my information kept confidential?",
           "acceptedAnswer": {"@type": "Answer", "text": "Absolutely. Everything you share with MindCare Services® is 100% confidential and is never disclosed to anyone. Your privacy and comfort are central to how we work."}
         },
@@ -194,6 +217,17 @@
         {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://themindcareservices.com/#services"},
         {"@type": "ListItem", "position": 3, "name": "About", "item": "https://themindcareservices.com/#about"},
         {"@type": "ListItem", "position": 4, "name": "Book a Consultation", "item": "https://themindcareservices.com/contact"}
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to start therapy at MindCare Services in Karachi",
+      "description": "Starting therapy at MindCare Services® takes four simple steps — reach out, talk it through, get matched with the right specialist, and begin your sessions.",
+      "step": [
+        {"@type": "HowToStep", "position": 1, "name": "Reach out", "text": "Call, WhatsApp, or fill the booking form. It takes 30 seconds and there is no commitment."},
+        {"@type": "HowToStep", "position": 2, "name": "Free consultation", "text": "We listen to what's going on and answer your questions — confidentially and without judgment."},
+        {"@type": "HowToStep", "position": 3, "name": "Get matched", "text": "We pair you with the right specialist from our multidisciplinary team and agree on a plan together."},
+        {"@type": "HowToStep", "position": 4, "name": "Begin your journey", "text": "Sessions start at your pace — in clinic or at home — and we walk with you every step of the way."}
       ]
     },
     {
@@ -219,27 +253,34 @@
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --teal: #2BBDC9;
   --teal-dark: #1a9aaa;
+  --teal-deep: #0f7482;
   --teal-light: #e8f9fb;
   --green: #2D6A1F;
   --green-dark: #1e4a14;
   --green-light: #eaf4e6;
+  --sand: #fdf6ec;
+  --peach: #f9c58d;
+  --coral: #ef8354;
+  --lav: #b8a9e8;
   --white: #ffffff;
   --off-white: #f7fdfb;
-  --gray: #6b7280;
+  --gray: #5c6b63;
   --dark: #14261a;
   --border: #cdeae5;
+  --shadow-soft: 0 6px 30px rgba(20,38,26,0.07);
+  --radius: 20px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
-img { max-width: 100%; }
+img, svg { max-width: 100%; }
 
 /* ── ACCESSIBILITY ── */
 .skip-link {
@@ -269,27 +310,22 @@ select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
   * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
   .fade-up { opacity: 1 !important; transform: none !important; }
+  .float-a, .float-b, .breathe { animation: none !important; }
 }
 
 /* ── NAVBAR ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.94); backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
   padding: 0 5%; display: flex; align-items: center; justify-content: space-between;
   height: 72px; transition: box-shadow 0.3s;
 }
 nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
-
 .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.nav-logo img { height: 58px; width: auto; object-fit: contain; }
-.nav-logo-text {
-  display: none;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.5rem; font-weight: 700; color: var(--dark);
-}
+.nav-logo img { height: 54px; width: auto; object-fit: contain; }
+.nav-logo-text { display: none; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--dark); }
 .nav-logo-text span { color: var(--teal); }
-
 .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
 .nav-links a {
   text-decoration: none; color: var(--dark);
@@ -305,8 +341,7 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
   box-shadow: 0 4px 14px rgba(43,189,201,0.3);
 }
 .nav-cta:hover { background: var(--teal-dark) !important; }
-
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
 .hamburger span { width: 24px; height: 2px; background: var(--dark); border-radius: 2px; transition: all 0.3s; display: block; }
 
 /* ── MOBILE MENU ── */
@@ -315,6 +350,7 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
   top: 72px; left: 0; right: 0; bottom: 0;
   background: white; z-index: 999;
   padding: 24px 5%; flex-direction: column; gap: 4px;
+  overflow-y: auto;
 }
 .mobile-menu.open { display: flex; animation: menuIn 0.22s ease forwards; }
 @keyframes menuIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
@@ -340,28 +376,27 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
 
 /* ── HERO ── */
 #home {
-  background: linear-gradient(135deg, #edf9f8 0%, #e4f8f6 50%, #f4fdf0 100%);
-  padding: 100px 5% 60px;
+  background: linear-gradient(160deg, #eefaf8 0%, #e6f7f3 45%, #f6fbef 100%);
+  padding: 118px 5% 0;
   position: relative; overflow: hidden;
 }
 #home::before {
   content: ''; position: absolute;
-  width: 600px; height: 600px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(43,189,201,0.09) 0%, transparent 70%);
-  top: -150px; right: -150px; pointer-events: none;
+  width: 640px; height: 640px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(43,189,201,0.10) 0%, transparent 70%);
+  top: -180px; right: -160px; pointer-events: none;
 }
-
 .hero-inner {
   max-width: 1160px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; align-items: center;
+  display: grid; grid-template-columns: 1.05fr 1fr;
+  gap: 40px; align-items: center;
   position: relative; z-index: 1;
+  padding-bottom: 40px;
 }
-
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
   background: white; border: 1px solid var(--border);
-  border-radius: 50px; padding: 6px 16px;
+  border-radius: 50px; padding: 7px 16px;
   font-size: 0.77rem; font-weight: 600; color: var(--teal-dark);
   margin-bottom: 22px; box-shadow: 0 2px 12px rgba(43,189,201,0.1);
   letter-spacing: 0.03em;
@@ -371,100 +406,138 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
   background: var(--teal); animation: pulse 2s infinite; flex-shrink: 0;
 }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
-
 .hero-text h1 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.6rem, 4.5vw, 4rem);
-  font-weight: 600; line-height: 1.12; color: var(--dark);
-  margin-bottom: 16px;
+  font-size: clamp(2.7rem, 4.8vw, 4.2rem);
+  font-weight: 600; line-height: 1.1; color: var(--dark);
+  margin-bottom: 18px;
 }
-.hero-text h1 em { font-style: italic; color: var(--teal); }
-
-.hero-text p {
-  font-size: 1rem; line-height: 1.75; color: var(--gray);
-  margin-bottom: 32px; max-width: 440px;
+.hero-text h1 em { font-style: italic; color: var(--teal); position: relative; }
+.hero-text h1 em::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 4px; height: 10px;
+  background: rgba(249,197,141,0.5); z-index: -1; border-radius: 4px;
 }
-
+.hero-lede {
+  font-size: 1.02rem; line-height: 1.8; color: var(--gray);
+  margin-bottom: 30px; max-width: 460px;
+}
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 .btn-primary {
   background: var(--teal); color: white; border: none;
-  padding: 13px 28px; border-radius: 50px;
-  font-family: 'DM Sans', sans-serif; font-size: 0.92rem; font-weight: 500;
+  padding: 14px 30px; border-radius: 50px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.94rem; font-weight: 600;
   cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; gap: 8px;
-  transition: all 0.25s; box-shadow: 0 6px 20px rgba(43,189,201,0.3);
+  transition: all 0.25s; box-shadow: 0 6px 20px rgba(43,189,201,0.32);
 }
-.btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(43,189,201,0.4); }
+.btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(43,189,201,0.42); }
 .btn-secondary {
   color: var(--green); border: 1.5px solid var(--green);
-  background: transparent; padding: 12px 24px;
+  background: rgba(255,255,255,0.6); padding: 13px 26px;
   border-radius: 50px; font-family: 'DM Sans', sans-serif;
-  font-size: 0.92rem; font-weight: 500; cursor: pointer;
+  font-size: 0.94rem; font-weight: 500; cursor: pointer;
   text-decoration: none; transition: all 0.25s;
 }
 .btn-secondary:hover { background: var(--green); color: white; }
-
+.hero-micro { font-size: 0.75rem; color: var(--gray); margin-top: 12px; display: flex; align-items: center; gap: 6px; }
 .hero-phone {
-  margin-top: 28px; display: flex; align-items: center; gap: 12px;
+  margin-top: 26px; display: flex; align-items: center; gap: 12px;
   font-size: 0.88rem; color: var(--gray);
 }
 .hero-phone strong { color: var(--dark); font-size: 0.95rem; }
 .phone-icon {
-  width: 40px; height: 40px; background: var(--teal-light); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; color: var(--teal); font-size: 1rem;
-  flex-shrink: 0;
+  width: 42px; height: 42px; background: white; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; color: var(--teal);
+  flex-shrink: 0; box-shadow: var(--shadow-soft);
 }
 
-/* Hero right: compact cards */
-.hero-visual { display: flex; flex-direction: column; gap: 14px; }
-.hero-card {
-  background: white; border-radius: 18px; padding: 22px 24px;
-  box-shadow: 0 6px 30px rgba(0,0,0,0.06); border: 1px solid var(--border);
-  transition: transform 0.25s;
-}
-.hero-card:hover { transform: translateY(-3px); }
-.hero-card-icon { font-size: 1.5rem; margin-bottom: 8px; }
-.hero-card h3 { font-size: 1rem; font-weight: 600; color: var(--dark); margin-bottom: 4px; }
-.hero-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.55; }
-.hero-card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+/* Hero illustration */
+.hero-art { position: relative; }
+.hero-art svg { width: 100%; height: auto; display: block; filter: drop-shadow(0 24px 40px rgba(20,38,26,0.10)); }
+.float-a { animation: floatA 6s ease-in-out infinite; }
+.float-b { animation: floatA 7s ease-in-out 0.8s infinite; }
+@keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+.breathe { transform-origin: center; animation: breathe 5s ease-in-out infinite; }
+@keyframes breathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.045)} }
 
-.stat-bar {
-  background: white; border-radius: 14px; padding: 16px 22px;
-  display: flex; align-items: center; justify-content: space-around;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.05); border: 1px solid var(--border);
-}
-.stat-item { text-align: center; }
-.stat-item .num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.7rem; font-weight: 600; color: var(--teal);
-}
-.stat-item .lbl { font-size: 0.72rem; color: var(--gray); margin-top: 1px; }
-.stats-note { font-size: 0.68rem; color: rgba(107,114,128,0.65); text-align: center; margin-top: 4px; }
+/* wave divider */
+.wave { display: block; width: 100%; height: 70px; margin-bottom: -1px; }
 
 /* ── SECTION BASE ── */
-section { padding: 72px 5%; }
+section { padding: 80px 5%; }
 .section-inner { max-width: 1160px; margin: 0 auto; }
 .section-tag {
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--teal); margin-bottom: 10px; display: block;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--teal-dark); margin-bottom: 12px;
+  background: var(--teal-light); padding: 6px 14px; border-radius: 50px;
 }
 .section-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-  font-weight: 600; line-height: 1.2; color: var(--dark); margin-bottom: 12px;
+  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  font-weight: 600; line-height: 1.18; color: var(--dark); margin-bottom: 14px;
 }
-.section-sub { font-size: 0.95rem; color: var(--gray); line-height: 1.75; max-width: 580px; }
-.section-header { margin-bottom: 44px; }
+.section-sub { font-size: 0.97rem; color: var(--gray); line-height: 1.8; max-width: 600px; }
+.section-header { margin-bottom: 48px; }
 .section-header.centered { text-align: center; }
 .section-header.centered .section-sub { margin: 0 auto; }
 
+/* ── TRUST BAR ── */
+#trust { background: white; padding: 44px 5%; border-bottom: 1px solid var(--border); }
+.trust-inner {
+  max-width: 1160px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center;
+}
+.trust-item .t-ico { margin: 0 auto 10px; width: 52px; height: 52px; border-radius: 16px; background: var(--teal-light); display: flex; align-items: center; justify-content: center; }
+.trust-item .t-num { font-family: 'Cormorant Garamond', serif; font-size: 2.1rem; font-weight: 600; color: var(--teal-deep); line-height: 1; }
+.trust-item .t-lbl { font-size: 0.82rem; color: var(--gray); margin-top: 6px; }
+
+/* ── FEELINGS (empathy strip) ── */
+#feelings { background: var(--sand); position: relative; }
+.feel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+.feel-card {
+  background: white; border-radius: var(--radius); padding: 26px 24px;
+  border: 1px solid #f0e4d3; box-shadow: var(--shadow-soft);
+  display: flex; flex-direction: column; gap: 12px;
+  transition: transform .25s;
+}
+.feel-card:hover { transform: translateY(-4px); }
+.feel-card svg { width: 64px; height: 64px; }
+.feel-card h3 { font-size: 1rem; font-weight: 600; }
+.feel-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.65; }
+.feel-note { text-align: center; margin-top: 34px; font-size: 0.95rem; color: var(--gray); }
+.feel-note a { color: var(--teal-dark); font-weight: 600; }
+
+/* ── JOURNEY ── */
+#journey { background: white; }
+.journey-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; position: relative; }
+.journey-grid::before {
+  content: ''; position: absolute; top: 62px; left: 10%; right: 10%;
+  border-top: 2px dashed var(--border); z-index: 0;
+}
+.j-step { position: relative; z-index: 1; text-align: center; padding: 0 8px; }
+.j-art {
+  width: 124px; height: 124px; margin: 0 auto 18px; border-radius: 50%;
+  background: var(--off-white); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-soft); transition: transform .25s;
+}
+.j-step:hover .j-art { transform: translateY(-5px) scale(1.03); }
+.j-art svg { width: 84px; height: 84px; }
+.j-num {
+  display: inline-block; background: var(--teal); color: white;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+  border-radius: 50px; padding: 4px 12px; margin-bottom: 10px;
+}
+.j-step h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: 6px; }
+.j-step p { font-size: 0.84rem; color: var(--gray); line-height: 1.65; }
+.journey-cta { text-align: center; margin-top: 44px; }
+
 /* ── SERVICES ── */
 #services { background: var(--off-white); }
-.services-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;
-}
+.services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
 .service-card {
-  background: white; border-radius: 18px; padding: 26px 28px;
+  background: white; border-radius: var(--radius); padding: 28px;
   border: 1px solid var(--border); transition: all 0.25s; position: relative; overflow: hidden;
 }
 .service-card::before {
@@ -472,81 +545,130 @@ section { padding: 72px 5%; }
   background: linear-gradient(90deg, var(--teal), var(--green));
   transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
 }
-.service-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(43,189,201,0.1); border-color: var(--teal); }
+.service-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(43,189,201,0.12); border-color: var(--teal); }
 .service-card:hover::before { transform: scaleX(1); }
-.service-icon { font-size: 1.6rem; margin-bottom: 12px; }
-.service-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; color: var(--dark); }
-.service-card p { font-size: 0.84rem; color: var(--gray); line-height: 1.65; }
+.service-icon {
+  width: 56px; height: 56px; border-radius: 16px; margin-bottom: 16px;
+  background: var(--teal-light); display: flex; align-items: center; justify-content: center;
+}
+.service-icon svg { width: 32px; height: 32px; }
+.service-card h3 { font-size: 1.07rem; font-weight: 600; margin-bottom: 8px; color: var(--dark); }
+.service-card p { font-size: 0.86rem; color: var(--gray); line-height: 1.68; }
 
 .awareness-card {
-  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
-  border-radius: 18px; padding: 28px 32px; color: white;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-deep) 100%);
+  border-radius: var(--radius); padding: 30px 34px; color: white;
   grid-column: span 2;
   display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center;
+  position: relative; overflow: hidden;
 }
-.awareness-card h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; }
-.awareness-card p { opacity: 0.9; font-size: 0.87rem; line-height: 1.65; }
+.awareness-card::after {
+  content: ''; position: absolute; width: 260px; height: 260px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); bottom: -120px; right: -80px;
+}
+.awareness-card h3 { font-size: 1.35rem; font-weight: 600; margin-bottom: 8px; }
+.awareness-card p { opacity: 0.92; font-size: 0.88rem; line-height: 1.65; }
 .btn-white {
   display: inline-flex; align-items: center; gap: 8px;
-  background: white; color: var(--teal); border: none;
-  border-radius: 50px; padding: 11px 24px; font-weight: 600;
-  cursor: pointer; text-decoration: none; font-size: 0.87rem; transition: all 0.2s;
+  background: white; color: var(--teal-deep); border: none;
+  border-radius: 50px; padding: 12px 26px; font-weight: 600;
+  cursor: pointer; text-decoration: none; font-size: 0.88rem; transition: all 0.2s;
+  position: relative; z-index: 1;
 }
-.btn-white:hover { background: rgba(255,255,255,0.9); transform: translateY(-1px); }
+.btn-white:hover { background: rgba(255,255,255,0.92); transform: translateY(-1px); }
 
 /* ── ABOUT ── */
 #about { background: white; }
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
-.about-img-box {
-  background: linear-gradient(135deg, var(--teal-light), var(--green-light));
-  border-radius: 28px; height: 420px;
-  display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+.about-art { position: relative; }
+.about-art svg { width: 100%; height: auto; display: block; }
+.about-chip {
+  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+  background: white; border-radius: 14px; padding: 14px 22px;
+  box-shadow: 0 10px 30px rgba(20,38,26,0.12); text-align: center;
+  border: 1px solid var(--border); min-width: 230px;
 }
-.about-img-content { text-align: center; padding: 32px; position: relative; z-index: 1; }
-.about-img-content h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.7rem; font-weight: 600; color: var(--dark); margin-bottom: 6px;
-}
-.about-img-content .role { color: var(--teal); font-size: 0.88rem; font-weight: 500; margin-bottom: 18px; }
-.about-img-chip {
-  background: white; border-radius: 12px; padding: 14px 20px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-}
-.about-img-chip .lbl { font-size: 0.7rem; color: var(--gray); }
-.about-img-chip .val { font-weight: 600; color: var(--dark); font-size: 0.9rem; margin-top: 2px; }
-
-.about-content p { font-size: 0.95rem; color: var(--gray); line-height: 1.8; margin-bottom: 18px; }
-.about-content p:last-of-type { margin-bottom: 28px; }
-
+.about-chip .lbl { font-size: 0.68rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; }
+.about-chip .val { font-weight: 700; color: var(--dark); font-size: 0.95rem; margin-top: 2px; }
+.about-content p { font-size: 0.96rem; color: var(--gray); line-height: 1.85; margin-bottom: 18px; }
 .founder-quote {
   background: var(--teal-light); border-left: 3px solid var(--teal);
-  border-radius: 0 12px 12px 0; padding: 20px 24px; margin: 24px 0;
+  border-radius: 0 14px 14px 0; padding: 22px 26px; margin: 26px 0;
 }
 .founder-quote p {
-  font-style: italic; font-size: 0.92rem; color: var(--teal-dark);
-  line-height: 1.75; margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 1.12rem; color: var(--teal-deep);
+  line-height: 1.7; margin: 0 !important;
 }
-.founder-quote cite { font-size: 0.78rem; color: var(--gray); margin-top: 8px; display: block; }
+.founder-quote cite { font-size: 0.78rem; color: var(--gray); margin-top: 10px; display: block; font-style: normal; }
+
+/* ── WHY US ── */
+#why { background: var(--off-white); }
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 20px; }
+.why-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; transition: transform .25s, box-shadow .25s; }
+.why-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(43,189,201,.12); }
+.why-card .why-icon { width: 50px; height: 50px; border-radius: 14px; background: var(--teal-light); display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
+.why-card .why-icon svg { width: 28px; height: 28px; }
+.why-card h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: 7px; }
+.why-card p { font-size: 0.86rem; color: var(--gray); line-height: 1.65; }
+
+/* ── TESTIMONIAL ── */
+#testimonial {
+  background: linear-gradient(135deg, var(--dark) 0%, #16351f 100%);
+  padding: 84px 5%; position: relative; overflow: hidden;
+}
+#testimonial::before {
+  content: ''; position: absolute; width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(43,189,201,0.14) 0%, transparent 70%);
+  top: -150px; left: -100px;
+}
+.testimonial-inner { max-width: 800px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+.t-stars { color: #FFD700; font-size: 1rem; letter-spacing: 2px; margin-bottom: 18px; }
+.t-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-style: italic; color: white; line-height: 1.55;
+  margin-bottom: 24px; position: relative; padding: 0 12px; border: none;
+}
+.t-quote::before {
+  content: '\201C'; font-size: 5rem; line-height: 0;
+  position: absolute; top: 18px; left: -8px;
+  color: var(--teal); opacity: 0.4; font-style: normal;
+}
+.t-name { font-weight: 600; color: var(--teal); font-size: 0.88rem; letter-spacing: 0.04em; }
+.t-detail { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 4px; }
 
 /* ── TEAM ── */
-#team { background: var(--off-white); }
-.team-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;
-}
+#team { background: white; }
+.team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
 .team-card {
-  background: white; border-radius: 18px; padding: 24px 20px;
+  background: var(--off-white); border-radius: var(--radius); padding: 26px 20px;
   text-align: center; border: 1px solid var(--border); transition: all 0.25s;
 }
-.team-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(43,189,201,0.1); }
+.team-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(43,189,201,0.12); background: white; }
 .team-avatar {
-  width: 72px; height: 72px; border-radius: 50%;
-  margin: 0 auto 14px; display: flex; align-items: center; justify-content: center;
-  font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: white;
+  width: 82px; height: 82px; border-radius: 50%;
+  margin: 0 auto 14px; overflow: hidden;
+  border: 3px solid white; box-shadow: var(--shadow-soft);
 }
-.team-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--dark); margin-bottom: 3px; }
-.team-card .role { font-size: 0.77rem; color: var(--teal); font-weight: 500; margin-bottom: 5px; }
-.team-card .cred { font-size: 0.72rem; color: var(--gray); line-height: 1.4; }
+.team-avatar svg { width: 100%; height: 100%; display: block; }
+.team-card h3 { font-size: 0.96rem; font-weight: 600; color: var(--dark); margin-bottom: 3px; }
+.team-card .role { font-size: 0.77rem; color: var(--teal-dark); font-weight: 600; margin-bottom: 5px; }
+.team-card .cred { font-size: 0.72rem; color: var(--gray); line-height: 1.45; }
+
+/* ── FAQ ── */
+#faq { background: var(--off-white); }
+.faq-list { max-width: 780px; margin: 0 auto; }
+.faq-item { border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; overflow: hidden; background: white; }
+.faq-q {
+  width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+  padding: 18px 22px; font-family: 'DM Sans', sans-serif; font-size: 0.98rem;
+  font-weight: 600; color: var(--dark); display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.faq-q::after { content: '+'; font-size: 1.5rem; color: var(--teal); flex-shrink: 0; transition: transform .25s; line-height: 1; }
+.faq-item.open .faq-q::after { transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.faq-a p { padding: 0 22px 18px; font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
 
 /* ── COLLABORATIONS ── */
 #collaborations { background: white; }
@@ -555,8 +677,9 @@ section { padding: 72px 5%; }
 .collab-chip {
   display: flex; align-items: center; gap: 12px;
   padding: 14px 18px; background: var(--teal-light);
-  border-radius: 12px; font-size: 0.87rem; color: var(--teal-dark); font-weight: 500;
+  border-radius: 12px; font-size: 0.87rem; color: var(--teal-deep); font-weight: 500;
 }
+.collab-chip svg { width: 22px; height: 22px; flex-shrink: 0; }
 .collab-form-box {
   background: var(--off-white); border-radius: 22px;
   padding: 36px; border: 1px solid var(--border);
@@ -575,7 +698,7 @@ section { padding: 72px 5%; }
 .form-group textarea,
 .form-group select {
   width: 100%; border: 1.5px solid var(--border); border-radius: 10px;
-  padding: 10px 13px; font-family: 'DM Sans', sans-serif;
+  padding: 11px 13px; font-family: 'DM Sans', sans-serif;
   font-size: 0.86rem; color: var(--dark); background: white;
   outline: none; transition: border-color 0.2s;
 }
@@ -584,29 +707,18 @@ section { padding: 72px 5%; }
 .form-group select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(43,189,201,0.1); }
 .form-group textarea { min-height: 100px; resize: vertical; }
 
-/* ── TESTIMONIAL ── */
-#testimonial {
-  background: linear-gradient(135deg, var(--dark) 0%, #1b3a1b 100%);
-  padding: 72px 5%;
+/* ── CTA BAND ── */
+#cta-band { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-deep) 100%); padding: 66px 5%; }
+.cta-band-inner {
+  max-width: 1000px; margin: 0 auto; color: white;
+  display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
 }
-.testimonial-inner { max-width: 800px; margin: 0 auto; text-align: center; }
-.t-stars { color: #FFD700; font-size: 1rem; letter-spacing: 2px; margin-bottom: 18px; }
-.t-quote {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  font-style: italic; color: white; line-height: 1.55;
-  margin-bottom: 24px; position: relative; padding: 0 12px;
-}
-.t-quote::before {
-  content: '\201C'; font-size: 5rem; line-height: 0;
-  position: absolute; top: 18px; left: -8px;
-  color: var(--teal); opacity: 0.4; font-style: normal;
-}
-.t-name { font-weight: 600; color: var(--teal); font-size: 0.88rem; letter-spacing: 0.04em; }
-.t-detail { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 4px; }
+.cta-band-inner h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 600; line-height: 1.25; margin-bottom: 8px; }
+.cta-band-inner p { opacity: 0.92; font-size: 0.94rem; }
+.cta-band-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* ── FOOTER ── */
-footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5% 28px; }
+footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5% 28px; }
 .footer-grid {
   max-width: 1160px; margin: 0 auto;
   display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -662,7 +774,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
 .wa-float-btn svg { width: 28px; height: 28px; fill: white; }
 @keyframes waBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
 
-/* ── TOAST (kept for fallback) ── */
+/* ── TOAST / MODAL ── */
 .toast {
   position: fixed; bottom: 96px; right: 26px;
   background: var(--green); color: white;
@@ -673,8 +785,6 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
   z-index: 9999; max-width: 300px; display: none;
 }
 .toast.show { transform: translateY(0); display: block; }
-
-/* ── SUCCESS MODAL ── */
 .modal-overlay {
   display: none; position: fixed; inset: 0;
   background: rgba(20,38,26,0.55); backdrop-filter: blur(4px);
@@ -709,110 +819,163 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
 /* ── ANIMATIONS ── */
 .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-/* ── LOADING ── */
 .btn-primary.loading { pointer-events: none; opacity: 0.75; }
-
-/* ── TRUST BAR ── */
-#trust { background: white; padding: 40px 5%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.trust-inner {
-  max-width: 1160px; margin: 0 auto;
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center;
-}
-.trust-item .t-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--teal); line-height: 1; }
-.trust-item .t-lbl { font-size: 0.82rem; color: var(--gray); margin-top: 6px; }
-
-/* ── WHY US ── */
-#why { background: var(--off-white); }
-.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 20px; }
-.why-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: transform .25s, box-shadow .25s; }
-.why-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(43,189,201,.1); }
-.why-card .why-icon { width: 46px; height: 46px; border-radius: 12px; background: var(--teal-light); color: var(--teal-dark); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 14px; }
-.why-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
-.why-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
-
-/* ── FAQ ── */
-#faq { background: white; }
-.faq-list { max-width: 780px; margin: 0 auto; }
-.faq-item { border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; overflow: hidden; background: var(--off-white); }
-.faq-q {
-  width: 100%; text-align: left; background: none; border: none; cursor: pointer;
-  padding: 18px 22px; font-family: 'DM Sans', sans-serif; font-size: 0.98rem;
-  font-weight: 600; color: var(--dark); display: flex; justify-content: space-between; align-items: center; gap: 16px;
-}
-.faq-q::after { content: '+'; font-size: 1.5rem; color: var(--teal); flex-shrink: 0; transition: transform .25s; line-height: 1; }
-.faq-item.open .faq-q::after { transform: rotate(45deg); }
-.faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
-.faq-a p { padding: 0 22px 18px; font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
 
 /* ── DARK MODE ── */
 @media (prefers-color-scheme: dark) {
   :root {
     --white: #0e1b13; --off-white: #12241a; --dark: #eaf4ee;
     --gray: #9db3a6; --border: #234034; --teal-light: #13312f;
-    --green-light: #16281a;
+    --green-light: #16281a; --sand: #17251b;
+    --shadow-soft: 0 6px 30px rgba(0,0,0,0.3);
   }
   body { background: #0e1b13; }
   nav { background: rgba(14,27,19,0.9); }
   .mobile-menu { background: #0e1b13; }
-  .hero-card, .service-card, .team-card, .why-card, .stat-bar,
-  .collab-form-box, .faq-item, .hero-badge { background: #12241a; }
-  #home { background: linear-gradient(135deg,#0e1b13 0%,#12241a 55%,#0e1b13 100%); }
+  .service-card, .team-card, .why-card, .collab-form-box, .faq-item,
+  .hero-badge, .feel-card, .about-chip, .phone-icon, .j-art { background: #12241a; }
+  .feel-card { border-color: #234034; }
+  #home { background: linear-gradient(160deg,#0e1b13 0%,#12241a 55%,#0e1b13 100%); }
+  .wave path { fill: #0e1b13 !important; }
   .form-group input, .form-group textarea, .form-group select { background: #0e1b13; color: var(--dark); }
   .founder-quote { background: #13312f; }
+  .hero-text h1 em::after { background: rgba(249,197,141,0.18); }
+  .btn-secondary { background: transparent; color: #7fd67f; border-color: #7fd67f; }
+  #testimonial, footer { background: #0a140e; }
 }
 
-/* ── MOBILE ── */
+/* ── RESPONSIVE ── */
 @media (max-width: 960px) {
-  .trust-inner { grid-template-columns: repeat(2, 1fr); gap: 28px; }
-  .hero-inner { grid-template-columns: 1fr; gap: 36px; }
-  .hero-visual { order: 1; }
+  .hero-inner { grid-template-columns: 1fr; gap: 28px; padding-bottom: 20px; }
+  .hero-art { max-width: 480px; margin: 0 auto; }
   .about-grid, .collab-layout { grid-template-columns: 1fr; gap: 40px; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .awareness-card { grid-template-columns: 1fr; grid-column: span 1; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
   .form-row { grid-template-columns: 1fr; }
+  .trust-inner { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  .journey-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .journey-grid::before { display: none; }
+  .cta-band-inner { grid-template-columns: 1fr; text-align: center; }
+  .cta-band-btns { justify-content: center; }
 }
 @media (max-width: 640px) {
-  section { padding: 56px 5%; }
-  #home { padding: 90px 5% 48px; }
-  .hero-text h1 { font-size: 2.2rem; }
-  .hero-actions { flex-direction: column; }
+  section { padding: 60px 5%; }
+  #home { padding: 96px 5% 0; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions a { text-align: center; justify-content: center; }
   .team-grid { grid-template-columns: 1fr 1fr; }
   .services-grid { grid-template-columns: 1fr; }
   .awareness-card { grid-column: auto; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-  .hero-card-row { grid-template-columns: 1fr; }
+  .journey-grid { grid-template-columns: 1fr; }
   nav { height: 64px; }
   .mobile-menu { top: 64px; }
-  .nav-logo img { height: 48px; }
+  .nav-logo img { height: 46px; }
+  .wave { height: 42px; }
 }
 </style>
 </head>
 <body>
 
-<a href="#home" class="skip-link">Skip to main content</a>
+<a href="#main" class="skip-link">Skip to main content</a>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- SVG SPRITE (shared vector icons) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-brain" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9.5 2a2.5 2.5 0 0 0-2.5 2.5v.55A3.5 3.5 0 0 0 4 8.5c0 .64.17 1.23.47 1.75A3.5 3.5 0 0 0 3 13.5 3.5 3.5 0 0 0 6.5 17H7v1.5A2.5 2.5 0 0 0 9.5 21c.98 0 1.84-.56 2.25-1.38V4.38A2.5 2.5 0 0 0 9.5 2Z"/>
+      <path d="M14.5 2A2.5 2.5 0 0 1 17 4.5v.55A3.5 3.5 0 0 1 20 8.5c0 .64-.17 1.23-.47 1.75A3.5 3.5 0 0 1 21 13.5 3.5 3.5 0 0 1 17.5 17H17v1.5A2.5 2.5 0 0 1 14.5 21c-.98 0-1.84-.56-2.25-1.38V4.38A2.5 2.5 0 0 1 14.5 2Z"/>
+    </symbol>
+    <symbol id="i-family" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="7" cy="6" r="2.6"/><circle cx="17" cy="6" r="2.6"/><circle cx="12" cy="11" r="2"/>
+      <path d="M2.5 20v-1.6A4.4 4.4 0 0 1 7 14.2c1 0 1.94.33 2.7.9"/>
+      <path d="M21.5 20v-1.6a4.4 4.4 0 0 0-4.5-4.2c-1 0-1.94.33-2.7.9"/>
+      <path d="M8.5 21v-.8a3.5 3.5 0 0 1 7 0v.8"/>
+    </symbol>
+    <symbol id="i-speech" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.3 8.7 8.7 0 0 1-3.7-.8L3 20l1.1-5A8 8 0 0 1 3.5 11.5 8.4 8.4 0 0 1 12 3.2a8.4 8.4 0 0 1 9 8.3Z"/>
+      <path d="M8.5 10.5h.01M12.2 10.5h.01M15.9 10.5h.01"/>
+      <path d="M8.5 14c1 .8 2.2 1.2 3.7 1.2s2.7-.4 3.7-1.2"/>
+    </symbol>
+    <symbol id="i-physio" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="13.5" cy="4.5" r="2"/>
+      <path d="M4 21l4.3-5.4M12.6 8.8 9.2 12l3 2.5-1 6.5"/>
+      <path d="M12.6 8.8 16 11l4 .6M9.2 12l-4.4-.7"/>
+    </symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 11V6.5a1.5 1.5 0 0 0-3 0V11m0-4.5V4a1.5 1.5 0 0 0-3 0v6.5m0-5V4.5a1.5 1.5 0 0 0-3 0V12m-2.5-3.5v6.8c0 3.4 2.7 6.2 6.1 6.2h1.2A6.2 6.2 0 0 0 20 15.3V8.5a1.5 1.5 0 0 0-3 0"/>
+    </symbol>
+    <symbol id="i-cycle" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 8A8.5 8.5 0 0 0 5.6 6L4 8m0 0V4m0 4h4"/>
+      <path d="M4 16a8.5 8.5 0 0 0 14.4 2l1.6-2m0 0v4m0-4h-4"/>
+    </symbol>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.8V20h13V9.8"/><path d="M10 20v-5h4v5"/>
+    </symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6a1 1 0 0 1 1 1V5H8V3.5a1 1 0 0 1 1-1Z"/>
+      <path d="M9 10h6M9 13.5h6M9 17h3.5"/>
+    </symbol>
+    <symbol id="i-tooth" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 5.5C10.8 4.3 9.2 3.5 7.6 3.5 5 3.5 3.5 5.6 3.5 8c0 4.2 2 7.2 3 10.5.4 1.3 2.2 1.3 2.6 0l1.3-4.4c.3-1 1.9-1 2.2 0l1.3 4.4c.4 1.3 2.2 1.3 2.6 0 1-3.3 3-6.3 3-10.5 0-2.4-1.5-4.5-4.1-4.5-1.6 0-3.2.8-4.4 2Z"/>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3 5 5.8v5.4c0 4.4 3 8.4 7 9.8 4-1.4 7-5.4 7-9.8V5.8L12 3Z"/><path d="m9 11.5 2.2 2.2L15.5 9.5"/>
+    </symbol>
+    <symbol id="i-grad" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m2.5 9 9.5-4.5L21.5 9 12 13.5 2.5 9Z"/><path d="M6.5 11v4.5c0 1.4 2.5 2.8 5.5 2.8s5.5-1.4 5.5-2.8V11"/><path d="M21.5 9v5"/>
+    </symbol>
+    <symbol id="i-heart-hands" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 8.2C12 6.4 13.4 5 15.1 5 17 5 18.3 6.5 18.3 8.2c0 2.6-3.5 4.6-6.3 6.8-2.8-2.2-6.3-4.2-6.3-6.8C5.7 6.5 7 5 8.9 5 10.6 5 12 6.4 12 8.2Z"/>
+      <path d="M3 15.5 6.5 19a4 4 0 0 0 2.8 1.2h5.4A4 4 0 0 0 17.5 19l3.5-3.5"/>
+    </symbol>
+    <symbol id="i-puzzle" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 3.5a1.8 1.8 0 0 1 3.6 0V5H17a1.5 1.5 0 0 1 1.5 1.5V10h1.4a1.8 1.8 0 0 1 0 3.6H18.5V17a1.5 1.5 0 0 1-1.5 1.5h-3.4v1.4a1.8 1.8 0 0 1-3.6 0V18.5H6.5A1.5 1.5 0 0 1 5 17v-3.5H3.6a1.8 1.8 0 0 1 0-3.6H5V6.5A1.5 1.5 0 0 1 6.5 5H10V3.5Z"/>
+    </symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="#1a9aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><circle cx="12" cy="15.5" r="1.4"/>
+    </symbol>
+    <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="#0f7482" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="4" width="10" height="17" rx="1"/><path d="M14 9h5a1 1 0 0 1 1 1v11"/><path d="M2.5 21h19"/><path d="M7.5 8h3M7.5 12h3M7.5 16h3M17 13h.01M17 17h.01"/>
+    </symbol>
+    <symbol id="i-school" viewBox="0 0 24 24" fill="none" stroke="#0f7482" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 21V10l9-6 9 6v11"/><path d="M3 21h18"/><path d="M9 21v-6a3 3 0 0 1 6 0v6"/><circle cx="12" cy="9" r="1.4"/>
+    </symbol>
+    <symbol id="i-handshake" viewBox="0 0 24 24" fill="none" stroke="#0f7482" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m2.5 9.5 4-2 5 1.5 4.5-1.8 5.5 2.6"/><path d="M7 7.5V15l4.2 4a2 2 0 0 0 2.8 0l4-3.8V8"/><path d="m11 12-1.7 1.7a1.5 1.5 0 0 0 2.1 2.1L13 14.2"/>
+    </symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="#0f7482" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18"/>
+    </symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="#0f7482" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 6.5C10.5 5 8.5 4.5 4 4.5v14c4.5 0 6.5.5 8 2 1.5-1.5 3.5-2 8-2v-14c-4.5 0-6.5.5-8 2Z"/><path d="M12 6.5v14"/>
+    </symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </symbol>
+  </defs>
+</svg>
 
 <!-- TOAST -->
 <div class="toast" id="toast">✓ Request sent! We'll be in touch soon.</div>
 
 <!-- SUCCESS MODAL -->
 <div class="modal-overlay" id="successModal" onclick="closeModal(event)">
-  <div class="modal-box">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-icon">✅</div>
-    <h3>Message Sent!</h3>
+    <h3 id="modalTitle">Message Sent!</h3>
     <p id="modalMsg">Thank you for reaching out. We'll get back to you within 24–48 hours.</p>
-    <button class="modal-close" onclick="document.getElementById('successModal').classList.remove('open')">Close</button>
+    <button class="modal-close" onclick="document.getElementById('successModal').classList.remove('open');document.body.style.overflow=''">Close</button>
   </div>
 </div>
 
 <!-- NAVBAR -->
 <nav id="navbar" aria-label="Primary navigation">
   <a href="#home" class="nav-logo" aria-label="MindCare Services home">
-    <img src="mindcare.png" width="120" height="58"
+    <img src="mindcare.png" width="120" height="54"
          alt="MindCare Services® — psychotherapy and mental health clinic in Karachi"
          onerror="this.style.display='none';document.getElementById('nav-logo-text').style.display='flex'">
     <span class="nav-logo-text" id="nav-logo-text" style="display:none">MIND<span>CARE</span></span>
@@ -820,26 +983,28 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#services">Services</a></li>
+    <li><a href="#journey">How It Works</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#team">Team</a></li>
-    <li><a href="#collaborations">Collaborate</a></li>
     <li><a href="contact.html" class="nav-cta">Book Consultation</a></li>
   </ul>
-  <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" style="background:none;border:none">
+  <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#home" onclick="toggleMenu()">Home</a>
-  <a href="#services" onclick="toggleMenu()">Services</a>
-  <a href="#about" onclick="toggleMenu()">About</a>
-  <a href="#team" onclick="toggleMenu()">Team</a>
-  <a href="#collaborations" onclick="toggleMenu()">Collaborate</a>
+  <a href="#home">Home</a>
+  <a href="#services">Services</a>
+  <a href="#journey">How It Works</a>
+  <a href="#about">About</a>
+  <a href="#team">Team</a>
+  <a href="#faq">FAQ</a>
+  <a href="#collaborations">Collaborate</a>
   <a href="contact.html" class="m-cta">Book a Consultation</a>
-  <a href="https://wa.me/923272337631" target="_blank" class="m-wa" onclick="toggleMenu()">
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <a href="https://wa.me/923272337631" target="_blank" rel="noopener" class="m-wa">
+    <svg width="18" height="18" fill="white"><use href="#i-wa"/></svg>
     Chat on WhatsApp
   </a>
 </div>
@@ -848,25 +1013,32 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
 <div class="wa-float">
   <div class="wa-tooltip">Chat on WhatsApp</div>
   <a href="https://wa.me/923272337631?text=Hi%2C%20I'd%20like%20to%20book%20a%20consultation%20with%20MindCare%20Services."
-     target="_blank" class="wa-float-btn" aria-label="WhatsApp MindCare">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+     target="_blank" rel="noopener" class="wa-float-btn" aria-label="Chat with MindCare on WhatsApp">
+    <svg><use href="#i-wa"/></svg>
   </a>
 </div>
 
-<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<main id="main">
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
 <section id="home">
   <div class="hero-inner">
     <div class="hero-text fade-up">
       <div class="hero-badge">MindCare Services® — Member of PPA</div>
       <h1>Struggling <em>silently?</em><br>Let's talk.</h1>
-      <p>Real support, real people. Evidence-based therapy for anxiety, depression, trauma, and more — right here in Karachi.</p>
+      <p class="hero-lede">Real support, real people. Evidence-based therapy for anxiety, depression, trauma, and more — right here in Karachi, from a team that actually listens.</p>
       <div class="hero-actions">
         <a href="contact.html" class="btn-primary">Book Free Consultation</a>
-        <a href="#services" class="btn-secondary">Our Services</a>
+        <a href="#journey" class="btn-secondary">See How It Works</a>
       </div>
-      <p style="font-size:0.73rem;color:var(--gray);margin-top:10px">No pressure. 100% confidential.</p>
+      <p class="hero-micro">
+        <svg width="14" height="14" fill="none" stroke="#2D6A1F" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        No pressure · 100% confidential · Free first consultation
+      </p>
       <div class="hero-phone">
-        <div class="phone-icon">📞</div>
+        <div class="phone-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
         <div>
           <div style="font-size:0.73rem;color:var(--gray)">Prefer a call?</div>
           <strong><a href="tel:+923272337631" style="color:inherit;text-decoration:none">+92 327 2337631</a></strong>
@@ -874,59 +1046,236 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
       </div>
     </div>
 
-    <div class="hero-visual fade-up">
-      <div class="hero-card">
-        <div class="hero-card-icon">🧠</div>
-        <h3>Individual Psychotherapy</h3>
-        <p>Tailored sessions for anxiety, depression, and trauma — for adults and adolescents.</p>
-      </div>
-      <div class="hero-card-row">
-        <div class="hero-card">
-          <div class="hero-card-icon">🤝</div>
-          <h3>Family Counseling</h3>
-          <p>Strengthen relationships through guided communication.</p>
-        </div>
-        <div class="hero-card">
-          <div class="hero-card-icon">📋</div>
-          <h3>Assessments</h3>
-          <p>Professional psychological evaluations and screenings.</p>
-        </div>
-      </div>
-      <div class="stat-bar">
-        <div class="stat-item">
-          <div class="num">7+</div>
-          <div class="lbl">Specialists</div>
-        </div>
-        <div class="stat-item">
-          <div class="num">PPA</div>
-          <div class="lbl">Certified Member</div>
-        </div>
-        <div class="stat-item">
-          <div class="num">KHI</div>
-          <div class="lbl">Based in Karachi</div>
-        </div>
-      </div>
-      <p class="stats-note">PPA membership verified · Serving Karachi since founding</p>
+    <!-- HERO ILLUSTRATION: therapy conversation scene -->
+    <div class="hero-art fade-up" role="img" aria-label="Illustration of a therapist and a client sitting together in a calm room with plants, talking comfortably">
+      <svg viewBox="0 0 560 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="breathe" d="M280 30c110 0 232 62 232 190 0 130-96 222-232 222S48 350 48 220 170 30 280 30Z" fill="#ffffff" opacity="0.85"/>
+        <path d="M280 52c100 0 208 56 208 168 0 118-86 200-208 200S72 338 72 220 180 52 280 52Z" fill="#e3f6f4"/>
+        <circle cx="150" cy="120" r="34" fill="#f9c58d"/>
+        <path d="M104 156c22 14 66 16 92-2" stroke="#efb571" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="352" y="72" width="120" height="104" rx="12" fill="#ffffff"/>
+        <rect x="352" y="72" width="120" height="104" rx="12" fill="none" stroke="#bfe6e0" stroke-width="4"/>
+        <path d="M412 74v100M354 124h116" stroke="#bfe6e0" stroke-width="4"/>
+        <path d="M370 108c8-10 20-10 26 0M430 96c8-10 20-10 26 0" stroke="#8fd3da" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="280" cy="404" rx="216" ry="34" fill="#cdeae5"/>
+        <ellipse cx="280" cy="404" rx="164" ry="24" fill="#dff3ef"/>
+
+        <!-- THERAPIST (left) -->
+        <g class="float-a">
+          <path d="M96 300h118v96a10 10 0 0 1-10 10H106a10 10 0 0 1-10-10v-96Z" fill="#2bbdc9"/>
+          <rect x="88" y="286" width="134" height="30" rx="15" fill="#1a9aaa"/>
+          <path d="M124 318c0-30 20-52 44-52s44 22 44 52v50h-88v-50Z" fill="#0f7482"/>
+          <circle cx="168" cy="228" r="30" fill="#eaa17a"/>
+          <path d="M138 222c2-20 16-32 30-32s28 12 30 32c-8-10-18-14-30-14s-22 4-30 14Z" fill="#3c2a20"/>
+          <circle cx="196" cy="200" r="10" fill="#3c2a20"/>
+          <path d="M162 236c4 4 10 4 14 0" stroke="#7c4a32" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <circle cx="158" cy="226" r="2.6" fill="#3c2a20"/><circle cx="180" cy="226" r="2.6" fill="#3c2a20"/>
+          <path d="M204 300c16 4 30 14 34 30" stroke="#0f7482" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <rect x="222" y="316" width="40" height="52" rx="6" transform="rotate(12 242 342)" fill="#ffffff" stroke="#bfe6e0" stroke-width="3"/>
+          <path d="M234 332l22 5M232 344l22 5M230 356l14 3" stroke="#8fd3da" stroke-width="3" stroke-linecap="round"/>
+        </g>
+
+        <!-- CLIENT (right) -->
+        <g class="float-b">
+          <path d="M346 300h118v96a10 10 0 0 1-10 10H356a10 10 0 0 1-10-10v-96Z" fill="#7fc96b"/>
+          <rect x="338" y="286" width="134" height="30" rx="15" fill="#5da84a"/>
+          <path d="M350 318c0-30 20-52 44-52s44 22 44 52v50h-88v-50Z" fill="#2d6a1f"/>
+          <circle cx="394" cy="228" r="30" fill="#f0b48e"/>
+          <path d="M364 224c0-20 14-34 30-34 18 0 30 16 30 34-4-12-14-18-30-18-14 0-24 6-30 18Z" fill="#241a12"/>
+          <path d="M388 238c3 3 8 3 11 0" stroke="#8a5638" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <circle cx="384" cy="227" r="2.6" fill="#241a12"/><circle cx="405" cy="227" r="2.6" fill="#241a12"/>
+          <path d="M352 306c-14-4-24-16-26-30" stroke="#2d6a1f" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <circle cx="324" cy="270" r="10" fill="#f0b48e"/>
+        </g>
+
+        <!-- speech bubbles -->
+        <g class="float-a">
+          <path d="M226 162a22 22 0 0 1 22-22h44a22 22 0 0 1 0 44h-30l-16 14v-14a22 22 0 0 1-20-22Z" fill="#ffffff" stroke="#bfe6e0" stroke-width="3"/>
+          <circle cx="258" cy="162" r="3.4" fill="#2bbdc9"/><circle cx="272" cy="162" r="3.4" fill="#2bbdc9"/><circle cx="286" cy="162" r="3.4" fill="#2bbdc9"/>
+        </g>
+        <g class="float-b">
+          <path d="M330 116a18 18 0 0 1 18-18h30a18 18 0 0 1 0 36h-6v12l-14-12h-10a18 18 0 0 1-18-18Z" fill="#2bbdc9"/>
+          <path d="M348 112c6 8 16 8 22 0" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- plants -->
+        <g>
+          <path d="M60 356c0-30 12-56 30-70-4 26-6 50-2 70h-28Z" fill="#5da84a"/>
+          <path d="M92 356c-2-24 6-48 22-62-8 24-10 44-8 62H92Z" fill="#7fc96b"/>
+          <path d="M52 356h64l-8 44a8 8 0 0 1-8 6H68a8 8 0 0 1-8-6l-8-44Z" fill="#e07b4a"/>
+        </g>
+        <g>
+          <path d="M494 330c8-18 24-28 40-30-10 12-18 24-20 38l-20-8Z" fill="#7fc96b"/>
+          <path d="M492 336h44l-6 32a7 7 0 0 1-7 6h-18a7 7 0 0 1-7-6l-6-32Z" fill="#c45a28"/>
+        </g>
+        <path class="float-b" d="M182 68c0-6 4-10 9-10s9 4 9 10c0 8-10 13-18 19-8-6-18-11-18-19 0-6 4-10 9-10s9 4 9 10Z" fill="#ef8354" opacity="0.85"/>
+        <path class="float-a" d="M470 210c0-4 3-7 6.5-7s6.5 3 6.5 7c0 6-7 9-13 14-6-5-13-8-13-14 0-4 3-7 6.5-7s6.5 3 6.5 7Z" fill="#b8a9e8" opacity="0.9"/>
+      </svg>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V38C240 8 480 0 720 16s480 44 720 22v32H0Z" fill="#ffffff"/></svg>
+</section>
+
+<!-- ═══════════════════ TRUST BAR ═══════════════════ -->
+<section id="trust" aria-label="Why families trust MindCare">
+  <div class="trust-inner">
+    <div class="trust-item fade-up">
+      <div class="t-ico"><svg width="26" height="26"><use href="#i-family"/></svg></div>
+      <div class="t-num">7+</div><div class="t-lbl">Multidisciplinary Specialists</div>
+    </div>
+    <div class="trust-item fade-up">
+      <div class="t-ico"><svg width="26" height="26"><use href="#i-puzzle"/></svg></div>
+      <div class="t-num">10</div><div class="t-lbl">Therapy &amp; Clinical Services</div>
+    </div>
+    <div class="trust-item fade-up">
+      <div class="t-ico"><svg width="26" height="26"><use href="#i-shield"/></svg></div>
+      <div class="t-num">PPA</div><div class="t-lbl">Association-Verified Founder</div>
+    </div>
+    <div class="trust-item fade-up">
+      <div class="t-ico"><svg width="26" height="26"><use href="#i-lock"/></svg></div>
+      <div class="t-num">100%</div><div class="t-lbl">Confidential &amp; Judgment-Free</div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════ TRUST BAR ═══════════════════════════════ -->
-<section id="trust" aria-label="Why families trust MindCare">
-  <div class="trust-inner">
-    <div class="trust-item fade-up"><div class="t-num">7+</div><div class="t-lbl">Multidisciplinary Specialists</div></div>
-    <div class="trust-item fade-up"><div class="t-num">10</div><div class="t-lbl">Therapy &amp; Clinical Services</div></div>
-    <div class="trust-item fade-up"><div class="t-num">PPA</div><div class="t-lbl">Association-Verified Founder</div></div>
-    <div class="trust-item fade-up"><div class="t-num">100%</div><div class="t-lbl">Confidential &amp; Judgment-Free</div></div>
+<!-- ═══════════════════ FEELINGS ═══════════════════ -->
+<section id="feelings" aria-labelledby="feelings-title">
+  <div class="section-inner">
+    <div class="section-header centered fade-up">
+      <span class="section-tag">You're Not Alone</span>
+      <h2 class="section-title" id="feelings-title">Does any of this sound like you?</h2>
+      <p class="section-sub">Whatever you're carrying, it's valid — and it's treatable. Here's how these feelings often show up.</p>
+    </div>
+    <div class="feel-grid">
+      <div class="feel-card fade-up">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="28" fill="#e8f9fb"/>
+          <circle cx="32" cy="34" r="13" fill="#f0b48e"/>
+          <path d="M26 41c1.8-2 3.8-3 6-3s4.2 1 6 3" stroke="#7c4a32" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="27" cy="32" r="1.8" fill="#3c2a20"/><circle cx="37" cy="32" r="1.8" fill="#3c2a20"/>
+          <path d="M14 14c3 2 3 6 0 8M50 14c-3 2-3 6 0 8M20 9c2 1.6 2 4.4 0 6M44 9c-2 1.6-2 4.4 0 6" stroke="#2bbdc9" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        </svg>
+        <h3>Constant worry or racing thoughts</h3>
+        <p>Your mind won't switch off — sleep, focus, and calm feel out of reach. That's often anxiety, and it responds well to therapy.</p>
+      </div>
+      <div class="feel-card fade-up">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="28" fill="#eaf4e6"/>
+          <path d="M20 16c-4 6-4 14 2 18-8-1-13-8-12-15 3-2 7-3 10-3Z" fill="#9db3a6"/>
+          <circle cx="34" cy="36" r="12" fill="#eaa17a"/>
+          <path d="M29 43c1.4-1.6 3.2-2.4 5-2.4s3.6.8 5 2.4" stroke="#7c4a32" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="30" cy="34" r="1.7" fill="#3c2a20"/><circle cx="39" cy="34" r="1.7" fill="#3c2a20"/>
+          <path d="M46 18l-2 6M52 22l-4 4" stroke="#6b8f9c" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+        <h3>Feeling low, empty, or unmotivated</h3>
+        <p>When even small things feel heavy and joy feels far away, that's not laziness — it can be depression, and help works.</p>
+      </div>
+      <div class="feel-card fade-up">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="28" fill="#fdeee4"/>
+          <circle cx="24" cy="32" r="10" fill="#eaa17a"/>
+          <circle cx="44" cy="32" r="10" fill="#f0b48e"/>
+          <path d="M31 44 25 52M37 44l6 8" stroke="#ef8354" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M32 22c-2 4-2 8 0 12M36 22c2 4 2 8 0 12" stroke="#c45a28" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="21" cy="31" r="1.6" fill="#3c2a20"/><circle cx="47" cy="31" r="1.6" fill="#3c2a20"/>
+        </svg>
+        <h3>Conflict at home or in relationships</h3>
+        <p>Misunderstandings that repeat, distance that grows. Family and couples counseling rebuilds communication and trust.</p>
+      </div>
+      <div class="feel-card fade-up">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="28" fill="#efeaf9"/>
+          <circle cx="32" cy="30" r="12" fill="#f0b48e"/>
+          <circle cx="28" cy="28" r="1.7" fill="#3c2a20"/><circle cx="37" cy="28" r="1.7" fill="#3c2a20"/>
+          <path d="M28 36h8" stroke="#7c4a32" stroke-width="2" stroke-linecap="round"/>
+          <path d="M18 52c2-8 7-12 14-12s12 4 14 12" fill="#b8a9e8"/>
+          <path d="M46 16c2 2 2 5 0 7M52 13c3 3 3 8 0 11" stroke="#8f7cc9" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        </svg>
+        <h3>A child who needs extra support</h3>
+        <p>Speech delays, ADHD, autism, learning differences — early, structured therapy changes a child's whole trajectory.</p>
+      </div>
+    </div>
+    <p class="feel-note fade-up">Not sure which one fits? That's okay — <a href="contact.html">talk to us</a> and we'll figure it out together.</p>
   </div>
 </section>
 
-<!-- ═══════════════════════════════ SERVICES ═══════════════════════════════ -->
+<!-- ═══════════════════ JOURNEY ═══════════════════ -->
+<section id="journey" aria-labelledby="journey-title">
+  <div class="section-inner">
+    <div class="section-header centered fade-up">
+      <span class="section-tag">How It Works</span>
+      <h2 class="section-title" id="journey-title">Your journey, in four gentle steps</h2>
+      <p class="section-sub">Getting help shouldn't be complicated. Here's exactly what happens when you reach out.</p>
+    </div>
+    <div class="journey-grid">
+      <div class="j-step fade-up">
+        <div class="j-art">
+          <svg viewBox="0 0 84 84" aria-hidden="true">
+            <rect x="22" y="10" width="40" height="64" rx="8" fill="#ffffff" stroke="#2bbdc9" stroke-width="3"/>
+            <rect x="28" y="20" width="28" height="36" rx="4" fill="#e8f9fb"/>
+            <circle cx="42" cy="65" r="3.4" fill="#2bbdc9"/>
+            <path d="M34 30h16M34 38h16M34 46h10" stroke="#1a9aaa" stroke-width="2.6" stroke-linecap="round"/>
+            <circle cx="62" cy="18" r="10" fill="#25D366"/>
+            <path d="M58 18l3 3 5-6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="j-num">STEP 1</span>
+        <h3>Reach out</h3>
+        <p>Call, WhatsApp, or fill the form. Takes 30 seconds — no commitment.</p>
+      </div>
+      <div class="j-step fade-up">
+        <div class="j-art">
+          <svg viewBox="0 0 84 84" aria-hidden="true">
+            <path d="M12 32a16 16 0 0 1 16-16h18a16 16 0 0 1 0 32H32l-12 10V48a16 16 0 0 1-8-16Z" fill="#2bbdc9"/>
+            <circle cx="30" cy="32" r="3" fill="#fff"/><circle cx="41" cy="32" r="3" fill="#fff"/><circle cx="52" cy="32" r="3" fill="#fff"/>
+            <path d="M40 52a13 13 0 0 1 13-13h9a13 13 0 0 1 0 26h-4v9l-10-9a13 13 0 0 1-8-13Z" fill="#f9c58d"/>
+            <path d="M54 52c3 3.6 8 3.6 11 0" stroke="#a96a2d" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="j-num">STEP 2</span>
+        <h3>Free consultation</h3>
+        <p>We listen to what's going on and answer every question — confidentially.</p>
+      </div>
+      <div class="j-step fade-up">
+        <div class="j-art">
+          <svg viewBox="0 0 84 84" aria-hidden="true">
+            <circle cx="28" cy="28" r="12" fill="#eaa17a"/>
+            <path d="M12 62c2-12 8-18 16-18s14 6 16 18" fill="#0f7482"/>
+            <circle cx="58" cy="30" r="10" fill="#f0b48e"/>
+            <path d="M44 62c2-10 7-15 14-15s12 5 14 15" fill="#5da84a"/>
+            <path d="M30 44c8-6 16-6 24-1" stroke="#ef8354" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="1 7"/>
+            <path d="M40 16c0-3 2-5 4.5-5S49 13 49 16c0 4-5 6.5-9 10-4-3.5-9-6-9-10 0-3 2-5 4.5-5S40 13 40 16Z" fill="#ef8354"/>
+          </svg>
+        </div>
+        <span class="j-num">STEP 3</span>
+        <h3>Get matched</h3>
+        <p>We pair you with the right specialist and agree on a plan together.</p>
+      </div>
+      <div class="j-step fade-up">
+        <div class="j-art">
+          <svg viewBox="0 0 84 84" aria-hidden="true">
+            <path d="M14 66c10-2 14-10 16-20 2 8 6 12 12 14-10 4-14 10-16 20-2-8-6-12-12-14Z" fill="#f9c58d"/>
+            <path d="M40 34c14-2 20-12 22-26 2 12 8 18 16 22-14 4-20 12-22 26-2-10-8-18-16-22Z" fill="#2bbdc9"/>
+            <circle cx="22" cy="24" r="4" fill="#b8a9e8"/>
+          </svg>
+        </div>
+        <span class="j-num">STEP 4</span>
+        <h3>Begin your journey</h3>
+        <p>Sessions at your pace — in clinic or at home. We walk with you, every step.</p>
+      </div>
+    </div>
+    <div class="journey-cta fade-up">
+      <a href="contact.html" class="btn-primary">Take the First Step — It's Free</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SERVICES ═══════════════════ -->
 <section id="services">
   <div class="section-inner">
     <div class="section-header fade-up">
       <span class="section-tag">What We Offer</span>
-      <h2 class="section-title">Comprehensive Care for Mind & Body</h2>
+      <h2 class="section-title">Comprehensive Care for Mind &amp; Body</h2>
       <p class="section-sub">A holistic range of therapy and clinical services — all under one roof, delivered by experienced professionals.</p>
     </div>
 
@@ -934,72 +1283,64 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
       <div class="awareness-card fade-up">
         <div>
           <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0.75;margin-bottom:8px">Featured Service</div>
-          <h3>🎤 Awareness Sessions & Trainings</h3>
+          <h3>Awareness Sessions &amp; Trainings</h3>
           <p>Certified mental health workshops for workplaces, schools, and institutions. Designed to reduce stigma and build resilience across communities.</p>
         </div>
-        <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;flex-direction:column;gap:10px;position:relative;z-index:1">
           <div style="background:rgba(255,255,255,0.14);border-radius:10px;padding:14px">
             <div style="font-weight:600;margin-bottom:3px;font-size:0.9rem">Corporate Wellness</div>
-            <div style="font-size:0.8rem;opacity:0.8">Tailored programs for organizations</div>
+            <div style="font-size:0.8rem;opacity:0.85">Tailored programs for organizations</div>
           </div>
           <div style="background:rgba(255,255,255,0.14);border-radius:10px;padding:14px">
             <div style="font-weight:600;margin-bottom:3px;font-size:0.9rem">Educational Seminars</div>
-            <div style="font-size:0.8rem;opacity:0.8">For schools & universities</div>
+            <div style="font-size:0.8rem;opacity:0.85">For schools &amp; universities</div>
           </div>
           <a href="contact.html" class="btn-white">Book a Session →</a>
         </div>
       </div>
 
       <div class="service-card fade-up">
-        <div class="service-icon">🧠</div>
+        <div class="service-icon"><svg><use href="#i-brain"/></svg></div>
         <h3>Individual Psychotherapy</h3>
         <p>CBT, Psychodynamic Therapy, and Motivational Therapy for adults and adolescents managing anxiety, depression, stress, and trauma.</p>
       </div>
-
       <div class="service-card fade-up">
-        <div class="service-icon">👨‍👩‍👧</div>
-        <h3>Family & Relationship Counseling</h3>
+        <div class="service-icon"><svg><use href="#i-family"/></svg></div>
+        <h3>Family &amp; Relationship Counseling</h3>
         <p>Guided sessions to strengthen family bonds, resolve conflict, and navigate major life transitions together.</p>
       </div>
-
       <div class="service-card fade-up">
-        <div class="service-icon">🗣️</div>
+        <div class="service-icon"><svg><use href="#i-speech"/></svg></div>
         <h3>Speech Therapy</h3>
         <p>Expert support for communication disorders, language delays, articulation issues, and fluency challenges for children and adults.</p>
       </div>
-
       <div class="service-card fade-up">
-        <div class="service-icon">🏃</div>
+        <div class="service-icon"><svg><use href="#i-physio"/></svg></div>
         <h3>Physiotherapy</h3>
         <p>Rehabilitation, pain management, and mobility improvement — assessed and treated by experienced physiotherapists.</p>
       </div>
-
       <div class="service-card fade-up">
-        <div class="service-icon">✋</div>
+        <div class="service-icon"><svg><use href="#i-hand"/></svg></div>
         <h3>Occupational Therapy</h3>
         <p>Helping individuals of all ages regain independence in daily activities and meaningful life skills.</p>
       </div>
-
       <div class="service-card fade-up">
-        <div class="service-icon">🔄</div>
+        <div class="service-icon"><svg><use href="#i-cycle"/></svg></div>
         <h3>Behavioral Therapy</h3>
         <p>Structured interventions for ASD support, ADHD, and social skills development using proven frameworks.</p>
       </div>
-
       <div class="service-card fade-up">
-        <div class="service-icon">🏡</div>
+        <div class="service-icon"><svg><use href="#i-home"/></svg></div>
         <h3>Remedial Home Sessions</h3>
         <p>Specialized home-based therapy for individuals with special needs — professional care delivered to your doorstep.</p>
       </div>
-
       <div class="service-card fade-up">
-        <div class="service-icon">📋</div>
+        <div class="service-icon"><svg><use href="#i-clipboard"/></svg></div>
         <h3>Diagnostic Assessments</h3>
         <p>Cognitive and psychological evaluations to guide accurate diagnosis and personalized treatment planning.</p>
       </div>
-
       <div class="service-card fade-up">
-        <div class="service-icon">🦷</div>
+        <div class="service-icon"><svg><use href="#i-tooth"/></svg></div>
         <h3>Dental Consultations</h3>
         <p>Expert advice on oral health, treatment planning, and preventive care from our qualified dental consultant.</p>
       </div>
@@ -1007,31 +1348,54 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
   </div>
 </section>
 
-<!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
 <section id="about">
   <div class="section-inner">
     <div class="about-grid">
-      <div class="about-visual fade-up">
-        <div class="about-img-box">
-          <div class="about-img-content">
-            <h3>Shaista Tariq</h3>
-            <div class="role">Founder & Lead Psychotherapist</div>
-            <div class="about-img-chip">
-              <div class="lbl">Accreditation</div>
-              <div class="val">Member of PPA</div>
-              <div class="lbl" style="margin-top:3px">Pakistan Psychological Association</div>
-            </div>
-          </div>
+      <div class="about-art fade-up" role="img" aria-label="Illustration of founder Shaista Tariq — a psychotherapist standing warmly beside a growing plant, symbolising growth and care">
+        <svg viewBox="0 0 480 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M240 20c105 0 200 62 200 190 0 125-88 230-200 230S40 335 40 210 135 20 240 20Z" fill="#e3f6f4"/>
+          <path d="M70 130c30-40 80-64 130-64" stroke="#7fc96b" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="2 10"/>
+          <path d="M410 300c-16 46-52 84-100 100" stroke="#2bbdc9" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="2 10"/>
+          <g class="float-a">
+            <path d="M186 260c0-40 24-66 54-66s54 26 54 66l14 120H172l14-120Z" fill="#0f7482"/>
+            <path d="M196 232c12-16 30-24 44-24s32 8 44 24c-10 44-10 88 4 132h-16c-10-40-12-84-4-118-8-8-18-12-28-12s-20 4-28 12c8 34 6 78-4 118h-16c14-44 14-88 4-132Z" fill="#2bbdc9"/>
+            <circle cx="240" cy="164" r="34" fill="#eaa17a"/>
+            <path d="M204 158c0-26 16-44 36-44s36 18 36 44c0 10-2 18-6 24 4-18 0-34-10-42-6 8-16 12-30 12-8 0-14-1-20-4-4 8-6 18-4 30-2-6-2-13-2-20Z" fill="#177585"/>
+            <path d="M206 150c-6 20-4 44 4 62l-12 6c-8-22-6-50 8-68Z" fill="#177585"/>
+            <circle cx="229" cy="162" r="3" fill="#3c2a20"/><circle cx="252" cy="162" r="3" fill="#3c2a20"/>
+            <path d="M233 176c4 4 10 4 14 0" stroke="#7c4a32" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+            <path d="M196 250c-16 10-26 26-28 44" stroke="#2bbdc9" stroke-width="15" fill="none" stroke-linecap="round"/>
+            <circle cx="166" cy="298" r="9" fill="#eaa17a"/>
+            <path d="M284 250c18 8 28 22 32 40" stroke="#2bbdc9" stroke-width="15" fill="none" stroke-linecap="round"/>
+            <rect x="296" y="278" width="46" height="34" rx="4" fill="#ffffff" stroke="#bfe6e0" stroke-width="3"/>
+            <path d="M319 280v30M302 288h12M302 296h12M326 288h12M326 296h12" stroke="#8fd3da" stroke-width="2.4" stroke-linecap="round"/>
+          </g>
+          <g class="float-b">
+            <path d="M96 330c0-34 16-62 36-76-6 28-8 54-2 76h-34Z" fill="#5da84a"/>
+            <path d="M136 330c-2-26 8-52 26-66-10 26-12 46-8 66h-18Z" fill="#7fc96b"/>
+            <path d="M86 330h76l-9 52a9 9 0 0 1-9 7H104a9 9 0 0 1-9-7l-9-52Z" fill="#e07b4a"/>
+          </g>
+          <g class="float-b">
+            <circle cx="374" cy="150" r="34" fill="#ffffff" stroke="#2bbdc9" stroke-width="3"/>
+            <path d="M374 132l5.5 11 12 1.8-8.7 8.6 2 12-10.8-5.6-10.8 5.6 2-12-8.7-8.6 12-1.8 5.5-11Z" fill="#f9c58d" stroke="#efb571" stroke-width="1.6"/>
+          </g>
+          <ellipse cx="240" cy="404" rx="160" ry="24" fill="#cdeae5"/>
+        </svg>
+        <div class="about-chip">
+          <div class="lbl">Accreditation</div>
+          <div class="val">Shaista Tariq · Member of PPA</div>
+          <div class="lbl" style="margin-top:3px">Pakistan Psychological Association</div>
         </div>
       </div>
       <div class="about-content fade-up">
         <span class="section-tag">About MindCare</span>
         <h2 class="section-title">Care that's grounded in science, delivered with heart.</h2>
         <p>MindCare Services® is a psychotherapy and mental wellness firm based in Karachi. We bring together a multidisciplinary team of specialists — psychologists, physiotherapists, speech therapists, and more — to offer truly holistic care.</p>
-        <p>Founded by Shaista Tariq, a Psychotherapist, Mental Health Consultant & Educator and proud Member of the Pakistan Psychological Association (PPA), MindCare was built on one belief: no one should have to struggle alone.</p>
+        <p>Founded by Shaista Tariq, a Psychotherapist, Mental Health Consultant &amp; Educator and proud Member of the Pakistan Psychological Association (PPA), MindCare was built on one belief: no one should have to struggle alone.</p>
         <div class="founder-quote">
           <p>"I kept seeing people suffer in silence — unsure if what they felt was 'serious enough' to ask for help. It always is. MindCare exists to make that first step feel less scary."</p>
-          <cite>— Shaista Tariq, Founder & Lead Psychotherapist</cite>
+          <cite>— Shaista Tariq, Founder &amp; Lead Psychotherapist</cite>
         </div>
         <a href="contact.html" class="btn-primary">Book a Consultation ↗</a>
       </div>
@@ -1039,19 +1403,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
   </div>
 </section>
 
-<!-- ═══════════════════════════════ TESTIMONIAL ═══════════════════════════════ -->
-<section id="testimonial">
-  <div class="testimonial-inner fade-up">
-    <div class="t-stars">★★★★★</div>
-    <div class="t-quote">
-      I came in not knowing what to expect. I left feeling heard for the first time in years. The team here doesn't just run through a checklist — they actually sit with you in it.
-    </div>
-    <div class="t-name">— A.K., Karachi</div>
-    <div class="t-detail">Individual therapy client · shared with permission, name anonymized</div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════ WHY US ═══════════════════════════════ -->
+<!-- ═══════════════════ WHY US ═══════════════════ -->
 <section id="why">
   <div class="section-inner">
     <div class="section-header centered fade-up">
@@ -1060,15 +1412,27 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
       <p class="section-sub">We combine clinical rigor with genuine human warmth — so getting help never feels clinical or cold.</p>
     </div>
     <div class="why-grid">
-      <div class="why-card fade-up"><div class="why-icon" aria-hidden="true">🎓</div><h3>Evidence-Based</h3><p>Every session draws on proven frameworks like CBT, not guesswork — led by a PPA-member founder.</p></div>
-      <div class="why-card fade-up"><div class="why-icon" aria-hidden="true">🫶</div><h3>Judgment-Free</h3><p>No problem is “too small.” We meet you exactly where you are, with warmth and zero pressure.</p></div>
-      <div class="why-card fade-up"><div class="why-icon" aria-hidden="true">🧩</div><h3>All Under One Roof</h3><p>Psychology, speech, physio, occupational &amp; behavioral therapy — coordinated, holistic care.</p></div>
-      <div class="why-card fade-up"><div class="why-icon" aria-hidden="true">🔒</div><h3>Fully Confidential</h3><p>Your story stays yours. Everything you share is private and never disclosed to anyone.</p></div>
+      <div class="why-card fade-up"><div class="why-icon"><svg><use href="#i-grad"/></svg></div><h3>Evidence-Based</h3><p>Every session draws on proven frameworks like CBT, not guesswork — led by a PPA-member founder.</p></div>
+      <div class="why-card fade-up"><div class="why-icon"><svg><use href="#i-heart-hands"/></svg></div><h3>Judgment-Free</h3><p>No problem is "too small." We meet you exactly where you are, with warmth and zero pressure.</p></div>
+      <div class="why-card fade-up"><div class="why-icon"><svg><use href="#i-puzzle"/></svg></div><h3>All Under One Roof</h3><p>Psychology, speech, physio, occupational &amp; behavioral therapy — coordinated, holistic care.</p></div>
+      <div class="why-card fade-up"><div class="why-icon"><svg><use href="#i-lock"/></svg></div><h3>Fully Confidential</h3><p>Your story stays yours. Everything you share is private and never disclosed to anyone.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════ TEAM ═══════════════════════════════ -->
+<!-- ═══════════════════ TESTIMONIAL ═══════════════════ -->
+<section id="testimonial">
+  <div class="testimonial-inner fade-up">
+    <div class="t-stars" aria-label="Five star review">★★★★★</div>
+    <blockquote class="t-quote">
+      I came in not knowing what to expect. I left feeling heard for the first time in years. The team here doesn't just run through a checklist — they actually sit with you in it.
+    </blockquote>
+    <div class="t-name">— A.K., Karachi</div>
+    <div class="t-detail">Individual therapy client · shared with permission, name anonymized</div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TEAM ═══════════════════ -->
 <section id="team">
   <div class="section-inner">
     <div class="section-header centered fade-up">
@@ -1079,46 +1443,58 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
 
     <div class="team-grid">
       <div class="team-card fade-up">
-        <div class="team-avatar" style="background:linear-gradient(135deg,var(--teal),var(--teal-dark))">ST</div>
+        <div class="team-avatar">
+          <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#c9f0f4"/><circle cx="40" cy="34" r="15" fill="#eaa17a"/><path d="M25 30c0-11 7-19 15-19s15 8 15 19c0 4-1 7-2 9 1-8-1-15-5-18-2 3-6 5-12 5-4 0-6-1-8-2-2 3-3 8-2 13-1-2-1-5-1-7Z" fill="#177585"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#0f7482"/><circle cx="35" cy="34" r="1.7" fill="#3c2a20"/><circle cx="45" cy="34" r="1.7" fill="#3c2a20"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#7c4a32" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
         <h3>Shaista Tariq</h3>
-        <div class="role">Founder & Psychotherapist</div>
-        <div class="cred">Member of PPA · Mental Health Consultant & Educator</div>
+        <div class="role">Founder &amp; Psychotherapist</div>
+        <div class="cred">Member of PPA · Mental Health Consultant &amp; Educator</div>
       </div>
       <div class="team-card fade-up">
-        <div class="team-avatar" style="background:linear-gradient(135deg,#7B5EA7,#5a3f8a)">RA</div>
+        <div class="team-avatar">
+          <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#e6ddf7"/><circle cx="40" cy="34" r="15" fill="#f0b48e"/><path d="M24 36c-2-13 6-24 16-24s18 11 16 24c-2-9-7-14-16-14s-14 5-16 14Z" fill="#241a12"/><path d="M24 36c0 10 2 16 0 22l6-2c-2-6-2-13 0-20h-6ZM56 36c0 10-2 16 0 22l-6-2c2-6 2-13 0-20h6Z" fill="#241a12"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#7b5ea7"/><circle cx="35" cy="34" r="1.7" fill="#241a12"/><circle cx="45" cy="34" r="1.7" fill="#241a12"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#8a5638" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
         <h3>Ribqah Arshad</h3>
         <div class="role">Team Coordinator</div>
-        <div class="cred">Operations & Client Relations</div>
+        <div class="cred">Operations &amp; Client Relations</div>
       </div>
       <div class="team-card fade-up">
-        <div class="team-avatar" style="background:linear-gradient(135deg,#E07B4A,#c45a28)">EF</div>
+        <div class="team-avatar">
+          <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#fde3d1"/><circle cx="40" cy="34" r="15" fill="#eaa17a"/><path d="M26 30c1-10 6-17 14-17s13 7 14 17c0 3 0 6-1 8 0-7-2-13-6-16-3 3-7 4-11 4-3 0-5 0-7-1-2 3-3 7-2 12-1-2-1-4-1-7Z" fill="#5a3b28"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#e07b4a"/><circle cx="35" cy="34" r="1.7" fill="#3c2a20"/><circle cx="45" cy="34" r="1.7" fill="#3c2a20"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#7c4a32" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
         <h3>Ejaz Fatima</h3>
         <div class="role">Physiotherapist</div>
-        <div class="cred">Rehabilitation & Pain Management</div>
+        <div class="cred">Rehabilitation &amp; Pain Management</div>
       </div>
       <div class="team-card fade-up">
-        <div class="team-avatar" style="background:linear-gradient(135deg,#4A90D9,#2a6db5)">RP</div>
+        <div class="team-avatar">
+          <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#d3e7f8"/><circle cx="40" cy="34" r="15" fill="#f0b48e"/><path d="M25 32c-1-12 6-21 15-21s16 9 15 21l-3 3c1-9-3-16-12-16s-13 7-12 16l-3-3Z" fill="#241a12"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#4a90d9"/><circle cx="35" cy="34" r="1.7" fill="#241a12"/><circle cx="45" cy="34" r="1.7" fill="#241a12"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#8a5638" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
         <h3>Rimsha Pari</h3>
         <div class="role">Consultant Physiotherapist</div>
-        <div class="cred">Musculoskeletal & Neuro-PT</div>
+        <div class="cred">Musculoskeletal &amp; Neuro-PT</div>
       </div>
       <div class="team-card fade-up">
-        <div class="team-avatar" style="background:linear-gradient(135deg,#D94A8A,#a52f64)">HT</div>
+        <div class="team-avatar">
+          <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#fbdae8"/><circle cx="40" cy="34" r="15" fill="#eaa17a"/><path d="M25 33c-2-12 5-22 15-22s17 10 15 22c-1-9-6-15-15-15s-14 6-15 15Z" fill="#3c2a20"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#d94a8a"/><circle cx="35" cy="34" r="1.7" fill="#3c2a20"/><circle cx="45" cy="34" r="1.7" fill="#3c2a20"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#7c4a32" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
         <h3>Hareem Tariq</h3>
         <div class="role">Dental Consultant</div>
-        <div class="cred">Preventive & Restorative Care</div>
+        <div class="cred">Preventive &amp; Restorative Care</div>
       </div>
       <div class="team-card fade-up">
-        <div class="team-avatar" style="background:linear-gradient(135deg,var(--green),var(--green-dark))">SL</div>
+        <div class="team-avatar">
+          <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#dff0d8"/><circle cx="40" cy="35" r="15" fill="#d9a06b"/><path d="M27 30c2-9 6-14 13-14s11 5 13 14c0 2 0 3-1 5 0-6-2-10-5-12-2 2-4 3-7 3s-5-1-7-3c-3 2-5 6-5 12 0-2-1-3-1-5Z" fill="#241a12"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#2d6a1f"/><circle cx="35" cy="35" r="1.7" fill="#241a12"/><circle cx="45" cy="35" r="1.7" fill="#241a12"/><path d="M36 41c2.4 2.2 5.6 2.2 8 0" stroke="#7a4a28" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
         <h3>Shafeeq Langhar</h3>
         <div class="role">Psychologist</div>
-        <div class="cred">Clinical Psychology · Individual & Group Therapy</div>
+        <div class="cred">Clinical Psychology · Individual &amp; Group Therapy</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════ FAQ ═══════════════════════════════ -->
+<!-- ═══════════════════ FAQ ═══════════════════ -->
 <section id="faq">
   <div class="section-inner">
     <div class="section-header centered fade-up">
@@ -1140,6 +1516,10 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
         <div class="faq-a"><p>You can book a free consultation by calling <a href="tel:+923272337631">+92 327 2337631</a>, messaging us on WhatsApp, or filling out the booking form on our <a href="contact.html">contact page</a>. We typically respond within a few hours.</p></div>
       </div>
       <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">What happens in the first therapy session?</button>
+        <div class="faq-a"><p>Your first session is a relaxed conversation. Your therapist listens to what's going on, answers your questions, and together you agree on a plan that feels right — there is no pressure and nothing you have to prepare.</p></div>
+      </div>
+      <div class="faq-item">
         <button type="button" class="faq-q" aria-expanded="false">Is my information kept confidential?</button>
         <div class="faq-a"><p>Absolutely. Everything you share with us is 100% confidential and is never disclosed to anyone. Your privacy and comfort are central to how we work.</p></div>
       </div>
@@ -1151,7 +1531,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
   </div>
 </section>
 
-<!-- ═══════════════════════════════ COLLABORATIONS ═══════════════════════════════ -->
+<!-- ═══════════════════ COLLABORATIONS ═══════════════════ -->
 <section id="collaborations">
   <div class="section-inner">
     <div class="collab-layout">
@@ -1160,11 +1540,11 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
         <h2 class="section-title">Let's Collaborate</h2>
         <p class="section-sub">We welcome partnerships with healthcare providers, schools, corporations, NGOs, and wellness organizations who share our commitment to mental health.</p>
         <div class="collab-chips">
-          <div class="collab-chip">🏢 Corporate Wellness Partnerships</div>
-          <div class="collab-chip">🏫 School & University Programs</div>
-          <div class="collab-chip">🤝 Healthcare Provider Referrals</div>
-          <div class="collab-chip">🌐 NGO & Community Outreach</div>
-          <div class="collab-chip">📚 Research & Training Collaborations</div>
+          <div class="collab-chip"><svg><use href="#i-building"/></svg> Corporate Wellness Partnerships</div>
+          <div class="collab-chip"><svg><use href="#i-school"/></svg> School &amp; University Programs</div>
+          <div class="collab-chip"><svg><use href="#i-handshake"/></svg> Healthcare Provider Referrals</div>
+          <div class="collab-chip"><svg><use href="#i-globe"/></svg> NGO &amp; Community Outreach</div>
+          <div class="collab-chip"><svg><use href="#i-book"/></svg> Research &amp; Training Collaborations</div>
         </div>
       </div>
       <div class="collab-form-box fade-up">
@@ -1172,20 +1552,20 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
         <p class="form-sub">We'll get back to you within 24–48 hours.</p>
         <div class="form-row">
           <div class="form-group">
-            <label>Your Name *</label>
-            <input type="text" placeholder="Full name" id="collab-name">
+            <label for="collab-name">Your Name *</label>
+            <input type="text" placeholder="Full name" id="collab-name" autocomplete="name">
           </div>
           <div class="form-group">
-            <label>Organization *</label>
-            <input type="text" placeholder="Organization" id="collab-org">
+            <label for="collab-org">Organization *</label>
+            <input type="text" placeholder="Organization" id="collab-org" autocomplete="organization">
           </div>
         </div>
         <div class="form-group">
-          <label>Email Address *</label>
-          <input type="email" placeholder="your@email.com" id="collab-email">
+          <label for="collab-email">Email Address *</label>
+          <input type="email" placeholder="your@email.com" id="collab-email" autocomplete="email">
         </div>
         <div class="form-group">
-          <label>Type of Collaboration</label>
+          <label for="collab-type">Type of Collaboration</label>
           <select id="collab-type">
             <option value="">Select an option</option>
             <option>Corporate Wellness Program</option>
@@ -1197,7 +1577,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
           </select>
         </div>
         <div class="form-group">
-          <label>Message</label>
+          <label for="collab-msg">Message</label>
           <textarea placeholder="Tell us about your proposal..." id="collab-msg"></textarea>
         </div>
         <button class="btn-primary" id="collabSubmitBtn" style="width:100%;justify-content:center" onclick="submitCollab()">Send Request →</button>
@@ -1206,7 +1586,25 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
   </div>
 </section>
 
-<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<!-- ═══════════════════ CTA BAND ═══════════════════ -->
+<section id="cta-band" aria-labelledby="cta-title">
+  <div class="cta-band-inner fade-up">
+    <div>
+      <h2 id="cta-title">The hardest part is reaching out.<br>Let's make it easy.</h2>
+      <p>Free first consultation · Confidential · Mon–Sat, 9am–7pm</p>
+    </div>
+    <div class="cta-band-btns">
+      <a href="contact.html" class="btn-white">Book Free Consultation</a>
+      <a href="https://wa.me/923272337631" target="_blank" rel="noopener" class="btn-white" style="background:#25D366;color:white">
+        <svg width="18" height="18" fill="white"><use href="#i-wa"/></svg> WhatsApp Us
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -1214,14 +1612,14 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
       <div class="footer-tagline">Keeping Your Peace ®</div>
       <p>A psychotherapy and mental health firm in Karachi, Pakistan, making evidence-based support accessible for all.</p>
       <div class="footer-social">
-        <a href="https://www.instagram.com/mindcare.services/" target="_blank" title="@mindcare.services">
+        <a href="https://www.instagram.com/mindcare.services/" target="_blank" rel="noopener" title="@mindcare.services" aria-label="MindCare on Instagram">
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
-        <a href="https://www.linkedin.com/company/mindcare-services/" target="_blank" title="LinkedIn">
+        <a href="https://www.linkedin.com/company/mindcare-services/" target="_blank" rel="noopener" title="LinkedIn" aria-label="MindCare on LinkedIn">
           <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         </a>
-        <a href="https://wa.me/923272337631" target="_blank" title="WhatsApp">
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        <a href="https://wa.me/923272337631" target="_blank" rel="noopener" title="WhatsApp" aria-label="MindCare on WhatsApp">
+          <svg width="15" height="15" fill="currentColor"><use href="#i-wa"/></svg>
         </a>
       </div>
     </div>
@@ -1241,6 +1639,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
       <h4>Company</h4>
       <ul>
         <li><a href="#about">About Us</a></li>
+        <li><a href="#journey">How It Works</a></li>
         <li><a href="#why">Why MindCare</a></li>
         <li><a href="#team">Our Team</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -1252,7 +1651,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 56px 5%
       <h4>Contact</h4>
       <ul>
         <li><a href="tel:+923272337631">+92 327 2337631</a></li>
-        <li><a href="https://www.instagram.com/mindcare.services/" target="_blank">@mindcare.services</a></li>
+        <li><a href="https://www.instagram.com/mindcare.services/" target="_blank" rel="noopener">@mindcare.services</a></li>
         <li><a href="mailto:traineegenes@gmail.com">traineegenes@gmail.com</a></li>
         <li><a href="mailto:shaistatariq2002@gmail.com">shaistatariq2002@gmail.com</a></li>
         <li><a href="contact.html">Book Consultation</a></li>
@@ -1307,12 +1706,8 @@ function toggleMenu() {
     spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
   }
 }
-
-// Close mobile menu when clicking any link inside it
 document.querySelectorAll('.mobile-menu a').forEach(link => {
-  link.addEventListener('click', () => {
-    if (menuOpen) toggleMenu();
-  });
+  link.addEventListener('click', () => { if (menuOpen) toggleMenu(); });
 });
 
 // Fade-up observer
@@ -1320,6 +1715,7 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
       setTimeout(() => entry.target.classList.add('visible'), i * 70);
+      observer.unobserve(entry.target);
     }
   });
 }, { threshold: 0.08 });
@@ -1337,13 +1733,8 @@ function closeModal(e) {
     document.body.style.overflow = '';
   }
 }
-document.getElementById('successModal').addEventListener('transitionend', () => {
-  if (!document.getElementById('successModal').classList.contains('open')) {
-    document.body.style.overflow = '';
-  }
-});
 
-// Toast helper (kept as fallback)
+// Toast helper (fallback)
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
@@ -1362,7 +1753,7 @@ function submitCollab() {
 
 // Active nav link highlighting
 window.addEventListener('scroll', () => {
-  const sections = ['home','services','about','why','team','faq','collaborations'];
+  const sections = ['home','trust','feelings','journey','services','about','why','team','faq','collaborations'];
   let current = '';
   sections.forEach(id => {
     const el = document.getElementById(id);
@@ -1371,7 +1762,7 @@ window.addEventListener('scroll', () => {
   document.querySelectorAll('.nav-links a').forEach(a => {
     a.classList.toggle('active', a.getAttribute('href') === '#' + current);
   });
-});
+}, { passive: true });
 </script>
 </body>
 </html>
