@@ -205,8 +205,8 @@
         },
         {
           "@type": "Question",
-          "name": "Is MindCare Services a PPA certified clinic?",
-          "acceptedAnswer": {"@type": "Answer", "text": "Yes. MindCare Services® is led by Shaista Tariq, a verified Member of the Pakistan Psychological Association (PPA)."}
+          "name": "Is MindCare Services led by a PPA-certified professional?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. MindCare Services® was founded and is led by Shaista Tariq, who is personally a verified Member of the Pakistan Psychological Association (PPA). The membership belongs to Shaista, and the whole team follows evidence-based professional standards."}
         }
       ]
     },
@@ -821,6 +821,14 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 .btn-primary.loading { pointer-events: none; opacity: 0.75; }
 
+/* clickable cards */
+.service-card, .team-card { position: relative; }
+.card-stretch { position: absolute; inset: 0; z-index: 3; border-radius: inherit; text-indent: -9999px; overflow: hidden; white-space: nowrap; }
+.service-card { padding-bottom: 48px; }
+.service-card::after { content: 'Learn more →'; position: absolute; left: 28px; bottom: 22px; font-size: 0.82rem; font-weight: 600; color: var(--teal-dark); transition: transform .2s; }
+.service-card:hover::after { transform: translateX(4px); }
+.team-card::after { content: 'View profile →'; display: block; margin-top: 10px; font-size: 0.74rem; font-weight: 600; color: var(--teal-dark); }
+
 /* ── DARK MODE ── */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -982,10 +990,10 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
   </a>
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
-    <li><a href="#services">Services</a></li>
+    <li><a href="services/index.html">Services</a></li>
     <li><a href="#journey">How It Works</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#team">Team</a></li>
+    <li><a href="team/index.html">Team</a></li>
     <li><a href="contact.html" class="nav-cta">Book Consultation</a></li>
   </ul>
   <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -996,10 +1004,10 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#home">Home</a>
-  <a href="#services">Services</a>
+  <a href="services/index.html">Services</a>
   <a href="#journey">How It Works</a>
   <a href="#about">About</a>
-  <a href="#team">Team</a>
+  <a href="team/index.html">Team</a>
   <a href="#faq">FAQ</a>
   <a href="#collaborations">Collaborate</a>
   <a href="contact.html" class="m-cta">Book a Consultation</a>
@@ -1024,7 +1032,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
 <section id="home">
   <div class="hero-inner">
     <div class="hero-text fade-up">
-      <div class="hero-badge">MindCare Services® — Member of PPA</div>
+      <div class="hero-badge">Founded by Shaista Tariq · PPA Member</div>
       <h1>Struggling <em>silently?</em><br>Let's talk.</h1>
       <p class="hero-lede">Real support, real people. Evidence-based therapy for anxiety, depression, trauma, and more — right here in Karachi, from a team that actually listens.</p>
       <div class="hero-actions">
@@ -1295,55 +1303,67 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
             <div style="font-weight:600;margin-bottom:3px;font-size:0.9rem">Educational Seminars</div>
             <div style="font-size:0.8rem;opacity:0.85">For schools &amp; universities</div>
           </div>
-          <a href="contact.html" class="btn-white">Book a Session →</a>
+          <a href="services/awareness-sessions.html" class="btn-white">Learn More →</a>
         </div>
       </div>
 
       <div class="service-card fade-up">
+        <a class="card-stretch" href="services/individual-psychotherapy.html" aria-label="Learn more about Individual Psychotherapy">Individual Psychotherapy</a>
         <div class="service-icon"><svg><use href="#i-brain"/></svg></div>
         <h3>Individual Psychotherapy</h3>
         <p>CBT, Psychodynamic Therapy, and Motivational Therapy for adults and adolescents managing anxiety, depression, stress, and trauma.</p>
       </div>
       <div class="service-card fade-up">
+        <a class="card-stretch" href="services/family-counseling.html" aria-label="Learn more about Family & Relationship Counseling">Family & Relationship Counseling</a>
         <div class="service-icon"><svg><use href="#i-family"/></svg></div>
         <h3>Family &amp; Relationship Counseling</h3>
         <p>Guided sessions to strengthen family bonds, resolve conflict, and navigate major life transitions together.</p>
       </div>
       <div class="service-card fade-up">
+        <a class="card-stretch" href="services/speech-therapy.html" aria-label="Learn more about Speech Therapy">Speech Therapy</a>
         <div class="service-icon"><svg><use href="#i-speech"/></svg></div>
         <h3>Speech Therapy</h3>
         <p>Expert support for communication disorders, language delays, articulation issues, and fluency challenges for children and adults.</p>
       </div>
       <div class="service-card fade-up">
+        <a class="card-stretch" href="services/physiotherapy.html" aria-label="Learn more about Physiotherapy">Physiotherapy</a>
         <div class="service-icon"><svg><use href="#i-physio"/></svg></div>
         <h3>Physiotherapy</h3>
         <p>Rehabilitation, pain management, and mobility improvement — assessed and treated by experienced physiotherapists.</p>
       </div>
       <div class="service-card fade-up">
+        <a class="card-stretch" href="services/occupational-therapy.html" aria-label="Learn more about Occupational Therapy">Occupational Therapy</a>
         <div class="service-icon"><svg><use href="#i-hand"/></svg></div>
         <h3>Occupational Therapy</h3>
         <p>Helping individuals of all ages regain independence in daily activities and meaningful life skills.</p>
       </div>
       <div class="service-card fade-up">
+        <a class="card-stretch" href="services/behavioral-therapy.html" aria-label="Learn more about Behavioral Therapy">Behavioral Therapy</a>
         <div class="service-icon"><svg><use href="#i-cycle"/></svg></div>
         <h3>Behavioral Therapy</h3>
         <p>Structured interventions for ASD support, ADHD, and social skills development using proven frameworks.</p>
       </div>
       <div class="service-card fade-up">
+        <a class="card-stretch" href="services/remedial-home-sessions.html" aria-label="Learn more about Remedial Home Sessions">Remedial Home Sessions</a>
         <div class="service-icon"><svg><use href="#i-home"/></svg></div>
         <h3>Remedial Home Sessions</h3>
         <p>Specialized home-based therapy for individuals with special needs — professional care delivered to your doorstep.</p>
       </div>
       <div class="service-card fade-up">
+        <a class="card-stretch" href="services/diagnostic-assessments.html" aria-label="Learn more about Diagnostic Assessments">Diagnostic Assessments</a>
         <div class="service-icon"><svg><use href="#i-clipboard"/></svg></div>
         <h3>Diagnostic Assessments</h3>
         <p>Cognitive and psychological evaluations to guide accurate diagnosis and personalized treatment planning.</p>
       </div>
       <div class="service-card fade-up">
+        <a class="card-stretch" href="services/dental-consultations.html" aria-label="Learn more about Dental Consultations">Dental Consultations</a>
         <div class="service-icon"><svg><use href="#i-tooth"/></svg></div>
         <h3>Dental Consultations</h3>
         <p>Expert advice on oral health, treatment planning, and preventive care from our qualified dental consultant.</p>
       </div>
+    </div>
+    <div style="text-align:center;margin-top:36px" class="fade-up">
+      <a href="services/index.html" class="btn-secondary">Browse all services in detail →</a>
     </div>
   </div>
 </section>
@@ -1447,6 +1467,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
           <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#c9f0f4"/><circle cx="40" cy="34" r="15" fill="#eaa17a"/><path d="M25 30c0-11 7-19 15-19s15 8 15 19c0 4-1 7-2 9 1-8-1-15-5-18-2 3-6 5-12 5-4 0-6-1-8-2-2 3-3 8-2 13-1-2-1-5-1-7Z" fill="#177585"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#0f7482"/><circle cx="35" cy="34" r="1.7" fill="#3c2a20"/><circle cx="45" cy="34" r="1.7" fill="#3c2a20"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#7c4a32" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
         </div>
         <h3>Shaista Tariq</h3>
+        <a class="card-stretch" href="team/shaista-tariq.html" aria-label="View Shaista Tariq's profile">Shaista Tariq</a>
         <div class="role">Founder &amp; Psychotherapist</div>
         <div class="cred">Member of PPA · Mental Health Consultant &amp; Educator</div>
       </div>
@@ -1455,6 +1476,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
           <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#e6ddf7"/><circle cx="40" cy="34" r="15" fill="#f0b48e"/><path d="M24 36c-2-13 6-24 16-24s18 11 16 24c-2-9-7-14-16-14s-14 5-16 14Z" fill="#241a12"/><path d="M24 36c0 10 2 16 0 22l6-2c-2-6-2-13 0-20h-6ZM56 36c0 10-2 16 0 22l-6-2c2-6 2-13 0-20h6Z" fill="#241a12"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#7b5ea7"/><circle cx="35" cy="34" r="1.7" fill="#241a12"/><circle cx="45" cy="34" r="1.7" fill="#241a12"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#8a5638" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
         </div>
         <h3>Ribqah Arshad</h3>
+        <a class="card-stretch" href="team/ribqah-arshad.html" aria-label="View Ribqah Arshad's profile">Ribqah Arshad</a>
         <div class="role">Team Coordinator</div>
         <div class="cred">Operations &amp; Client Relations</div>
       </div>
@@ -1463,6 +1485,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
           <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#fde3d1"/><circle cx="40" cy="34" r="15" fill="#eaa17a"/><path d="M26 30c1-10 6-17 14-17s13 7 14 17c0 3 0 6-1 8 0-7-2-13-6-16-3 3-7 4-11 4-3 0-5 0-7-1-2 3-3 7-2 12-1-2-1-4-1-7Z" fill="#5a3b28"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#e07b4a"/><circle cx="35" cy="34" r="1.7" fill="#3c2a20"/><circle cx="45" cy="34" r="1.7" fill="#3c2a20"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#7c4a32" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
         </div>
         <h3>Ejaz Fatima</h3>
+        <a class="card-stretch" href="team/ejaz-fatima.html" aria-label="View Ejaz Fatima's profile">Ejaz Fatima</a>
         <div class="role">Physiotherapist</div>
         <div class="cred">Rehabilitation &amp; Pain Management</div>
       </div>
@@ -1471,6 +1494,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
           <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#d3e7f8"/><circle cx="40" cy="34" r="15" fill="#f0b48e"/><path d="M25 32c-1-12 6-21 15-21s16 9 15 21l-3 3c1-9-3-16-12-16s-13 7-12 16l-3-3Z" fill="#241a12"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#4a90d9"/><circle cx="35" cy="34" r="1.7" fill="#241a12"/><circle cx="45" cy="34" r="1.7" fill="#241a12"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#8a5638" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
         </div>
         <h3>Rimsha Pari</h3>
+        <a class="card-stretch" href="team/rimsha-pari.html" aria-label="View Rimsha Pari's profile">Rimsha Pari</a>
         <div class="role">Consultant Physiotherapist</div>
         <div class="cred">Musculoskeletal &amp; Neuro-PT</div>
       </div>
@@ -1479,6 +1503,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
           <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#fbdae8"/><circle cx="40" cy="34" r="15" fill="#eaa17a"/><path d="M25 33c-2-12 5-22 15-22s17 10 15 22c-1-9-6-15-15-15s-14 6-15 15Z" fill="#3c2a20"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#d94a8a"/><circle cx="35" cy="34" r="1.7" fill="#3c2a20"/><circle cx="45" cy="34" r="1.7" fill="#3c2a20"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#7c4a32" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
         </div>
         <h3>Hareem Tariq</h3>
+        <a class="card-stretch" href="team/hareem-tariq.html" aria-label="View Hareem Tariq's profile">Hareem Tariq</a>
         <div class="role">Dental Consultant</div>
         <div class="cred">Preventive &amp; Restorative Care</div>
       </div>
@@ -1487,9 +1512,13 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
           <svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#dff0d8"/><circle cx="40" cy="35" r="15" fill="#d9a06b"/><path d="M27 30c2-9 6-14 13-14s11 5 13 14c0 2 0 3-1 5 0-6-2-10-5-12-2 2-4 3-7 3s-5-1-7-3c-3 2-5 6-5 12 0-2-1-3-1-5Z" fill="#241a12"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#2d6a1f"/><circle cx="35" cy="35" r="1.7" fill="#241a12"/><circle cx="45" cy="35" r="1.7" fill="#241a12"/><path d="M36 41c2.4 2.2 5.6 2.2 8 0" stroke="#7a4a28" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
         </div>
         <h3>Shafeeq Langhar</h3>
+        <a class="card-stretch" href="team/shafeeq-langhar.html" aria-label="View Shafeeq Langhar's profile">Shafeeq Langhar</a>
         <div class="role">Psychologist</div>
         <div class="cred">Clinical Psychology · Individual &amp; Group Therapy</div>
       </div>
+    </div>
+    <div style="text-align:center;margin-top:36px" class="fade-up">
+      <a href="team/index.html" class="btn-secondary">Meet the full team →</a>
     </div>
   </div>
 </section>
@@ -1524,8 +1553,8 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
         <div class="faq-a"><p>Absolutely. Everything you share with us is 100% confidential and is never disclosed to anyone. Your privacy and comfort are central to how we work.</p></div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" aria-expanded="false">Is MindCare Services a PPA-certified clinic?</button>
-        <div class="faq-a"><p>Yes. MindCare Services® is led by Shaista Tariq, a verified Member of the Pakistan Psychological Association (PPA), and our care follows evidence-based professional standards.</p></div>
+        <button type="button" class="faq-q" aria-expanded="false">Is MindCare Services led by a PPA-certified professional?</button>
+        <div class="faq-a"><p>Yes. MindCare Services® was founded and is led by Shaista Tariq, who is a verified Member of the Pakistan Psychological Association (PPA). The PPA membership belongs to Shaista personally, and our whole team follows evidence-based professional standards.</p></div>
       </div>
     </div>
   </div>

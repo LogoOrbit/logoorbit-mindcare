@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url>
-    <loc>https://themindcareservices.com/</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://themindcareservices.com/mindcare.png</image:loc>
-      <image:title>MindCare Services® — Psychotherapy &amp; Mental Health Clinic in Karachi</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://themindcareservices.com/contact</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://themindcareservices.com/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://themindcareservices.com/contact</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/services/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://themindcareservices.com/team/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://themindcareservices.com/services/individual-psychotherapy</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/services/family-counseling</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/services/speech-therapy</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/services/physiotherapy</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/services/occupational-therapy</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/services/behavioral-therapy</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/services/remedial-home-sessions</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/services/diagnostic-assessments</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/services/dental-consultations</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/services/awareness-sessions</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://themindcareservices.com/team/shaista-tariq</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://themindcareservices.com/team/ribqah-arshad</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://themindcareservices.com/team/ejaz-fatima</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://themindcareservices.com/team/rimsha-pari</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://themindcareservices.com/team/hareem-tariq</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://themindcareservices.com/team/shafeeq-langhar</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
