@@ -74,16 +74,18 @@ def icon(prefix, name, w=None):
     return f'<svg{a}><use href="{prefix}assets/sprite.svg#{name}"/></svg>'
 
 
-def nav(prefix):
+def nav(prefix, active=None):
+    def cls(key):
+        return ' class="active"' if active == key else ''
     return f"""<nav id="navbar" aria-label="Primary navigation">
   <a href="{prefix}index.html" class="nav-logo" aria-label="MindCare Services home">
     <img src="{prefix}mindcare.png" width="120" height="54" alt="MindCare Services® — psychotherapy and mental health clinic in Karachi">
   </a>
   <ul class="nav-links">
-    <li><a href="{prefix}index.html">Home</a></li>
-    <li><a href="{prefix}services/index.html">Services</a></li>
-    <li><a href="{prefix}about.html">About</a></li>
-    <li><a href="{prefix}team/index.html">Team</a></li>
+    <li><a href="{prefix}index.html"{cls('home')}>Home</a></li>
+    <li><a href="{prefix}services/index.html"{cls('services')}>Services</a></li>
+    <li><a href="{prefix}about.html"{cls('about')}>About</a></li>
+    <li><a href="{prefix}team/index.html"{cls('team')}>Team</a></li>
     <li><a href="{prefix}contact.html" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
@@ -384,7 +386,7 @@ def service_page(s):
         for r in related)
 
     out = head(s["title"], s["desc"], url, prefix, schema)
-    out += nav(prefix)
+    out += nav(prefix, "services")
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
@@ -474,7 +476,7 @@ def services_index():
     out = head("Our Services | Psychotherapy, Counseling & Therapy in Karachi — MindCare Services®",
                "Explore all MindCare Services® offerings in Karachi: psychotherapy, family counseling, speech therapy, physiotherapy, occupational and behavioral therapy, assessments and more.",
                url, prefix, schema)
-    out += nav(prefix)
+    out += nav(prefix, "services")
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
@@ -593,7 +595,7 @@ def team_page(m):
         sname = SERVICE_BY_SLUG[svc]["name"]
         svc_link = f'<p style="margin-top:18px"><a href="{prefix}services/{svc}.html" class="more" style="font-weight:600">See {sname} →</a></p>'
     out = head(m["title"], m["desc"], url, prefix, schema, og_type="profile")
-    out += nav(prefix)
+    out += nav(prefix, "team")
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
@@ -663,7 +665,7 @@ def team_index():
     out = head("Our Team | Psychotherapists & Specialists in Karachi — MindCare Services®",
                "Meet the MindCare Services® team in Karachi — psychotherapists, physiotherapists, a psychologist, dental consultant and coordinators led by founder Shaista Tariq (PPA Member).",
                url, prefix, schema)
-    out += nav(prefix)
+    out += nav(prefix, "team")
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
