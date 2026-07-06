@@ -82,22 +82,18 @@ def nav(prefix):
   <ul class="nav-links">
     <li><a href="{prefix}index.html">Home</a></li>
     <li><a href="{prefix}services/index.html">Services</a></li>
-    <li><a href="{prefix}index.html#journey">How It Works</a></li>
+    <li><a href="{prefix}about.html">About</a></li>
     <li><a href="{prefix}team/index.html">Team</a></li>
-    <li><a href="{prefix}index.html#about">About</a></li>
-    <li><a href="{prefix}contact.html" class="nav-cta">Book Consultation</a></li>
+    <li><a href="{prefix}contact.html" class="nav-cta">Book</a></li>
   </ul>
   <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="{prefix}index.html">Home</a>
   <a href="{prefix}services/index.html">Services</a>
-  <a href="{prefix}index.html#journey">How It Works</a>
+  <a href="{prefix}about.html">About</a>
   <a href="{prefix}team/index.html">Team</a>
-  <a href="{prefix}index.html#about">About</a>
-  <a href="{prefix}index.html#faq">FAQ</a>
   <a href="{prefix}contact.html" class="m-cta">Book a Consultation</a>
-  <a href="{WA}" target="_blank" rel="noopener" class="m-wa">{icon(prefix,'i-wa','18')} Chat on WhatsApp</a>
 </div>
 <div class="wa-float">
   <div class="wa-tooltip">Chat on WhatsApp</div>
