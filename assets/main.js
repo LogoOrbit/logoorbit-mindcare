@@ -61,7 +61,7 @@
     doc.setAttribute('data-theme', t);
     try { localStorage.setItem('mc-theme', t); } catch (e) {}
     var m = document.querySelector('meta[name="theme-color"]:not([media])') || document.querySelector('meta[name="theme-color"]');
-    if (m) m.setAttribute('content', t === 'dark' ? '#0e1b13' : '#f2f6f3');
+    if (m) m.setAttribute('content', t === 'dark' ? '#0e1b13' : '#e8ecf1');
   }
   var themeBtn = document.getElementById('themeBtn');
   if (themeBtn) themeBtn.addEventListener('click', function () {
