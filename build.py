@@ -13,6 +13,15 @@ WA = "https://wa.me/923272337631"
 ROOT = os.path.dirname(os.path.abspath(__file__))
 TODAY = datetime.date.today().isoformat()
 
+GTAG = """<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QZFCFZT32R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QZFCFZT32R');
+</script>"""
+
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">')
@@ -47,6 +56,7 @@ def head(title, desc, canonical, prefix, schema, og_type="website"):
 <link rel="icon" href="{prefix}mindcare.png" type="image/png">
 <link rel="apple-touch-icon" href="{prefix}mindcare.png">
 <link rel="manifest" href="{prefix}site.webmanifest">
+{GTAG}
 {FONTS}
 <link rel="stylesheet" href="{prefix}assets/styles.css">
 <script type="application/ld+json">
@@ -993,6 +1003,58 @@ def guides_index():
     return out
 
 
+def confirmation_page():
+    prefix = ""
+    url = f"{BASE}/confirmed"
+    schema = {"@context": "https://schema.org", "@type": "WebPage",
+              "name": "Appointment Confirmed — MindCare Services®", "url": url,
+              "description": "Your appointment request has been received. The MindCare Services® team will be in touch shortly to confirm your session.",
+              "isPartOf": {"@type": "WebSite", "name": "MindCare Services®", "url": BASE}}
+    out = head("Appointment Confirmed — Thank You | MindCare Services®",
+               "Thank you — your appointment request has been received. Our team will contact you shortly to confirm the details. Keeping Your Peace®.",
+               url, prefix, schema)
+    # Thank-you pages should not be indexed by search engines.
+    out = out.replace('<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">',
+                      '<meta name="robots" content="noindex, follow">')
+    out += nav(prefix)
+    out += f"""<main id="main">
+<header class="page-hero confirm-hero">
+  <div class="ph-inner" style="text-align:center;max-width:720px;margin:0 auto">
+    <div class="confirm-check" aria-hidden="true">
+      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+    <div class="ph-badge" style="margin:0 auto 18px">{icon(prefix,'i-heart-hands')} Keeping Your Peace®</div>
+    <h1>Your appointment request is confirmed</h1>
+    <p class="lede">Thank you for reaching out to MindCare Services®. We've received your request and a member of our team will contact you shortly to finalise the date, time and details of your session.</p>
+    <div class="ph-actions" style="justify-content:center">
+      <a href="{WA}?text=Hi%2C%20I%20just%20booked%20an%20appointment%20and%20wanted%20to%20confirm%20the%20details." target="_blank" rel="noopener" class="btn-primary">{icon(prefix,'i-wa','18')} Message us on WhatsApp</a>
+      <a href="{prefix}index.html" class="btn-secondary">Back to Home</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">What Happens Next</span><h2 class="section-title">Here's what to expect</h2></div>
+    <div class="feature-grid">
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-phone')}</div><h3>1. We'll be in touch</h3><p>Our coordinator will reach out by phone or WhatsApp to confirm your appointment and answer any questions.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clock')}</div><h3>2. Confirm your time</h3><p>We'll lock in a slot that suits you. Sessions run Mon–Sat, 9am–7pm, in-clinic in Karachi.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>3. Your first session</h3><p>A relaxed, judgment-free conversation. Nothing to prepare — just come as you are.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:36px">
+      <p style="margin-bottom:14px">Need to reach us sooner? Call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a>.</p>
+      <a href="{prefix}services/index.html" class="more" style="font-weight:600">Explore our services →</a>
+    </div>
+  </div>
+</section>
+
+{cta_band(prefix, "While you wait, get to know us", "Read about our team and approach, or reach out any time on WhatsApp — we're here to help.")}
+</main>
+"""
+    out += footer(prefix)
+    return out
+
+
 def write(path, content):
     full = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
@@ -1011,6 +1073,7 @@ def build():
     for t in TOPICS:
         write(f"{t['slug']}.html", seo_page(t))
     write("guides.html", guides_index())
+    write("confirmed.html", confirmation_page())
     # sitemap
     urls = [(f"{BASE}/", "1.0"), (f"{BASE}/contact", "0.8"),
             (f"{BASE}/services/", "0.9"), (f"{BASE}/team/", "0.7"),

@@ -236,3 +236,15 @@ html[dir="rtl"] .breadcrumb li:not(:last-child)::after { content:'‹'; }
   .ph-actions { flex-direction: column; }
   .ph-actions a { text-align: center; justify-content: center; }
 }
+
+/* Appointment confirmation page */
+.confirm-check {
+  width: 92px; height: 92px; margin: 0 auto 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; color: #fff;
+  background: linear-gradient(135deg, var(--teal), var(--green));
+  box-shadow: 0 12px 30px rgba(43,189,201,0.35);
+  animation: confirmPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes confirmPop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .confirm-check { animation: none; } }
