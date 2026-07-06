@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#e9ebe6">
+<meta name="theme-color" content="#faf8f3">
 <script>
 /* no-flash theme + language (white default; Urdu auto for Urdu devices) */
 (function(){try{
@@ -42,11 +42,11 @@
 
 <style>
 :root{
-  --teal:#2BBDC9;--teal-dark:#1a9aaa;--teal-deep:#0f7482;--teal-light:#e8f9fb;
+  --teal:#0f9aa8;--teal-dark:#12808d;--teal-deep:#0b5f6d;--teal-light:#e8f9fb;
   --green:#2d6a1f;--green-light:#eaf4e6;--coral:#ef8354;
-  --bg:#e9ebe6;--surface:#e0e3dc;--card:#f5f5f1;--ink:#1b2822;--muted:#586761;
-  --border:#d5d8cf;--shadow:0 8px 30px rgba(30,45,40,.08);--radius:20px;
-  --hero-a:#e8ede9;--hero-b:#e4eae5;--hero-c:#eff1ec;
+  --bg:#faf8f3;--surface:#f1ede4;--card:#ffffff;--ink:#1b2822;--muted:#44544b;
+  --border:#e3ddd0;--shadow:0 8px 30px rgba(30,45,40,.08);--radius:20px;
+  --hero-a:#f4f0e6;--hero-b:#f0eee2;--hero-c:#f9f7f0;
 }
 html[data-theme="dark"]{
   --teal:#3fd0dc;--teal-dark:#57dbe6;--teal-deep:#8fe8f0;--teal-light:#12312f;
@@ -69,7 +69,7 @@ html[lang="ur"] .serif{font-family:'Noto Naskh Arabic',serif}
 ::selection{background:rgba(43,189,201,.25)}
 
 .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-section{padding:64px 0}
+section{padding:52px 0}
 h1,h2{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.15;color:var(--ink)}
 html[lang="ur"] h1,html[lang="ur"] h2{font-family:'Noto Naskh Arabic',serif;line-height:1.5}
 h1{font-size:clamp(2.2rem,6vw,3.5rem)}
@@ -78,9 +78,9 @@ h2{font-size:clamp(1.7rem,3.4vw,2.4rem)}
 html[lang="ur"] .tag{letter-spacing:normal}
 .muted{color:var(--muted)}
 .center{text-align:center}
-.sec-head{max-width:640px;margin:0 auto 40px}
+.sec-head{max-width:640px;margin:0 auto 28px}
 .sec-head.center{text-align:center}
-.lead{color:var(--muted);font-size:1.05rem}
+.lead{color:var(--muted);font-size:1.1rem;line-height:1.7}
 
 /* progress */
 .progress{position:fixed;top:0;inset-inline-start:0;height:3px;width:0;background:linear-gradient(90deg,var(--teal),var(--green));z-index:1001}
@@ -98,8 +98,8 @@ nav{position:fixed;top:0;inset-inline:0;z-index:1000;height:66px;display:flex;al
 .nav-logo{display:flex;align-items:center;gap:8px;font-weight:700}
 .nav-logo img{height:44px;width:auto}
 .nav-links{display:flex;align-items:center;gap:2px;list-style:none}
-.nav-links a{color:var(--ink);font-size:.9rem;font-weight:500;padding:8px 13px;border-radius:8px;transition:background .2s,color .2s}
-.nav-links a:hover,.nav-links a.active{background:var(--teal-light);color:var(--teal-dark)}
+.nav-links a{color:var(--ink);font-size:.93rem;font-weight:500;padding:8px 13px;border-radius:8px;transition:background .2s,color .2s}
+.nav-links a:hover{background:var(--teal-light);color:var(--teal-dark)}.nav-links a.active{background:var(--teal-light);color:var(--teal-deep);font-weight:600;box-shadow:inset 0 -2px 0 var(--teal)}
 .nav-cta{background:var(--teal);color:#fff !important;padding:9px 18px;border-radius:50px}
 .nav-cta:hover{background:var(--teal-dark)}
 .nav-tools{display:flex;align-items:center;gap:8px}
@@ -119,7 +119,7 @@ html[data-theme="dark"] .icon-btn .moon{display:block}
 .mobile-menu .m-cta{margin-top:16px;background:var(--teal);color:#fff;border-radius:50px;text-align:center;border-bottom:none}
 
 /* HERO */
-.hero{padding:96px 0 40px;background:linear-gradient(160deg,var(--hero-a),var(--hero-b) 55%,var(--hero-c));position:relative;overflow:hidden}
+.hero{padding:92px 0 28px;background:linear-gradient(160deg,var(--hero-a),var(--hero-b) 55%,var(--hero-c));position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;top:-140px;inset-inline-end:-120px;width:460px;height:460px;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,rgba(43,189,201,.16),transparent 68%);transform:translateY(var(--py,0));will-change:transform}
 .hero::after{content:"";position:absolute;bottom:-160px;inset-inline-start:-140px;width:420px;height:420px;border-radius:50%;pointer-events:none;
@@ -152,7 +152,7 @@ a.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:va
 .card .ic{width:52px;height:52px;border-radius:14px;background:var(--teal-light);display:grid;place-items:center;margin-bottom:14px}
 .card .ic svg{width:28px;height:28px;stroke:var(--teal-deep)}
 .card h3{font-size:1.05rem;font-weight:600;margin-bottom:6px}
-.card p{font-size:.9rem;color:var(--muted);line-height:1.6}
+.card p{font-size:.95rem;color:var(--muted);line-height:1.65}
 .card .more{margin-top:10px;font-size:.85rem;font-weight:600;color:var(--teal-dark)}
 
 /* TEAM */
@@ -176,7 +176,7 @@ a.person:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:
 .step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px;position:relative}
 .step::before{counter-increment:s;content:counter(s);position:absolute;top:18px;inset-inline-end:22px;font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:600;color:var(--teal);opacity:.5}
 .step h3{font-size:1.05rem;margin-bottom:6px}
-.step p{color:var(--muted);font-size:.92rem}
+.step p{color:var(--muted);font-size:.96rem}
 
 /* ABOUT */
 .about-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(26px,5vw,44px);text-align:center;max-width:760px;margin:0 auto}
@@ -188,7 +188,7 @@ a.person:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:
 .faq-q::after{content:"+";font-size:1.4rem;color:var(--teal);transition:transform .25s}
 .faq-item.open .faq-q::after{transform:rotate(45deg)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .3s}
-.faq-a p{padding:0 20px 18px;color:var(--muted);font-size:.92rem}
+.faq-a p{padding:0 20px 18px;color:var(--muted);font-size:.96rem;line-height:1.7}
 
 /* CTA */
 .cta{background:linear-gradient(135deg,var(--teal),var(--teal-deep));border-radius:24px;padding:clamp(32px,6vw,56px);text-align:center;color:#fff;max-width:900px;margin:0 auto}
@@ -240,7 +240,7 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
   .feel-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:560px){
-  .feel-grid{grid-template-columns:1fr}section{padding:48px 0}
+  .feel-grid{grid-template-columns:1fr}section{padding:40px 0}
   .nav-cta{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.fade-up{opacity:1;transform:none}}
@@ -350,7 +350,7 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
         <span class="live" data-i18n="team.online">Online now</span>
       </a>
       <a class="person fade-up" href="team/shafeeq-langhar.html">
-        <div class="avatar"><svg viewBox="0 0 100 100"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2BBDC9"/><stop offset="1" stop-color="#0f7482"/></linearGradient></defs><circle cx="50" cy="38" r="16" fill="url(#g2)"/><path d="M20 88c3-20 15-28 30-28s27 8 30 28z" fill="url(#g2)" opacity=".9"/></svg><span class="online"></span></div>
+        <div class="avatar"><svg viewBox="0 0 100 100"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2BBDC9"/><stop offset="1" stop-color="#0b5f6d"/></linearGradient></defs><circle cx="50" cy="38" r="16" fill="url(#g2)"/><path d="M20 88c3-20 15-28 30-28s27 8 30 28z" fill="url(#g2)" opacity=".9"/></svg><span class="online"></span></div>
         <h3>Shafeeq Langhar</h3><div class="role" data-i18n="role.psych">Psychologist</div>
         <span class="live" data-i18n="team.online">Online now</span>
       </a>
