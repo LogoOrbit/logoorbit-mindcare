@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
+<script>(function(){try{var t=localStorage.getItem('mc-theme')||'light';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('mc-lang');if(!l){l=((navigator.language||'').toLowerCase().indexOf('ur')===0)?'ur':'en';}document.documentElement.setAttribute('lang',l);document.documentElement.setAttribute('dir',l==='ur'?'rtl':'ltr');}catch(e){}})();</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#2BBDC9" media="(prefers-color-scheme: light)">
@@ -91,14 +94,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
 }
-@media (prefers-color-scheme: dark) {
-  :root { --white: #0e1b13; --off-white: #12241a; --dark: #eaf4ee; --gray: #9db3a6; --border: #234034; --teal-light: #13312f; --green-light: #16281a; }
-  body { background: #0e1b13; }
-  nav, .mobile-menu { background: rgba(14,27,19,0.95); }
-  .booking-form-box, .founder-card { background: #12241a; }
-  .form-group input, .form-group textarea, .form-group select { background: #0e1b13; color: var(--dark); }
-  .page-hero { background: linear-gradient(135deg,#0e1b13 0%,#12241a 55%,#0e1b13 100%); }
-}
+html[data-theme="dark"] { --white: #0e1b13; --off-white: #12241a; --dark: #eaf4ee; --gray: #a7bcb0; --border: #234034; --teal:#3fd0dc; --teal-dark:#57dbe6; --teal-deep:#8fe8f0; --teal-light: #13312f; --green-light: #16281a; }
+html[data-theme="dark"] body { background: #0e1b13; }
+html[data-theme="dark"] nav, html[data-theme="dark"] .mobile-menu { background: rgba(14,27,19,0.95); }
+html[data-theme="dark"] .booking-form-box, html[data-theme="dark"] .founder-card { background: #12241a; }
+html[data-theme="dark"] .form-group input, html[data-theme="dark"] .form-group textarea, html[data-theme="dark"] .form-group select { background: #0e1b13; color: var(--dark); }
+html[data-theme="dark"] .page-hero { background: linear-gradient(135deg,#0e1b13 0%,#12241a 55%,#0e1b13 100%); }
+/* nav tools + urdu */
+.nav-tools{display:flex;align-items:center;gap:8px}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--off-white);color:var(--dark);display:grid;place-items:center;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.8rem}
+.icon-btn svg{width:18px;height:18px}
+.icon-btn .moon{display:none}
+html[data-theme="dark"] .icon-btn .sun{display:none}
+html[data-theme="dark"] .icon-btn .moon{display:block}
+html[lang="ur"] body{font-family:'Noto Naskh Arabic','DM Sans',sans-serif}
 
 /* NAV */
 nav {
@@ -386,9 +395,11 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
     <li><a href="team/index.html">Team</a></li>
     <li><a href="index.html" class="nav-back">← Back to Main</a></li>
   </ul>
-  <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" style="background:none;border:none">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-tools">
+  <button class="icon-btn" id="langBtn" type="button" aria-label="Change language">اردو</button>
+  <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></svg></button>
+  <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" style="background:none;border:none"><span></span><span></span><span></span></button>
+</div>
 </nav>
 
 <!-- MOBILE MENU -->
@@ -740,6 +751,17 @@ function submitForm(prefix) {
 document.querySelectorAll('.btn-submit').forEach(btn => {
   btn.dataset.originalText = btn.textContent;
 });
+</script>
+<script>
+(function(){var doc=document.documentElement;
+function setTheme(t){doc.setAttribute('data-theme',t);try{localStorage.setItem('mc-theme',t);}catch(e){}}
+var tb=document.getElementById('themeBtn');if(tb)tb.addEventListener('click',function(){setTheme(doc.getAttribute('data-theme')==='dark'?'light':'dark');});
+var UR={"Home":"ہوم","Services":"خدمات","Team":"ٹیم","About":"ہمارے بارے میں","Contact":"رابطہ","Book a Consultation":"مشورہ بُک کریں","Book Consultation":"اپائنٹمنٹ","← Back to Main":"مرکزی صفحہ »","Back to Main":"مرکزی صفحہ","Get in Touch":"رابطہ کریں"};
+var SEL='.nav-links a, .mobile-menu a, .breadcrumb li, .breadcrumb a';
+function apply(lang){document.querySelectorAll(SEL).forEach(function(el){var o=el.getAttribute('data-en');if(o==null){o=el.textContent.trim();el.setAttribute('data-en',o);}el.textContent=(lang==='ur'&&UR[o])?UR[o]:o;});doc.setAttribute('lang',lang);doc.setAttribute('dir',lang==='ur'?'rtl':'ltr');var lb=document.getElementById('langBtn');if(lb)lb.textContent=lang==='ur'?'EN':'اردو';try{localStorage.setItem('mc-lang',lang);}catch(e){}}
+apply(doc.getAttribute('lang')==='ur'?'ur':'en');
+var l=document.getElementById('langBtn');if(l)l.addEventListener('click',function(){apply(doc.getAttribute('lang')==='ur'?'en':'ur');});
+})();
 </script>
 </body>
 </html>
