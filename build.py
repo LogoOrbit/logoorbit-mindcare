@@ -86,7 +86,11 @@ def nav(prefix):
     <li><a href="{prefix}team/index.html">Team</a></li>
     <li><a href="{prefix}contact.html" class="nav-cta">Book</a></li>
   </ul>
-  <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+  <div class="nav-tools">
+    <button class="icon-btn" id="langBtn" type="button" aria-label="Change language">اردو</button>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></svg></button>
+    <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+  </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="{prefix}index.html">Home</a>
@@ -465,7 +469,7 @@ def services_index():
             for i, s in enumerate(SERVICES)]},
     ]}
     cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="{s['slug']}.html"><div class="fi">{icon(prefix,s['icon'])}</div><h3>{s['name']}</h3><p>{s['lede'][:120]}…</p><span class="more">Learn more →</span></a>'''
+        f'''      <a class="link-card fade-up" href="{prefix}services/{s['slug']}.html"><div class="fi">{icon(prefix,s['icon'])}</div><h3>{s['name']}</h3><p>{s['lede'][:120]}…</p><span class="more">Learn more →</span></a>'''
         for s in SERVICES)
     out = head("Our Services | Psychotherapy, Counseling & Therapy in Karachi — MindCare Services®",
                "Explore all MindCare Services® offerings in Karachi: psychotherapy, family counseling, speech therapy, physiotherapy, occupational and behavioral therapy, assessments and more.",
@@ -652,7 +656,7 @@ def team_index():
             {"@type": "ListItem", "position": i + 1, "name": m["name"], "url": f"{BASE}/team/{m['slug']}"}
             for i, m in enumerate(TEAM)]}]}
     cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="{m['slug']}.html" style="text-align:center">
+        f'''      <a class="link-card fade-up" href="{prefix}team/{m['slug']}.html" style="text-align:center">
         <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px">{AV[m['av']]}</div>
         <h3>{m['name']}</h3><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">{m['role']}</p>
         <span class="more">View profile →</span></a>''' for m in TEAM)

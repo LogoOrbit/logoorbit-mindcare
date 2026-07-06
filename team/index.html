@@ -122,7 +122,11 @@
     <li><a href="../team/index.html">Team</a></li>
     <li><a href="../contact.html" class="nav-cta">Book</a></li>
   </ul>
-  <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+  <div class="nav-tools">
+    <button class="icon-btn" id="langBtn" type="button" aria-label="Change language">اردو</button>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></svg></button>
+    <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+  </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="../index.html">Home</a>
@@ -148,27 +152,27 @@
 <section>
   <div class="section-inner">
     <div class="card-grid">
-      <a class="link-card fade-up" href="shaista-tariq.html" style="text-align:center">
+      <a class="link-card fade-up" href="../team/shaista-tariq.html" style="text-align:center">
         <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px"><svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#c9f0f4"/><circle cx="40" cy="34" r="15" fill="#eaa17a"/><path d="M25 30c0-11 7-19 15-19s15 8 15 19c0 4-1 7-2 9 1-8-1-15-5-18-2 3-6 5-12 5-4 0-6-1-8-2-2 3-3 8-2 13-1-2-1-5-1-7Z" fill="#177585"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#0b5f6d"/><circle cx="35" cy="34" r="1.7" fill="#3c2a20"/><circle cx="45" cy="34" r="1.7" fill="#3c2a20"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#7c4a32" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
         <h3>Shaista Tariq</h3><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">Founder & Lead Psychotherapist</p>
         <span class="more">View profile →</span></a>
-      <a class="link-card fade-up" href="ribqah-arshad.html" style="text-align:center">
+      <a class="link-card fade-up" href="../team/ribqah-arshad.html" style="text-align:center">
         <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px"><svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#e6ddf7"/><circle cx="40" cy="34" r="15" fill="#f0b48e"/><path d="M24 36c-2-13 6-24 16-24s18 11 16 24c-2-9-7-14-16-14s-14 5-16 14Z" fill="#241a12"/><path d="M24 36c0 10 2 16 0 22l6-2c-2-6-2-13 0-20h-6ZM56 36c0 10-2 16 0 22l-6-2c2-6 2-13 0-20h6Z" fill="#241a12"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#7b5ea7"/><circle cx="35" cy="34" r="1.7" fill="#241a12"/><circle cx="45" cy="34" r="1.7" fill="#241a12"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#8a5638" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
         <h3>Ribqah Arshad</h3><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">Team Coordinator</p>
         <span class="more">View profile →</span></a>
-      <a class="link-card fade-up" href="ejaz-fatima.html" style="text-align:center">
+      <a class="link-card fade-up" href="../team/ejaz-fatima.html" style="text-align:center">
         <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px"><svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#fde3d1"/><circle cx="40" cy="34" r="15" fill="#eaa17a"/><path d="M26 30c1-10 6-17 14-17s13 7 14 17c0 3 0 6-1 8 0-7-2-13-6-16-3 3-7 4-11 4-3 0-5 0-7-1-2 3-3 7-2 12-1-2-1-4-1-7Z" fill="#5a3b28"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#e07b4a"/><circle cx="35" cy="34" r="1.7" fill="#3c2a20"/><circle cx="45" cy="34" r="1.7" fill="#3c2a20"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#7c4a32" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
         <h3>Ejaz Fatima</h3><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">Physiotherapist</p>
         <span class="more">View profile →</span></a>
-      <a class="link-card fade-up" href="rimsha-pari.html" style="text-align:center">
+      <a class="link-card fade-up" href="../team/rimsha-pari.html" style="text-align:center">
         <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px"><svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#d3e7f8"/><circle cx="40" cy="34" r="15" fill="#f0b48e"/><path d="M25 32c-1-12 6-21 15-21s16 9 15 21l-3 3c1-9-3-16-12-16s-13 7-12 16l-3-3Z" fill="#241a12"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#4a90d9"/><circle cx="35" cy="34" r="1.7" fill="#241a12"/><circle cx="45" cy="34" r="1.7" fill="#241a12"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#8a5638" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
         <h3>Rimsha Pari</h3><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">Consultant Physiotherapist</p>
         <span class="more">View profile →</span></a>
-      <a class="link-card fade-up" href="hareem-tariq.html" style="text-align:center">
+      <a class="link-card fade-up" href="../team/hareem-tariq.html" style="text-align:center">
         <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px"><svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#fbdae8"/><circle cx="40" cy="34" r="15" fill="#eaa17a"/><path d="M25 33c-2-12 5-22 15-22s17 10 15 22c-1-9-6-15-15-15s-14 6-15 15Z" fill="#3c2a20"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#d94a8a"/><circle cx="35" cy="34" r="1.7" fill="#3c2a20"/><circle cx="45" cy="34" r="1.7" fill="#3c2a20"/><path d="M36 40c2.4 2.2 5.6 2.2 8 0" stroke="#7c4a32" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
         <h3>Hareem Tariq</h3><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">Dental Consultant</p>
         <span class="more">View profile →</span></a>
-      <a class="link-card fade-up" href="shafeeq-langhar.html" style="text-align:center">
+      <a class="link-card fade-up" href="../team/shafeeq-langhar.html" style="text-align:center">
         <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px"><svg viewBox="0 0 80 80"><rect width="80" height="80" fill="#dff0d8"/><circle cx="40" cy="35" r="15" fill="#d9a06b"/><path d="M27 30c2-9 6-14 13-14s11 5 13 14c0 2 0 3-1 5 0-6-2-10-5-12-2 2-4 3-7 3s-5-1-7-3c-3 2-5 6-5 12 0-2-1-3-1-5Z" fill="#241a12"/><path d="M14 76c3-15 13-23 26-23s23 8 26 23" fill="#2d6a1f"/><circle cx="35" cy="35" r="1.7" fill="#241a12"/><circle cx="45" cy="35" r="1.7" fill="#241a12"/><path d="M36 41c2.4 2.2 5.6 2.2 8 0" stroke="#7a4a28" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
         <h3>Shafeeq Langhar</h3><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">Psychologist</p>
         <span class="more">View profile →</span></a>
