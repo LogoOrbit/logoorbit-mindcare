@@ -37,7 +37,7 @@ if(langBtn) langBtn.addEventListener("click",function(){
 
 /* ---------- theme ---------- */
 function setTheme(t){ doc.setAttribute("data-theme",t); try{localStorage.setItem("mc-theme",t);}catch(e){}
-  var m=document.querySelector('meta[name="theme-color"]'); if(m) m.content=(t==="dark"?"#0e1b13":"#e8ecf1"); }
+  var m=document.querySelector('meta[name="theme-color"]'); if(m) m.content=(t==="dark"?"#0e1b13":"#e9ebe6"); }
 var themeBtn=document.getElementById("themeBtn");
 if(themeBtn) themeBtn.addEventListener("click",function(){
   setTheme(doc.getAttribute("data-theme")==="dark"?"light":"dark");
@@ -148,4 +148,21 @@ window.addEventListener("scroll",function(){
     ticking=false;
   });
 },{passive:true});
+
+/* ---------- smooth page transitions between internal pages ---------- */
+if(!reduce){
+  document.addEventListener("click",function(e){
+    var a=e.target.closest&&e.target.closest("a");
+    if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
+    var href=a.getAttribute("href");
+    if(!href||a.target==="_blank"||a.hasAttribute("download")) return;
+    if(href.charAt(0)==="#"||/^(mailto:|tel:|javascript:)/i.test(href)) return;
+    if(a.host&&a.host!==location.host) return;
+    if(a.pathname===location.pathname&&a.hash) return;
+    e.preventDefault();
+    document.body.classList.add("page-exit");
+    setTimeout(function(){ window.location.href=a.href; },260);
+  });
+  window.addEventListener("pageshow",function(ev){ if(ev.persisted) document.body.classList.remove("page-exit"); });
+}
 })();
