@@ -110,6 +110,12 @@ html[data-theme="dark"] .icon-btn .sun{display:none}
 html[data-theme="dark"] .icon-btn .moon{display:block}
 html[lang="ur"] body{font-family:'Noto Naskh Arabic','DM Sans',sans-serif}
 
+/* scroll reveal */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0ms)}
+.fade-up.rv-left{transform:translateX(-40px)}.fade-up.rv-right{transform:translateX(40px)}
+.fade-up.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.fade-up{opacity:1!important;transform:none!important}}
+
 /* NAV */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
@@ -654,35 +660,6 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
 </main><!-- /contact-body -->
 
 <script>
-// Nav scroll
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
-});
-
-// Mobile menu
-let menuOpen = false;
-function toggleMenu() {
-  menuOpen = !menuOpen;
-  const menu = document.getElementById('mobileMenu');
-  const spans = document.querySelectorAll('.hamburger span');
-  const burger = document.querySelector('.hamburger');
-  if (burger) burger.setAttribute('aria-expanded', menuOpen);
-  if (menuOpen) {
-    menu.classList.add('open'); document.body.style.overflow = 'hidden';
-    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-    spans[1].style.opacity = '0';
-    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-  } else {
-    menu.classList.remove('open'); document.body.style.overflow = '';
-    spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
-  }
-}
-
-// Close mobile menu when tapping any link
-document.querySelectorAll('.mobile-menu a').forEach(link => {
-  link.addEventListener('click', () => { if (menuOpen) toggleMenu(); });
-});
-
 // Tab switching
 function switchTab(id, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -690,8 +667,6 @@ function switchTab(id, btn) {
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
 }
-
-// Modal helpers
 function showModal(msg) {
   document.getElementById('modalMsg').textContent = msg;
   document.getElementById('successModal').classList.add('open');
@@ -703,66 +678,32 @@ function closeModal(e) {
     document.body.style.overflow = '';
   }
 }
-
-// Toast (kept as fallback)
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 5000);
 }
-
-// Form submit with modal popup
 function submitForm(prefix) {
   const btn = document.getElementById(prefix + '-btn');
   const nameEl = document.getElementById(prefix + '-name');
   const name = nameEl ? nameEl.value.trim() : '';
-
-  // Basic validation
   const phoneEl = document.getElementById(prefix + '-phone');
-  if (phoneEl && !phoneEl.value.trim()) {
-    phoneEl.style.borderColor = 'red';
-    phoneEl.focus();
-    setTimeout(() => phoneEl.style.borderColor = '', 2000);
-    return;
-  }
-  if (nameEl && !name) {
-    nameEl.style.borderColor = 'red';
-    nameEl.focus();
-    setTimeout(() => nameEl.style.borderColor = '', 2000);
-    return;
-  }
-
-  btn.textContent = 'Sending…';
-  btn.classList.add('loading');
-
+  if (phoneEl && !phoneEl.value.trim()) { phoneEl.style.borderColor = 'red'; phoneEl.focus(); setTimeout(() => phoneEl.style.borderColor = '', 2000); return; }
+  if (nameEl && !name) { nameEl.style.borderColor = 'red'; nameEl.focus(); setTimeout(() => nameEl.style.borderColor = '', 2000); return; }
+  btn.textContent = 'Sending…'; btn.classList.add('loading');
   setTimeout(() => {
-    btn.textContent = btn.dataset.originalText || btn.textContent.replace('Sending…', 'Send');
+    btn.textContent = btn.dataset.originalText || 'Send';
     btn.classList.remove('loading');
-
     const messages = {
       c1: 'Your free consultation request has been received! We\'ll call or WhatsApp you within a few hours.',
       c2: 'Your appointment request is confirmed! We\'ll call or WhatsApp you to confirm the exact slot.',
-      c3: 'Your message has been received! We typically reply within 2–4 hours during working hours.'
+      c3: 'Your message has been received! We typically reply within 2\u20134 hours during working hours.'
     };
     showModal(messages[prefix] || 'Your message has been sent! We\'ll get back to you soon.');
   }, 1400);
 }
-
-// Store original button text
-document.querySelectorAll('.btn-submit').forEach(btn => {
-  btn.dataset.originalText = btn.textContent;
-});
+document.querySelectorAll('.btn-submit').forEach(btn => { btn.dataset.originalText = btn.textContent; });
 </script>
-<script>
-(function(){var doc=document.documentElement;
-function setTheme(t){doc.setAttribute('data-theme',t);try{localStorage.setItem('mc-theme',t);}catch(e){}}
-var tb=document.getElementById('themeBtn');if(tb)tb.addEventListener('click',function(){setTheme(doc.getAttribute('data-theme')==='dark'?'light':'dark');});
-var UR={"Home":"ہوم","Services":"خدمات","Team":"ٹیم","About":"ہمارے بارے میں","Contact":"رابطہ","Book a Consultation":"مشورہ بُک کریں","Book Consultation":"اپائنٹمنٹ","← Back to Main":"مرکزی صفحہ »","Back to Main":"مرکزی صفحہ","Get in Touch":"رابطہ کریں"};
-var SEL='.nav-links a, .mobile-menu a, .breadcrumb li, .breadcrumb a';
-function apply(lang){document.querySelectorAll(SEL).forEach(function(el){var o=el.getAttribute('data-en');if(o==null){o=el.textContent.trim();el.setAttribute('data-en',o);}el.textContent=(lang==='ur'&&UR[o])?UR[o]:o;});doc.setAttribute('lang',lang);doc.setAttribute('dir',lang==='ur'?'rtl':'ltr');var lb=document.getElementById('langBtn');if(lb)lb.textContent=lang==='ur'?'EN':'اردو';try{localStorage.setItem('mc-lang',lang);}catch(e){}}
-apply(doc.getAttribute('lang')==='ur'?'ur':'en');
-var l=document.getElementById('langBtn');if(l)l.addEventListener('click',function(){apply(doc.getAttribute('lang')==='ur'?'en':'ur');});
-})();
-</script>
+<script src="assets/main.js" defer></script>
 </body>
 </html>

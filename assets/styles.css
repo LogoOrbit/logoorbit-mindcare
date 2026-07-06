@@ -175,9 +175,16 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
 .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
 .faq-a p { padding: 0 22px 18px; font-size: 0.9rem; color: var(--gray); line-height: 1.7; margin: 0; }
 
-/* ANIM */
-.fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
-.fade-up.visible { opacity: 1; transform: translateY(0); }
+/* ANIM — scroll reveal + parallax */
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); will-change: opacity, transform; }
+.fade-up.rv-left { transform: translateX(-42px); }
+.fade-up.rv-right { transform: translateX(42px); }
+.fade-up.rv-scale { transform: scale(.9); }
+.fade-up.visible { opacity: 1; transform: none; }
+/* parallax: hero glow drifts, illustration floats */
+.page-hero::before { transform: translateY(var(--py, 0)); transition: transform .05s linear; will-change: transform; }
+.detail-art { will-change: transform; }
+@media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1 !important; transform: none !important; } .page-hero::before, .detail-art { transform: none !important; } }
 .float-a { animation: floatA 6s ease-in-out infinite; }
 .float-b { animation: floatA 7s ease-in-out .8s infinite; }
 @keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }

@@ -2,6 +2,7 @@
 (function(){
 "use strict";
 var doc=document.documentElement;
+var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 var DICT=window.I18N||{en:{},ur:{}};
 
 /* ---------- language ---------- */
@@ -63,20 +64,88 @@ document.querySelectorAll(".faq-item").forEach(function(item){
   });
 });
 
-/* ---------- scroll progress + reveal ---------- */
+/* ---------- scroll animations: reveal + parallax ---------- */
 var prog=document.getElementById("progress");
-window.addEventListener("scroll",function(){
-  if(!prog) return;
-  var h=document.documentElement, s=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
-  prog.style.width=Math.min(s*100,100)+"%";
-},{passive:true});
 
-if("IntersectionObserver" in window){
+// auto-tag hero copy, section heads and CTA for reveal
+if(!reduce){
+  var extra=document.querySelectorAll(".hero-copy > *, .sec-head > *, .about-wrap > *");
+  extra.forEach(function(el){ el.classList.add("fade-up"); });
+  // directional variety
+  document.querySelectorAll(".hero-copy > *").forEach(function(el){ el.classList.add("rv-left"); });
+  document.querySelectorAll(".brain-wrap").forEach(function(el){ el.classList.add("fade-up","rv-right"); });
+  // stagger cards within each grid
+  document.querySelectorAll(".grid-3, .team-grid, .feel-grid, .steps").forEach(function(g){
+    [].slice.call(g.children).forEach(function(c,i){ c.style.setProperty("--d",(i%3)*90+"ms"); });
+  });
+}
+
+var revealEls=[].slice.call(document.querySelectorAll(".fade-up"));
+if("IntersectionObserver" in window && !reduce){
   var io=new IntersectionObserver(function(es){
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("vis"); io.unobserve(e.target); } });
-  },{threshold:.12});
-  document.querySelectorAll(".fade-up").forEach(function(el){io.observe(el);});
+  },{threshold:.14,rootMargin:"0px 0px -6% 0px"});
+  revealEls.forEach(function(el){io.observe(el);});
 }else{
-  document.querySelectorAll(".fade-up").forEach(function(el){el.classList.add("vis");});
+  revealEls.forEach(function(el){el.classList.add("vis");});
 }
+
+/* ---------- background music: play on landing, fade out on scroll ---------- */
+(function(){
+  var audio=document.getElementById("bgm"); if(!audio) return;
+  var btn=document.getElementById("bgmBtn");
+  var MAX=0.4, FADE=750, started=false, enabled=true;
+  try{ if(localStorage.getItem("mc-bgm")==="off") enabled=false; }catch(e){}
+  function targetVol(){ return MAX*Math.max(0,Math.min(1,1-window.scrollY/FADE)); }
+  function refresh(){
+    if(!enabled){ audio.volume=0; return; }
+    var v=targetVol(); audio.volume=v;
+    if(v<0.002){ if(!audio.paused) audio.pause(); }
+    else if(started && audio.paused){ audio.play().catch(function(){}); }
+  }
+  function start(){
+    if(started||!enabled) return;
+    audio.volume=targetVol();
+    var p=audio.play();
+    if(p&&p.then) p.then(function(){started=true;}).catch(function(){});
+    else started=true;
+  }
+  function setBtn(){ if(btn){ btn.setAttribute("aria-pressed",String(enabled)); btn.classList.toggle("muted",!enabled); } }
+  setBtn();
+  // try immediate autoplay; fall back to the first user gesture
+  start();
+  ["pointerdown","keydown","touchstart"].forEach(function(ev){
+    window.addEventListener(ev,function(){ start(); },{passive:true});
+  });
+  window.addEventListener("scroll",function(){ if(!started) start(); refresh(); },{passive:true});
+  refresh();
+  if(btn) btn.addEventListener("click",function(e){
+    e.stopPropagation();
+    enabled=!enabled;
+    try{ localStorage.setItem("mc-bgm",enabled?"on":"off"); }catch(err){}
+    if(enabled){ started=false; start(); refresh(); } else { audio.pause(); audio.volume=0; }
+    setBtn();
+  });
+})();
+
+// parallax on scroll (hero glow + brain drift)
+var hero=document.querySelector(".hero");
+var pEls=[].slice.call(document.querySelectorAll("[data-parallax]"));
+var ticking=false;
+window.addEventListener("scroll",function(){
+  var h=document.documentElement, s=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
+  if(prog) prog.style.width=Math.min(s*100,100)+"%";
+  if(reduce||ticking) return;
+  ticking=true;
+  requestAnimationFrame(function(){
+    var y=window.scrollY;
+    if(hero) hero.style.setProperty("--py",(y*0.3).toFixed(1)+"px");
+    pEls.forEach(function(el){
+      var r=el.getBoundingClientRect();
+      var off=(r.top+r.height/2)-window.innerHeight/2;
+      el.style.transform="translateY("+(off*parseFloat(el.getAttribute("data-parallax")||"-0.05")).toFixed(1)+"px)";
+    });
+    ticking=false;
+  });
+},{passive:true});
 })();
