@@ -150,7 +150,7 @@ def footer(prefix):
     <div class="footer-col"><h4>Contact</h4><ul>
       <li><a href="tel:{PHONE}">{PHONE_H}</a></li>
       <li><a href="https://www.instagram.com/mindcare.services/" target="_blank" rel="noopener">@mindcare.services</a></li>
-      <li><a href="mailto:traineegenes@gmail.com">traineegenes@gmail.com</a></li>
+      <li><a href="mailto:shaistatariq2002@gmail.com">shaistatariq2002@gmail.com</a></li>
       <li><a href="{prefix}contact.html">Book Consultation</a></li>
       <li><span>Karachi, Pakistan</span></li>
     </ul></div>
