@@ -24,6 +24,18 @@ function applyLang(lang){
   });
   doc.setAttribute("lang",lang);
   doc.setAttribute("dir",lang==="ur"?"rtl":"ltr");
+  // swap meditation audio to match the chosen language, keeping playback state
+  var medi=document.getElementById("medi");
+  if(medi){
+    var src=medi.getAttribute(lang==="ur"?"data-src-ur":"data-src-en");
+    if(src && medi.getAttribute("src")!==src){
+      var wasPlaying=!medi.paused, vol=medi.volume;
+      medi.setAttribute("src",src);
+      medi.load();
+      medi.volume=vol;
+      if(wasPlaying) medi.play().catch(function(){});
+    }
+  }
   var lb=document.getElementById("langBtn");
   if(lb) lb.textContent = lang==="ur" ? "EN" : "اردو";
   try{localStorage.setItem("mc-lang",lang);}catch(e){}
