@@ -43,6 +43,7 @@
 <style>
 :root{
   --teal:#0f9aa8;--teal-dark:#12808d;--teal-deep:#0b5f6d;--teal-light:#e8f9fb;
+  --teal-btn:#087585;--teal-btn-hover:#06626f;
   --green:#2d6a1f;--green-light:#eaf4e6;--coral:#ef8354;
   --bg:#f4fbfb;--surface:#e7f5f4;--card:#ffffff;--ink:#1b2822;--muted:#44544b;
   --border:#d4e9e7;--shadow:0 8px 30px rgba(30,45,40,.08);--radius:20px;
@@ -50,6 +51,7 @@
 }
 html[data-theme="dark"]{
   --teal:#3fd0dc;--teal-dark:#57dbe6;--teal-deep:#8fe8f0;--teal-light:#12312f;
+  --teal-btn:#0a7f90;--teal-btn-hover:#096b79;
   --green:#8fd66f;--green-light:#16281a;--coral:#f6a074;
   --bg:#0e1b13;--surface:#12241a;--card:#12241a;--ink:#eaf4ee;--muted:#a7bcb0;
   --border:#234034;--shadow:0 8px 30px rgba(0,0,0,.35);
@@ -87,8 +89,8 @@ html[lang="ur"] .tag{letter-spacing:normal}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:50px;font-family:inherit;font-size:.95rem;font-weight:600;cursor:pointer;border:none;transition:transform .2s,box-shadow .2s,background .2s}
-.btn-primary{background:var(--teal);color:#fff;box-shadow:0 6px 20px rgba(43,189,201,.32)}
-.btn-primary:hover{background:var(--teal-dark);transform:translateY(-2px)}
+.btn-primary{background:var(--teal-btn);color:#fff;box-shadow:0 6px 20px rgba(43,189,201,.32)}
+.btn-primary:hover{background:var(--teal-btn-hover);transform:translateY(-2px)}
 .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border)}
 .btn-ghost:hover{border-color:var(--teal);color:var(--teal-dark)}
 
@@ -100,8 +102,8 @@ nav{position:fixed;top:0;inset-inline:0;z-index:1000;height:66px;display:flex;al
 .nav-links{display:flex;align-items:center;gap:2px;list-style:none}
 .nav-links a{color:var(--ink);font-size:.93rem;font-weight:500;padding:8px 13px;border-radius:8px;transition:background .2s,color .2s}
 .nav-links a:hover{background:var(--teal-light);color:var(--teal-dark)}.nav-links a.active{background:var(--teal-light);color:var(--teal-deep);font-weight:600;box-shadow:inset 0 -2px 0 var(--teal)}
-.nav-cta{background:var(--teal);color:#fff !important;padding:9px 18px;border-radius:50px}
-.nav-cta:hover{background:var(--teal-dark)}
+.nav-cta{background:var(--teal-btn);color:#fff !important;padding:9px 18px;border-radius:50px}
+.nav-cta:hover{background:var(--teal-btn-hover)}
 .nav-tools{display:flex;align-items:center;gap:8px}
 .icon-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--ink);
   display:grid;place-items:center;cursor:pointer;font-weight:700;font-size:.82rem;transition:transform .2s,background .2s}
@@ -116,7 +118,7 @@ html[data-theme="dark"] .icon-btn .moon{display:block}
 .mobile-menu{display:none;position:fixed;top:66px;inset-inline:0;bottom:0;background:var(--bg);z-index:999;padding:22px;flex-direction:column;gap:2px;overflow-y:auto}
 .mobile-menu.open{display:flex}
 .mobile-menu a{color:var(--ink);font-size:1.1rem;font-weight:500;padding:15px 6px;border-bottom:1px solid var(--border)}
-.mobile-menu .m-cta{margin-top:16px;background:var(--teal);color:#fff;border-radius:50px;text-align:center;border-bottom:none}
+.mobile-menu .m-cta{margin-top:16px;background:var(--teal-btn);color:#fff;border-radius:50px;text-align:center;border-bottom:none}
 
 /* HERO */
 .hero{padding:92px 0 28px;background:linear-gradient(160deg,var(--hero-a),var(--hero-b) 55%,var(--hero-c));position:relative;overflow:hidden}
@@ -191,10 +193,10 @@ a.person:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:
 .faq-a p{padding:0 20px 18px;color:var(--muted);font-size:.96rem;line-height:1.7}
 
 /* CTA */
-.cta{background:linear-gradient(135deg,var(--teal),var(--teal-deep));border-radius:24px;padding:clamp(32px,6vw,56px);text-align:center;color:#fff;max-width:900px;margin:0 auto}
+.cta{background:linear-gradient(135deg,#0a7f90,#0b5f6d);border-radius:24px;padding:clamp(32px,6vw,56px);text-align:center;color:#fff;max-width:900px;margin:0 auto}
 .cta h2{color:#fff}
 .cta p{opacity:.92;margin-top:6px}
-.cta .btn-primary{background:#fff;color:var(--teal-deep)}
+.cta .btn-primary{background:#fff;color:#0b5f6d}
 .cta .btn-ghost{color:#fff;border-color:rgba(255,255,255,.6)}
 .cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
 
