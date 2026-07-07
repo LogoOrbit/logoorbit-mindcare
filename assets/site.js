@@ -176,14 +176,13 @@ if("IntersectionObserver" in window && !reduce){
   if(enabled){
     var ov=document.createElement("div");
     ov.id="audio-gate";
-    ov.innerHTML='<button type="button" aria-label="Enter with sound"><span class="ag-ring"></span><span class="ag-txt">Tap to enter<br><small>with sound on</small></span></button>';
+    ov.innerHTML='<button type="button" aria-label="Tap to enter"><span class="ag-ring"></span><span class="ag-txt">Tap</span></button>';
     var s=document.createElement("style");
     s.textContent='#audio-gate{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;'
       +'background:rgba(6,14,11,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:opacity .6s ease;opacity:1}'
       +'#audio-gate.hide{opacity:0;pointer-events:none}'
       +'#audio-gate button{position:relative;background:none;border:0;cursor:pointer;color:#eafff6;font:inherit;text-align:center;padding:34px}'
-      +'#audio-gate .ag-txt{position:relative;font-weight:600;font-size:1.05rem;line-height:1.5;letter-spacing:.02em}'
-      +'#audio-gate .ag-txt small{font-weight:400;font-size:.8rem;opacity:.75}'
+      +'#audio-gate .ag-txt{position:relative;font-weight:600;font-size:1.5rem;letter-spacing:.08em}'
       +'#audio-gate .ag-ring{position:absolute;inset:50% auto auto 50%;width:150px;height:150px;transform:translate(-50%,-50%);'
       +'border-radius:50%;border:1px solid rgba(47,230,166,.5);box-shadow:0 0 40px rgba(47,230,166,.35),inset 0 0 40px rgba(47,230,166,.2);'
       +'animation:agp 2.4s ease-out infinite}'

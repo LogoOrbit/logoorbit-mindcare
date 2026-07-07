@@ -264,25 +264,24 @@
     }, { threshold: 0.02 }).observe(section);
   }
 
-  // ---- touch / pointer interaction ----
-  var pTX = 0, pTY = 0, pX = 0, pY = 0, poke = 0;
-  function moveAt(cx, cy) {
-    var r = section.getBoundingClientRect();
-    pTX = ((cx - r.left) / (r.width || 1)) * 2 - 1;
-    pTY = ((cy - r.top) / (r.height || 1)) * 2 - 1;
+  // ---- touch / pointer interaction: drag to spin, very smoothly ----
+  var spinVel = 0, dragging = false, lastX = 0;
+  function down(x) { dragging = true; lastX = x; }
+  function move(x) {
+    if (!dragging) return;
+    var dx = x - lastX; lastX = x;
+    spinVel += dx * 0.00025; // add gentle angular velocity from drag
   }
-  section.addEventListener("pointermove", function (e) { moveAt(e.clientX, e.clientY); }, { passive: true });
-  function pokeAt(cx, cy) { moveAt(cx, cy); poke = 1; }
-  section.addEventListener("pointerdown", function (e) { pokeAt(e.clientX, e.clientY); }, { passive: true });
-  section.addEventListener("touchmove", function (e) {
-    if (e.touches[0]) { moveAt(e.touches[0].clientX, e.touches[0].clientY); poke = Math.max(poke, 0.6); }
-  }, { passive: true });
-  section.addEventListener("touchstart", function (e) {
-    if (e.touches[0]) pokeAt(e.touches[0].clientX, e.touches[0].clientY);
-  }, { passive: true });
+  function up() { dragging = false; }
+  section.addEventListener("pointerdown", function (e) { down(e.clientX); }, { passive: true });
+  window.addEventListener("pointermove", function (e) { move(e.clientX); }, { passive: true });
+  window.addEventListener("pointerup", up, { passive: true });
+  section.addEventListener("touchstart", function (e) { if (e.touches[0]) down(e.touches[0].clientX); }, { passive: true });
+  section.addEventListener("touchmove", function (e) { if (e.touches[0]) move(e.touches[0].clientX); }, { passive: true });
+  section.addEventListener("touchend", up, { passive: true });
 
   // ---- render loop ----
-  var t0 = performance.now(), last = t0, scrollSpin = 0, revealS = 0;
+  var t0 = performance.now(), last = t0, scrollSpin = 0, revealS = 0, spin = 0;
   function loop(now) {
     if (!visible) { running = false; return; }
     running = true;
@@ -290,30 +289,29 @@
     var dt = Math.min((now - last) / 1000, 0.05); last = now;
     readAudio();
 
-    // pointer follow + touch "poke" energy (smoothed, decaying)
-    pX += (pTX - pX) * 0.06; pY += (pTY - pY) * 0.06; poke *= 0.93;
-    var react = amp + poke * 0.9;
+    // very smooth spin from drag; slowly eases back to idle (no size/brightness change)
+    spin += spinVel; spinVel *= 0.95;
 
     uniforms.uTime.value = t;
-    uniforms.uAmp.value = react; uniforms.uLow.value = low + poke * 0.6;
-    uniforms.uMid.value = mid + poke * 0.5; uniforms.uHigh.value = high + poke * 0.7;
+    uniforms.uAmp.value = amp; uniforms.uLow.value = low;
+    uniforms.uMid.value = mid; uniforms.uHigh.value = high;
 
     // orb breathing
-    var pulse = 1 + react * 0.3 + low * 0.15 + poke * 0.18;
+    var pulse = 1 + amp * 0.3 + low * 0.15;
     orb.scale.setScalar(pulse);
     for (var s = 0; s < shells.length; s++) {
       shells[s].rotation.y = t * (0.05 + s * 0.03);
       shells[s].rotation.x = t * 0.02 * (s + 1);
       shells[s].scale.setScalar(1 + amp * 0.12 + Math.sin(t * 0.5 + s) * 0.02);
     }
-    glow.scale.setScalar(8 + react * 4.5 + low * 2.2);
-    glow.material.opacity = 0.7 + react * 0.55;
+    glow.scale.setScalar(8 + amp * 4.5 + low * 2.2);
+    glow.material.opacity = 0.7 + amp * 0.55;
 
     // energy field: organic radial spectrum
     for (var i = 0; i < FIELD; i++) {
       var b = analyser ? freq[fBin[i]] / 255 : 0;
       var breathe = 0.12 * Math.sin(t * 0.6 + fAng[i] * 5.0);
-      var rad = fBase[i] + b * 1.6 + react * 0.6 + poke * 0.5 + breathe;
+      var rad = fBase[i] + b * 1.6 + amp * 0.6 + breathe;
       var a2 = fAng[i] + t * 0.05;
       fPos[i * 3] = Math.cos(a2) * rad;
       fPos[i * 3 + 1] = fY[i] + Math.sin(t * 0.4 + fAng[i] * 3.0) * 0.25;
@@ -323,9 +321,9 @@
     field.material.opacity = 0.6 + high * 0.4;
 
     // orbiting particles drift outward on peaks
-    var push = 1 + react * 0.5 + poke * 0.4;
+    var push = 1 + amp * 0.5;
     for (var k = 0; k < ORBIT; k++) {
-      oAng[k] += oSpd[k] * dt * (0.6 + react);
+      oAng[k] += oSpd[k] * dt * (0.6 + amp);
       var rr = oRad[k] * push;
       var ca = Math.cos(oAng[k]) * rr, sa = Math.sin(oAng[k]) * rr;
       var ct = Math.cos(oTilt[k]), st = Math.sin(oTilt[k]);
@@ -351,8 +349,8 @@
     // orb rises up and scales in, then gently sinks as it exits
     group.scale.setScalar(0.55 + revealS * 0.45);
     group.position.y = (1 - revealS) * -2.4 + travel * 1.2;
-    group.rotation.y = t * 0.06 + scrollSpin * 1.6 + pX * 0.5;
-    group.rotation.x = Math.sin(t * 0.1) * 0.05 - scrollSpin * 0.25 + pY * 0.4;
+    group.rotation.y = t * 0.06 + scrollSpin * 1.6 + spin;
+    group.rotation.x = Math.sin(t * 0.1) * 0.05 - scrollSpin * 0.25;
 
     // subtle cinematic camera drift + responsive depth
     camera.position.x = Math.sin(t * 0.08) * 0.35;
