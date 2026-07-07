@@ -24,7 +24,7 @@
   var CAM_Z = 7.2;
   camera.position.set(0, 0, CAM_Z);
 
-  var GREEN = new THREE.Color(0x2fe6a6);
+  var GREEN = new THREE.Color(0x4dffbe);
   var group = new THREE.Group();
   scene.add(group);
 
@@ -119,10 +119,10 @@
       "uniform vec3 uColor;uniform float uAmp,uHigh;varying float vN;varying vec3 vView;",
       "void main(){",
       " float fres=pow(1.0-abs(vView.z),2.2);",
-      " float plasma=0.4+0.6*vN;",
-      " vec3 col=uColor*(plasma+fres*1.4);",
-      " col+=vec3(0.05,0.35,0.22)*uHigh*2.0;",
-      " float a=0.18+fres*0.8+uAmp*0.4;",
+      " float plasma=0.65+0.75*vN;",
+      " vec3 col=uColor*(plasma+fres*2.1)+vec3(0.10,0.55,0.38)*fres;",
+      " col+=vec3(0.10,0.55,0.35)*uHigh*2.4;",
+      " float a=0.32+fres*0.95+uAmp*0.45;",
       " gl_FragColor=vec4(col,a);}"
     ].join("\n")
   });
@@ -135,7 +135,7 @@
     var m = new THREE.Mesh(
       new THREE.IcosahedronGeometry(r, 2),
       new THREE.MeshBasicMaterial({
-        color: GREEN, transparent: true, opacity: 0.05 - i * 0.012,
+        color: GREEN, transparent: true, opacity: 0.11 - i * 0.02,
         blending: THREE.AdditiveBlending, depthWrite: false,
         wireframe: true
       })
@@ -148,18 +148,19 @@
     var c = document.createElement("canvas"); c.width = c.height = 128;
     var g = c.getContext("2d");
     var rg = g.createRadialGradient(64, 64, 0, 64, 64, 64);
-    rg.addColorStop(0, "rgba(90,255,200,1)");
-    rg.addColorStop(0.25, "rgba(47,230,166,0.55)");
+    rg.addColorStop(0, "rgba(180,255,230,1)");
+    rg.addColorStop(0.22, "rgba(90,255,206,0.8)");
+    rg.addColorStop(0.5, "rgba(47,230,166,0.35)");
     rg.addColorStop(1, "rgba(0,40,25,0)");
     g.fillStyle = rg; g.fillRect(0, 0, 128, 128);
     var t = new THREE.CanvasTexture(c); return t;
   }
   var gtex = glowTex();
   var glow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: gtex, color: 0x2fe6a6, transparent: true, opacity: 0.55,
+    map: gtex, color: 0x5affce, transparent: true, opacity: 0.8,
     blending: THREE.AdditiveBlending, depthWrite: false
   }));
-  glow.scale.set(7, 7, 1); scene.add(glow);
+  glow.scale.set(8.5, 8.5, 1); scene.add(glow);
 
   // light-ray sprite (soft vertical volumetric feel)
   var ray = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -200,8 +201,8 @@
   }
   fGeo.setAttribute("position", new THREE.BufferAttribute(fPos, 3));
   var field = new THREE.Points(fGeo, new THREE.PointsMaterial({
-    size: lowPerf ? 0.05 : 0.035, map: ptex, color: 0x2fe6a6,
-    transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending,
+    size: lowPerf ? 0.06 : 0.045, map: ptex, color: 0x6affce,
+    transparent: true, opacity: 1.0, blending: THREE.AdditiveBlending,
     depthWrite: false, sizeAttenuation: true
   }));
   group.add(field);
@@ -220,8 +221,8 @@
   }
   oGeo.setAttribute("position", new THREE.BufferAttribute(oPos, 3));
   var orbit = new THREE.Points(oGeo, new THREE.PointsMaterial({
-    size: 0.06, map: ptex, color: 0x7affd0, transparent: true,
-    opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false
+    size: 0.075, map: ptex, color: 0xb6ffe4, transparent: true,
+    opacity: 1.0, blending: THREE.AdditiveBlending, depthWrite: false
   }));
   group.add(orbit);
 
@@ -263,6 +264,23 @@
     }, { threshold: 0.02 }).observe(section);
   }
 
+  // ---- touch / pointer interaction ----
+  var pTX = 0, pTY = 0, pX = 0, pY = 0, poke = 0;
+  function moveAt(cx, cy) {
+    var r = section.getBoundingClientRect();
+    pTX = ((cx - r.left) / (r.width || 1)) * 2 - 1;
+    pTY = ((cy - r.top) / (r.height || 1)) * 2 - 1;
+  }
+  section.addEventListener("pointermove", function (e) { moveAt(e.clientX, e.clientY); }, { passive: true });
+  function pokeAt(cx, cy) { moveAt(cx, cy); poke = 1; }
+  section.addEventListener("pointerdown", function (e) { pokeAt(e.clientX, e.clientY); }, { passive: true });
+  section.addEventListener("touchmove", function (e) {
+    if (e.touches[0]) { moveAt(e.touches[0].clientX, e.touches[0].clientY); poke = Math.max(poke, 0.6); }
+  }, { passive: true });
+  section.addEventListener("touchstart", function (e) {
+    if (e.touches[0]) pokeAt(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+
   // ---- render loop ----
   var t0 = performance.now(), last = t0, scrollSpin = 0, revealS = 0;
   function loop(now) {
@@ -272,26 +290,30 @@
     var dt = Math.min((now - last) / 1000, 0.05); last = now;
     readAudio();
 
+    // pointer follow + touch "poke" energy (smoothed, decaying)
+    pX += (pTX - pX) * 0.06; pY += (pTY - pY) * 0.06; poke *= 0.93;
+    var react = amp + poke * 0.9;
+
     uniforms.uTime.value = t;
-    uniforms.uAmp.value = amp; uniforms.uLow.value = low;
-    uniforms.uMid.value = mid; uniforms.uHigh.value = high;
+    uniforms.uAmp.value = react; uniforms.uLow.value = low + poke * 0.6;
+    uniforms.uMid.value = mid + poke * 0.5; uniforms.uHigh.value = high + poke * 0.7;
 
     // orb breathing
-    var pulse = 1 + amp * 0.28 + low * 0.15;
+    var pulse = 1 + react * 0.3 + low * 0.15 + poke * 0.18;
     orb.scale.setScalar(pulse);
     for (var s = 0; s < shells.length; s++) {
       shells[s].rotation.y = t * (0.05 + s * 0.03);
       shells[s].rotation.x = t * 0.02 * (s + 1);
       shells[s].scale.setScalar(1 + amp * 0.12 + Math.sin(t * 0.5 + s) * 0.02);
     }
-    glow.scale.setScalar(6.5 + amp * 4 + low * 2);
-    glow.material.opacity = 0.4 + amp * 0.5;
+    glow.scale.setScalar(8 + react * 4.5 + low * 2.2);
+    glow.material.opacity = 0.7 + react * 0.55;
 
     // energy field: organic radial spectrum
     for (var i = 0; i < FIELD; i++) {
       var b = analyser ? freq[fBin[i]] / 255 : 0;
       var breathe = 0.12 * Math.sin(t * 0.6 + fAng[i] * 5.0);
-      var rad = fBase[i] + b * 1.6 + amp * 0.6 + breathe;
+      var rad = fBase[i] + b * 1.6 + react * 0.6 + poke * 0.5 + breathe;
       var a2 = fAng[i] + t * 0.05;
       fPos[i * 3] = Math.cos(a2) * rad;
       fPos[i * 3 + 1] = fY[i] + Math.sin(t * 0.4 + fAng[i] * 3.0) * 0.25;
@@ -301,9 +323,9 @@
     field.material.opacity = 0.6 + high * 0.4;
 
     // orbiting particles drift outward on peaks
-    var push = 1 + amp * 0.5;
+    var push = 1 + react * 0.5 + poke * 0.4;
     for (var k = 0; k < ORBIT; k++) {
-      oAng[k] += oSpd[k] * dt * (0.6 + amp);
+      oAng[k] += oSpd[k] * dt * (0.6 + react);
       var rr = oRad[k] * push;
       var ca = Math.cos(oAng[k]) * rr, sa = Math.sin(oAng[k]) * rr;
       var ct = Math.cos(oTilt[k]), st = Math.sin(oTilt[k]);
@@ -329,8 +351,8 @@
     // orb rises up and scales in, then gently sinks as it exits
     group.scale.setScalar(0.55 + revealS * 0.45);
     group.position.y = (1 - revealS) * -2.4 + travel * 1.2;
-    group.rotation.y = t * 0.06 + scrollSpin * 1.6;
-    group.rotation.x = Math.sin(t * 0.1) * 0.05 - scrollSpin * 0.25;
+    group.rotation.y = t * 0.06 + scrollSpin * 1.6 + pX * 0.5;
+    group.rotation.x = Math.sin(t * 0.1) * 0.05 - scrollSpin * 0.25 + pY * 0.4;
 
     // subtle cinematic camera drift + responsive depth
     camera.position.x = Math.sin(t * 0.08) * 0.35;

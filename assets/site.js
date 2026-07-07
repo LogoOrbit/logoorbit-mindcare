@@ -97,7 +97,7 @@ if("IntersectionObserver" in window && !reduce){
   var medi=document.getElementById("medi");
   var orb=document.getElementById("orb-scene");
   var btn=document.getElementById("bgmBtn");
-  var BGM_MAX=0.4, MEDI_MAX=0.5, started=false, enabled=true;
+  var BGM_MAX=0.4, MEDI_MAX=0.5, started=false, enabled=true, hidden=false;
   // smoothed volumes to avoid any harsh jump / perceived stutter
   var bgmV=0, mediV=0;
   try{ if(localStorage.getItem("mc-bgm")==="off") enabled=false; }catch(e){}
@@ -120,7 +120,7 @@ if("IntersectionObserver" in window && !reduce){
 
   function apply(el, target, max, ref){
     if(!el) return ref;
-    if(!enabled){ el.volume=0; if(!el.paused) el.pause(); return 0; }
+    if(!enabled || hidden){ el.volume=0; if(!el.paused) el.pause(); return hidden?ref:0; }
     ref += (target-ref)*0.12;             // heavy smoothing
     var v=max*ref;
     el.volume=clamp(v);
@@ -163,6 +163,43 @@ if("IntersectionObserver" in window && !reduce){
     if(enabled){ started=false; start(); } else { [bgm,medi].forEach(function(el){ if(el){ el.pause(); el.volume=0; } }); bgmV=mediV=0; }
     setBtn();
   });
+
+  // stop audio when the tab is hidden / browser minimized; resume on return
+  document.addEventListener("visibilitychange",function(){
+    hidden=document.hidden;
+    if(hidden){ [bgm,medi].forEach(function(el){ if(el && !el.paused) el.pause(); }); }
+    else schedule();
+  });
+  window.addEventListener("pagehide",function(){ [bgm,medi].forEach(function(el){ if(el && !el.paused) el.pause(); }); });
+
+  // first-visit prompt so audio can start (browsers block autoplay until a gesture)
+  if(enabled){
+    var ov=document.createElement("div");
+    ov.id="audio-gate";
+    ov.innerHTML='<button type="button" aria-label="Enter with sound"><span class="ag-ring"></span><span class="ag-txt">Tap to enter<br><small>with sound on</small></span></button>';
+    var s=document.createElement("style");
+    s.textContent='#audio-gate{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;'
+      +'background:rgba(6,14,11,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:opacity .6s ease;opacity:1}'
+      +'#audio-gate.hide{opacity:0;pointer-events:none}'
+      +'#audio-gate button{position:relative;background:none;border:0;cursor:pointer;color:#eafff6;font:inherit;text-align:center;padding:34px}'
+      +'#audio-gate .ag-txt{position:relative;font-weight:600;font-size:1.05rem;line-height:1.5;letter-spacing:.02em}'
+      +'#audio-gate .ag-txt small{font-weight:400;font-size:.8rem;opacity:.75}'
+      +'#audio-gate .ag-ring{position:absolute;inset:50% auto auto 50%;width:150px;height:150px;transform:translate(-50%,-50%);'
+      +'border-radius:50%;border:1px solid rgba(47,230,166,.5);box-shadow:0 0 40px rgba(47,230,166,.35),inset 0 0 40px rgba(47,230,166,.2);'
+      +'animation:agp 2.4s ease-out infinite}'
+      +'@keyframes agp{0%{transform:translate(-50%,-50%) scale(.85);opacity:.9}100%{transform:translate(-50%,-50%) scale(1.35);opacity:0}}';
+    function gate(){
+      enabled=true; started=false; start(); schedule(); setBtn();
+      ov.classList.add("hide"); setTimeout(function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); },700);
+      document.removeEventListener("pointerdown",gate);
+    }
+    document.addEventListener("DOMContentLoaded",function(){
+      document.head.appendChild(s); document.body.appendChild(ov);
+      ov.addEventListener("click",gate);
+    });
+    // any first interaction anywhere also satisfies it
+    document.addEventListener("pointerdown",gate,{once:true});
+  }
 })();
 
 // parallax on scroll (hero glow + brain drift)
