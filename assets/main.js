@@ -98,7 +98,7 @@
     "Want to work with one of our specialists?":"ہمارے کسی ماہر کے ساتھ کام کرنا چاہتے ہیں؟",
     "Book a free, confidential consultation and we'll match you with the right person.":"ایک مفت، خفیہ مشورہ بُک کریں اور ہم آپ کو صحیح ماہر سے ملا دیں گے۔",
     // roles
-    "Founder & Lead Psychotherapist":"بانی و لیڈ سائیکو تھراپسٹ","Team Coordinator":"ٹیم کوآرڈینیٹر",
+    "Founder & Associate Psychologist":"بانی و ایسوسی ایٹ سائیکالوجسٹ","Team Coordinator":"ٹیم کوآرڈینیٹر",
     "Psychologist":"ماہرِ نفسیات","Physiotherapist":"فزیو تھراپسٹ","Consultant Physiotherapist":"کنسلٹنٹ فزیو تھراپسٹ",
     "Dental Consultant":"ڈینٹل کنسلٹنٹ",
     // --- about ---
