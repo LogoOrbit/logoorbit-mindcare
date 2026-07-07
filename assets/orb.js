@@ -29,7 +29,7 @@
   scene.add(group);
 
   // ---- audio analysis (shared global stream) ----
-  var audio = document.getElementById("bgm");
+  var audio = document.getElementById("medi") || document.getElementById("bgm");
   var analyser = null, freq = null, actx = null;
   function initAudio() {
     if (analyser || !audio) return;

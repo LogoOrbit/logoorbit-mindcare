@@ -90,40 +90,77 @@ if("IntersectionObserver" in window && !reduce){
   revealEls.forEach(function(el){el.classList.add("vis");});
 }
 
-/* ---------- background music: play on landing, fade out on scroll ---------- */
+/* ---------- audio: hero background music crossfades to the orb meditation,
+   then everything fades out below the orb section. Never both at full. ---------- */
 (function(){
-  var audio=document.getElementById("bgm"); if(!audio) return;
+  var bgm=document.getElementById("bgm"); if(!bgm) return;
+  var medi=document.getElementById("medi");
+  var orb=document.getElementById("orb-scene");
   var btn=document.getElementById("bgmBtn");
-  var MAX=0.4, FADE=750, started=false, enabled=true;
+  var BGM_MAX=0.4, MEDI_MAX=0.5, started=false, enabled=true;
+  // smoothed volumes to avoid any harsh jump / perceived stutter
+  var bgmV=0, mediV=0;
   try{ if(localStorage.getItem("mc-bgm")==="off") enabled=false; }catch(e){}
-  function targetVol(){ return MAX*Math.max(0,Math.min(1,1-window.scrollY/FADE)); }
-  function refresh(){
-    if(!enabled){ audio.volume=0; return; }
-    var v=targetVol(); audio.volume=v;
-    if(v<0.002){ if(!audio.paused) audio.pause(); }
-    else if(started && audio.paused){ audio.play().catch(function(){}); }
+  function clamp(x){ return x<0?0:(x>1?1:x); }
+
+  function targets(){
+    var vh=window.innerHeight||1;
+    if(!orb){ // no orb on page: classic hero fade-on-scroll
+      return { bgm: clamp(1-window.scrollY/750), medi: 0 };
+    }
+    var r=orb.getBoundingClientRect();
+    var enter=clamp((vh-r.top)/vh);      // 0 = orb below viewport, 1 = orb reached top
+    var exit=clamp(r.bottom/vh);          // 1 = orb still on screen, 0 = scrolled past
+    // bgm dominates the hero, gone well before meditation rises (no clash)
+    var bt=clamp(1-enter*2.2);
+    // meditation only inside the orb zone, faded out once scrolled past
+    var mt=Math.min(clamp((enter-0.4)/0.6), exit);
+    return { bgm: bt, medi: mt };
   }
+
+  function apply(el, target, max, ref){
+    if(!el) return ref;
+    if(!enabled){ el.volume=0; if(!el.paused) el.pause(); return 0; }
+    ref += (target-ref)*0.12;             // heavy smoothing
+    var v=max*ref;
+    el.volume=clamp(v);
+    if(v<0.004){ if(!el.paused) el.pause(); }
+    else if(started && el.paused){ el.play().catch(function(){}); }
+    return ref;
+  }
+
+  var raf=false;
+  function tick(){
+    raf=false;
+    var t=targets();
+    bgmV=apply(bgm, t.bgm, BGM_MAX, bgmV);
+    mediV=apply(medi, t.medi, MEDI_MAX, mediV);
+    // keep smoothing until both settle
+    if(Math.abs(bgmV-t.bgm)>0.002 || Math.abs(mediV-t.medi)>0.002) schedule();
+  }
+  function schedule(){ if(!raf){ raf=true; requestAnimationFrame(tick); } }
+
   function start(){
     if(started||!enabled) return;
-    audio.volume=targetVol();
-    var p=audio.play();
-    if(p&&p.then) p.then(function(){started=true;}).catch(function(){});
-    else started=true;
+    started=true;
+    // prime both elements within the user gesture so playback is allowed
+    [bgm,medi].forEach(function(el){ if(el){ el.volume=0; var p=el.play(); if(p&&p.then) p.catch(function(){}); } });
+    schedule();
   }
   function setBtn(){ if(btn){ btn.setAttribute("aria-pressed",String(enabled)); btn.classList.toggle("muted",!enabled); } }
   setBtn();
-  // try immediate autoplay; fall back to the first user gesture
   start();
   ["pointerdown","keydown","touchstart"].forEach(function(ev){
-    window.addEventListener(ev,function(){ start(); },{passive:true});
+    window.addEventListener(ev,function(){ start(); schedule(); },{passive:true});
   });
-  window.addEventListener("scroll",function(){ if(!started) start(); refresh(); },{passive:true});
-  refresh();
+  window.addEventListener("scroll",function(){ if(!started) start(); schedule(); },{passive:true});
+  window.addEventListener("resize",schedule,{passive:true});
+  schedule();
   if(btn) btn.addEventListener("click",function(e){
     e.stopPropagation();
     enabled=!enabled;
     try{ localStorage.setItem("mc-bgm",enabled?"on":"off"); }catch(err){}
-    if(enabled){ started=false; start(); refresh(); } else { audio.pause(); audio.volume=0; }
+    if(enabled){ started=false; start(); } else { [bgm,medi].forEach(function(el){ if(el){ el.pause(); el.volume=0; } }); bgmV=mediV=0; }
     setBtn();
   });
 })();
