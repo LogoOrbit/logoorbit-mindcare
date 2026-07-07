@@ -176,28 +176,36 @@ if("IntersectionObserver" in window && !reduce){
   if(enabled){
     var ov=document.createElement("div");
     ov.id="audio-gate";
-    ov.innerHTML='<button type="button" aria-label="Tap to enter"><span class="ag-ring"></span><span class="ag-txt">Tap</span></button>';
+    ov.innerHTML='<button type="button" class="ag-btn" aria-label="Enter"><span class="ag-ring"></span><span class="ag-ring ag-ring2"></span><span class="ag-lbl">ENTER</span></button>';
     var s=document.createElement("style");
     s.textContent='#audio-gate{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;'
-      +'background:rgba(6,14,11,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:opacity .6s ease;opacity:1}'
+      +'background:rgba(5,12,10,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);'
+      +'transition:opacity .7s ease;opacity:1;will-change:opacity}'
       +'#audio-gate.hide{opacity:0;pointer-events:none}'
-      +'#audio-gate button{position:relative;background:none;border:0;cursor:pointer;color:#eafff6;font:inherit;text-align:center;padding:34px}'
-      +'#audio-gate .ag-txt{position:relative;font-weight:600;font-size:1.5rem;letter-spacing:.08em}'
-      +'#audio-gate .ag-ring{position:absolute;inset:50% auto auto 50%;width:150px;height:150px;transform:translate(-50%,-50%);'
-      +'border-radius:50%;border:1px solid rgba(47,230,166,.5);box-shadow:0 0 40px rgba(47,230,166,.35),inset 0 0 40px rgba(47,230,166,.2);'
-      +'animation:agp 2.4s ease-out infinite}'
-      +'@keyframes agp{0%{transform:translate(-50%,-50%) scale(.85);opacity:.9}100%{transform:translate(-50%,-50%) scale(1.35);opacity:0}}';
+      +'#audio-gate .ag-btn{position:relative;width:172px;height:172px;border-radius:50%;cursor:pointer;'
+      +'background:radial-gradient(circle at 50% 40%,rgba(47,230,166,.28),rgba(6,20,15,.6) 70%);'
+      +'border:1px solid rgba(90,255,206,.55);color:#eafff6;font:600 1.15rem/1 inherit;letter-spacing:.22em;'
+      +'display:flex;align-items:center;justify-content:center;isolation:isolate;'
+      +'box-shadow:0 0 60px rgba(47,230,166,.35),inset 0 0 40px rgba(47,230,166,.18);'
+      +'transition:transform .35s cubic-bezier(.2,.9,.25,1),box-shadow .35s ease;'
+      +'will-change:transform;animation:agFloat 4s ease-in-out infinite}'
+      +'#audio-gate .ag-btn:hover{transform:scale(1.08);box-shadow:0 0 90px rgba(47,230,166,.6),inset 0 0 55px rgba(47,230,166,.3)}'
+      +'#audio-gate .ag-btn:active{transform:scale(.94)}'
+      +'#audio-gate .ag-lbl{position:relative;z-index:2;padding-left:.22em}'
+      +'#audio-gate .ag-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(90,255,206,.5);'
+      +'transform:scale(1);opacity:.9;pointer-events:none;animation:agp 2.6s ease-out infinite;will-change:transform,opacity}'
+      +'#audio-gate .ag-ring2{animation-delay:1.3s}'
+      +'@keyframes agp{0%{transform:scale(.9);opacity:.85}100%{transform:scale(1.9);opacity:0}}'
+      +'@keyframes agFloat{0%,100%{transform:translateY(-6px)}50%{transform:translateY(6px)}}'
+      +'@media(prefers-reduced-motion:reduce){#audio-gate .ag-btn{animation:none}#audio-gate .ag-ring{animation:none;opacity:0}}';
     function gate(){
       enabled=true; started=false; start(); schedule(); setBtn();
-      ov.classList.add("hide"); setTimeout(function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); },700);
-      document.removeEventListener("pointerdown",gate);
+      ov.classList.add("hide"); setTimeout(function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); },800);
     }
     document.addEventListener("DOMContentLoaded",function(){
       document.head.appendChild(s); document.body.appendChild(ov);
-      ov.addEventListener("click",gate);
+      ov.querySelector(".ag-btn").addEventListener("click",gate);
     });
-    // any first interaction anywhere also satisfies it
-    document.addEventListener("pointerdown",gate,{once:true});
   }
 })();
 
