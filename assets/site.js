@@ -101,6 +101,7 @@ if("IntersectionObserver" in window && !reduce){
   // smoothed volumes to avoid any harsh jump / perceived stutter
   var bgmV=0, mediV=0;
   try{ if(localStorage.getItem("mc-bgm")==="off") enabled=false; }catch(e){}
+  window.__mcMuted=!enabled;
   function clamp(x){ return x<0?0:(x>1?1:x); }
 
   function targets(){
@@ -159,6 +160,7 @@ if("IntersectionObserver" in window && !reduce){
   if(btn) btn.addEventListener("click",function(e){
     e.stopPropagation();
     enabled=!enabled;
+    window.__mcMuted=!enabled;
     try{ localStorage.setItem("mc-bgm",enabled?"on":"off"); }catch(err){}
     if(enabled){ started=false; start(); } else { [bgm,medi].forEach(function(el){ if(el){ el.pause(); el.volume=0; } }); bgmV=mediV=0; }
     setBtn();
@@ -178,34 +180,106 @@ if("IntersectionObserver" in window && !reduce){
     ov.id="audio-gate";
     ov.innerHTML='<button type="button" class="ag-btn" aria-label="Enter"><span class="ag-ring"></span><span class="ag-ring ag-ring2"></span><span class="ag-lbl">ENTER</span></button>';
     var s=document.createElement("style");
-    s.textContent='#audio-gate{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;'
-      +'background:rgba(5,12,10,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);'
+    s.textContent='#audio-gate{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2147483000;'
+      +'display:flex;align-items:center;justify-content:center;'
+      +'background:rgba(5,12,10,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);'
       +'transition:opacity .7s ease;opacity:1;will-change:opacity}'
       +'#audio-gate.hide{opacity:0;pointer-events:none}'
-      +'#audio-gate .ag-btn{position:relative;width:172px;height:172px;border-radius:50%;cursor:pointer;'
-      +'background:radial-gradient(circle at 50% 40%,rgba(47,230,166,.28),rgba(6,20,15,.6) 70%);'
-      +'border:1px solid rgba(90,255,206,.55);color:#eafff6;font:600 1.15rem/1 inherit;letter-spacing:.22em;'
-      +'display:flex;align-items:center;justify-content:center;isolation:isolate;'
-      +'box-shadow:0 0 60px rgba(47,230,166,.35),inset 0 0 40px rgba(47,230,166,.18);'
+      +'#audio-gate .ag-btn{position:relative;width:180px;height:180px;border-radius:50%;cursor:pointer;'
+      +'background:radial-gradient(circle at 50% 42%,rgba(90,255,206,.5),rgba(20,70,52,.85) 68%);'
+      +'border:2px solid rgba(120,255,214,.85);color:#f2fffb;font:700 1.4rem/1 inherit;letter-spacing:.24em;'
+      +'display:flex;align-items:center;justify-content:center;isolation:isolate;text-shadow:0 0 18px rgba(90,255,206,.7);'
+      +'box-shadow:0 0 70px rgba(47,230,166,.55),inset 0 0 45px rgba(47,230,166,.3);'
       +'transition:transform .35s cubic-bezier(.2,.9,.25,1),box-shadow .35s ease;'
-      +'will-change:transform;animation:agFloat 4s ease-in-out infinite}'
-      +'#audio-gate .ag-btn:hover{transform:scale(1.08);box-shadow:0 0 90px rgba(47,230,166,.6),inset 0 0 55px rgba(47,230,166,.3)}'
+      +'will-change:transform;animation:agFloat 3.6s ease-in-out infinite}'
+      +'#audio-gate .ag-btn:hover{transform:scale(1.09);box-shadow:0 0 110px rgba(47,230,166,.8),inset 0 0 60px rgba(47,230,166,.45)}'
       +'#audio-gate .ag-btn:active{transform:scale(.94)}'
-      +'#audio-gate .ag-lbl{position:relative;z-index:2;padding-left:.22em}'
-      +'#audio-gate .ag-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(90,255,206,.5);'
+      +'#audio-gate .ag-lbl{position:relative;z-index:2;padding-left:.24em}'
+      +'#audio-gate .ag-ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(120,255,214,.7);'
       +'transform:scale(1);opacity:.9;pointer-events:none;animation:agp 2.6s ease-out infinite;will-change:transform,opacity}'
       +'#audio-gate .ag-ring2{animation-delay:1.3s}'
-      +'@keyframes agp{0%{transform:scale(.9);opacity:.85}100%{transform:scale(1.9);opacity:0}}'
+      +'@keyframes agp{0%{transform:scale(.92);opacity:.9}100%{transform:scale(1.95);opacity:0}}'
       +'@keyframes agFloat{0%,100%{transform:translateY(-6px)}50%{transform:translateY(6px)}}'
       +'@media(prefers-reduced-motion:reduce){#audio-gate .ag-btn{animation:none}#audio-gate .ag-ring{animation:none;opacity:0}}';
     function gate(){
       enabled=true; started=false; start(); schedule(); setBtn();
       ov.classList.add("hide"); setTimeout(function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); },800);
     }
-    document.addEventListener("DOMContentLoaded",function(){
-      document.head.appendChild(s); document.body.appendChild(ov);
+    function mount(){
+      document.head.appendChild(s);
+      // append to <html>, not <body>: body has a running animation that would make
+      // position:fixed resolve against the whole page instead of the viewport
+      document.documentElement.appendChild(ov);
       ov.querySelector(".ag-btn").addEventListener("click",gate);
-    });
+    }
+    if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",mount);
+    else mount();
+  }
+})();
+
+/* ---------- subtle UI sound effects (synthesized, no assets) ---------- */
+(function(){
+  var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
+  var ctx, master, noiseBuf;
+  function ensure(){
+    if(window.__mcMuted) return null;
+    if(!ctx){
+      ctx=new AC(); master=ctx.createGain(); master.gain.value=0.5; master.connect(ctx.destination);
+      var len=ctx.sampleRate*1; noiseBuf=ctx.createBuffer(1,len,ctx.sampleRate);
+      var d=noiseBuf.getChannelData(0); for(var i=0;i<len;i++) d[i]=Math.random()*2-1;
+    }
+    if(ctx.state==="suspended") ctx.resume();
+    return ctx.state==="running"?ctx:null;
+  }
+  ["pointerdown","keydown","touchstart"].forEach(function(ev){
+    window.addEventListener(ev,function(){ if(!window.__mcMuted && ctx && ctx.state==="suspended") ctx.resume(); },{passive:true});
+  });
+
+  function blip(){
+    var c=ensure(); if(!c) return; var t=c.currentTime;
+    var o=c.createOscillator(), g=c.createGain();
+    o.type="sine"; o.frequency.setValueAtTime(500,t); o.frequency.exponentialRampToValueAtTime(760,t+0.06);
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.045,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.15);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t+0.17);
+  }
+  function whoosh(amt){
+    var c=ensure(); if(!c) return; var t=c.currentTime;
+    var src=c.createBufferSource(); src.buffer=noiseBuf;
+    var bp=c.createBiquadFilter(); bp.type="bandpass"; bp.Q.value=0.8;
+    bp.frequency.setValueAtTime(280,t); bp.frequency.exponentialRampToValueAtTime(1500,t+0.25);
+    var g=c.createGain(); var v=Math.min(0.16,0.03+amt*0.16);
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(v,t+0.05);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.4);
+    src.connect(bp); bp.connect(g); g.connect(master); src.start(t); src.stop(t+0.45);
+  }
+
+  // hover blips on interactive cards / buttons
+  var HOVER=".btn,.nav-cta,.icon-btn,a.card,a.person,.faq-q";
+  var cur=null;
+  document.addEventListener("pointerover",function(e){
+    if(e.pointerType==="touch") return;
+    var el=e.target.closest&&e.target.closest(HOVER);
+    if(el && el!==cur){ cur=el; blip(); }
+    else if(!el) cur=null;
+  },{passive:true});
+
+  // whoosh while dragging the hero brain
+  var brain=document.getElementById("brain");
+  if(brain){
+    var down=false,lx=0,ly=0,lastW=0;
+    function s(x,y){ down=true; lx=x; ly=y; }
+    function m(x,y){
+      if(!down) return; var dx=x-lx,dy=y-ly; lx=x; ly=y;
+      var sp=Math.sqrt(dx*dx+dy*dy), now=performance.now();
+      if(sp>7 && now-lastW>170){ lastW=now; whoosh(Math.min(1,sp/55)); }
+    }
+    brain.addEventListener("pointerdown",function(e){ s(e.clientX,e.clientY); },{passive:true});
+    window.addEventListener("pointermove",function(e){ m(e.clientX,e.clientY); },{passive:true});
+    window.addEventListener("pointerup",function(){ down=false; },{passive:true});
+    brain.addEventListener("touchstart",function(e){ if(e.touches[0]) s(e.touches[0].clientX,e.touches[0].clientY); },{passive:true});
+    brain.addEventListener("touchmove",function(e){ if(e.touches[0]) m(e.touches[0].clientX,e.touches[0].clientY); },{passive:true});
+    window.addEventListener("touchend",function(){ down=false; },{passive:true});
   }
 })();
 
