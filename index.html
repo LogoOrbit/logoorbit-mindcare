@@ -286,7 +286,7 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
   <a href="contact.html" class="m-cta" data-i18n="nav.book">Book a Consultation</a>
 </div>
 
-<audio id="bgm" src="assets/Background%20Music%20For%20Website.mp3" loop preload="auto"></audio>
+<audio id="bgm" src="https://raw.githubusercontent.com/LogoOrbit/talklive.ai/main/marketing/Meditation.mp3" crossorigin="anonymous" loop preload="auto"></audio>
 <button id="bgmBtn" class="bgm-btn" type="button" aria-label="Toggle background music" aria-pressed="true" title="Music on/off">
   <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path class="wave-eq" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>
   <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>
@@ -317,6 +317,14 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
   </div>
   <svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V38C240 8 480 0 720 16s480 44 720 22v32H0Z"/></svg>
 </section>
+
+<!-- IMMERSIVE ORB -->
+<style>
+#orb-scene{position:relative;width:100%;height:100vh;min-height:560px;background:#000;overflow:hidden;isolation:isolate;line-height:0}
+#orb-canvas{display:block;width:100%;height:100%}
+@media(max-width:720px){#orb-scene{height:82vh;min-height:460px}}
+</style>
+<section id="orb-scene" aria-hidden="true"><canvas id="orb-canvas"></canvas></section>
 
 <!-- FEELINGS -->
 <section id="feelings">
@@ -504,5 +512,7 @@ var I18N={
 </script>
 <script src="assets/site.js" defer></script>
 <script src="assets/brain.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="assets/orb.js" defer></script>
 </body>
 </html>
