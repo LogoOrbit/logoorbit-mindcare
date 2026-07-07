@@ -125,9 +125,19 @@ section { padding: 56px 5%; }
 .profile-head { display: grid; grid-template-columns: auto 1fr; gap: 30px; align-items: center; }
 .profile-avatar { width: 150px; height: 150px; border-radius: 28px; overflow: hidden; border: 4px solid white; box-shadow: var(--shadow-soft); flex-shrink: 0; }
 .profile-avatar svg { width: 100%; height: 100%; display: block; }
-.profile-head .role { color: var(--teal-dark); font-weight: 600; font-size: 0.95rem; margin: 4px 0 10px; }
+.profile-head .role { color: var(--teal-dark); font-weight: 600; font-size: 0.95rem; margin: 4px 0 6px; }
+.profile-head .role-sub { color: var(--gray); font-size: 0.86rem; font-weight: 500; line-height: 1.5; margin: 0 0 12px; max-width: 46ch; }
 .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .mini-tag { background: var(--teal-light); color: var(--teal-deep); font-size: 0.78rem; font-weight: 600; padding: 5px 12px; border-radius: 50px; }
+/* Profile CV + skills (used on richer team profiles) */
+.detail-body .cv-list { list-style: none; display: block; margin: 0 0 22px; padding: 0; }
+.detail-body .cv-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; padding: 13px 0; border-bottom: 1px solid var(--border); }
+.detail-body .cv-list li:last-child { border-bottom: none; }
+.detail-body .cv-list .cv-role { font-weight: 600; color: var(--dark); font-size: 0.98rem; }
+.detail-body .cv-list .cv-org { color: var(--teal-dark); font-weight: 500; font-size: 0.92rem; }
+.detail-body .cv-list .cv-date { margin-left: auto; color: var(--gray); font-size: 0.82rem; white-space: nowrap; }
+.detail-body .skill-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 9px; margin: 0 0 22px; padding: 0; }
+.detail-body .skill-chips li { display: inline-flex; background: var(--teal-light); color: var(--teal-deep); font-size: 0.8rem; font-weight: 600; padding: 7px 14px; border-radius: 50px; border: 1px solid var(--border); }
 
 /* CTA BAND */
 .cta-band { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-deep) 100%); padding: 60px 5%; }

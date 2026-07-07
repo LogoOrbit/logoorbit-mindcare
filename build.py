@@ -86,6 +86,7 @@ def nav(prefix, active=None):
     <li><a href="{prefix}services/index.html"{cls('services')}>Services</a></li>
     <li><a href="{prefix}about.html"{cls('about')}>About</a></li>
     <li><a href="{prefix}team/index.html"{cls('team')}>Team</a></li>
+    <li><a href="{prefix}articles.html"{cls('articles')}>Articles</a></li>
     <li><a href="{prefix}contact.html" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
@@ -99,6 +100,7 @@ def nav(prefix, active=None):
   <a href="{prefix}services/index.html">Services</a>
   <a href="{prefix}about.html">About</a>
   <a href="{prefix}team/index.html">Team</a>
+  <a href="{prefix}articles.html">Articles</a>
   <a href="{prefix}contact.html" class="m-cta">Book a Consultation</a>
 </div>
 <div class="wa-float">
@@ -145,6 +147,7 @@ def footer(prefix):
       <li><a href="{prefix}index.html#about">About Us</a></li>
       <li><a href="{prefix}index.html#journey">How It Works</a></li>
       <li><a href="{prefix}team/index.html">Our Team</a></li>
+      <li><a href="{prefix}articles.html">Articles</a></li>
       <li><a href="{prefix}guides.html">Help &amp; Guides</a></li>
       <li><a href="{prefix}index.html#faq">FAQ</a></li>
       <li><a href="{prefix}contact.html">Book Appointment</a></li>
@@ -512,17 +515,33 @@ AV = {
 }
 
 TEAM = [
-    dict(slug="shaista-tariq", av="shaista", name="Shaista Tariq", role="Founder & Lead Psychotherapist",
-         title="Shaista Tariq — Founder & Lead Psychotherapist (PPA Member) | MindCare Services®",
-         desc="Shaista Tariq is the founder and lead psychotherapist of MindCare Services® in Karachi, and a personal Member of the Pakistan Psychological Association (PPA).",
-         tags=["PPA Member", "Psychotherapist", "Mental Health Educator"],
-         job="Psychotherapist",
-         bio=["Shaista Tariq is a Psychotherapist, Mental Health Consultant &amp; Educator, and the founder of MindCare Services®. She is personally a verified Member of the Pakistan Psychological Association (PPA).",
+    dict(slug="shaista-tariq", av="shaista", name="Shaista Tariq", role="Founder & Associate Psychologist",
+         title="Shaista Tariq — Founder & Associate Psychologist (PPA Member) | MindCare Services®",
+         desc="Shaista Tariq is the founder of MindCare Services® in Karachi — an Associate Psychologist, Counsellor, Behavior Therapist and Mental Health Care Provider, and a personal Member of the Pakistan Psychological Association (PPA).",
+         tags=["Founder", "PPA Member", "Associate Psychologist", "Behavior Therapist"],
+         job="Psychologist",
+         headline="Associate Psychologist | Counsellor | Mental Health Care Provider | Behavior Therapist",
+         bio=["Shaista Tariq is an Associate Psychologist, Counsellor, Behavior Therapist and Mental Health Care Provider, and the founder of MindCare Services®. She is personally a verified Member of the Pakistan Psychological Association (PPA).",
               "She founded MindCare on a single belief: no one should have to struggle alone, or feel that what they're going through isn't \"serious enough\" to ask for help. Under her leadership, MindCare has grown into a multidisciplinary team offering holistic, evidence-based care across Karachi.",
-              "Shaista works with adults and adolescents using approaches including Cognitive Behavioral Therapy (CBT), psychodynamic and motivational therapy, and also leads awareness sessions and trainings for workplaces, schools and institutions."],
-         focus=["Anxiety, depression and stress", "Trauma and difficult life experiences", "Cognitive Behavioral Therapy (CBT)",
-                "Family and relationship counseling", "Mental health education & awareness training"],
-         knows=["Psychotherapy", "Cognitive Behavioral Therapy", "Mental Health", "Family Counseling", "Trauma Therapy", "Anxiety", "Depression"],
+              "Alongside MindCare, Shaista works as a Behavioral Therapist and Additional Needs Coordinator at VIVI – The Bear School, supporting children with additional needs. She works with adults and adolescents using approaches including Cognitive Behavioral Therapy (CBT), Applied Behavior Analysis (ABA) and motivational therapy, and leads awareness sessions and trainings for workplaces, schools and institutions.",
+              "She also writes on mental health, workplaces and the human side of care — you can <a href=\"../articles.html\">read her articles here</a>."],
+         focus=["Anxiety, depression and stress", "Behavior therapy &amp; child mental health", "Cognitive Behavioral Therapy (CBT)",
+                "Counselling for individuals and families", "Mental health education &amp; awareness training"],
+         knows=["Psychology", "Counselling", "Cognitive Behavioral Therapy", "Applied Behavior Analysis", "Behavioral Therapy", "Child Mental Health", "Mental Health"],
+         experience=[
+             {"role": "Founder", "org": "MindCare Services®", "date": "Aug 2024 – Present"},
+             {"role": "Additional Needs Coordinator", "org": "VIVI – The Bear School", "date": "Nov 2025 – Present"},
+             {"role": "Behavioral Therapist", "org": "VIVI – The Bear School", "date": "Dec 2024 – Present"},
+             {"role": "Member", "org": "Pakistan Psychological Association", "date": "Mar 2026 – Present"},
+             {"role": "Child Mental Health Care Provider", "org": "Core Care Clinic", "date": "Feb 2024 – Aug 2024"},
+             {"role": "Management Sub-coordinator", "org": "Core Care Clinic", "date": "Feb 2024 – Aug 2024"},
+         ],
+         education=[
+             {"title": "ABA Certification, Psychology", "org": "American Council of Training & Development", "date": "2024"},
+             {"title": "Bachelor of Psychology (Social Sciences)", "org": "Jinnah University for Women", "date": "2020 – 2024"},
+         ],
+         skills=["Business Ownership", "Early-Stage Ventures", "Start-up Leadership", "Cognitive Behavioral Therapy (CBT)",
+                 "Applied Behavior Analysis (ABA)", "Behavioral Therapy", "Counselling", "Child Mental Health", "Mental Health Awareness"],
          member="PPA"),
     dict(slug="ribqah-arshad", av="ribqah", name="Ribqah Arshad", role="Team Coordinator",
          title="Ribqah Arshad — Team Coordinator | MindCare Services® Karachi",
@@ -589,6 +608,35 @@ def team_page(m):
     tags = "".join(f'<span class="mini-tag">{t}</span>' for t in m["tags"])
     bio = "\n".join(f"        <p>{p}</p>" for p in m["bio"])
     focus = "\n".join(li(prefix, f) for f in m["focus"])
+    headline_html = f'<div class="role-sub">{m["headline"]}</div>' if m.get("headline") else ""
+    extra = ""
+    if m.get("experience"):
+        rows = "\n".join(
+            f'          <li><span class="cv-role">{html.escape(e["role"])}</span>'
+            f'<span class="cv-org">{html.escape(e["org"])}</span>'
+            f'<span class="cv-date">{html.escape(e["date"])}</span></li>'
+            for e in m["experience"])
+        extra += f"""        <h2>Experience</h2>
+        <ul class="cv-list">
+{rows}
+        </ul>
+"""
+    if m.get("education"):
+        rows = "\n".join(
+            f'          <li><span class="cv-role">{html.escape(e["title"])}</span>'
+            f'<span class="cv-org">{html.escape(e["org"])}</span>'
+            f'<span class="cv-date">{html.escape(e["date"])}</span></li>'
+            for e in m["education"])
+        extra += f"""        <h2>Education &amp; Credentials</h2>
+        <ul class="cv-list">
+{rows}
+        </ul>
+"""
+    if m.get("skills"):
+        chips = "".join(f'<li>{html.escape(s)}</li>' for s in m["skills"])
+        extra += f"""        <h2>Skills</h2>
+        <ul class="skill-chips">{chips}</ul>
+"""
     svc = m.get("service")
     svc_link = ""
     if svc:
@@ -605,6 +653,7 @@ def team_page(m):
       <div>
         <h1 style="margin-bottom:2px">{m['name']}</h1>
         <div class="role">{m['role']}</div>
+        {headline_html}
         <div class="tag-row">{tags}</div>
       </div>
     </div>
@@ -620,7 +669,7 @@ def team_page(m):
         <ul>
 {focus}
         </ul>
-        {svc_link}
+{extra}        {svc_link}
       </div>
       <aside class="aside-card fade-up">
         <h3>Book with {m['name'].split()[0]}</h3>
@@ -1005,6 +1054,70 @@ def guides_index():
     return out
 
 
+# ─────────────────────────── ARTICLES ───────────────────────────
+# Articles written by Shaista Tariq, published on LinkedIn. Cards link out to
+# the full pieces on LinkedIn (external), so bodies are not mirrored here.
+ARTICLES = [
+    dict(title="The Soul Cannot Be Coded",
+         url="https://www.linkedin.com/pulse/soul-cannot-coded-shaista-tariq-pp4df/",
+         blurb="A reflection on the deeply human core of care and connection — and why empathy, presence and the human soul can never truly be replaced by technology or automation."),
+    dict(title="The Cost of Professionalism vs. The Reality of Pay",
+         url="https://www.linkedin.com/pulse/cost-professionalism-vs-reality-pay-shaista-tariq-sv88f/",
+         blurb="An honest look at the gap between the standards, dedication and professionalism expected of care workers and the reality of how that work is recognised and paid."),
+    dict(title="Consistency vs. Correction",
+         url="https://www.linkedin.com/pulse/consistency-vs-correction-shaista-tariq-3ozpf/",
+         blurb="Why steady, consistent support shapes lasting behaviour and growth far more than constant correction — insights drawn from working with children and additional needs."),
+    dict(title="Why People Leave Jobs, Productivity Drops & Businesses Struggle",
+         url="https://www.linkedin.com/pulse/why-people-leave-jobs-productivity-drops-businesses-struggle-tariq-ey6zf/",
+         blurb="The psychological and human factors behind disengagement, burnout and turnover at work — and what leaders and workplaces can do to genuinely support their people."),
+]
+
+
+def articles_index():
+    prefix = ""
+    url = f"{BASE}/articles.html"
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "CollectionPage", "name": "Articles by Shaista Tariq — MindCare Services®", "url": url,
+         "description": "Articles and reflections by Shaista Tariq, founder of MindCare Services®, on mental health, care, workplaces and the human side of psychology."},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Articles", "item": url}]},
+        {"@type": "ItemList", "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "name": a["title"], "url": a["url"]}
+            for i, a in enumerate(ARTICLES)]}]}
+    cards = "\n".join(
+        f'''      <a class="link-card fade-up" href="{a['url']}" target="_blank" rel="noopener">
+        <div class="fi">{icon(prefix,'i-book')}</div>
+        <h3>{html.escape(a['title'])}</h3><p>{html.escape(a['blurb'])}</p>
+        <span class="more">Read on LinkedIn →</span></a>''' for a in ARTICLES)
+    out = head("Articles by Shaista Tariq | Mental Health, Care & Workplaces — MindCare Services®",
+               "Articles and reflections by Shaista Tariq, founder of MindCare Services® in Karachi — on mental health, the human side of care, workplaces and behaviour.",
+               url, prefix, schema)
+    out += nav(prefix, "articles")
+    out += f"""<main id="main">
+<header class="page-hero">
+  <div class="ph-inner">
+    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Articles</li></ol>
+    <div class="ph-badge">{icon(prefix,'i-book')} Writing &amp; reflections</div>
+    <h1>Articles by <em>Shaista Tariq</em></h1>
+    <p class="lede">Reflections on mental health, the human side of care, workplaces and behaviour — written by Shaista Tariq, founder of MindCare Services®. Read the full pieces on LinkedIn.</p>
+    <div class="ph-actions"><a href="{prefix}team/shaista-tariq.html" class="btn-secondary">About Shaista →</a></div>
+  </div>
+</header>
+<section>
+  <div class="section-inner">
+    <div class="card-grid">
+{cards}
+    </div>
+  </div>
+</section>
+{cta_band(prefix, "Have something on your mind?", "Whether it's for you or someone you care about, we're here. Reach out for a free, confidential consultation.")}
+</main>
+"""
+    out += footer(prefix)
+    return out
+
+
 def confirmation_page():
     prefix = ""
     url = f"{BASE}/confirmed"
@@ -1075,11 +1188,12 @@ def build():
     for t in TOPICS:
         write(f"{t['slug']}.html", seo_page(t))
     write("guides.html", guides_index())
+    write("articles.html", articles_index())
     write("confirmed.html", confirmation_page())
     # sitemap
     urls = [(f"{BASE}/", "1.0"), (f"{BASE}/contact", "0.8"),
             (f"{BASE}/services/", "0.9"), (f"{BASE}/team/", "0.7"),
-            (f"{BASE}/guides.html", "0.8")]
+            (f"{BASE}/guides.html", "0.8"), (f"{BASE}/articles.html", "0.7")]
     urls += [(f"{BASE}/services/{s['slug']}", "0.8") for s in SERVICES]
     urls += [(f"{BASE}/team/{m['slug']}", "0.6") for m in TEAM]
     urls += [(f"{BASE}/{t['slug']}", "0.8") for t in TOPICS]
