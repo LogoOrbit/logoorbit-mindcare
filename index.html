@@ -321,9 +321,10 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 
 <!-- IMMERSIVE ORB -->
 <style>
-#orb-scene{position:relative;width:100%;height:100vh;min-height:560px;background:#000;overflow:hidden;isolation:isolate;line-height:0}
-#orb-canvas{display:block;width:100%;height:100%}
-@media(max-width:720px){#orb-scene{height:82vh;min-height:460px}}
+#orb-scene{position:relative;width:100%;height:100vh;min-height:560px;background:transparent;overflow:hidden;isolation:isolate;line-height:0}
+#orb-canvas{display:block;width:100%;height:100%;background:transparent}
+@media(max-width:720px){#orb-scene{height:70vh;min-height:420px}}
+@media(max-width:480px){#orb-scene{height:60vh;min-height:360px}}
 </style>
 <section id="orb-scene" aria-hidden="true"><canvas id="orb-canvas"></canvas></section>
 

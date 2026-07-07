@@ -16,13 +16,13 @@
   if (lowPerf) dpr = Math.min(dpr, 1.5);
 
   // ---- renderer / scene / camera ----
-  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !lowPerf, alpha: false });
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !lowPerf, alpha: true, premultipliedAlpha: false });
   renderer.setPixelRatio(dpr);
-  renderer.setClearColor(0x000000, 1);
+  renderer.setClearColor(0x000000, 0); // fully transparent — blends with page in light & dark
   var scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x001108, 0.05);
   var camera = new THREE.PerspectiveCamera(46, 1, 0.1, 100);
-  camera.position.set(0, 0, 7.2);
+  var CAM_Z = 7.2;
+  camera.position.set(0, 0, CAM_Z);
 
   var GREEN = new THREE.Color(0x2fe6a6);
   var group = new THREE.Group();
@@ -100,7 +100,7 @@
   var orbMat = new THREE.ShaderMaterial({
     uniforms: uniforms,
     transparent: true,
-    blending: THREE.AdditiveBlending,
+    blending: THREE.NormalBlending, // keeps the orb body visible on light backgrounds too
     depthWrite: false,
     vertexShader: NOISE + [
       "uniform float uTime,uAmp,uLow,uMid;varying float vN;varying vec3 vView;",
@@ -245,7 +245,11 @@
     var r = section.getBoundingClientRect();
     var ww = r.width || innerWidth, hh = r.height || innerHeight;
     renderer.setSize(ww, hh, false);
-    camera.aspect = ww / hh; camera.updateProjectionMatrix();
+    camera.aspect = ww / hh;
+    // pull the camera back on narrow / portrait screens so the whole orb + field fit
+    var portrait = hh > ww;
+    CAM_Z = ww < 560 ? 10.6 : ww < 900 ? (portrait ? 9.6 : 8.4) : 7.2;
+    camera.updateProjectionMatrix();
   }
   resize();
   addEventListener("resize", resize, { passive: true });
@@ -260,7 +264,7 @@
   }
 
   // ---- render loop ----
-  var t0 = performance.now(), last = t0;
+  var t0 = performance.now(), last = t0, scrollSpin = 0, revealS = 0;
   function loop(now) {
     if (!visible) { running = false; return; }
     running = true;
@@ -311,11 +315,27 @@
 
     dust.rotation.y = t * 0.01;
 
-    // idle rotation + subtle cinematic camera drift
-    group.rotation.y = t * 0.06;
-    group.rotation.x = Math.sin(t * 0.1) * 0.05;
+    // ---- scroll-driven reveal + parallax animation ----
+    var rc = section.getBoundingClientRect();
+    var vh2 = innerHeight || 1;
+    // 0 as section rises from the bottom of the viewport, 1 once fully arrived
+    var revealT = Math.max(0, Math.min(1, (vh2 - rc.top) / (vh2 * 0.85)));
+    var eased = revealT * revealT * (3 - 2 * revealT); // smoothstep
+    // travel: 0 centered → +/- as it leaves the viewport (for spin + drift accents)
+    var travel = ((rc.top + rc.height / 2) - vh2 / 2) / vh2;
+    scrollSpin += (travel * 0.9 - scrollSpin) * 0.06;
+    revealS += (eased - revealS) * 0.1;
+
+    // orb rises up and scales in, then gently sinks as it exits
+    group.scale.setScalar(0.55 + revealS * 0.45);
+    group.position.y = (1 - revealS) * -2.4 + travel * 1.2;
+    group.rotation.y = t * 0.06 + scrollSpin * 1.6;
+    group.rotation.x = Math.sin(t * 0.1) * 0.05 - scrollSpin * 0.25;
+
+    // subtle cinematic camera drift + responsive depth
     camera.position.x = Math.sin(t * 0.08) * 0.35;
-    camera.position.y = Math.cos(t * 0.06) * 0.22;
+    camera.position.y = Math.cos(t * 0.06) * 0.22 + travel * 0.6;
+    camera.position.z += (CAM_Z - camera.position.z) * 0.08;
     camera.lookAt(0, 0, 0);
 
     renderer.render(scene, camera);
