@@ -246,6 +246,31 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
   .nav-cta{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.fade-up{opacity:1;transform:none}}
+
+/* Custom video player */
+.vplayer{position:relative;max-width:860px;margin:0 auto;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 18px 44px rgba(11,95,109,.22)}
+.vplayer video{width:100%;display:block;cursor:pointer}
+.vp-big{position:absolute;inset:0;margin:auto;width:84px;height:84px;border:0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,var(--teal),var(--teal-deep));box-shadow:0 8px 30px rgba(0,0,0,.35);transition:transform .25s,opacity .25s}
+.vp-big svg{width:38px;height:38px;margin-left:4px}
+.vp-big:hover{transform:scale(1.08)}
+.vplayer.playing .vp-big{opacity:0;pointer-events:none;transform:scale(1.3)}
+.vp-bar{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(transparent,rgba(0,0,0,.75));opacity:0;transition:opacity .25s}
+.vplayer:hover .vp-bar,.vplayer:not(.playing) .vp-bar,.vplayer.touched .vp-bar{opacity:1}
+.vp-btn{border:0;background:none;color:#fff;cursor:pointer;padding:6px;display:flex;border-radius:8px;transition:background .2s}
+.vp-btn:hover{background:rgba(255,255,255,.15)}
+.vp-btn svg{width:22px;height:22px}
+.vp-play .i-pause,.vplayer.playing .vp-play .i-play{display:none}
+.vplayer.playing .vp-play .i-pause{display:block}
+.vp-mute .i-muted,.vplayer.muted .vp-mute .i-vol{display:none}
+.vplayer.muted .vp-mute .i-muted{display:block}
+.vp-track{position:relative;flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,.25);cursor:pointer}
+.vp-track:hover{height:8px}
+.vp-buffer{position:absolute;inset:0;width:0;border-radius:3px;background:rgba(255,255,255,.35)}
+.vp-fill{position:absolute;inset:0;width:0;border-radius:3px;background:linear-gradient(90deg,var(--teal),#3fd0dc)}
+.vp-knob{position:absolute;top:50%;left:0;width:14px;height:14px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 1px 5px rgba(0,0,0,.4);opacity:0;transition:opacity .2s}
+.vp-track:hover .vp-knob,.vplayer.playing .vp-track .vp-knob{opacity:1}
+.vp-time{color:#fff;font-size:.8rem;font-variant-numeric:tabular-nums;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+@media (max-width:560px){.vp-big{width:64px;height:64px}.vp-big svg{width:28px;height:28px}.vp-time{display:none}}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZFCFZT32R"></script>
@@ -385,11 +410,19 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
       <span class="tag" data-i18n="vid.tag">Self awareness</span>
       <h2 data-i18n="vid.title">Sanena Zaheer, Associate Psychologist — Contribution on Stress Awareness</h2>
     </div>
-    <div class="fade-up" style="max-width:860px;margin:0 auto">
-      <video controls preload="metadata" style="width:100%;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.12);display:block;background:#000">
+    <div class="fade-up vplayer" id="vplayer">
+      <video preload="metadata" playsinline>
         <source src="https://CinegmaFilms.b-cdn.net/Stress%20Awarness.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
+      <button class="vp-big" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg></button>
+      <div class="vp-bar">
+        <button class="vp-btn vp-play" aria-label="Play"><svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg><svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+        <div class="vp-track" aria-label="Seek"><div class="vp-buffer"></div><div class="vp-fill"></div><div class="vp-knob"></div></div>
+        <span class="vp-time">0:00 / 0:00</span>
+        <button class="vp-btn vp-mute" aria-label="Mute"><svg class="i-vol" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.5 3a3.5 3.5 0 0 0-2-3.2v6.4a3.5 3.5 0 0 0 2-3.2Zm-2-7v2.1a5 5 0 0 1 0 9.8V19a7 7 0 0 0 0-14Z"/></svg><svg class="i-muted" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.3 3 2.1-2.1 1.4 1.4-2.1 2.1 2.1 2.1-1.4 1.4-2.1-2.1-2.1 2.1-1.4-1.4 2.1-2.1-2.1-2.1 1.4-1.4 2.1 2.1Z"/></svg></button>
+        <button class="vp-btn vp-fs" aria-label="Fullscreen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h6v2H6v4H4V4Zm10 0h6v6h-2V6h-4V4ZM4 14h2v4h4v2H4v-6Zm14 0h2v6h-6v-2h4v-4Z"/></svg></button>
+      </div>
     </div>
   </div>
 </section>
@@ -535,5 +568,42 @@ var I18N={
 <script src="assets/brain.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <script src="assets/orb.js" defer></script>
+<script>
+(function(){
+  var p=document.getElementById('vplayer');if(!p)return;
+  var v=p.querySelector('video'),track=p.querySelector('.vp-track'),fill=p.querySelector('.vp-fill'),knob=p.querySelector('.vp-knob'),buf=p.querySelector('.vp-buffer'),time=p.querySelector('.vp-time');
+  function fmt(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+  function toggle(){v.paused?v.play():v.pause()}
+  p.querySelector('.vp-big').addEventListener('click',toggle);
+  p.querySelector('.vp-play').addEventListener('click',toggle);
+  v.addEventListener('click',toggle);
+  v.addEventListener('play',function(){p.classList.add('playing')});
+  v.addEventListener('pause',function(){p.classList.remove('playing')});
+  v.addEventListener('timeupdate',function(){
+    var pct=v.duration?(v.currentTime/v.duration*100):0;
+    fill.style.width=pct+'%';knob.style.left=pct+'%';
+    time.textContent=fmt(v.currentTime)+' / '+fmt(v.duration);
+  });
+  v.addEventListener('progress',function(){
+    if(v.buffered.length&&v.duration)buf.style.width=(v.buffered.end(v.buffered.length-1)/v.duration*100)+'%';
+  });
+  v.addEventListener('loadedmetadata',function(){time.textContent='0:00 / '+fmt(v.duration)});
+  function seek(e){
+    var r=track.getBoundingClientRect(),x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
+    v.currentTime=Math.min(Math.max(x/r.width,0),1)*(v.duration||0);
+  }
+  var drag=false;
+  track.addEventListener('pointerdown',function(e){drag=true;track.setPointerCapture(e.pointerId);seek(e)});
+  track.addEventListener('pointermove',function(e){if(drag)seek(e)});
+  track.addEventListener('pointerup',function(){drag=false});
+  p.querySelector('.vp-mute').addEventListener('click',function(){v.muted=!v.muted;p.classList.toggle('muted',v.muted)});
+  p.querySelector('.vp-fs').addEventListener('click',function(){
+    if(document.fullscreenElement)document.exitFullscreen();
+    else if(p.requestFullscreen)p.requestFullscreen();
+    else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();
+  });
+  var t;p.addEventListener('touchstart',function(){p.classList.add('touched');clearTimeout(t);t=setTimeout(function(){p.classList.remove('touched')},3000)});
+})();
+</script>
 </body>
 </html>
