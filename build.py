@@ -88,6 +88,7 @@ def nav(prefix, active=None):
     <li><a href="{prefix}about.html"{cls('about')}>About</a></li>
     <li><a href="{prefix}team/index.html"{cls('team')}>Team</a></li>
     <li><a href="{prefix}articles.html"{cls('articles')}>Articles</a></li>
+    <li><a href="{prefix}workshops.html"{cls('workshops')}>Workshops</a></li>
     <li><a href="{prefix}contact.html" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
@@ -102,6 +103,7 @@ def nav(prefix, active=None):
   <a href="{prefix}about.html">About</a>
   <a href="{prefix}team/index.html">Team</a>
   <a href="{prefix}articles.html">Articles</a>
+  <a href="{prefix}workshops.html">Workshops</a>
   <a href="{prefix}contact.html" class="m-cta">Book a Consultation</a>
 </div>
 <div class="wa-float">
@@ -150,6 +152,7 @@ def footer(prefix):
       <li><a href="{prefix}team/index.html">Our Team</a></li>
       <li><a href="{prefix}articles.html">Articles</a></li>
       <li><a href="{prefix}guides.html">Help &amp; Guides</a></li>
+      <li><a href="{prefix}workshops.html">Workshops</a></li>
       <li><a href="{prefix}index.html#faq">FAQ</a></li>
       <li><a href="{prefix}contact.html">Book Appointment</a></li>
     </ul></div>
@@ -1119,6 +1122,132 @@ def articles_index():
     return out
 
 
+# ─────────────────────────── WORKSHOPS ───────────────────────────
+WS_WA = (WA + "?text=Hi%21%20I%27d%20like%20to%20apply%20for%20the%20Applied%20Psychology"
+         "%20Masterclass%20%2827%E2%80%9331%20July%202026%29.%20Please%20share%20the"
+         "%20registration%20details.")
+
+WS_DAYS = [
+    dict(img="01-day1-poster.png", day="Day 1 · Mon 27 July", title="Case Conceptualization & Diagnostic Reasoning",
+         desc="Learn to think like a clinician — turn scattered client information into a clear, structured case map.",
+         kit=["Intake Form Template", "5-Ps Framework Cheat Sheet", "Sample Redacted Case Study"]),
+    dict(img="02-day2-poster.png", day="Day 2 · Tue 28 July", title="The CBT Toolkit — Core Interventions",
+         desc="Hands-on practice with the interventions used in real sessions, with worksheets you can legally photocopy for your future clients.",
+         kit=["7-Column Thought Records", "Behavioral Experiment Templates", "Photocopy-Ready Worksheets"]),
+    dict(img="03-day3-poster.png", day="Day 3 · Wed 29 July", title="Trauma-Informed Care & Somatic Stabilization",
+         desc="Understand the nervous system under stress and guide clients back into their window of tolerance.",
+         kit=["Window of Tolerance Chart", "3 Somatic Grounding Scripts", "5-4-3-2-1 & Box Breathing Guides"]),
+    dict(img="04-day4-poster.png", day="Day 4 · Thu 30 July", title="Ethics, Boundaries & Crisis Management",
+         desc="Handle the hardest moments of practice with confidence, safety and professional integrity.",
+         kit=["Suicide Risk Assessment Checklist", "Crisis Safety Plan Template", "Boundary-Setting Frameworks"]),
+    dict(img="05-day5-poster.png", day="Day 5 · Fri 31 July", title="From Student to Practitioner — Career & Practice Building",
+         desc="Package your skills, build your presence and step into professional practice with a clear roadmap.",
+         kit=["Self-Compassion E-Journal Template", "Workbook Layout Templates", "Content Packaging Playbook"]),
+]
+
+
+def workshops_page():
+    prefix = ""
+    url = f"{BASE}/workshops.html"
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "CollectionPage", "name": "Workshops & Trainings — MindCare Services®", "url": url,
+         "description": "Professional psychology workshops and certification trainings by MindCare Services® in Karachi."},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": url}]},
+        {"@type": "Event", "name": "Applied Psychology Masterclass — 5-Day Certification Series",
+         "startDate": "2026-07-27", "endDate": "2026-07-31",
+         "eventStatus": "https://schema.org/EventScheduled",
+         "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+         "image": f"{BASE}/assets/workshops/00-main-poster.png",
+         "description": "A 5-day applied psychology certification masterclass covering case conceptualization, CBT interventions, trauma-informed care, ethics & crisis management, and practice building. Includes certificate and toolkit manual.",
+         "organizer": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
+         "location": {"@type": "Place", "name": "MindCare Services®",
+                      "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}}}]}
+    day_cards = "\n".join(f'''      <article class="feature-card fade-up ws-day">
+        <img src="assets/workshops/{d['img']}" alt="{html.escape(d['title'])} — Applied Psychology Masterclass {d['day']}" loading="lazy" style="width:100%;height:auto;border-radius:14px;margin-bottom:16px">
+        <span class="section-tag">{d['day']}</span>
+        <h3 style="margin-top:10px">{html.escape(d['title'])}</h3>
+        <p>{html.escape(d['desc'])}</p>
+        <ul class="aside-list" style="margin-top:12px">
+{chr(10).join(li(prefix, k) for k in d['kit'])}
+        </ul>
+      </article>''' for d in WS_DAYS)
+    out = head("Applied Psychology Masterclass — 5-Day Certification Workshop | MindCare Services®",
+               "Join MindCare's Applied Psychology Masterclass, 27–31 July 2026 in Karachi. 5 days of hands-on clinical training with certification and a complete practitioner toolkit. Apply on WhatsApp.",
+               url, prefix, schema, og_type="website")
+    out = out.replace(f'<meta property="og:image" content="{BASE}/mindcare.png">',
+                      f'<meta property="og:image" content="{BASE}/assets/workshops/00-main-poster.png">')
+    out += nav(prefix, "workshops")
+    out += f"""<main id="main">
+<header class="page-hero">
+  <div class="ph-inner">
+    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Workshops</li></ol>
+    <div class="ph-badge">{icon(prefix,'i-grad')} Upcoming Workshop · 27–31 July 2026</div>
+    <h1>Applied Psychology <em>Masterclass</em></h1>
+    <p class="lede">Five days. Five clinical skill sets. One certification. Go from theory to a practitioner's toolkit you can open during your very first real session — taught the MindCare way: practical, ethical and human.</p>
+    <div class="ph-actions">
+      <a href="{WS_WA}" target="_blank" rel="noopener" class="btn-primary">{icon(prefix,'i-wa','18')} Apply on WhatsApp</a>
+      <a href="#schedule" class="btn-secondary">See the 5-Day Journey ↓</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="section-inner">
+    <div class="split-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:center">
+      <div class="fade-up">
+        <img src="assets/workshops/00-main-poster.png" alt="Applied Psychology Masterclass — 5-day certification series poster, 27–31 July 2026" style="width:100%;height:auto;border-radius:18px;box-shadow:0 18px 48px rgba(0,0,0,.18)">
+      </div>
+      <div class="fade-up">
+        <span class="section-tag">Why this masterclass</span>
+        <h2 class="section-title">Walk out session-ready, not just certified</h2>
+        <p style="margin:14px 0 18px">Most trainings end with a certificate. This one ends with a working clinical toolkit — printed templates, worksheets and scripts you'll actually use with clients, plus the confidence to apply them.</p>
+        <ul class="aside-list">
+{li(prefix,'Certificate of completion for every participant')}
+{li(prefix,'Complete practitioner toolkit &amp; manual to keep')}
+{li(prefix,'Hands-on practice, real case studies, live demos')}
+{li(prefix,'Photocopy-ready worksheets for your future clients')}
+{li(prefix,'Taught by MindCare&#39;s clinical team in Karachi')}
+        </ul>
+        <div style="margin-top:24px"><a href="{WS_WA}" target="_blank" rel="noopener" class="btn-primary">{icon(prefix,'i-wa','18')} Reserve Your Seat</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="schedule" class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">The 5-Day Journey</span><h2 class="section-title">One skill set per day, one toolkit for life</h2><p class="section-sub">Each day builds on the last — and each day you take home the exact tools professionals use.</p></div>
+    <div class="card-grid">
+{day_cards}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Good For</span><h2 class="section-title">Who should attend</h2></div>
+    <div class="feature-grid">
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Psychology students</h3><p>Bridge the gap between the classroom and the therapy room before you graduate.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clipboard')}</div><h3>Fresh graduates</h3><p>Start your first placements with intake forms, frameworks and worksheets already in hand.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>Helping professionals</h3><p>Teachers, counselors and caregivers who want evidence-based tools they can use responsibly.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px" class="fade-up">
+      <p style="margin-bottom:16px;font-weight:600">Seats are limited — applications close when the batch is full.</p>
+      <a href="{WS_WA}" target="_blank" rel="noopener" class="btn-primary">{icon(prefix,'i-wa','18')} Apply Now on WhatsApp</a>
+      <p style="margin-top:14px">or call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a></p>
+    </div>
+  </div>
+</section>
+
+{cta_band(prefix, "Ready to become session-ready?", "Message us on WhatsApp with your name and background — we'll confirm your seat and share the fee & venue details.")}
+</main>
+"""
+    out += footer(prefix)
+    return out
+
+
 def confirmation_page():
     prefix = ""
     url = f"{BASE}/confirmed"
@@ -1190,11 +1319,13 @@ def build():
         write(f"{t['slug']}.html", seo_page(t))
     write("guides.html", guides_index())
     write("articles.html", articles_index())
+    write("workshops.html", workshops_page())
     write("confirmed.html", confirmation_page())
     # sitemap
     urls = [(f"{BASE}/", "1.0"), (f"{BASE}/contact", "0.8"),
             (f"{BASE}/services/", "0.9"), (f"{BASE}/team/", "0.7"),
-            (f"{BASE}/guides.html", "0.8"), (f"{BASE}/articles.html", "0.7")]
+            (f"{BASE}/guides.html", "0.8"), (f"{BASE}/articles.html", "0.7"),
+            (f"{BASE}/workshops.html", "0.9")]
     urls += [(f"{BASE}/services/{s['slug']}", "0.8") for s in SERVICES]
     urls += [(f"{BASE}/team/{m['slug']}", "0.6") for m in TEAM]
     urls += [(f"{BASE}/{t['slug']}", "0.8") for t in TOPICS]
