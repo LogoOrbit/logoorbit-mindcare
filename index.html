@@ -577,8 +577,10 @@ var I18N={
   p.querySelector('.vp-big').addEventListener('click',toggle);
   p.querySelector('.vp-play').addEventListener('click',toggle);
   v.addEventListener('click',toggle);
-  v.addEventListener('play',function(){p.classList.add('playing')});
-  v.addEventListener('pause',function(){p.classList.remove('playing')});
+  function amb(on){window.__mcVideoPlaying=on;document.dispatchEvent(new Event('mc-video'))}
+  v.addEventListener('play',function(){p.classList.add('playing');amb(true)});
+  v.addEventListener('pause',function(){p.classList.remove('playing');amb(false)});
+  v.addEventListener('ended',function(){p.classList.remove('playing');amb(false)});
   v.addEventListener('timeupdate',function(){
     var pct=v.duration?(v.currentTime/v.duration*100):0;
     fill.style.width=pct+'%';knob.style.left=pct+'%';

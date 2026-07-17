@@ -133,7 +133,7 @@ if("IntersectionObserver" in window && !reduce){
 
   function apply(el, target, max, ref){
     if(!el) return ref;
-    if(!enabled || hidden){ el.volume=0; if(!el.paused) el.pause(); return hidden?ref:0; }
+    if(!enabled || hidden || window.__mcVideoPlaying){ el.volume=0; if(!el.paused) el.pause(); return (hidden||window.__mcVideoPlaying)?ref:0; }
     ref += (target-ref)*0.12;             // heavy smoothing
     var v=max*ref;
     el.volume=clamp(v);
@@ -168,6 +168,8 @@ if("IntersectionObserver" in window && !reduce){
   });
   window.addEventListener("scroll",function(){ if(!started) start(); schedule(); },{passive:true});
   window.addEventListener("resize",schedule,{passive:true});
+  // page video takes priority: fade ambient audio out while it plays, back in when it stops
+  document.addEventListener("mc-video",schedule);
   schedule();
   if(btn) btn.addEventListener("click",function(e){
     e.stopPropagation();
