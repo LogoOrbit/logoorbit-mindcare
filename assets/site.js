@@ -109,7 +109,7 @@ if("IntersectionObserver" in window && !reduce){
   var medi=document.getElementById("medi");
   var orb=document.getElementById("orb-scene");
   var btn=document.getElementById("bgmBtn");
-  var BGM_MAX=0.4, MEDI_MAX=0.5, started=false, enabled=true, hidden=false;
+  var BGM_MAX=0.4, MEDI_MAX=0.85, started=false, enabled=true, hidden=false;
   // smoothed volumes to avoid any harsh jump / perceived stutter
   var bgmV=0, mediV=0;
   try{ if(localStorage.getItem("mc-bgm")==="off") enabled=false; }catch(e){}
