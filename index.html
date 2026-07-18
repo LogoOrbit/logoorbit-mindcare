@@ -348,6 +348,37 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
   <svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V38C240 8 480 0 720 16s480 44 720 22v32H0Z"/></svg>
 </section>
 
+<!-- NEWS: UPCOMING WORKSHOP -->
+<style>
+.news-band{padding:34px 0}
+.news-card{display:grid;grid-template-columns:150px 1fr auto;gap:26px;align-items:center;background:var(--card);border:1px solid var(--teal);border-radius:20px;padding:22px 30px;box-shadow:0 14px 40px rgba(15,154,168,.14)}
+.news-card img{width:150px;height:auto;border-radius:12px;display:block}
+.news-tag{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-deep);background:var(--teal-light);padding:5px 13px;border-radius:999px;margin-bottom:10px}
+.news-tag .dot{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:newsPulse 1.6s ease-in-out infinite}
+@keyframes newsPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.55}}
+.news-card h3{font-size:1.28rem;color:var(--ink);margin:0 0 6px}
+.news-card h3 em{font-style:italic;color:var(--teal-dark)}
+.news-card p{font-size:.92rem;color:var(--muted);margin:0}
+.news-ctas{display:flex;flex-direction:column;gap:10px;white-space:nowrap}
+@media(max-width:860px){.news-card{grid-template-columns:1fr;text-align:center}.news-card img{margin:0 auto;width:190px}.news-ctas{flex-direction:row;justify-content:center;flex-wrap:wrap;white-space:normal}}
+</style>
+<section class="news-band" aria-label="News — upcoming workshop">
+  <div class="wrap">
+    <div class="news-card">
+      <a href="workshops.html" aria-label="Applied Psychology Masterclass details"><img src="assets/workshops/00-main-poster.png" alt="Applied Psychology Masterclass poster — 5-day certification series, 27–31 July 2026" loading="lazy"></a>
+      <div>
+        <span class="news-tag"><span class="dot" aria-hidden="true"></span><span data-i18n="news.tag">News · Upcoming Workshop</span></span>
+        <h3 data-i18n-html="news.title">Applied Psychology <em>Masterclass</em> — 27–31 July 2026</h3>
+        <p data-i18n="news.sub">5 days · 5 clinical skill sets · certification + complete practitioner toolkit. Seats are limited — apply now on WhatsApp.</p>
+      </div>
+      <div class="news-ctas">
+        <a href="https://wa.me/923272337631?text=Hi%21%20I%27d%20like%20to%20apply%20for%20the%20Applied%20Psychology%20Masterclass%20%2827%E2%80%9331%20July%202026%29.%20Please%20share%20the%20registration%20details." target="_blank" rel="noopener" class="btn btn-primary" data-i18n="news.apply">Apply on WhatsApp</a>
+        <a href="workshops.html" class="btn btn-ghost" data-i18n="news.more">Workshop Details →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- IMMERSIVE ORB -->
 <style>
 #orb-scene{position:relative;width:100%;height:100vh;min-height:560px;background:transparent;overflow:hidden;isolation:isolate;line-height:0}
@@ -530,7 +561,7 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 var I18N={
  en:{},
  ur:{
-  "nav.home":"ہوم","nav.services":"خدمات","nav.about":"ہمارے بارے میں","nav.team":"ٹیم","nav.articles":"مضامین","nav.workshops":"ورکشاپس","nav.book":"اپائنٹمنٹ",
+  "nav.home":"ہوم","nav.services":"خدمات","nav.about":"ہمارے بارے میں","nav.team":"ٹیم","nav.articles":"مضامین","nav.workshops":"ورکشاپس","news.tag":"خبر · آنے والی ورکشاپ","news.title":"اپلائیڈ سائیکالوجی <em>ماسٹر کلاس</em> — 27 تا 31 جولائی 2026","news.sub":"5 دن · 5 کلینیکل مہارتیں · سرٹیفکیٹ + مکمل پریکٹیشنر ٹول کٹ۔ نشستیں محدود ہیں — ابھی واٹس ایپ پر اپلائی کریں۔","news.apply":"واٹس ایپ پر اپلائی کریں","news.more":"ورکشاپ کی تفصیلات ←","nav.book":"اپائنٹمنٹ",
   "hero.badge":"کراچی · کلینک · گھر · آن لائن",
   "hero.h1":"خاموشی سے <em>پریشان</em> ہیں؟<br>آئیے بات کرتے ہیں۔",
   "hero.lede":"ایسے لوگ جو واقعی آپ کی بات سنتے ہیں۔ کراچی میں پریشانی، ذہنی دباؤ اور بہت کچھ کے لیے تھراپی۔",
