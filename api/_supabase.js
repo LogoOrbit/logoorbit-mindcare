@@ -10,6 +10,9 @@ const SUPABASE_URL = process.env.SUPABASE_URL || 'https://kcamfetippgrawhgiabo.s
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY ||
   'sb_publishable_XjxVmD8PFSyjXjZVXKj2gQ_2tNejmQe';
 
+// Must match SESSION_COOKIE in supabase/functions/workshop-submissions.
+const SESSION_COOKIE = 'mc_submissions';
+
 function encodeBody(req) {
   const type = (req.headers['content-type'] || '').toLowerCase();
   const body = req.body;
@@ -58,15 +61,23 @@ async function proxy(req, res, functionName) {
     return;
   }
 
-  const setCookie = typeof upstream.headers.getSetCookie === 'function'
+  // Pass our own session cookie back, but not the CDN cookies Supabase sets for
+  // its own domain: the browser would reject them and they only add noise.
+  const upstreamCookies = typeof upstream.headers.getSetCookie === 'function'
     ? upstream.headers.getSetCookie()
     : [upstream.headers.get('set-cookie')].filter(Boolean);
-  if (setCookie.length) res.setHeader('Set-Cookie', setCookie);
+  const ourCookies = upstreamCookies.filter((c) => c.startsWith(SESSION_COOKIE + '='));
 
-  res.status(upstream.status);
-  res.setHeader('Content-Type', upstream.headers.get('content-type') || 'application/json');
-  res.setHeader('Cache-Control', 'no-store');
-  res.send(Buffer.from(await upstream.arrayBuffer()));
+  const outgoing = {
+    // Written with writeHead rather than res.send, which rewrites the content
+    // type when handed a Buffer and would serve the HTML page as plain text.
+    'Content-Type': upstream.headers.get('content-type') || 'application/json',
+    'Cache-Control': 'no-store',
+  };
+  if (ourCookies.length) outgoing['Set-Cookie'] = ourCookies;
+
+  res.writeHead(upstream.status, outgoing);
+  res.end(Buffer.from(await upstream.arrayBuffer()));
 }
 
 module.exports = { proxy, SUPABASE_URL, SUPABASE_ANON_KEY };
