@@ -1,4 +1,4 @@
-// MindCare Services® — shared interactions (interior & landing pages)
+// MindCare Services®: shared interactions (interior & landing pages)
 (function () {
   var doc = document.documentElement;
   var nav = document.getElementById('navbar');
@@ -79,19 +79,19 @@
     // --- services index ---
     "Comprehensive care for":"جامع دیکھ بھال برائے","mind & body":"دماغ و جسم",
     "10 services · One caring team":"10 خدمات · ایک مخلص ٹیم",
-    "A holistic range of therapy and clinical services — all under one roof in Karachi, delivered by experienced professionals. Choose a service to learn more.":"تھراپی اور طبی خدمات کا ہمہ گیر سلسلہ — سب کراچی میں ایک ہی چھت تلے، تجربہ کار ماہرین کے ذریعے۔ مزید جاننے کے لیے کوئی خدمت منتخب کریں۔",
-    "Confidential, one-on-one talk therapy for adults and adolescents — using proven methods like CBT to work through anxiety…":"بالغوں اور نوجوانوں کے لیے خفیہ، انفرادی گفتگو پر مبنی تھراپی — پریشانی سے نمٹنے کے لیے سی بی ٹی جیسے مستند طریقے…",
+    "A holistic range of therapy and clinical services, all under one roof in Karachi, delivered by experienced professionals. Choose a service to learn more.":"تھراپی اور طبی خدمات کا ہمہ گیر سلسلہ، سب کراچی میں ایک ہی چھت تلے، تجربہ کار ماہرین کے ذریعے۔ مزید جاننے کے لیے کوئی خدمت منتخب کریں۔",
+    "Confidential, one-on-one talk therapy for adults and adolescents, using proven methods like CBT to work through anxiety,…":"بالغوں اور نوجوانوں کے لیے خفیہ، انفرادی گفتگو پر مبنی تھراپی، پریشانی سے نمٹنے کے لیے سی بی ٹی جیسے مستند طریقے…",
     "Guided sessions that help families and couples rebuild communication, resolve recurring conflict, and navigate big life …":"رہنمائی پر مبنی سیشن جو خاندانوں اور جوڑوں کو دوبارہ رابطہ بحال کرنے، جھگڑے سلجھانے اور زندگی کے بڑے مراحل سے گزرنے میں مدد دیتے ہیں…",
-    "Expert support for communication — from children's language delays and articulation to adult fluency and speech recovery…":"رابطے کے لیے ماہرانہ مدد — بچوں کی زبان میں تاخیر اور تلفظ سے لے کر بالغوں کی روانی اور گفتار کی بحالی تک…",
-    "Rehabilitation, pain management and mobility improvement — assessed and treated by experienced physiotherapists who help…":"بحالی، درد کا انتظام اور نقل و حرکت میں بہتری — تجربہ کار فزیو تھراپسٹ کی تشخیص اور علاج کے ساتھ…",
-    "Helping individuals of all ages regain independence in the daily activities that matter most — from a child's fine-motor…":"ہر عمر کے افراد کو روزمرہ کے اہم کاموں میں خودمختاری دوبارہ حاصل کرنے میں مدد — بچے کی باریک حرکات سے لے کر…",
-    "Structured, evidence-based interventions for autism spectrum support, ADHD and social-skills development — building posi…":"آٹزم، اے ڈی ایچ ڈی اور سماجی مہارتوں کی نشوونما کے لیے منظم، ثبوت پر مبنی اقدامات — مثبت…",
-    "Specialized, one-on-one therapy for individuals with special needs — delivered in the comfort and familiarity of your ow…":"خصوصی ضروریات والے افراد کے لیے مخصوص، انفرادی تھراپی — آپ کے اپنے گھر کے پُرسکون ماحول میں…",
-    "Cognitive and psychological evaluations that bring clarity — guiding accurate diagnosis and a personalized, effective tr…":"ذہنی اور نفسیاتی جائزے جو وضاحت لاتے ہیں — درست تشخیص اور مؤثر، ذاتی نوعیت کے علاج کی رہنمائی…",
-    "Expert advice on oral health, treatment planning and preventive care — from a qualified dental consultant, as part of Mi…":"دانتوں کی صحت، علاج کی منصوبہ بندی اور احتیاطی نگہداشت پر ماہرانہ مشورہ — ایک ماہر ڈینٹل کنسلٹنٹ کی جانب سے…",
-    "Certified mental health workshops for workplaces, schools and institutions — designed to reduce stigma, build resilience…":"دفاتر، اسکولوں اور اداروں کے لیے مستند ذہنی صحت ورکشاپس — بدنامی کم کرنے اور حوصلہ بڑھانے کے لیے…",
+    "Expert support for communication, from children's language delays and articulation to adult fluency and speech recovery,…":"رابطے کے لیے ماہرانہ مدد، بچوں کی زبان میں تاخیر اور تلفظ سے لے کر بالغوں کی روانی اور گفتار کی بحالی تک…",
+    "Rehabilitation, pain management and mobility improvement, assessed and treated by experienced physiotherapists who help …":"بحالی، درد کا انتظام اور نقل و حرکت میں بہتری، تجربہ کار فزیو تھراپسٹ کی تشخیص اور علاج کے ساتھ…",
+    "Helping individuals of all ages regain independence in the daily activities that matter most, from a child's fine-motor …":"ہر عمر کے افراد کو روزمرہ کے اہم کاموں میں خودمختاری دوبارہ حاصل کرنے میں مدد، بچے کی باریک حرکات سے لے کر…",
+    "Structured, evidence-based interventions for autism spectrum support, ADHD and social-skills development, building posit…":"آٹزم، اے ڈی ایچ ڈی اور سماجی مہارتوں کی نشوونما کے لیے منظم، ثبوت پر مبنی اقدامات، مثبت…",
+    "Specialized, one-on-one therapy for individuals with special needs, delivered in the comfort and familiarity of your own…":"خصوصی ضروریات والے افراد کے لیے مخصوص، انفرادی تھراپی، آپ کے اپنے گھر کے پُرسکون ماحول میں…",
+    "Cognitive and psychological evaluations that bring clarity, guiding accurate diagnosis and a personalized, effective tre…":"ذہنی اور نفسیاتی جائزے جو وضاحت لاتے ہیں، درست تشخیص اور مؤثر، ذاتی نوعیت کے علاج کی رہنمائی…",
+    "Expert advice on oral health, treatment planning and preventive care, from a qualified dental consultant, as part of Min…":"دانتوں کی صحت، علاج کی منصوبہ بندی اور احتیاطی نگہداشت پر ماہرانہ مشورہ، ایک ماہر ڈینٹل کنسلٹنٹ کی جانب سے…",
+    "Certified mental health workshops for workplaces, schools and institutions, designed to reduce stigma, build resilience …":"دفاتر، اسکولوں اور اداروں کے لیے مستند ذہنی صحت ورکشاپس، بدنامی کم کرنے اور حوصلہ بڑھانے کے لیے…",
     "Not sure which service fits?":"یقین نہیں کون سی خدمت مناسب ہے؟",
-    "Tell us what's going on and we'll guide you to the right support — free and confidential.":"ہمیں بتائیں کیا مسئلہ ہے، ہم آپ کو صحیح مدد کی طرف رہنمائی کریں گے — مفت اور خفیہ۔",
+    "Tell us what's going on and we'll guide you to the right support, free and confidential.":"ہمیں بتائیں کیا مسئلہ ہے، ہم آپ کو صحیح مدد کی طرف رہنمائی کریں گے، مفت اور خفیہ۔",
     // --- team index ---
     "Meet the people behind":"ملیں اُن ماہرین سے جو ہیں","your care":"آپ کی دیکھ بھال کے پیچھے",
     "A dedicated group of specialists united by one mission: compassionate, professional, impactful care. Get to know each of them.":"ماہرین کا ایک پُرعزم گروہ، ایک مشن پر متحد: ہمدرد، پیشہ ورانہ اور مؤثر دیکھ بھال۔ ہر ایک کو جانیں۔",
@@ -104,13 +104,13 @@
     // --- about ---
     "Founded by Shaista Tariq · PPA Member":"بانی: شائستہ طارق · پی پی اے ممبر",
     "Real support, from people who":"حقیقی مدد، اُن لوگوں سے جو","actually listen":"واقعی سنتے ہیں",
-    "MindCare Services® is a mental health and rehabilitation clinic in Karachi. We bring therapy, counseling and rehab care together under one warm, judgment-free roof — in clinic, at your home, or online.":"مائنڈ کیئر سروسز® کراچی میں ذہنی صحت اور بحالی کا کلینک ہے۔ ہم تھراپی، کاؤنسلنگ اور بحالی کی خدمات کو ایک پُرسکون، بغیر تنقید ماحول میں یکجا کرتے ہیں — کلینک میں، آپ کے گھر پر، یا آن لائن۔",
+    "MindCare Services® is a mental health and rehabilitation clinic in Karachi. We bring therapy, counseling and rehab care together under one warm, judgment-free roof, in clinic, at your home, or online.":"مائنڈ کیئر سروسز® کراچی میں ذہنی صحت اور بحالی کا کلینک ہے۔ ہم تھراپی، کاؤنسلنگ اور بحالی کی خدمات کو ایک پُرسکون، بغیر تنقید ماحول میں یکجا کرتے ہیں، کلینک میں، آپ کے گھر پر، یا آن لائن۔",
     "Our Story":"ہماری کہانی","Why we started MindCare":"ہم نے مائنڈ کیئر کیوں شروع کیا",
     "In Karachi, asking for help still feels harder than it should. Long waits, cold clinics, and the quiet worry of being judged keep too many people from getting support they need.":"کراچی میں مدد مانگنا آج بھی ضرورت سے زیادہ مشکل لگتا ہے۔ لمبے انتظار، سرد کلینک، اور تنقید کا خاموش خوف بہت سے لوگوں کو ضروری مدد سے دور رکھتے ہیں۔",
-    "MindCare was built to change that. We keep things human: one caring team, honest conversations, and care plans you actually understand. Whether it's the mind or the body, you're met with patience — never a script.":"مائنڈ کیئر اسی کو بدلنے کے لیے بنایا گیا۔ ہم چیزیں انسانی رکھتے ہیں: ایک مخلص ٹیم، دیانتدار گفتگو، اور ایسے علاجی منصوبے جو آپ واقعی سمجھ سکیں۔ چاہے معاملہ دماغ کا ہو یا جسم کا، آپ کو صبر ملے گا — کوئی رٹا رٹایا انداز نہیں۔",
+    "MindCare was built to change that. We keep things human: one caring team, honest conversations, and care plans you actually understand. Whether it's the mind or the body, you're met with patience, never a script.":"مائنڈ کیئر اسی کو بدلنے کے لیے بنایا گیا۔ ہم چیزیں انسانی رکھتے ہیں: ایک مخلص ٹیم، دیانتدار گفتگو، اور ایسے علاجی منصوبے جو آپ واقعی سمجھ سکیں۔ چاہے معاملہ دماغ کا ہو یا جسم کا، آپ کو صبر ملے گا، کوئی رٹا رٹایا انداز نہیں۔",
     "What makes us different":"ہمیں کیا مختلف بناتا ہے",
-    "One team for mind and body — therapy, counseling and rehab in one place.":"دماغ اور جسم کے لیے ایک ہی ٹیم — تھراپی، کاؤنسلنگ اور بحالی، سب ایک جگہ۔",
-    "Come to us, or we come to you — clinic, home visits and online sessions.":"آپ ہمارے پاس آئیں، یا ہم آپ کے پاس — کلینک، گھر پر آمد اور آن لائن سیشن۔",
+    "One team for mind and body: therapy, counseling and rehab in one place.":"دماغ اور جسم کے لیے ایک ہی ٹیم، تھراپی، کاؤنسلنگ اور بحالی، سب ایک جگہ۔",
+    "Come to us, or we come to you: clinic, home visits and online sessions.":"آپ ہمارے پاس آئیں، یا ہم آپ کے پاس، کلینک، گھر پر آمد اور آن لائن سیشن۔",
     "Evidence-based, never one-size-fits-all.":"ثبوت پر مبنی، ہر ایک کے لیے ایک جیسا نہیں۔",
     "Private and confidential, always.":"ہمیشہ نجی اور خفیہ۔",
     "A PPA Member and mental health educator, Shaista leads every care plan personally and set MindCare's warm, no-judgment tone.":"پی پی اے ممبر اور ذہنی صحت کی معلمہ، شائستہ ہر علاجی منصوبے کی خود نگرانی کرتی ہیں اور مائنڈ کیئر کے پُرخلوص، بلا تنقید انداز کی بنیاد رکھی۔",
@@ -118,17 +118,17 @@
     "Four simple promises that shape every session.":"چار سادہ وعدے جو ہر سیشن کی بنیاد ہیں۔",
     "Warmth first":"پہلے اپنائیت","You're a person, not a case file. We listen before we advise.":"آپ ایک انسان ہیں، کوئی فائل نہیں۔ ہم مشورہ دینے سے پہلے سنتے ہیں۔",
     "Private & safe":"نجی اور محفوظ","What you share stays between us. Every time.":"آپ کی بات ہمارے درمیان رہتی ہے۔ ہر بار۔",
-    "Evidence-based":"ثبوت پر مبنی","Real methods that work — explained in plain language.":"کارآمد اور مستند طریقے — آسان زبان میں سمجھائے گئے۔",
-    "Care that reaches you":"آپ تک پہنچنے والی دیکھ بھال","Clinic, home visit or online — whatever fits your life.":"کلینک، گھر پر آمد یا آن لائن — جو آپ کی زندگی کے مطابق ہو۔",
+    "Evidence-based":"ثبوت پر مبنی","Real methods that work, explained in plain language.":"کارآمد اور مستند طریقے، آسان زبان میں سمجھائے گئے۔",
+    "Care that reaches you":"آپ تک پہنچنے والی دیکھ بھال","Clinic, home visit or online, whatever fits your life.":"کلینک، گھر پر آمد یا آن لائن، جو آپ کی زندگی کے مطابق ہو۔",
     "Services for mind & body":"دماغ و جسم کی خدمات","Specialists on the team":"ٹیم کے ماہرین",
     "6 days":"6 دن","Open Monday–Saturday":"پیر تا ہفتہ کھلا","Confidential care":"خفیہ دیکھ بھال",
     "Ready when you are.":"جب آپ تیار ہوں۔",
     "A free, confidential consultation is the easiest way to begin. No pressure, no judgment.":"ایک مفت، خفیہ مشورہ شروعات کا آسان ترین طریقہ ہے۔ کوئی دباؤ نہیں، کوئی تنقید نہیں۔",
     // --- contact ---
     "Book a Consultation":"مشورہ بُک کریں",
-    "Take the first step. We'll listen, guide, and support you — no pressure, no judgment, 100% confidential.":"پہلا قدم اٹھائیں۔ ہم سنیں گے، رہنمائی کریں گے اور آپ کا ساتھ دیں گے — کوئی دباؤ نہیں، کوئی تنقید نہیں، 100% خفیہ۔",
+    "Take the first step. We'll listen, guide, and support you, with no pressure, no judgment and 100% confidentiality.":"پہلا قدم اٹھائیں۔ ہم سنیں گے، رہنمائی کریں گے اور آپ کا ساتھ دیں گے، کوئی دباؤ نہیں، کوئی تنقید نہیں، 100% خفیہ۔",
     "Get in Touch":"رابطہ کریں","Send a Message":"پیغام بھیجیں",
-    "Choose any way that feels comfortable — fill the form, call us, WhatsApp, or email directly. We typically respond within a few hours.":"جو طریقہ آسان لگے اپنائیں — فارم بھریں، کال کریں، واٹس ایپ کریں یا براہِ راست ای میل کریں۔ ہم عموماً چند گھنٹوں میں جواب دیتے ہیں۔",
+    "Choose any way that feels comfortable: fill the form, call us, WhatsApp, or email directly. We typically respond within a few hours.":"جو طریقہ آسان لگے اپنائیں، فارم بھریں، کال کریں، واٹس ایپ کریں یا براہِ راست ای میل کریں۔ ہم عموماً چند گھنٹوں میں جواب دیتے ہیں۔",
     "Phone":"فون","Email":"ای میل","Location":"مقام","Website":"ویب سائٹ","Clinic Hours":"کلینک کے اوقات",
     "Mon–Sat · 9am to 7pm":"پیر تا ہفتہ · صبح 9 تا شام 7","Karachi, Sindh, Pakistan":"کراچی، سندھ، پاکستان",
     "Consultation":"مشورہ","Appointment":"اپائنٹمنٹ","General Query":"عام سوال","Message Sent!":"پیغام بھیج دیا گیا!",
@@ -146,7 +146,7 @@
     "Your name":"آپ کا نام","Name":"نام","+92...":"+92...","+92... or email":"+92... یا ای میل","your@email.com":"your@email.com",
     "You don't have to share everything. Just a sentence or two is fine. Everything is confidential.":"سب کچھ بتانا ضروری نہیں۔ ایک دو جملے کافی ہیں۔ سب کچھ خفیہ رہے گا۔",
     "Any additional info for us to know before the appointment...":"اپائنٹمنٹ سے پہلے بتانے کے لیے کوئی اضافی بات...",
-    "Ask us anything — about services, team, pricing, or anything else.":"کچھ بھی پوچھیں — خدمات، ٹیم، فیس یا کسی بھی بارے میں۔"
+    "Ask us anything about services, team, pricing, or anything else.":"کچھ بھی پوچھیں، خدمات، ٹیم، فیس یا کسی بھی بارے میں۔"
   };
   var textNodes = [];
   if (document.body) {

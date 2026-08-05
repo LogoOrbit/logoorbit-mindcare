@@ -1,4 +1,4 @@
-/* MindCare Services® — interactive 3D psychology brain (hero) */
+/* MindCare Services®: interactive 3D psychology brain (hero) */
 (function(){
 "use strict";
 var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;

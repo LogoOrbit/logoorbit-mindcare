@@ -1,4 +1,4 @@
-/* MindCare Services® — shared stylesheet for interior pages */
+/* MindCare Services®: shared stylesheet for interior pages */
 :root {
   --teal: #0f9aa8; --teal-dark: #12808d; --teal-deep: #0b5f6d; --teal-light: #e8f9fb;
   --teal-btn: #087585; --teal-btn-hover: #06626f; /* accessible bg for white-text buttons (AA in both themes) */
@@ -188,7 +188,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
 .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
 .faq-a p { padding: 0 22px 18px; font-size: 0.95rem; color: var(--gray); line-height: 1.7; margin: 0; }
 
-/* ANIM — scroll reveal + parallax */
+/* ANIM: scroll reveal + parallax */
 .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); will-change: opacity, transform; }
 .fade-up.rv-left { transform: translateX(-42px); }
 .fade-up.rv-right { transform: translateX(42px); }
@@ -202,7 +202,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
 .float-b { animation: floatA 7s ease-in-out .8s infinite; }
 @keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
 
-/* DARK MODE — manual toggle only (default is white/light) */
+/* DARK MODE: manual toggle only (default is white/light) */
 html[data-theme="dark"] { --white:#0e1b13; --off-white:#12241a; --card:#12241a; --dark:#eaf4ee; --gray:#a7bcb0; --border:#234034; --teal:#3fd0dc; --teal-dark:#57dbe6; --teal-deep:#8fe8f0; --teal-light:#13312f; --teal-btn:#0a7f90; --teal-btn-hover:#096b79; --green-light:#16281a; --sand:#17251b; --shadow-soft:0 6px 30px rgba(0,0,0,0.3); }
 html[data-theme="dark"] body { background:#0e1b13; }
 html[data-theme="dark"] nav { background: rgba(14,27,19,0.92); }
@@ -250,7 +250,7 @@ html[dir="rtl"] .breadcrumb li:not(:last-child)::after { content:'‹'; }
   .ph-actions a { text-align: center; justify-content: center; }
 }
 
-/* ═══ ARTICLES — index cards ═══ */
+/* ═══ ARTICLES: index cards ═══ */
 .art-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
 .art-pill { font-size: 0.74rem; font-weight: 600; color: var(--teal-deep); background: var(--card); border: 1px solid var(--border); border-radius: 50px; padding: 5px 13px; }
 .art-chip { display: inline-flex; align-items: center; align-self: flex-start; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: #fff; background: linear-gradient(90deg, var(--a1, #0f9aa8), var(--a2, #2D6A1F)); padding: 5px 13px; border-radius: 50px; }
@@ -284,7 +284,7 @@ html[dir="rtl"] .breadcrumb li:not(:last-child)::after { content:'‹'; }
 .art-card h3 a::after, .art-feature-body h2 a::after { content: ''; position: absolute; inset: 0; z-index: 1; }
 .art-foot-note { margin-top: 26px; font-size: 0.85rem; color: var(--gray); text-align: center; }
 
-/* ═══ ARTICLES — reading page ═══ */
+/* ═══ ARTICLES: reading page ═══ */
 .art-hero .art-chip { margin-bottom: 14px; }
 .art-hero-motif { display: none; }
 @media (min-width: 1040px) {

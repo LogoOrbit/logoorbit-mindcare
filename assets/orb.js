@@ -1,4 +1,4 @@
-/* Immersive meditation orb — reacts to the global background audio stream. */
+/* Immersive meditation orb: reacts to the global background audio stream. */
 (function () {
   var canvas = document.getElementById("orb-canvas");
   var section = document.getElementById("orb-scene");
@@ -18,7 +18,7 @@
   // ---- renderer / scene / camera ----
   var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !lowPerf, alpha: true, premultipliedAlpha: false });
   renderer.setPixelRatio(dpr);
-  renderer.setClearColor(0x000000, 0); // fully transparent — blends with page in light & dark
+  renderer.setClearColor(0x000000, 0); // fully transparent, blends with page in light & dark
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(46, 1, 0.1, 100);
   var CAM_Z = 7.2;

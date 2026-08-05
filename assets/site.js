@@ -1,4 +1,4 @@
-/* MindCare Services — shared interactions: theme, language, menu, faq, reveal */
+/* MindCare Services: shared interactions - theme, language, menu, faq, reveal */
 (function(){
 "use strict";
 var doc=document.documentElement;
