@@ -1,0 +1,72 @@
+// Shared proxy helper for the two Supabase Edge Functions that back workshop
+// registration. Keeping the hop here means the browser only ever talks to
+// themindcareservices.com: no CORS, no third-party origin in the address bar,
+// and the API key is attached server side.
+//
+// The publishable key below is safe in source control. It grants nothing on its
+// own: the registrations table and the receipts bucket are service-role only,
+// and that key lives exclusively inside the Supabase runtime.
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://kcamfetippgrawhgiabo.supabase.co';
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY ||
+  'sb_publishable_XjxVmD8PFSyjXjZVXKj2gQ_2tNejmQe';
+
+function encodeBody(req) {
+  const type = (req.headers['content-type'] || '').toLowerCase();
+  const body = req.body;
+
+  if (body === undefined || body === null || body === '') return { body: undefined, type: null };
+  if (typeof body === 'string' || Buffer.isBuffer(body)) return { body, type: type || 'text/plain' };
+
+  if (type.includes('application/x-www-form-urlencoded')) {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(body)) params.append(key, String(value));
+    return { body: params.toString(), type: 'application/x-www-form-urlencoded' };
+  }
+  return { body: JSON.stringify(body), type: 'application/json' };
+}
+
+/**
+ * Forwards the incoming request to a Supabase Edge Function and streams the
+ * answer back, preserving status, content type and any session cookie.
+ */
+async function proxy(req, res, functionName) {
+  const headers = {
+    apikey: SUPABASE_ANON_KEY,
+    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+  };
+  if (req.headers.cookie) headers.cookie = req.headers.cookie;
+  if (req.headers['user-agent']) headers['user-agent'] = req.headers['user-agent'];
+
+  const forwardedFor = req.headers['x-forwarded-for'] || req.socket?.remoteAddress;
+  if (forwardedFor) headers['x-forwarded-for'] = String(forwardedFor);
+
+  const init = { method: req.method, headers, redirect: 'manual' };
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    const { body, type } = encodeBody(req);
+    if (body !== undefined) {
+      init.body = body;
+      if (type) headers['content-type'] = type;
+    }
+  }
+
+  let upstream;
+  try {
+    upstream = await fetch(`${SUPABASE_URL}/functions/v1/${functionName}`, init);
+  } catch (err) {
+    console.error(`proxy to ${functionName} failed`, err);
+    res.status(502).json({ error: 'The service is unreachable right now. Please try again in a moment.' });
+    return;
+  }
+
+  const setCookie = typeof upstream.headers.getSetCookie === 'function'
+    ? upstream.headers.getSetCookie()
+    : [upstream.headers.get('set-cookie')].filter(Boolean);
+  if (setCookie.length) res.setHeader('Set-Cookie', setCookie);
+
+  res.status(upstream.status);
+  res.setHeader('Content-Type', upstream.headers.get('content-type') || 'application/json');
+  res.setHeader('Cache-Control', 'no-store');
+  res.send(Buffer.from(await upstream.arrayBuffer()));
+}
+
+module.exports = { proxy, SUPABASE_URL, SUPABASE_ANON_KEY };

@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /submissions
+Disallow: /api/
 
 # Reputable AI crawlers welcome (E-E-A-T / AI Overview visibility)
 User-agent: GPTBot
