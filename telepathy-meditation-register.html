@@ -156,6 +156,11 @@
 .tm-choice-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .tm-choice-head strong{font-size:1.02rem;color:var(--dark)}
 .tm-choice-head em{font-style:normal;font-weight:700;font-size:.95rem;color:var(--teal-deep);white-space:nowrap}
+/* Both prices sit in a green pill: the point of this step is that the money is
+   small and optional, so it should read as reassuring rather than as a toll. */
+.tm-amount{color:var(--green);font-weight:700;white-space:nowrap}
+.tm-choice-head em.tm-amount{color:var(--green);background:var(--green-light);border:1px solid rgba(45,106,31,.22);
+ border-radius:999px;padding:4px 13px;font-size:.9rem}
 .tm-choice p{margin:6px 0 0;font-size:.87rem;color:var(--gray)}
 .tm-choice.sel{border-color:var(--teal);box-shadow:0 0 0 3px rgba(43,189,201,.13);background:var(--teal-light)}
 .tm-bank{background:var(--teal-light);border:1px solid var(--border);border-radius:16px;padding:22px 24px;margin:4px 0 18px}
@@ -177,6 +182,8 @@ html[data-theme="dark"] .tm-field input,html[data-theme="dark"] .tm-field select
 html[data-theme="dark"] .tm-choice{background:#0e1b13}
 html[data-theme="dark"] .tm-choice.sel,html[data-theme="dark"] .tm-bank{background:rgba(15,154,168,.12)}
 html[data-theme="dark"] .tm-copy{background:#12241a}
+html[data-theme="dark"] .tm-amount{color:#6ede8a}
+html[data-theme="dark"] .tm-choice-head em.tm-amount{color:#6ede8a;border-color:rgba(110,222,138,.28)}
 html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:#f0b4b4}
 @media(max-width:560px){.tm-row{grid-template-columns:1fr}.tm-form{padding:24px 20px}.tm-actions{flex-direction:column-reverse}}
 </style>
@@ -227,19 +234,19 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
 
           <label class="tm-choice" for="tm-cert-no">
             <input type="radio" name="tm-cert" id="tm-cert-no" value="no" checked>
-            <span class="tm-choice-head"><strong>No certificate, just register me</strong><em>Free</em></span>
+            <span class="tm-choice-head"><strong>No certificate, just register me</strong><em class="tm-amount">Free</em></span>
             <p>Both live evenings, the guided audio, the workbook and the 30-day recordings. Nothing to pay, nothing to upload.</p>
           </label>
 
           <label class="tm-choice" for="tm-cert-yes">
             <input type="radio" name="tm-cert" id="tm-cert-yes" value="yes">
-            <span class="tm-choice-head"><strong>Yes, send my Certificate of Participation</strong><em>PKR 1,000 one-time</em></span>
+            <span class="tm-choice-head"><strong>Yes, send my Certificate of Participation</strong><em class="tm-amount">PKR 1,000 one-time</em></span>
             <p>An official certificate issued by MindCare Services®, emailed to you within one business day. Covers verification, issuing and record-keeping.</p>
           </label>
 
           <div id="tm-pay" hidden>
             <div class="tm-bank">
-              <h4>Transfer the PKR 1,000 certificate fee</h4>
+              <h4>Transfer the <span class="tm-amount">PKR 1,000</span> certificate fee</h4>
               <p>Send it to the account below, then attach the screenshot. This is the only payment on this website, and it is optional.</p>
               <dl class="tm-bank-grid">
         <div><dt>Account title</dt><dd>Shaista Tariq</dd></div>

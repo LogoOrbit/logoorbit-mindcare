@@ -1642,7 +1642,11 @@ TM_CSS = """
 .tm-badge-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
 .tm-badge-row span{font-size:.8rem;font-weight:600;color:var(--teal-deep);background:var(--teal-light);
  border:1px solid var(--border);padding:5px 13px;border-radius:999px}
+/* Money is always green on this site: it reads as affordable and safe rather
+   than as a charge, which matters when the only fee is a small optional one. */
+.tm-amount{color:var(--green);font-weight:700;white-space:nowrap}
 html[data-theme="dark"] .tm-fact,html[data-theme="dark"] .tm-cert{background:#12241a}
+html[data-theme="dark"] .tm-amount{color:#6ede8a}
 html[data-theme="dark"] .tm-honest{background:rgba(15,154,168,.12)}
 @media(max-width:560px){.tm-free{padding:28px 20px}.tm-free .tm-price{font-size:2.9rem}}
 """
@@ -1678,6 +1682,11 @@ TM_FORM_CSS = """
 .tm-choice-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .tm-choice-head strong{font-size:1.02rem;color:var(--dark)}
 .tm-choice-head em{font-style:normal;font-weight:700;font-size:.95rem;color:var(--teal-deep);white-space:nowrap}
+/* Both prices sit in a green pill: the point of this step is that the money is
+   small and optional, so it should read as reassuring rather than as a toll. */
+.tm-amount{color:var(--green);font-weight:700;white-space:nowrap}
+.tm-choice-head em.tm-amount{color:var(--green);background:var(--green-light);border:1px solid rgba(45,106,31,.22);
+ border-radius:999px;padding:4px 13px;font-size:.9rem}
 .tm-choice p{margin:6px 0 0;font-size:.87rem;color:var(--gray)}
 .tm-choice.sel{border-color:var(--teal);box-shadow:0 0 0 3px rgba(43,189,201,.13);background:var(--teal-light)}
 .tm-bank{background:var(--teal-light);border:1px solid var(--border);border-radius:16px;padding:22px 24px;margin:4px 0 18px}
@@ -1699,6 +1708,8 @@ html[data-theme="dark"] .tm-field input,html[data-theme="dark"] .tm-field select
 html[data-theme="dark"] .tm-choice{background:#0e1b13}
 html[data-theme="dark"] .tm-choice.sel,html[data-theme="dark"] .tm-bank{background:rgba(15,154,168,.12)}
 html[data-theme="dark"] .tm-copy{background:#12241a}
+html[data-theme="dark"] .tm-amount{color:#6ede8a}
+html[data-theme="dark"] .tm-choice-head em.tm-amount{color:#6ede8a;border-color:rgba(110,222,138,.28)}
 html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:#f0b4b4}
 @media(max-width:560px){.tm-row{grid-template-columns:1fr}.tm-form{padding:24px 20px}.tm-actions{flex-direction:column-reverse}}
 """
@@ -2011,7 +2022,7 @@ def telepathy_meditation_page():
       </div>
       <div class="tm-cert">
         <h4>{icon(prefix,'i-grad','18')} Want it on paper? The certificate is optional.</h4>
-        <p>If you'd like an official <strong>Certificate of Participation</strong> from MindCare Services® for your CV or university file, there's a <strong>one-time fee of {TM_CERT_FEE}</strong> that covers verification, issuing and record-keeping. Pay it only if you want it: your certificate is emailed to you <strong>within one business day</strong>. Everything else about the workshop stays free either way, and we only ask about it on the very last step of the form.</p>
+        <p>If you'd like an official <strong>Certificate of Participation</strong> from MindCare Services® for your CV or university file, there's a <strong>one-time fee of <span class="tm-amount">{TM_CERT_FEE}</span></strong> that covers verification, issuing and record-keeping. Pay it only if you want it: your certificate is emailed to you <strong>within one business day</strong>. Everything else about the workshop stays free either way, and we only ask about it on the very last step of the form.</p>
       </div>
       <div style="margin-top:24px"><a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Claim Your Free Seat</a></div>
     </div>
@@ -2045,7 +2056,7 @@ def telepathy_meditation_page():
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clock')}</div><h3>30-day recording access</h3><p>Both evenings recorded and shared, so a missed session or a shaky connection never costs you the workshop.</p></div>
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-speech')}</div><h3>Guided audio, English &amp; Urdu</h3><p>The meditations from the sessions, recorded in both languages, to keep the practice going after the Zoom window closes.</p></div>
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-book')}</div><h3>The attunement workbook</h3><p>Practice logs, listening scripts, dyad exercise cards and your 21-day plan: a printable PDF sent before session one.</p></div>
-      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Certificate, if you want one</h3><p>Optional Certificate of Participation from MindCare Services®, a one-time {TM_CERT_FEE}, emailed within one business day. Everything above is free regardless.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Certificate, if you want one</h3><p>Optional Certificate of Participation from MindCare Services®, a one-time <span class="tm-amount">{TM_CERT_FEE}</span>, emailed within one business day. Everything above is free regardless.</p></div>
     </div>
   </div>
 </section>
@@ -2159,19 +2170,19 @@ def telepathy_register_page():
 
           <label class="tm-choice" for="tm-cert-no">
             <input type="radio" name="tm-cert" id="tm-cert-no" value="no" checked>
-            <span class="tm-choice-head"><strong>No certificate, just register me</strong><em>Free</em></span>
+            <span class="tm-choice-head"><strong>No certificate, just register me</strong><em class="tm-amount">Free</em></span>
             <p>Both live evenings, the guided audio, the workbook and the 30-day recordings. Nothing to pay, nothing to upload.</p>
           </label>
 
           <label class="tm-choice" for="tm-cert-yes">
             <input type="radio" name="tm-cert" id="tm-cert-yes" value="yes">
-            <span class="tm-choice-head"><strong>Yes, send my Certificate of Participation</strong><em>{TM_CERT_FEE} one-time</em></span>
+            <span class="tm-choice-head"><strong>Yes, send my Certificate of Participation</strong><em class="tm-amount">{TM_CERT_FEE} one-time</em></span>
             <p>An official certificate issued by MindCare Services®, emailed to you within one business day. Covers verification, issuing and record-keeping.</p>
           </label>
 
           <div id="tm-pay" hidden>
             <div class="tm-bank">
-              <h4>Transfer the {TM_CERT_FEE} certificate fee</h4>
+              <h4>Transfer the <span class="tm-amount">{TM_CERT_FEE}</span> certificate fee</h4>
               <p>Send it to the account below, then attach the screenshot. This is the only payment on this website, and it is optional.</p>
               <dl class="tm-bank-grid">
 {bank_rows}

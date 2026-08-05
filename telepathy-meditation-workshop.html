@@ -251,7 +251,11 @@
 .tm-badge-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
 .tm-badge-row span{font-size:.8rem;font-weight:600;color:var(--teal-deep);background:var(--teal-light);
  border:1px solid var(--border);padding:5px 13px;border-radius:999px}
+/* Money is always green on this site: it reads as affordable and safe rather
+   than as a charge, which matters when the only fee is a small optional one. */
+.tm-amount{color:var(--green);font-weight:700;white-space:nowrap}
 html[data-theme="dark"] .tm-fact,html[data-theme="dark"] .tm-cert{background:#12241a}
+html[data-theme="dark"] .tm-amount{color:#6ede8a}
 html[data-theme="dark"] .tm-honest{background:rgba(15,154,168,.12)}
 @media(max-width:560px){.tm-free{padding:28px 20px}.tm-free .tm-price{font-size:2.9rem}}
 </style>
@@ -304,7 +308,7 @@ html[data-theme="dark"] .tm-honest{background:rgba(15,154,168,.12)}
       </div>
       <div class="tm-cert">
         <h4><svg width="18" height="18"><use href="assets/sprite.svg#i-grad"/></svg> Want it on paper? The certificate is optional.</h4>
-        <p>If you'd like an official <strong>Certificate of Participation</strong> from MindCare Services® for your CV or university file, there's a <strong>one-time fee of PKR 1,000</strong> that covers verification, issuing and record-keeping. Pay it only if you want it: your certificate is emailed to you <strong>within one business day</strong>. Everything else about the workshop stays free either way, and we only ask about it on the very last step of the form.</p>
+        <p>If you'd like an official <strong>Certificate of Participation</strong> from MindCare Services® for your CV or university file, there's a <strong>one-time fee of <span class="tm-amount">PKR 1,000</span></strong> that covers verification, issuing and record-keeping. Pay it only if you want it: your certificate is emailed to you <strong>within one business day</strong>. Everything else about the workshop stays free either way, and we only ask about it on the very last step of the form.</p>
       </div>
       <div style="margin-top:24px"><a href="telepathy-meditation-register.html" class="btn-primary"><svg width="18" height="18"><use href="assets/sprite.svg#i-clipboard"/></svg> Claim Your Free Seat</a></div>
     </div>
@@ -385,7 +389,7 @@ html[data-theme="dark"] .tm-honest{background:rgba(15,154,168,.12)}
       <div class="feature-card fade-up"><div class="fi"><svg><use href="assets/sprite.svg#i-clock"/></svg></div><h3>30-day recording access</h3><p>Both evenings recorded and shared, so a missed session or a shaky connection never costs you the workshop.</p></div>
       <div class="feature-card fade-up"><div class="fi"><svg><use href="assets/sprite.svg#i-speech"/></svg></div><h3>Guided audio, English &amp; Urdu</h3><p>The meditations from the sessions, recorded in both languages, to keep the practice going after the Zoom window closes.</p></div>
       <div class="feature-card fade-up"><div class="fi"><svg><use href="assets/sprite.svg#i-book"/></svg></div><h3>The attunement workbook</h3><p>Practice logs, listening scripts, dyad exercise cards and your 21-day plan: a printable PDF sent before session one.</p></div>
-      <div class="feature-card fade-up"><div class="fi"><svg><use href="assets/sprite.svg#i-grad"/></svg></div><h3>Certificate, if you want one</h3><p>Optional Certificate of Participation from MindCare Services®, a one-time PKR 1,000, emailed within one business day. Everything above is free regardless.</p></div>
+      <div class="feature-card fade-up"><div class="fi"><svg><use href="assets/sprite.svg#i-grad"/></svg></div><h3>Certificate, if you want one</h3><p>Optional Certificate of Participation from MindCare Services®, a one-time <span class="tm-amount">PKR 1,000</span>, emailed within one business day. Everything above is free regardless.</p></div>
     </div>
   </div>
 </section>

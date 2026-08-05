@@ -1,8 +1,10 @@
 // Password-protected viewer for workshop registrations, served at /submissions.
 //
-// GET  -> login screen (or the table, if a valid session cookie is present)
-// POST -> checks the ID/password, sets a signed short-lived session cookie and
-//         renders the table with time-limited signed links to each receipt.
+// GET  -> login screen (or the registrations, if a valid session cookie is present)
+// POST -> login, logout, or deleting one registration
+//
+// The registrations are laid out as a card grid rather than a wide table, so
+// the page never scrolls sideways and reads properly on a phone.
 //
 // Deployed with verify_jwt = false: this function implements its own
 // credential check, because the people opening it are staff with an ID and
@@ -13,6 +15,7 @@ const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const BUCKET = "mindcare-receipts";
 const TABLE = "mindcare_workshop_registrations";
+const CERT_FEE = "PKR 1,000";
 
 // Credentials are checked against a salted SHA-256 digest so the plaintext
 // password is not committed to the website repository. Override either value
@@ -24,6 +27,8 @@ const CREDENTIAL_HASH = Deno.env.get("SUBMISSIONS_HASH") ??
 const SESSION_COOKIE = "mc_submissions";
 const SESSION_SECONDS = 8 * 60 * 60;
 const RECEIPT_LINK_SECONDS = 60 * 60;
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 const encoder = new TextEncoder();
 
@@ -102,49 +107,87 @@ function formatWhen(iso: string): string {
 }
 
 const PAGE_CSS = `
-:root{--bg:#f5f8f7;--card:#fff;--ink:#12241a;--muted:#5b6b63;--line:#dfe8e4;--teal:#2BBDC9;--teal-deep:#0F9AA8}
+:root{--bg:#f5f8f7;--card:#fff;--ink:#12241a;--muted:#5b6b63;--line:#dfe8e4;--teal:#2BBDC9;--teal-deep:#0F9AA8;
+ --green:#2D6A1F;--green-bg:#eaf4e6;--danger:#c2413f}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+ -webkit-font-smoothing:antialiased;overflow-wrap:anywhere}
 a{color:var(--teal-deep)}
-.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
-.top{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin-bottom:22px}
-.brand{font-size:1.35rem;font-weight:700;letter-spacing:-.01em}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 16px 56px}
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:18px}
+.brand{font-size:1.3rem;font-weight:700;letter-spacing:-.01em;line-height:1.2}
 .brand span{color:var(--teal-deep)}
-.sub{color:var(--muted);font-size:.88rem;margin-top:2px}
-.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);
- padding:9px 15px;border-radius:10px;font:inherit;font-size:.86rem;font-weight:600;cursor:pointer;text-decoration:none}
+.sub{color:var(--muted);font-size:.85rem;margin-top:4px;max-width:52ch}
+.count{display:inline-block;background:var(--teal);color:#fff;border-radius:999px;padding:2px 10px;font-size:.75rem;font-weight:700;
+ margin-left:8px;vertical-align:middle}
+.tools{display:flex;gap:9px;align-items:center;flex-wrap:wrap;flex:1;min-width:min(100%,280px);justify-content:flex-end}
+.tools form{margin:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);
+ padding:10px 15px;border-radius:10px;font:inherit;font-size:.85rem;font-weight:600;cursor:pointer;text-decoration:none;min-height:42px;white-space:nowrap}
 .btn:hover{border-color:var(--teal)}
 .btn-primary{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff}
+.search{flex:1;min-width:180px;padding:10px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:.9rem;
+ background:var(--card);color:var(--ink);min-height:42px}
+.search:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(43,189,201,.15)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 26px rgba(6,43,49,.06)}
-.search{flex:1;min-width:200px;padding:10px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:.9rem;background:var(--card);color:var(--ink)}
-.tablewrap{overflow-x:auto;border-radius:16px}
-table{border-collapse:collapse;width:100%;min-width:1280px;font-size:.87rem}
-th{position:sticky;top:0;background:#eef4f2;text-align:left;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;
- color:var(--teal-deep);padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
-td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-tr:last-child td{border-bottom:0}
-tr:hover td{background:#f8fbfa}
-.name{font-weight:600;white-space:nowrap}
-.long{max-width:280px;color:var(--muted);white-space:pre-wrap}
-.name .long{font-size:.76rem;margin-top:2px;max-width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nowrap{white-space:nowrap}
-.count{display:inline-block;background:var(--teal);color:#fff;border-radius:999px;padding:2px 10px;font-size:.78rem;font-weight:700;margin-left:8px}
-.empty{padding:60px 20px;text-align:center;color:var(--muted)}
-.login{max-width:390px;margin:14vh auto 0;padding:34px}
-.login h1{font-size:1.3rem;margin:0 0 4px}
+.notice{background:var(--teal-deep);color:#fff;border-radius:12px;padding:12px 16px;font-size:.88rem;font-weight:600;margin-bottom:16px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;align-items:start}
+.reg{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 6px 20px rgba(6,43,49,.05)}
+.reg-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.reg-name{font-size:1.05rem;font-weight:700;margin:0;line-height:1.25}
+.reg-when{color:var(--muted);font-size:.76rem;margin-top:3px}
+.reg-del{margin:0;flex:none}
+.icon-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;cursor:pointer;
+ border:1px solid var(--line);background:transparent;color:var(--muted);font:inherit;padding:0}
+.icon-btn:hover{border-color:var(--danger);color:var(--danger);background:rgba(194,65,63,.07)}
+.icon-btn svg{width:17px;height:17px;display:block}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:4px 11px;margin:12px 0 0}
+/* Money is green across the site, so a paid certificate reads green here too. */
+.tag-paid{color:var(--green);background:var(--green-bg);border:1px solid rgba(45,106,31,.22)}
+.tag-free{color:var(--muted);background:var(--bg);border:1px solid var(--line)}
+
+.reg-fields{display:grid;grid-template-columns:1fr;gap:11px;margin:14px 0 0}
+.reg-fields>div{margin:0}
+.reg-fields dt{font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--teal-deep);font-weight:700;margin-bottom:2px}
+.reg-fields dd{margin:0;font-size:.9rem;line-height:1.4}
+.reg-note{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.reg-note-label{font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--teal-deep);font-weight:700}
+.reg-note p{margin:3px 0 0;font-size:.87rem;line-height:1.5;color:var(--muted);white-space:pre-wrap}
+.reg-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:14px;padding-top:13px;
+ border-top:1px solid var(--line)}
+.reg-workshop{font-size:.72rem;color:var(--muted);flex:1;min-width:110px}
+.reg-foot .btn{padding:8px 13px;font-size:.8rem;min-height:38px}
+
+.empty{padding:56px 20px;text-align:center;color:var(--muted)}
+.noresults{text-align:center;color:var(--muted);padding:34px 10px;font-size:.9rem}
+.login{max-width:390px;margin:12vh auto 0;padding:30px}
+.login h1{font-size:1.25rem;margin:0 0 4px}
 .login p{color:var(--muted);font-size:.88rem;margin:0 0 22px}
-.login label{display:block;font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
-.login input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-bottom:16px;background:#fff;color:var(--ink)}
+.login label{display:block;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.login input{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-bottom:16px;background:#fff;color:var(--ink)}
 .login input:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(43,189,201,.15)}
-.login .btn{width:100%;justify-content:center;padding:12px}
+.login .btn{width:100%;padding:13px}
 .err{background:#fdecec;border:1px solid #f3c4c4;color:#a12a2a;border-radius:10px;padding:10px 13px;font-size:.85rem;margin-bottom:16px}
+
+@media(max-width:640px){
+ .wrap{padding:18px 12px 44px}
+ .top{flex-direction:column;align-items:stretch;gap:12px}
+ .tools{justify-content:stretch;min-width:0}
+ .search{flex:1 1 100%;min-width:0}
+ .tools .btn,.tools form{flex:1 1 0;min-width:0}
+ .tools form .btn{width:100%}
+ .grid{grid-template-columns:1fr;gap:12px}
+ .login{margin-top:6vh}
+}
 @media(prefers-color-scheme:dark){
- :root{--bg:#0e1b13;--card:#12241a;--ink:#e8f2ed;--muted:#93a89e;--line:#22392c}
- th{background:#162c20}
- tr:hover td{background:#16281d}
+ :root{--bg:#0e1b13;--card:#12241a;--ink:#e8f2ed;--muted:#93a89e;--line:#22392c;
+  --green:#6ede8a;--green-bg:#16281a;--danger:#e8817f}
  .login input{background:#0e1b13;color:var(--ink)}
  .err{background:#3a1c1c;border-color:#5e2b2b;color:#f0b4b4}
+ .tag-paid{border-color:rgba(110,222,138,.28)}
+ .icon-btn:hover{background:rgba(232,129,127,.12)}
 }
 `;
 
@@ -167,8 +210,16 @@ function shell(title: string, bodyHtml: string): string {
 </html>`;
 }
 
+function htmlResponse(body: string, status = 200): Response {
+  return new Response(shell("Submissions | MindCare Services", body), {
+    status,
+    headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
+  });
+}
+
 function loginPage(error?: string): Response {
-  const body = `<div class="wrap">
+  return htmlResponse(
+    `<div class="wrap">
   <form class="card login" method="POST" action="">
     <h1>MIND<span style="color:var(--teal-deep)">CARE</span> Submissions</h1>
     <p>Workshop registrations. Authorised staff only.</p>
@@ -179,11 +230,9 @@ function loginPage(error?: string): Response {
     <input id="password" name="password" type="password" autocomplete="current-password" required>
     <button class="btn btn-primary" type="submit">Sign in</button>
   </form>
-</div>`;
-  return new Response(shell("Submissions | MindCare Services", body), {
-    status: error ? 401 : 200,
-    headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
-  });
+</div>`,
+    error ? 401 : 200,
+  );
 }
 
 type Registration = {
@@ -224,7 +273,47 @@ async function signedReceiptUrls(paths: string[]): Promise<Record<string, string
   return map;
 }
 
-async function submissionsPage(): Promise<Response> {
+/** Removes one registration and whatever receipt came with it. */
+async function deleteRegistration(id: string): Promise<string | null> {
+  if (!UUID_RE.test(id)) return null;
+
+  const lookup = await fetch(
+    `${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}&select=name,receipt_path`,
+    { headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` } },
+  );
+  if (!lookup.ok) {
+    console.error("delete lookup failed", lookup.status, await lookup.text());
+    return null;
+  }
+  const [row] = await lookup.json() as Array<{ name: string; receipt_path: string | null }>;
+  if (!row) return null;
+
+  const removal = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}`, {
+    method: "DELETE",
+    headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` },
+  });
+  if (!removal.ok) {
+    console.error("delete failed", removal.status, await removal.text());
+    return null;
+  }
+
+  // Free seats have no receipt. When there is one, the row is what matters, so
+  // a file that will not delete is logged and left rather than failing the action.
+  if (row.receipt_path) {
+    const dropped = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${row.receipt_path}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${SERVICE_KEY}` },
+    });
+    if (!dropped.ok) console.error("receipt delete failed", dropped.status, await dropped.text());
+  }
+  return row.name;
+}
+
+const TRASH_ICON =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>';
+
+async function submissionsPage(notice?: string): Promise<Response> {
   const query = new URLSearchParams({
     select: "id,created_at,workshop,name,institute,phone,email,education,prior_info,expectations,certificate,receipt_path,receipt_name",
     order: "created_at.desc",
@@ -235,10 +324,10 @@ async function submissionsPage(): Promise<Response> {
   });
   if (!res.ok) {
     console.error("fetching registrations failed", res.status, await res.text());
-    return new Response(shell("Submissions | MindCare Services", `<div class="wrap"><div class="card empty">We could not load the registrations right now. Please refresh in a moment.</div></div>`), {
-      status: 502,
-      headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
-    });
+    return htmlResponse(
+      `<div class="wrap"><div class="card empty">We could not load the registrations right now. Please refresh in a moment.</div></div>`,
+      502,
+    );
   }
 
   const rows = await res.json() as Registration[];
@@ -246,36 +335,52 @@ async function submissionsPage(): Promise<Response> {
     rows.map((r) => r.receipt_path).filter((p): p is string => !!p),
   );
 
-  const tableRows = rows.map((r) => {
+  const cards = rows.map((r) => {
     // The workshop is free: only people who bought the certificate have a receipt.
     const link = r.receipt_path ? links[r.receipt_path] : undefined;
-    const receiptCell = !r.certificate
-      ? `<span class="long">Free seat, no payment</span>`
+    // A free seat has nothing to collect, and the badge already says so.
+    const receipt = !r.certificate
+      ? ""
       : link
       ? `<a class="btn" href="${esc(link)}" target="_blank" rel="noopener">View receipt</a>`
-      : `<span class="long">${esc(r.receipt_name || "uploaded")}</span>`;
-    return `<tr>
-      <td class="nowrap">${esc(formatWhen(r.created_at))}</td>
-      <td class="name">${esc(r.name)}<div class="long">${esc(r.workshop)}</div></td>
-      <td>${esc(r.institute)}</td>
-      <td class="nowrap"><a href="tel:${esc(r.phone.replace(/[^\d+]/g, ""))}">${esc(r.phone)}</a></td>
-      <td><a href="mailto:${esc(r.email)}">${esc(r.email)}</a></td>
-      <td>${esc(r.education)}</td>
-      <td class="long">${esc(r.prior_info)}</td>
-      <td class="long">${esc(r.expectations)}</td>
-      <td class="nowrap">${r.certificate ? "Yes, PKR 1,000" : "No"}</td>
-      <td>${receiptCell}</td>
-    </tr>`;
+      : `<span class="reg-workshop">${esc(r.receipt_name || "Receipt unavailable")}</span>`;
+    const note = (label: string, value: string) =>
+      value
+        ? `<div class="reg-note"><span class="reg-note-label">${label}</span><p>${esc(value)}</p></div>`
+        : "";
+    return `<article class="reg" data-row>
+      <div class="reg-top">
+        <div>
+          <h2 class="reg-name">${esc(r.name)}</h2>
+          <div class="reg-when">${esc(formatWhen(r.created_at))}</div>
+        </div>
+        <form class="reg-del" method="POST" action="" data-delete data-name="${esc(r.name)}">
+          <input type="hidden" name="action" value="delete">
+          <input type="hidden" name="id" value="${esc(r.id)}">
+          <button class="icon-btn" type="submit" title="Delete this registration"
+                  aria-label="Delete the registration from ${esc(r.name)}">${TRASH_ICON}</button>
+        </form>
+      </div>
+      <span class="tag ${r.certificate ? "tag-paid" : "tag-free"}">${
+      r.certificate ? `Certificate &middot; ${CERT_FEE}` : "Free seat"
+    }</span>
+      <dl class="reg-fields">
+        <div><dt>Institute / University</dt><dd>${esc(r.institute)}</dd></div>
+        <div><dt>Current education</dt><dd>${esc(r.education)}</dd></div>
+        <div><dt>Phone</dt><dd><a href="tel:${esc(r.phone.replace(/[^\d+]/g, ""))}">${esc(r.phone)}</a></dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:${esc(r.email)}">${esc(r.email)}</a></dd></div>
+      </dl>
+      ${note("Prior knowledge", r.prior_info)}
+      ${note("Expectations", r.expectations)}
+      <div class="reg-foot">
+        <span class="reg-workshop">${esc(r.workshop)}</span>
+        ${receipt}
+      </div>
+    </article>`;
   }).join("");
 
-  const table = rows.length
-    ? `<div class="card tablewrap"><table id="grid">
-        <thead><tr>
-          <th>Received</th><th>Name</th><th>Institute / University</th><th>Phone</th><th>Email</th>
-          <th>Current education</th><th>Prior knowledge</th><th>Expectations</th><th>Certificate</th><th>Receipt</th>
-        </tr></thead>
-        <tbody>${tableRows}</tbody>
-      </table></div>`
+  const list = rows.length
+    ? `<div class="grid" id="grid">${cards}</div><p class="noresults" id="noresults" hidden>No registrations match that search.</p>`
     : `<div class="card empty">No registrations yet. They will appear here as soon as someone submits the workshop form.</div>`;
 
   const csvData = rows.map((r) => [
@@ -288,31 +393,48 @@ async function submissionsPage(): Promise<Response> {
   <div class="top">
     <div>
       <div class="brand">MIND<span>CARE</span> Submissions<span class="count">${rows.length}</span></div>
-      <div class="sub">Workshop registrations, newest first. The workshop is free; receipts belong to paid certificates only, and their links expire after one hour.</div>
+      <div class="sub">Newest first. The workshop is free; receipts belong to paid certificates only and their links expire after one hour.</div>
     </div>
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="Search name, email, institute...">
-      <button class="btn" id="csv" type="button">Download CSV</button>
+      <button class="btn" id="csv" type="button">CSV</button>
       <a class="btn" href="">Refresh</a>
-      <form method="POST" action="" style="margin:0"><input type="hidden" name="action" value="logout"><button class="btn" type="submit">Sign out</button></form>
+      <form method="POST" action=""><input type="hidden" name="action" value="logout"><button class="btn" type="submit">Sign out</button></form>
     </div>
   </div>
-  ${table}
+  ${notice ? `<div class="notice">${esc(notice)}</div>` : ""}
+  ${list}
 </div>
 <script id="rowdata" type="application/json">${
     JSON.stringify(csvData).replace(/</g, "\\u003c")
   }</script>
 <script>
 (function(){
-  var q = document.getElementById('q'), grid = document.getElementById('grid');
+  var q = document.getElementById('q');
+  var grid = document.getElementById('grid');
+  var none = document.getElementById('noresults');
   if (q && grid) {
     q.addEventListener('input', function(){
       var needle = q.value.toLowerCase();
-      Array.prototype.forEach.call(grid.tBodies[0].rows, function(row){
-        row.style.display = row.textContent.toLowerCase().indexOf(needle) === -1 ? 'none' : '';
+      var shown = 0;
+      Array.prototype.forEach.call(grid.querySelectorAll('[data-row]'), function(card){
+        var hit = card.textContent.toLowerCase().indexOf(needle) !== -1;
+        card.style.display = hit ? '' : 'none';
+        if (hit) shown++;
       });
+      if (none) none.hidden = shown !== 0;
     });
   }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-delete]'), function(form){
+    form.addEventListener('submit', function(e){
+      var who = form.getAttribute('data-name') || 'this registration';
+      if (!confirm('Delete the registration from ' + who + '?\\n\\nThe details and any uploaded receipt are removed for good.')) {
+        e.preventDefault();
+      }
+    });
+  });
+
   var btn = document.getElementById('csv');
   if (btn) btn.addEventListener('click', function(){
     var head = ['Received','Workshop','Name','Institute','Phone','Email','Current education','Prior knowledge','Expectations','Certificate','Receipt'];
@@ -329,9 +451,7 @@ async function submissionsPage(): Promise<Response> {
 })();
 </script>`;
 
-  return new Response(shell("Submissions | MindCare Services", body), {
-    headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
-  });
+  return htmlResponse(body);
 }
 
 function withCookie(res: Response, value: string, maxAge: number): Response {
@@ -347,9 +467,20 @@ Deno.serve(async (req: Request) => {
   if (req.method === "POST") {
     const form = await req.formData().catch(() => null);
     if (!form) return loginPage("Something went wrong. Please try again.");
+    const action = form.get("action");
 
-    if (form.get("action") === "logout") {
-      return withCookie(loginPage(), "", 0);
+    if (action === "logout") return withCookie(loginPage(), "", 0);
+
+    if (action === "delete") {
+      // Deleting is only ever reachable with a live session. SameSite=Lax on the
+      // cookie keeps a cross-site form from posting here on someone's behalf.
+      if (!await sessionIsValid(readCookie(req, SESSION_COOKIE))) return loginPage();
+      const name = await deleteRegistration(String(form.get("id") ?? ""));
+      return await submissionsPage(
+        name
+          ? `Deleted the registration from ${name}.`
+          : "That registration could not be deleted. It may already be gone.",
+      );
     }
 
     const id = String(form.get("id") ?? "");
@@ -366,8 +497,6 @@ Deno.serve(async (req: Request) => {
     return new Response("Method not allowed", { status: 405 });
   }
 
-  if (await sessionIsValid(readCookie(req, SESSION_COOKIE))) {
-    return await submissionsPage();
-  }
+  if (await sessionIsValid(readCookie(req, SESSION_COOKIE))) return await submissionsPage();
   return loginPage();
 });

@@ -22,9 +22,19 @@ only from people who ask for one.
 
 Staff read it back at `/submissions`, which rewrites to `/api/submissions` and
 proxies to the `workshop-submissions` Edge Function. That function checks the ID
-and password, sets a signed 8 hour session cookie, and renders the table with a
-Certificate column and one hour signed links to the receipts that exist. It also
-offers search and a CSV export.
+and password, sets a signed 8 hour session cookie, and renders one card per
+registration, badged free or paid certificate, with one hour signed links to the
+receipts that exist. It also offers search, a CSV export and per-registration
+delete.
+
+The layout is a card grid rather than a table so the page fits any width without
+scrolling sideways, and collapses to a single column on a phone.
+
+Deleting removes the row and its receipt together. It needs a live session, the
+id has to be a UUID before any query runs, and the browser asks for confirmation
+first. If the row goes but the stored receipt will not, the failure is logged and
+the delete still counts: an orphaned file is a smaller problem than a row that
+refuses to disappear.
 
 ## Where things live
 
