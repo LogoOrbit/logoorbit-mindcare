@@ -4,7 +4,8 @@ Generates /services/*.html and /team/*.html plus their index pages from the
 data tables below, so every interior page shares one design system and a
 consistent SEO/schema baseline. Run: python3 build.py
 """
-import os, html, json, datetime
+import os, re, html, json, datetime
+from urllib.parse import quote as urlquote
 
 BASE = "https://themindcareservices.com"
 PHONE = "+92-327-2337631"
@@ -1059,60 +1060,434 @@ def guides_index():
 
 
 # ─────────────────────────── ARTICLES ───────────────────────────
-# Articles written by Shaista Tariq, published on LinkedIn. Cards link out to
-# the full pieces on LinkedIn (external), so bodies are not mirrored here.
+# Articles written by Shaista Tariq. Each one gets a dedicated page under
+# /articles/<slug>.html; the original LinkedIn post is linked as the source.
+#
+# Body blocks: ("lead"|"p"|"h2", text) · ("ask", question) · ("quote", text)
+#              ("ul", [items]) · ("kv", [(term, definition)]) · ("note", title, text)
+
+MOTIFS = {
+    # Mind vs. machine — a rule-following grid wired to an organic form
+    "soul": '''<svg viewBox="0 0 200 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="16" y="36" width="66" height="66" rx="10" opacity=".55"/>
+      <path d="M30 52h38M30 64h38M30 76h24M30 88h30" opacity=".4"/>
+      <path d="M122 32c24 0 38 18 38 38s-14 38-38 38c-15 0-25-9-25-21 0-11 9-15 9-23 0-10-10-12-10-21 0-7 11-11 26-11Z" opacity=".95"/>
+      <circle cx="130" cy="66" r="6" fill="currentColor" stroke="none" opacity=".9"/>
+      <path d="M138 52c8 4 10 12 6 20" opacity=".6"/>
+      <path d="M82 69h15" stroke-dasharray="2 6" opacity=".8"/>
+    </svg>''',
+    # Balance — what the work weighs against what it is paid
+    "pay": '''<svg viewBox="0 0 200 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M100 26v88M76 114h48"/>
+      <path d="M44 40h112" opacity=".9"/>
+      <circle cx="100" cy="40" r="5" fill="currentColor" stroke="none"/>
+      <path d="M44 40 26 84h36L44 40Z" opacity=".95"/>
+      <path d="M156 40l-12 30h24l-12-30Z" opacity=".5"/>
+      <path d="M26 84c4 8 32 8 36 0M144 70c3 6 21 6 24 0" opacity=".7"/>
+    </svg>''',
+    # Consistency plus correction — steady steps, gently re-aimed
+    "consistency": '''<svg viewBox="0 0 200 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M22 104h156" opacity=".4"/>
+      <circle cx="38" cy="104" r="6" opacity=".95"/><circle cx="72" cy="104" r="6" opacity=".85"/>
+      <circle cx="106" cy="104" r="6" opacity=".75"/><circle cx="140" cy="104" r="6" opacity=".65"/>
+      <circle cx="174" cy="104" r="6" opacity=".55"/>
+      <path d="M30 76c30 4 52-6 62-24 8-14 22-20 40-18" opacity=".95"/>
+      <path d="M120 30l14 4-6 13" opacity=".95"/>
+    </svg>''',
+    # Work — output falling away, and a door left open
+    "work": '''<svg viewBox="0 0 200 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="22" y="46" width="24" height="66" rx="6" opacity=".95"/>
+      <rect x="56" y="64" width="24" height="48" rx="6" opacity=".72"/>
+      <rect x="90" y="82" width="24" height="30" rx="6" opacity=".5"/>
+      <path d="M144 30h34v82h-34" opacity=".9"/>
+      <path d="M162 72h-32M142 60l-14 12 14 12" opacity=".95"/>
+    </svg>''',
+}
+
 ARTICLES = [
-    dict(title="The Soul Cannot Be Coded",
+    dict(slug="the-soul-cannot-be-coded",
+         title="The Soul Cannot Be Coded",
+         kicker="Man vs. Machine: the Chinese Room and why processing is not consciousness",
+         category="Philosophy of Mind",
+         motif="soul", a1="#0f9aa8", a2="#5c58c9",
+         date="2026-03-03", date_h="3 March 2026",
          url="https://www.linkedin.com/pulse/soul-cannot-coded-shaista-tariq-pp4df/",
-         blurb="A reflection on the deeply human core of care and connection — and why empathy, presence and the human soul can never truly be replaced by technology or automation."),
-    dict(title="The Cost of Professionalism vs. The Reality of Pay",
+         blurb="A philosophical dialogue on consciousness, machines and the irreducible human — and why empathy, presence and the human soul can never truly be coded.",
+         desc="Shaista Tariq on the Chinese Room, instinct, the subconscious and the soul as scientific inference — a philosophical case for why human consciousness cannot be replicated by machines.",
+         takeaways=[
+             "Instinct comes before training — no one programs hunger into a newborn.",
+             "Machines have no subconscious, so no hidden depth shapes what they say.",
+             "A functionally perfect replica still never becomes the original.",
+             "We already accept non-physical realities: thoughts, logic, numbers.",
+         ],
+         body=[
+             ("lead", "Can a machine truly think? Can it feel? Can it understand? These are not merely academic questions; they are among the most consequential questions of our time, as artificial intelligence grows more sophisticated and more embedded in human life."),
+             ("p", "What follows is a philosophical dialogue that begins with a classic thought experiment and arrives somewhere most Western philosophy has never dared to go: the argument that the human soul — understood not as a religious abstraction but as a scientific inference — is the unbridgeable gap between human consciousness and any machine."),
+             ("note", "An original work of philosophical reasoning", "The arguments developed here emerged organically through conversation, built not from textbooks, but from genuine inquiry into what makes a human being irreducibly human."),
+             ("h2", "The experiment under discussion: the Chinese Room, and why it is not enough"),
+             ("p", "John Searle's famous thought experiment imagines a person locked in a room, receiving messages in Chinese. Using a comprehensive rulebook, they produce correct Chinese responses without understanding a single word. Searle's argument: this is exactly what computers do. They manipulate symbols according to rules. They have syntax, but no semantics. No matter how sophisticated the program, the room never understands Chinese."),
+             ("p", "Most philosophical responses to this challenge debate the mechanics — whether the &ldquo;system as a whole&rdquo; understands even if the person inside does not. But there is a deeper and more revealing challenge to ask: even if the room produced a perfect answer, a human who genuinely understood Chinese might have answered <em>differently</em>. Not wrongly — differently. Because a human brings something the rulebook does not have: an opinion."),
+             ("quote", "This distinction between <em>the correct answer</em> and <em>my answer</em> is one the Chinese Room can never bridge."),
+             ("p", "The room gives what it was built to give. A human gives what they, specifically and irreducibly, choose to give. The source of that difference is the central problem this essay investigates. What follows are the distinctions that separate humans from machines — and the rationales for the questions the Chinese Room leaves open."),
+             ("h2", "Part I — Instinct, need, and the stake in existence"),
+             ("ask", "If an AI can simulate human needs perfectly, does it actually experience the &ldquo;drive&rdquo; behind those needs?"),
+             ("p", "A baby does not learn to cry for milk. No one programs hunger into a newborn. The drive comes from within — from billions of years of evolution encoded in biology prior to any training, any instruction, any input from the outside world. This is the first and perhaps most important distinction between human consciousness and artificial intelligence."),
+             ("p", "A computer starts as pure zero. Whatever it knows, whatever it appears to feel, was put there by someone else. It is borrowed consciousness at best, not original. It has no stake in anything. It does not fear death, does not hunger, has no skin in the game. Philosophers call this <em>intentionality</em>: the idea that all human thought is <em>about</em> something, driven by desire, fear, need. The Chinese Room processes, but wants nothing."),
+             ("p", "One might ask: does a thermostat &ldquo;want&rdquo; warmth? Does a virus &ldquo;want&rdquo; to survive? The answer illuminates the point rather than undermining it. We call these processes drives only by analogy. The virus has no experience of wanting. The thermostat has no awareness of cold. But a hungry child does not merely behave as if they want milk; they <em>want</em> it, in the full phenomenological sense. That wanting arises from within, not from programming."),
+             ("h2", "Part II — The three levels: what computers cannot have"),
+             ("ask", "If a machine has no subconscious, no dreams and no biological trauma, can it ever truly &ldquo;understand&rdquo; the human experience — or is it just replicating the surface of our thoughts?"),
+             ("p", "Human consciousness operates across three levels: the conscious, the subconscious and the unconscious. Most of what the brain does is below awareness. Generational memory, instincts, fears, attractions — all baked into a person before they are born. Dreams are not random noise; they are the subconscious processing what the conscious mind could not."),
+             ("p", "A computer has no subconscious. It has no suppressed drives bubbling up to influence its outputs in ways it cannot explain. Everything a computer does is explicit. There is no hidden layer of unresolved experience shaping its responses. It absorbs information. Humans pass it through generations, filtered through biology, trauma, love and time."),
+             ("p", "This is perhaps the deepest structural difference. The subconscious is not merely a feature of human psychology; it is evidence of an interior life that has depth, layers, and a history that no input-output machine can replicate."),
+             ("h2", "Part III — The brand and the replica: on origin and authenticity"),
+             ("ask", "If a replica is functionally perfect, does it ever truly become the original? Or is there an &ldquo;essence&rdquo; of origin that a machine can never inherit, no matter how sophisticated its code?"),
+             ("p", "Why can a replica never truly be the original? Not merely because of quality — a perfect replica might be functionally indistinguishable. The difference is one of origin and authority. The original carries something the copy structurally cannot have, regardless of how perfect the imitation becomes."),
+             ("p", "Humans are the original. Artificial intelligence is the replica. No matter how sophisticated the copy becomes, it cannot carry what the original <em>is</em>, because it did not come from the same source."),
+             ("p", "This observation leads to a profound implication. If humans wanted to truly replicate themselves, nature already provided the method: reproduction. Birth is not copying data. It is passing something forward — instinct, essence, the irreducible human quality — through a process we did not design and do not fully control. A born child is unpredictable. You cannot determine what they will become. That unpredictability is not a flaw; it is proof that something real is happening, something beyond programming."),
+             ("p", "A computer's &ldquo;child&rdquo; is just another program. Fully controlled. Fully predictable in principle. This is not a difference in degree; it is a difference in kind."),
+             ("h2", "Part IV — The aether argument: soul as scientific inference"),
+             ("ask", "If we accept the existence of dark matter because of its effect on the universe, why do we hesitate to accept a soul when human consciousness behaves as if one exists?"),
+             ("p", "In the history of science, there is a recurring pattern: something is accepted as real before it is proven, because the evidence of its effects demands it. Aether was proposed because space behaved as if something filled it — objects moved, light propagated, forces acted across apparent voids. Dark matter is the contemporary version: invisible, undetected directly, yet required by the mathematics of galactic motion."),
+             ("p", "The soul should be understood in precisely this way. We cannot see it, touch it or measure it directly. But human behaviour — consciousness, creativity, love, sacrifice and the experience of meaning — only makes complete sense if something like the soul exists. This is not a religious argument. It is a scientific-style inference from observed effects to necessary cause."),
+             ("p", "Physics has already established that human perception covers only a narrow slice of reality. Frequencies exist below and above what we can hear. Colours exist beyond what we can see. Quantum mechanics describes a reality that functionally exists but that no human can directly perceive or intuit. Dimensions beyond the three we experience may be real. The soul operating on a frequency or dimension beyond current sensory range is not mystical. It is consistent with how science already understands the limits of perception."),
+             ("h2", "Part V — Thoughts without proof: the strongest argument"),
+             ("ask", "If we accept that numbers and logic are real despite being non-physical, why do we demand physical proof for the existence of the human soul?"),
+             ("p", "Here is the argument that most completely exposes the inconsistency of materialist scepticism about the soul: we already accept the existence of something non-physical as the foundation of all knowledge."),
+             ("p", "Thoughts exist. No one disputes this. Yet no one has ever touched a thought, seen a thought, or held a thought in their hand. Science itself operates on thoughts. Logic is a thought. Mathematics is a thought. The number seven has never been located in physical space. And yet civilisation is built on the reality of these non-physical things."),
+             ("quote", "If we accept thoughts as real without physical proof — and we do, completely, without question — then the burden-of-proof argument against the soul loses its force."),
+             ("p", "We have already conceded that non-physical things can be real. The question is not <em>whether</em> non-physical reality exists. We know it does. The question is only how far it extends."),
+             ("p", "Spirituality — the dimension of the soul accessible through inner experience — exists across every human culture and every era of history. It appears in all religions, and in the lives of those who claim no religion at all. Atheists describe experiences of transcendence, awe and meaning that exceed the mechanical. This universality is not proof of a particular religious tradition. It is evidence of something in the human constitution that points beyond the physical — something the Chinese Room will never have, no matter how its rulebook grows."),
+             ("h2", "Conclusion: what machines will never be"),
+             ("p", "The argument developed in this essay can be stated plainly. Human consciousness is not a sophisticated information-processing system that could, in principle, be replicated by sufficiently advanced machines. It is something different in kind: arising from a biological origin that is prior to training, driven by instincts that predate birth, structured by layers of subconscious depth that no explicit program can reproduce, authenticated by an origin that no replica can share, and animated by a soul whose existence is scientifically inferrable even if not yet scientifically measurable."),
+             ("p", "To create something truly like a human, you cannot build it. You must grow it. Reproduction is not a workaround; it is the only method that works, because it is the only method that passes the irreducible thing forward. The soul is not installed. It is inherited, generated, born."),
+             ("quote", "The Chinese Room will always give the correct answer. But it will never give <em>its</em> answer."),
+             ("p", "And in that gap — between the correct and the personal, between the programmed and the willed, between the processed and the felt — lives everything that makes a human being human."),
+         ]),
+    dict(slug="cost-of-professionalism-vs-reality-of-pay",
+         title="The Cost of Professionalism vs. The Reality of Pay",
+         kicker="What psychology graduates are offered, and what the law says they are owed",
+         category="Work & Ethics",
+         motif="pay", a1="#d9743a", a2="#a03418",
+         date="2026-02-16", date_h="16 February 2026",
          url="https://www.linkedin.com/pulse/cost-professionalism-vs-reality-pay-shaista-tariq-sv88f/",
-         blurb="An honest look at the gap between the standards, dedication and professionalism expected of care workers and the reality of how that work is recognised and paid."),
-    dict(title="Consistency vs. Correction",
+         blurb="Burnout is common, but we rarely ask why. An honest look at the gap between the professionalism expected of care workers and the reality of how that work is paid.",
+         desc="Shaista Tariq on underpaid psychology roles in Pakistan — what Sindh's minimum wage law actually requires of clinics, hospitals and NGOs, and why underpayment fuels burnout.",
+         takeaways=[
+             "Sindh's notified minimum wage for a skilled worker in 2025–26 is around PKR 49,628 a month.",
+             "Private hospitals, clinics and NGOs count as commercial establishments and are covered.",
+             "Labelling a formal role an &ldquo;internship&rdquo; does not remove the legal minimum.",
+             "Underpaying trained care workers is a direct route to burnout and attrition.",
+         ],
+         body=[
+             ("lead", "Burnout during work is a common thing, but we have to ask why and how it happens. I recently saw a post from a mental health firm offering only PKR 25,000 for a psychologist with two years of experience in addiction care. Like, seriously? Is it even worth wasting our money on degrees?"),
+             ("p", "As a psychology learner, this hurts. I assume this happens in other fields as well, but based on this example, it reminds me of one of my own experiences. For my first pay, I worked 12-hour shifts for only PKR 25,000. I have no personal regrets, because it was good learning and I wasn't struggling financially — but what about those who really need a job to support themselves or their families?"),
+             ("h2", "What the government says"),
+             ("p", "Now, take a look at what the government says about this. According to the latest notification for the 2025–2026 fiscal year, the minimum wage for a skilled worker in Sindh has been set at approximately <strong>PKR 49,628 per month</strong>."),
+             ("p", "Moreover, the law mandates that no industrial or commercial establishment — which includes private hospitals, clinics and NGOs — can pay a worker less than the notified rate for their skill category."),
+             ("h2", "Which specific laws state this?"),
+             ("p", "There are three main legal instruments that define and protect your initial salary limits:"),
+             ("kv", [
+                 ("Sindh Minimum Wages Act, 2015", "This is the primary law. Section 6 gives the government the power to declare minimum wage rates that employers must follow."),
+                 ("Minimum Wages Ordinance, 1961", "This defines a &ldquo;worker&rdquo; as anyone performing skilled, unskilled, intellectual or clerical work."),
+                 ("The Annual Minimum Wage Notification (2025–26)", "Issued by the Labour &amp; Human Resources Department, Government of Sindh. This explicitly lists the PKR 49,628 rate for skilled professionals."),
+             ]),
+             ("note", "Important note on &ldquo;establishments&rdquo;", "By law — specifically the Sindh Terms of Employment Act, 2015 — these regulations apply to all commercial establishments. While some small private practices might try to bypass this by calling a role an &ldquo;internship&rdquo;, any formal employment contract for a BS Psychology graduate must legally honour the skilled-worker minimum rate."),
+             ("h2", "A call to action for students"),
+             ("p", "As a psychology student, I think we all should take a step for this. I have seen professionals spending millions on their Masters and MPhil degrees, only to earn 25k? Seriously?"),
+             ("p", "In the next part, we will discuss this further. However, anyone can put their thoughts on it now — what do you think?"),
+         ]),
+    dict(slug="consistency-vs-correction",
+         title="Consistency vs. Correction",
+         kicker="Why showing up every day only works when you also check the direction",
+         category="Growth & Practice",
+         motif="consistency", a1="#2D6A1F", a2="#0f9aa8",
+         date="2026-01-22", date_h="22 January 2026",
          url="https://www.linkedin.com/pulse/consistency-vs-correction-shaista-tariq-3ozpf/",
-         blurb="Why steady, consistent support shapes lasting behaviour and growth far more than constant correction — insights drawn from working with children and additional needs."),
-    dict(title="Why People Leave Jobs, Productivity Drops & Businesses Struggle",
+         blurb="What matters more — consistency, or correcting your direction? For me it isn't a debate: consistency only works when it is paired with regular self-correction.",
+         desc="Shaista Tariq on why consistency alone leads to burnout or stagnation, and how pairing steady effort with regular self-correction turns work into meaningful growth.",
+         takeaways=[
+             "Consistency does not work automatically on its own.",
+             "Effort without alignment feels productive — until it doesn't.",
+             "Unreflected repetition often ends in burnout or stagnation.",
+             "Real progress is steady effort plus a continuously refined path.",
+         ],
+         body=[
+             ("lead", "The question often comes up: what matters more — consistency in your work, or correcting your direction from time to time? For me, this isn't a debate. People are free to see it from their own perspective."),
+             ("p", "From my point of view, both consistency and correction are equally important. Consistency only works when it is paired with regular self-correction. Showing up every day matters, but so does checking whether you're moving in the right direction."),
+             ("p", "Consistency doesn't work automatically on its own. If you keep working without pausing to reflect and adjust your approach, it can lead to a substantial and unreliable waste of energy. Effort without alignment may feel productive, but over time it often results in burnout or stagnation."),
+             ("quote", "Real progress comes from staying consistent while continuously refining the path."),
+             ("p", "That balance is what turns effort into meaningful growth. Of course, this is my personal perspective — yours may differ."),
+         ]),
+    dict(slug="why-people-leave-jobs-and-productivity-drops",
+         title="Why People Leave Jobs, Productivity Drops &amp; Businesses Struggle",
+         kicker="Low productivity is rarely laziness — it is biology, rhythm and rigid hiring",
+         category="Workplace Psychology",
+         motif="work", a1="#4a63cf", a2="#0b5f6d",
+         date="2026-01-21", date_h="21 January 2026",
          url="https://www.linkedin.com/pulse/why-people-leave-jobs-productivity-drops-businesses-struggle-tariq-ey6zf/",
-         blurb="The psychological and human factors behind disengagement, burnout and turnover at work — and what leaders and workplaces can do to genuinely support their people."),
+         blurb="The psychological and human factors behind disengagement, burnout and turnover at work — and what leaders can do to genuinely support their people.",
+         desc="Shaista Tariq on why productivity drops and people leave jobs — focus cycles, individual working rhythms, rigid schedules, and the shared responsibility of managers and employees.",
+         takeaways=[
+             "Of 6–8 active hours a day, only about 3–5 are genuinely productive.",
+             "Deep focus lasts 60–90 minutes; breaks are essential, not a luxury.",
+             "Rigid schedules assume time spent equals work done.",
+             "Responsibility for low productivity is shared by managers and employees.",
+         ],
+         body=[
+             ("lead", "Over time, I've noticed a recurring pattern behind low productivity and the gradual decline of many businesses. While there are multiple reasons, one factor stands out clearly from my personal experience: the way people are hired and managed."),
+             ("p", "Hiring is often treated as a checklist process — fill the position, set the hours, assign the tasks. But productivity doesn't work that way. The human brain may stay active for 6–8 hours a day, yet only about 3–5 hours are genuinely productive. Deep focus usually lasts 60–90 minutes, after which efficiency drops. This is not laziness; it's biology. Regular breaks are not a luxury — they are essential for maintaining mental clarity and long-term performance."),
+             ("h2", "Everyone works to a different rhythm"),
+             ("p", "What I've also observed is that everyone has a different working capacity and rhythm. Some people perform best in the morning, others later in the day. Many individuals naturally develop an entrepreneurial mindset — they know how and when they work best. Unfortunately, this potential often goes unnoticed. Instead of nurturing self-reliant routines, many organisations emphasise rigid schedules and fixed working hours, assuming that time spent equals work done."),
+             ("h2", "So who is responsible?"),
+             ("ask", "Who is responsible for low productivity — hiring managers, or employees?"),
+             ("p", "The honest answer is: <strong>both</strong>."),
+             ("p", "In some workplaces, employees understand their productivity levels and preferred work styles but are not given the freedom to apply them. They're expected to follow a one-size-fits-all routine, even if it limits their efficiency. In other cases, hiring managers lack an understanding of how productivity truly works, overlooking the importance of flexibility, mental fatigue and individual strengths."),
+             ("quote", "Productivity isn't about controlling people — it's about understanding them."),
+             ("p", "Businesses grow when employers trust their teams and employees take ownership of their responsibilities. When both sides meet halfway, people stay longer, productivity improves, and businesses become more resilient."),
+         ]),
 ]
+
+
+def _plain(x):
+    return re.sub(r"<[^>]+>", " ", re.sub(r"&[a-z]+;", " ", x))
+
+
+def read_time(a):
+    words = 0
+    for b in a["body"]:
+        for part in b[1:]:
+            if isinstance(part, str):
+                words += len(_plain(part).split())
+            else:
+                for it in part:
+                    seq = it if isinstance(it, (tuple, list)) else (it,)
+                    words += sum(len(_plain(x).split()) for x in seq)
+    return max(1, round(words / 200))
+
+
+def art_body(blocks):
+    out = []
+    for b in blocks:
+        kind = b[0]
+        if kind == "lead":
+            out.append(f'<p class="art-lead">{b[1]}</p>')
+        elif kind == "p":
+            out.append(f"<p>{b[1]}</p>")
+        elif kind == "h2":
+            out.append(f"<h2>{b[1]}</h2>")
+        elif kind == "ask":
+            out.append(f'<div class="art-ask"><span>The question</span><p>{b[1]}</p></div>')
+        elif kind == "quote":
+            out.append(f"<blockquote>{b[1]}</blockquote>")
+        elif kind == "ul":
+            items = "".join(f"<li>{i}</li>" for i in b[1])
+            out.append(f'<ul class="art-ul">{items}</ul>')
+        elif kind == "kv":
+            rows = "".join(f"<div class=\"art-kv\"><dt>{t}</dt><dd>{d}</dd></div>" for t, d in b[1])
+            out.append(f'<dl class="art-kvs">{rows}</dl>')
+        elif kind == "note":
+            out.append(f'<aside class="art-note"><h4>{b[1]}</h4><p>{b[2]}</p></aside>')
+    return "\n      ".join(out)
+
+
+def art_motif(a, cls="art-art"):
+    return (f'<div class="{cls}" style="--a1:{a["a1"]};--a2:{a["a2"]}">'
+            f'{MOTIFS[a["motif"]]}</div>')
+
+
+def art_url(a):
+    return f"{BASE}/articles/{a['slug']}"
+
+
+def article_page(a, idx):
+    prefix = "../"
+    url = art_url(a)
+    plain_title = html.unescape(a["title"])
+    share = urlquote(url, safe="")
+    wa_share = "https://wa.me/?text=" + urlquote(f"{plain_title} — {url}", safe="")
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "BlogPosting", "headline": plain_title, "url": url, "mainEntityOfPage": url,
+         "description": a["desc"], "datePublished": a["date"], "dateModified": a["date"],
+         "articleSection": a["category"], "inLanguage": "en",
+         "image": f"{BASE}/mindcare.png",
+         "author": {"@type": "Person", "name": "Shaista Tariq", "url": f"{BASE}/team/shaista-tariq",
+                    "jobTitle": "Founder & Associate Psychologist"},
+         "publisher": {"@type": "Organization", "name": "MindCare Services®", "url": BASE,
+                       "logo": {"@type": "ImageObject", "url": f"{BASE}/mindcare.png"}},
+         "isBasedOn": a["url"]},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Articles", "item": f"{BASE}/articles.html"},
+            {"@type": "ListItem", "position": 3, "name": plain_title, "item": url}]}]}
+    mins = read_time(a)
+    takeaways = "\n        ".join(
+        f"<li>{icon(prefix,'i-check','20')}<span>{t}</span></li>" for t in a["takeaways"])
+    prev_a = ARTICLES[idx - 1] if idx > 0 else None
+    next_a = ARTICLES[idx + 1] if idx < len(ARTICLES) - 1 else None
+    pn = ""
+    if prev_a:
+        pn += (f'      <a href="{prev_a["slug"]}.html" class="pv"><span class="art-pn-l">← Previous</span>'
+               f'<strong>{prev_a["title"]}</strong></a>\n')
+    if next_a:
+        pn += (f'      <a href="{next_a["slug"]}.html" class="nx"><span class="art-pn-l">Next →</span>'
+               f'<strong>{next_a["title"]}</strong></a>\n')
+    others = [x for x in ARTICLES if x["slug"] != a["slug"]][:3]
+    more = "\n".join(art_card(x, base="") for x in others)
+
+    out = head(f"{plain_title} — Shaista Tariq | MindCare Services®", a["desc"], url, prefix,
+               schema, og_type="article")
+    out += nav(prefix, "articles")
+    out += f"""<main id="main">
+<header class="page-hero art-hero" style="--a1:{a['a1']};--a2:{a['a2']}">
+  <div class="ph-inner">
+    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="{prefix}articles.html">Articles</a></li><li aria-current="page">{a['title']}</li></ol>
+    {art_motif(a, 'art-art art-hero-motif')}
+    <span class="art-chip">{a['category']}</span>
+    <h1>{a['title']}</h1>
+    <p class="lede">{a['kicker']}.</p>
+    <div class="art-byline">
+      <span class="art-avatar">{AV['shaista']}</span>
+      <span class="art-by-who">
+        <a class="art-by-name" href="{prefix}team/shaista-tariq.html">Shaista Tariq</a>
+        <span class="art-by-role">Founder &amp; Associate Psychologist · PPA Member</span>
+      </span>
+      <span class="art-by-meta"><time datetime="{a['date']}">{a['date_h']}</time> · {mins} min read</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="section-inner">
+    <div class="detail-grid">
+      <article class="article-body fade-up">
+        <div class="art-takeaways">
+          <h2 class="art-tk-title">In short</h2>
+          <ul>
+        {takeaways}
+          </ul>
+        </div>
+      {art_body(a['body'])}
+        <div class="art-end">
+          <span class="art-avatar sm">{AV['shaista']}</span>
+          <p>Written by <a href="{prefix}team/shaista-tariq.html">Shaista Tariq</a>, founder of MindCare Services®. Originally published on LinkedIn — <a href="{a['url']}" target="_blank" rel="noopener">read the original post ↗</a></p>
+        </div>
+      </article>
+      <aside class="aside-card fade-up">
+        <h3>Article details</h3>
+        <ul class="aside-list">
+          <li>{icon(prefix,'i-book')} {a['category']}</li>
+          <li>{icon(prefix,'i-clock')} {mins} min read</li>
+          <li>{icon(prefix,'i-grad')} Published {a['date_h']}</li>
+          <li>{icon(prefix,'i-globe')} <a href="{a['url']}" target="_blank" rel="noopener">Original on LinkedIn</a></li>
+        </ul>
+        <h3>Share this</h3>
+        <div class="art-share">
+          <a class="art-share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url={share}" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg><span>LinkedIn</span></a>
+          <a class="art-share-btn" href="{wa_share}" target="_blank" rel="noopener" aria-label="Share on WhatsApp"><svg fill="currentColor" aria-hidden="true"><use href="{prefix}assets/sprite.svg#i-wa"/></svg><span>WhatsApp</span></a>
+          <button type="button" class="art-share-btn" data-copy="{url}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy link</span></button>
+        </div>
+        <h3>Talk to someone</h3>
+        <p>If anything here resonated, a free and confidential consultation is a good place to start.</p>
+        <div class="aside-actions">
+          <a href="{prefix}contact.html" class="btn-primary" style="justify-content:center">Book a Consultation</a>
+          <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header fade-up"><span class="section-tag">Keep reading</span><h2 class="section-title">More from Shaista</h2></div>
+    <div class="art-pn fade-up">
+{pn}    </div>
+    <div class="art-grid" style="margin-top:22px">
+{more}
+    </div>
+  </div>
+</section>
+
+{cta_band(prefix, "Have something on your mind?", "Whether it's for you or someone you care about, we're here. Reach out for a free, confidential consultation.")}
+</main>
+"""
+    out += footer(prefix)
+    return out
+
+
+def art_card(a, base="articles/"):
+    """Magazine-style card used on the index and in 'keep reading' rails.
+    `base` is the path from the current page to the articles folder."""
+    href = f"{base}{a['slug']}.html"
+    return f'''      <article class="art-card fade-up" style="--a1:{a['a1']};--a2:{a['a2']}">
+        {art_motif(a)}
+        <div class="art-card-body">
+          <span class="art-chip">{a['category']}</span>
+          <h3><a href="{href}">{a['title']}</a></h3>
+          <p>{a['blurb']}</p>
+          <div class="art-card-foot">
+            <span class="art-date"><time datetime="{a['date']}">{a['date_h']}</time> · {read_time(a)} min</span>
+            <span class="more">Read →</span>
+          </div>
+        </div>
+      </article>'''
 
 
 def articles_index():
     prefix = ""
     url = f"{BASE}/articles.html"
+    lead, rest = ARTICLES[0], ARTICLES[1:]
     schema = {"@context": "https://schema.org", "@graph": [
-        {"@type": "CollectionPage", "name": "Articles by Shaista Tariq — MindCare Services®", "url": url,
-         "description": "Articles and reflections by Shaista Tariq, founder of MindCare Services®, on mental health, care, workplaces and the human side of psychology."},
+        {"@type": "Blog", "name": "Articles by Shaista Tariq — MindCare Services®", "url": url,
+         "description": "Articles and reflections by Shaista Tariq, founder of MindCare Services®, on mental health, care, workplaces and the human side of psychology.",
+         "author": {"@type": "Person", "name": "Shaista Tariq", "url": f"{BASE}/team/shaista-tariq"},
+         "blogPost": [
+             {"@type": "BlogPosting", "headline": html.unescape(a["title"]), "url": art_url(a),
+              "datePublished": a["date"], "description": a["desc"],
+              "author": {"@type": "Person", "name": "Shaista Tariq"}} for a in ARTICLES]},
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
             {"@type": "ListItem", "position": 2, "name": "Articles", "item": url}]},
         {"@type": "ItemList", "itemListElement": [
-            {"@type": "ListItem", "position": i + 1, "name": a["title"], "url": a["url"]}
+            {"@type": "ListItem", "position": i + 1, "name": html.unescape(a["title"]), "url": art_url(a)}
             for i, a in enumerate(ARTICLES)]}]}
-    cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="{a['url']}" target="_blank" rel="noopener">
-        <div class="fi">{icon(prefix,'i-book')}</div>
-        <h3>{html.escape(a['title'])}</h3><p>{html.escape(a['blurb'])}</p>
-        <span class="more">Read on LinkedIn →</span></a>''' for a in ARTICLES)
+    cards = "\n".join(art_card(a) for a in rest)
+    topics = "".join(f'<span class="art-pill">{a["category"]}</span>' for a in ARTICLES)
     out = head("Articles by Shaista Tariq | Mental Health, Care & Workplaces — MindCare Services®",
-               "Articles and reflections by Shaista Tariq, founder of MindCare Services® in Karachi — on mental health, the human side of care, workplaces and behaviour.",
+               "Articles and reflections by Shaista Tariq, founder of MindCare Services® in Karachi — on mental health, the human side of care, workplaces and behaviour. Read them in full here.",
                url, prefix, schema)
     out += nav(prefix, "articles")
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
     <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Articles</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-book')} Writing &amp; reflections</div>
+    <div class="ph-badge">{icon(prefix,'i-book')} {len(ARTICLES)} essays &amp; reflections</div>
     <h1>Articles by <em>Shaista Tariq</em></h1>
-    <p class="lede">Reflections on mental health, the human side of care, workplaces and behaviour — written by Shaista Tariq, founder of MindCare Services®. Read the full pieces on LinkedIn.</p>
+    <p class="lede">Long-form writing on mental health, the human side of care, workplaces and behaviour — by the founder of MindCare Services®. Every piece is here in full, no login required.</p>
+    <div class="art-pills">{topics}</div>
     <div class="ph-actions"><a href="{prefix}team/shaista-tariq.html" class="btn-secondary">About Shaista →</a></div>
   </div>
 </header>
 <section>
   <div class="section-inner">
-    <div class="card-grid">
+    <div class="section-header fade-up"><span class="section-tag">Latest</span></div>
+    <article class="art-feature fade-up" style="--a1:{lead['a1']};--a2:{lead['a2']}">
+      {art_motif(lead)}
+      <div class="art-feature-body">
+        <span class="art-chip">{lead['category']}</span>
+        <h2><a href="articles/{lead['slug']}.html">{lead['title']}</a></h2>
+        <p class="art-kicker">{lead['kicker']}</p>
+        <p>{lead['blurb']}</p>
+        <div class="art-card-foot">
+          <span class="art-date"><time datetime="{lead['date']}">{lead['date_h']}</time> · {read_time(lead)} min read</span>
+          <span class="more">Read the essay →</span>
+        </div>
+      </div>
+    </article>
+    <div class="art-grid" style="margin-top:22px">
 {cards}
     </div>
+    <p class="art-foot-note fade-up">Each article is also published on LinkedIn — links to the original posts sit at the end of every piece.</p>
   </div>
 </section>
 {cta_band(prefix, "Have something on your mind?", "Whether it's for you or someone you care about, we're here. Reach out for a free, confidential consultation.")}
@@ -1318,6 +1693,8 @@ def build():
     for t in TOPICS:
         write(f"{t['slug']}.html", seo_page(t))
     write("guides.html", guides_index())
+    for i, a in enumerate(ARTICLES):
+        write(f"articles/{a['slug']}.html", article_page(a, i))
     write("articles.html", articles_index())
     write("workshops.html", workshops_page())
     write("confirmed.html", confirmation_page())
@@ -1329,6 +1706,7 @@ def build():
     urls += [(f"{BASE}/services/{s['slug']}", "0.8") for s in SERVICES]
     urls += [(f"{BASE}/team/{m['slug']}", "0.6") for m in TEAM]
     urls += [(f"{BASE}/{t['slug']}", "0.8") for t in TOPICS]
+    urls += [(art_url(a), "0.7") for a in ARTICLES]
     body = "\n".join(
         f"  <url><loc>{u}</loc><lastmod>{TODAY}</lastmod><changefreq>monthly</changefreq><priority>{p}</priority></url>"
         for u, p in urls)

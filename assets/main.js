@@ -245,6 +245,34 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  // ---------- Copy-link buttons (article pages) ----------
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-copy]');
+    if (!btn) return;
+    e.preventDefault();
+    var label = btn.querySelector('span');
+    var text = btn.getAttribute('data-copy') || window.location.href;
+    var flash = function () {
+      if (!label || btn.dataset.busy) return;
+      btn.dataset.busy = '1';
+      var original = label.textContent;
+      label.textContent = 'Link copied';
+      setTimeout(function () { label.textContent = original; delete btn.dataset.busy; }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(flash, function () {});
+      return;
+    }
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:absolute;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); flash(); } catch (err) {}
+    document.body.removeChild(ta);
+  });
+
   // ---------- Smooth page transitions between internal pages ----------
   if (!reduce) {
     document.addEventListener('click', function (e) {
