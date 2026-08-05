@@ -39,6 +39,9 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"MedicalClinic","name":"MindCare Services","url":"https://themindcareservices.com/","logo":"https://themindcareservices.com/mindcare.png","telephone":"+92-327-2337631","address":{"@type":"PostalAddress","addressLocality":"Karachi","addressCountry":"PK"},"founder":{"@type":"Person","name":"Shaista Tariq","jobTitle":"Founder & Associate Psychologist"},"sameAs":["https://www.instagram.com/mindcare.services/"]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"EducationEvent","name":"Telepathy & Meditation: The Art of Deep Attunement","startDate":"2026-09-19T19:00:00+05:00","endDate":"2026-09-20T21:00:00+05:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode","url":"https://themindcareservices.com/telepathy-meditation-workshop.html","image":"https://themindcareservices.com/assets/workshops/telepathy-meditation-poster.svg","description":"A two-evening live online workshop from MindCare Services on meditation, limbic resonance and empathic attunement: the science and practice behind feeling genuinely connected to another person.","inLanguage":["en","ur"],"organizer":{"@type":"Organization","name":"MindCare Services","url":"https://themindcareservices.com/"},"location":{"@type":"VirtualLocation","url":"https://themindcareservices.com/telepathy-meditation-workshop.html"},"offers":{"@type":"Offer","url":"https://themindcareservices.com/telepathy-meditation-workshop.html#register","availability":"https://schema.org/InStock","validFrom":"2026-08-05","category":"Registration"}}
+</script>
 
 <style>
 :root{
@@ -360,22 +363,32 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 .news-card h3 em{font-style:italic;color:var(--teal-dark)}
 .news-card p{font-size:.92rem;color:var(--muted);margin:0}
 .news-ctas{display:flex;flex-direction:column;gap:10px;white-space:nowrap}
-@media(max-width:860px){.news-card{grid-template-columns:1fr;text-align:center}.news-card img{margin:0 auto;width:190px}.news-ctas{flex-direction:row;justify-content:center;flex-wrap:wrap;white-space:normal}}
+.news-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.news-meta span{font-size:.78rem;font-weight:600;color:var(--teal-deep);background:var(--teal-light);border:1px solid var(--border);padding:4px 11px;border-radius:999px}
+.news-foot{text-align:center;margin-top:14px;font-size:.9rem;color:var(--muted)}
+.news-foot a{font-weight:600;color:var(--teal-deep)}
+@media(max-width:860px){.news-card{grid-template-columns:1fr;text-align:center}.news-card img{margin:0 auto;width:190px}.news-ctas{flex-direction:row;justify-content:center;flex-wrap:wrap;white-space:normal}.news-meta{justify-content:center}}
 </style>
-<section class="news-band" aria-label="News: upcoming workshop">
+<section class="news-band" aria-label="News: upcoming online workshop">
   <div class="wrap">
     <div class="news-card">
-      <a href="workshops.html" aria-label="Applied Psychology Masterclass details"><img src="assets/workshops/00-main-poster.png" alt="Applied Psychology Masterclass poster, 5-day certification series, 27–31 July 2026" loading="lazy"></a>
+      <a href="telepathy-meditation-workshop.html" aria-label="Telepathy and Meditation online workshop details"><img src="assets/workshops/telepathy-meditation-poster.svg" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster, 19–20 September 2026" width="900" height="1200" loading="lazy"></a>
       <div>
-        <span class="news-tag"><span class="dot" aria-hidden="true"></span><span data-i18n="news.tag">News · Upcoming Workshop</span></span>
-        <h3 data-i18n-html="news.title">Applied Psychology <em>Masterclass</em>, 27–31 July 2026</h3>
-        <p data-i18n="news.sub">5 days · 5 clinical skill sets · certification + complete practitioner toolkit. Seats are limited, so apply now on WhatsApp.</p>
+        <span class="news-tag"><span class="dot" aria-hidden="true"></span><span data-i18n="news.tag">News · Upcoming Online Workshop</span></span>
+        <h3 data-i18n-html="news.title">Telepathy &amp; <em>Meditation</em>, 19–20 September 2026</h3>
+        <p data-i18n="news.sub">The art of deep attunement: two live evenings on Zoom. Guided meditation, the real science of empathic connection, and paired practice in breakout rooms. Registration is open.</p>
+        <div class="news-meta">
+          <span data-i18n="news.m1">Live on Zoom · join from anywhere</span>
+          <span data-i18n="news.m2">7:00–9:00 PM PKT</span>
+          <span data-i18n="news.m3">Beginners welcome</span>
+        </div>
       </div>
       <div class="news-ctas">
-        <a href="https://wa.me/923272337631?text=Hi%21%20I%27d%20like%20to%20apply%20for%20the%20Applied%20Psychology%20Masterclass%20%2827%E2%80%9331%20July%202026%29.%20Please%20share%20the%20registration%20details." target="_blank" rel="noopener" class="btn btn-primary" data-i18n="news.apply">Apply on WhatsApp</a>
-        <a href="workshops.html" class="btn btn-ghost" data-i18n="news.more">Workshop Details →</a>
+        <a href="telepathy-meditation-workshop.html#register" class="btn btn-primary" data-i18n="news.apply">Register Now</a>
+        <a href="telepathy-meditation-workshop.html" class="btn btn-ghost" data-i18n="news.more">Workshop Details →</a>
       </div>
     </div>
+    <p class="news-foot" data-i18n-html="news.foot">Also from MindCare: our Applied Psychology Masterclass certification series. <a href="workshops.html">See all workshops &amp; trainings →</a></p>
   </div>
 </section>
 
@@ -561,7 +574,7 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 var I18N={
  en:{},
  ur:{
-  "nav.home":"ہوم","nav.services":"خدمات","nav.about":"ہمارے بارے میں","nav.team":"ٹیم","nav.articles":"مضامین","nav.workshops":"ورکشاپس","news.tag":"خبر · آنے والی ورکشاپ","news.title":"اپلائیڈ سائیکالوجی <em>ماسٹر کلاس</em>، 27 تا 31 جولائی 2026","news.sub":"5 دن · 5 کلینیکل مہارتیں · سرٹیفکیٹ + مکمل پریکٹیشنر ٹول کٹ۔ نشستیں محدود ہیں، ابھی واٹس ایپ پر اپلائی کریں۔","news.apply":"واٹس ایپ پر اپلائی کریں","news.more":"ورکشاپ کی تفصیلات ←","nav.book":"اپائنٹمنٹ",
+  "nav.home":"ہوم","nav.services":"خدمات","nav.about":"ہمارے بارے میں","nav.team":"ٹیم","nav.articles":"مضامین","nav.workshops":"ورکشاپس","news.tag":"خبر · آنے والی آن لائن ورکشاپ","news.title":"ٹیلی پیتھی اور <em>مراقبہ</em>، 19 تا 20 ستمبر 2026","news.sub":"گہرے تعلق کا فن: زوم پر دو لائیو شامیں۔ رہنمائی کے ساتھ مراقبہ، ہمدردی اور جُڑاؤ کے پیچھے اصل سائنس، اور جوڑوں میں عملی مشق۔ رجسٹریشن کھلی ہے۔","news.m1":"زوم پر لائیو · دنیا میں کہیں سے بھی","news.m2":"شام 7 تا 9 بجے (پاکستان)","news.m3":"نئے سیکھنے والوں کے لیے بھی","news.apply":"ابھی رجسٹر کریں","news.more":"ورکشاپ کی تفصیلات ←","news.foot":"مائنڈ کیئر کی جانب سے مزید: اپلائیڈ سائیکالوجی ماسٹر کلاس سرٹیفکیشن سیریز۔ <a href=\"workshops.html\">تمام ورکشاپس دیکھیں ←</a>","nav.book":"اپائنٹمنٹ",
   "hero.badge":"کراچی · کلینک · گھر · آن لائن",
   "hero.h1":"خاموشی سے <em>پریشان</em> ہیں؟<br>آئیے بات کرتے ہیں۔",
   "hero.lede":"ایسے لوگ جو واقعی آپ کی بات سنتے ہیں۔ کراچی میں پریشانی، ذہنی دباؤ اور بہت کچھ کے لیے تھراپی۔",

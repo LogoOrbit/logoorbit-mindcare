@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="tmTitle tmDesc">
+  <title id="tmTitle">Telepathy &amp; Meditation: The Art of Deep Attunement</title>
+  <desc id="tmDesc">Poster for MindCare Services online live workshop on 19 and 20 September 2026, two evenings on Zoom, 7 to 9 PM Pakistan Standard Time.</desc>
+
+  <defs>
+    <linearGradient id="tmBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#062b31"/>
+      <stop offset="52%" stop-color="#0b5f6d"/>
+      <stop offset="100%" stop-color="#0f9aa8"/>
+    </linearGradient>
+    <linearGradient id="tmRule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f9c58d" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#f9c58d"/>
+      <stop offset="100%" stop-color="#f9c58d" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="tmGlowL" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e8f9fb" stop-opacity=".95"/>
+      <stop offset="60%" stop-color="#2bbdc9" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="#2bbdc9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tmGlowR" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe9d2" stop-opacity=".95"/>
+      <stop offset="60%" stop-color="#ef8354" stop-opacity=".32"/>
+      <stop offset="100%" stop-color="#ef8354" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="900" height="1200" fill="url(#tmBg)"/>
+
+  <!-- ambient ripples -->
+  <g fill="none" stroke="#e8f9fb" stroke-opacity=".10">
+    <circle cx="450" cy="540" r="150"/>
+    <circle cx="450" cy="540" r="230"/>
+    <circle cx="450" cy="540" r="315"/>
+    <circle cx="450" cy="540" r="405"/>
+    <circle cx="450" cy="540" r="500"/>
+  </g>
+
+  <!-- brand rail -->
+  <g>
+    <text x="70" y="96" font-family="'Trebuchet MS', 'DM Sans', sans-serif" font-size="27" font-weight="700" letter-spacing="7" fill="#ffffff">MIND<tspan fill="#f9c58d">CARE</tspan></text>
+    <text x="70" y="126" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-style="italic" fill="#bfeaf0">Keeping Your Peace ®</text>
+    <rect x="612" y="66" width="218" height="46" rx="23" fill="#ffffff" fill-opacity=".12" stroke="#e8f9fb" stroke-opacity=".45"/>
+    <text x="721" y="96" text-anchor="middle" font-family="'Trebuchet MS', 'DM Sans', sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#ffffff">ONLINE · LIVE</text>
+  </g>
+
+  <!-- two minds in resonance -->
+  <g>
+    <circle cx="318" cy="540" r="132" fill="url(#tmGlowL)"/>
+    <circle cx="582" cy="540" r="132" fill="url(#tmGlowR)"/>
+    <circle cx="318" cy="540" r="74" fill="none" stroke="#e8f9fb" stroke-opacity=".8" stroke-width="2"/>
+    <circle cx="582" cy="540" r="74" fill="none" stroke="#ffe0c4" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M318 466v148M244 540h148" stroke="#e8f9fb" stroke-opacity=".25" stroke-width="1.5"/>
+    <path d="M582 466v148M508 540h148" stroke="#ffe0c4" stroke-opacity=".25" stroke-width="1.5"/>
+    <!-- resonance waves travelling between them -->
+    <g fill="none" stroke-width="2.6" stroke-linecap="round">
+      <path d="M392 540q22-30 44 0t44 0 44 0" stroke="#e8f9fb" stroke-opacity=".9"/>
+      <path d="M392 512q22-22 44 0t44 0 44 0" stroke="#e8f9fb" stroke-opacity=".45"/>
+      <path d="M392 568q22-22 44 0t44 0 44 0" stroke="#ffd9bb" stroke-opacity=".45"/>
+    </g>
+    <circle cx="318" cy="540" r="9" fill="#e8f9fb"/>
+    <circle cx="582" cy="540" r="9" fill="#ffe0c4"/>
+  </g>
+
+  <!-- title block -->
+  <g text-anchor="middle">
+    <text x="450" y="770" font-family="'Trebuchet MS', 'DM Sans', sans-serif" font-size="18" font-weight="700" letter-spacing="6" fill="#f9c58d">UPCOMING WORKSHOP</text>
+    <text x="450" y="854" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#ffffff">Telepathy &amp;</text>
+    <text x="450" y="932" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" font-style="italic" fill="#bfeaf0">Meditation</text>
+    <rect x="150" y="962" width="600" height="2" fill="url(#tmRule)"/>
+    <text x="450" y="1004" font-family="'Trebuchet MS', 'DM Sans', sans-serif" font-size="25" fill="#e8f9fb">The Art of Deep Attunement</text>
+  </g>
+
+  <!-- details -->
+  <g text-anchor="middle" font-family="'Trebuchet MS', 'DM Sans', sans-serif">
+    <text x="450" y="1062" font-size="26" font-weight="700" fill="#ffffff">Sat 19 &amp; Sun 20 September 2026</text>
+    <text x="450" y="1098" font-size="21" fill="#bfeaf0">7:00–9:00 PM PKT · Two live sessions on Zoom</text>
+    <rect x="286" y="1124" width="328" height="50" rx="25" fill="#f9c58d"/>
+    <text x="450" y="1156" font-size="20" font-weight="700" letter-spacing="2" fill="#06333b">REGISTER NOW</text>
+  </g>
+</svg>

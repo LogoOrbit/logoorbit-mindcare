@@ -1521,6 +1521,287 @@ WS_DAYS = [
 ]
 
 
+# ── Telepathy & Meditation: online live workshop ──
+TM_SLUG = "telepathy-meditation-workshop"
+TM_TITLE = "Telepathy &amp; Meditation: The Art of Deep Attunement"
+TM_PLAIN = "Telepathy & Meditation: The Art of Deep Attunement"
+TM_DATES = "Sat 19 & Sun 20 September 2026"
+TM_TIME = "7:00–9:00 PM PKT"
+TM_POSTER = "assets/workshops/telepathy-meditation-poster.svg"
+TM_WA = (WA + "?text=Hi%21%20I%27d%20like%20to%20register%20for%20the%20Telepathy%20%26%20Meditation"
+         "%20online%20workshop%20%2819%E2%80%9320%20September%202026%29.%20Please%20share%20the%20fee"
+         "%20and%20Zoom%20details.")
+
+TM_SESSIONS = [
+    dict(tag="Session 1 · Sat 19 Sept · 7:00–9:00 PM PKT", icon="i-brain",
+         title="Stillness First: The Meditation Foundation",
+         desc="Attunement starts with a quiet nervous system. We build the practice that makes everything else possible: breath, posture, the body scan, and what to do when the mind refuses to settle.",
+         kit=["Guided breath &amp; body-scan practice, live",
+              "The three anchors: breath, body, sound",
+              "Working with a restless or anxious mind",
+              "Building a 10-minute daily habit that survives a busy week"]),
+    dict(tag="Session 1 · Part Two", icon="i-heart-hands",
+         title="Limbic Resonance: Why We Feel Each Other",
+         desc="The honest science behind that uncanny sense of “knowing” what someone feels. Mirror systems, co-regulation, emotional contagion, and why a settled person can settle a room.",
+         kit=["Co-regulation and the social nervous system",
+              "Emotional contagion vs. genuine empathy",
+              "Why presence is felt before a word is spoken",
+              "What research supports, and what it does not"]),
+    dict(tag="Session 2 · Sun 20 Sept · 7:00–9:00 PM PKT", icon="i-speech",
+         title="Listening Beneath the Words",
+         desc="Most of what people tell us is never said aloud. Train the skill that reads pace, pause, tone and posture: the closest thing to mind-reading any of us will ever have.",
+         kit=["Reading tone, tempo and silence",
+              "Empathic accuracy, and how to check it out loud",
+              "Reflective listening scripts you can use tonight",
+              "Catching your own projections before you name them"]),
+    dict(tag="Session 2 · Part Two", icon="i-shield",
+         title="The Resonance Lab &amp; Healthy Boundaries",
+         desc="Guided pair work in Zoom breakout rooms: sit with a partner, tune in, then compare notes. Playful, curious, honest about the results, followed by the piece most “empaths” never learn.",
+         kit=["Live dyad attunement exercises (breakout rooms)",
+              "Absorbing vs. attuning: knowing the difference",
+              "Grounding and closing rituals after heavy conversations",
+              "Your 21-day practice plan, built in the session"]),
+]
+
+TM_FAQS = [
+    ("Is this workshop claiming that telepathy is real?",
+     "No, and we want to be straightforward about that. There is no credible scientific evidence for mind-to-mind transmission, and we will say so in the room. What we explore is the very real, well-documented experience underneath the word: limbic resonance, co-regulation and empathic accuracy: the reasons a person can walk in and change the temperature of a room without saying anything. We treat “telepathy” as an honest question to sit with, not a power to sell you."),
+    ("Is this therapy?",
+     "No. This is an educational and experiential workshop, not psychotherapy, diagnosis or treatment, and it is not a substitute for either. If something surfaces during the sessions that deserves proper attention, our clinical team is one message away and we will happily point you to the right support."),
+    ("Do I need any meditation experience?",
+     "None at all. Every practice is guided from the beginning, and complete beginners often get the most out of it. If you already have a steady practice, the attunement and dyad work will give it somewhere new to go."),
+    ("It's online, so will it actually feel connected?",
+     "That is precisely what the format is testing, and in our experience it holds up better than people expect. Sessions are live on Zoom with cameras on, small breakout pairs, and a group small enough that everyone is spoken to by name. Nothing is pre-recorded."),
+    ("What if I miss a session or my internet drops?",
+     "Every registered participant gets the session recordings for 30 days, plus the guided audio practices and the workbook, so you can catch up and keep practising in your own time."),
+    ("Which language is it taught in?",
+     "English, with Urdu explanations whenever they help, the same way we run our sessions. The guided meditation audio is provided in both English and Urdu."),
+    ("How do I register and what does it cost?",
+     f"Fill the registration form on this page or message us directly on <a href=\"{TM_WA}\" target=\"_blank\" rel=\"noopener\">WhatsApp</a>. We will confirm your place, share the fee and send your Zoom link and calendar invite. Seats are capped so the breakout pairing stays workable."),
+]
+
+
+def telepathy_meditation_page():
+    prefix = ""
+    url = f"{BASE}/{TM_SLUG}.html"
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops.html"},
+            {"@type": "ListItem", "position": 3, "name": "Telepathy & Meditation Workshop", "item": url}]},
+        {"@type": "EducationEvent", "name": TM_PLAIN,
+         "startDate": "2026-09-19T19:00:00+05:00", "endDate": "2026-09-20T21:00:00+05:00",
+         "eventStatus": "https://schema.org/EventScheduled",
+         "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+         "image": f"{BASE}/{TM_POSTER}",
+         "url": url,
+         "inLanguage": ["en", "ur"],
+         "isAccessibleForFree": False,
+         "description": ("A two-evening live online workshop from MindCare Services® exploring meditation, "
+                         "limbic resonance and empathic attunement: the science and practice behind feeling "
+                         "genuinely connected to another person. Includes guided audio, a workbook and 30-day "
+                         "recording access."),
+         "organizer": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
+         "performer": {"@type": "Organization", "name": "MindCare Services®"},
+         "location": {"@type": "VirtualLocation", "url": url},
+         "offers": {"@type": "Offer", "url": url, "availability": "https://schema.org/InStock",
+                    "validFrom": "2026-08-05", "category": "Registration"}},
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q,
+             "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", a)}}
+            for q, a in TM_FAQS]}]}
+
+    session_cards = "\n".join(f'''      <article class="feature-card fade-up">
+        <div class="fi">{icon(prefix, s['icon'])}</div>
+        <span class="section-tag">{s['tag']}</span>
+        <h3 style="margin-top:10px">{s['title']}</h3>
+        <p>{s['desc']}</p>
+        <ul class="aside-list" style="margin-top:12px">
+{chr(10).join(li(prefix, k) for k in s['kit'])}
+        </ul>
+      </article>''' for s in TM_SESSIONS)
+
+    out = head("Telepathy & Meditation Live Online Workshop, 19–20 Sept 2026 | MindCare Services®",
+               "Join MindCare's live online workshop on meditation and deep attunement, 19–20 September 2026, "
+               "7–9 PM PKT on Zoom. Learn the real science of empathic connection, guided meditation and listening "
+               "beneath the words. Register now.",
+               url, prefix, schema, og_type="website")
+    out = out.replace(f'<meta property="og:image" content="{BASE}/mindcare.png">',
+                      f'<meta property="og:image" content="{BASE}/{TM_POSTER}">')
+    out += nav(prefix, "workshops")
+    out += f"""<main id="main">
+<style>
+.tm-hero-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:40px;align-items:center}}
+.tm-poster{{width:100%;height:auto;border-radius:20px;box-shadow:0 20px 54px rgba(6,43,49,.28)}}
+.tm-facts{{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:6px}}
+.tm-fact{{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}}
+.tm-fact strong{{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}}
+.tm-fact span{{font-size:1.02rem;font-weight:600;color:var(--dark)}}
+.tm-honest{{background:var(--teal-light);border:1px solid var(--border);border-left:5px solid var(--teal);border-radius:16px;padding:24px 28px;max-width:860px;margin:0 auto}}
+.tm-honest h3{{margin-bottom:10px}}
+.tm-form{{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px;max-width:640px;margin:0 auto;box-shadow:var(--shadow-soft)}}
+.tm-row{{display:grid;grid-template-columns:1fr 1fr;gap:14px}}
+.tm-field{{margin-bottom:15px}}
+.tm-field label{{display:block;font-size:.78rem;font-weight:600;margin-bottom:5px;color:var(--dark)}}
+.tm-field input,.tm-field select,.tm-field textarea{{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:.94rem;background:var(--white);color:var(--dark)}}
+.tm-field textarea{{min-height:88px;resize:vertical}}
+.tm-field input:focus,.tm-field select:focus,.tm-field textarea:focus{{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(43,189,201,.13)}}
+.tm-note{{font-size:.82rem;color:var(--gray);margin-top:12px;text-align:center}}
+html[data-theme="dark"] .tm-fact,html[data-theme="dark"] .tm-form{{background:#12241a}}
+html[data-theme="dark"] .tm-field input,html[data-theme="dark"] .tm-field select,html[data-theme="dark"] .tm-field textarea{{background:#0e1b13;color:var(--dark)}}
+html[data-theme="dark"] .tm-honest{{background:rgba(15,154,168,.12)}}
+@media(max-width:560px){{.tm-row{{grid-template-columns:1fr}}}}
+</style>
+
+<header class="page-hero">
+  <div class="ph-inner">
+    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="{prefix}workshops.html">Workshops</a></li><li aria-current="page">Telepathy &amp; Meditation</li></ol>
+    <div class="ph-badge">{icon(prefix,'i-globe')} Upcoming · Live Online · {TM_DATES}</div>
+    <h1>Telepathy &amp; <em>Meditation</em></h1>
+    <p class="lede">Two evenings on the quietest, most underrated skill there is: the ability to settle yourself, and then genuinely tune in to another human being. No robes, no mysticism, no promises we can't keep. Just stillness, real science and a room full of people practising it together.</p>
+    <div class="ph-actions">
+      <a href="#register" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Now</a>
+      <a href="{TM_WA}" target="_blank" rel="noopener" class="btn-secondary">{icon(prefix,'i-wa','18')} Register on WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="section-inner">
+    <div class="tm-hero-grid">
+      <div class="fade-up">
+        <img src="{prefix}{TM_POSTER}" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster, 19–20 September 2026" class="tm-poster" width="900" height="1200">
+      </div>
+      <div class="fade-up">
+        <span class="section-tag">The invitation</span>
+        <h2 class="section-title">You already know the feeling. This is the practice behind it.</h2>
+        <p style="margin:14px 0 16px">Someone walks into the room and you feel it before they speak. A friend calls the moment you thought of them. A client goes quiet and something in your own chest tightens. We call it telepathy because we don't have a better everyday word for it, but what's actually happening is attunement, and unlike magic, attunement can be trained.</p>
+        <p style="margin-bottom:20px">Over two live evenings we'll build it deliberately: first the meditation that quiets your own noise, then the listening that lets someone else's signal through. Small group, cameras on, real practice in pairs, and an honest conversation about where the science ends and the mystery begins.</p>
+        <div class="tm-facts">
+          <div class="tm-fact"><strong>When</strong><span>{TM_DATES}</span></div>
+          <div class="tm-fact"><strong>Time</strong><span>{TM_TIME}</span></div>
+          <div class="tm-fact"><strong>Where</strong><span>Live on Zoom · join from anywhere</span></div>
+          <div class="tm-fact"><strong>Format</strong><span>2 sessions × 2 hours · small group</span></div>
+        </div>
+        <div style="margin-top:24px"><a href="#register" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Now</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">The Two Evenings</span><h2 class="section-title">Four movements, one skill</h2><p class="section-sub">Every part is taught live and practised in the session, so you leave each evening having actually done the thing, not just heard about it.</p></div>
+    <div class="feature-grid">
+{session_cards}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="tm-honest fade-up">
+      <span class="section-tag">Straight talk</span>
+      <h3 style="margin-top:10px">What this workshop is, and what it isn't</h3>
+      <p style="margin-bottom:14px"><strong>It is</strong> an experiential meditation and attunement workshop grounded in what psychology actually knows about empathy, co-regulation and the nervous system, run with curiosity about the parts we can't yet explain.</p>
+      <p><strong>It isn't</strong> a claim that thoughts travel between minds, a psychic certification, or a form of treatment. Nothing here replaces therapy, medication or medical advice. If something tender comes up while you practise, our clinical team in Karachi is one message away.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Included</span><h2 class="section-title">What you take home</h2></div>
+    <div class="feature-grid">
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clock')}</div><h3>30-day recording access</h3><p>Both evenings recorded and shared, so a missed session or a shaky connection never costs you the workshop.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-speech')}</div><h3>Guided audio, English &amp; Urdu</h3><p>The meditations from the sessions, recorded in both languages, to keep the practice going after the Zoom window closes.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-book')}</div><h3>The attunement workbook</h3><p>Practice logs, listening scripts, dyad exercise cards and your 21-day plan: a printable PDF sent before session one.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Certificate of participation</h3><p>Issued by MindCare Services® to everyone who attends both live evenings.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Good For</span><h2 class="section-title">Who this is for</h2></div>
+    <div class="feature-grid">
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>The naturally sensitive</h3><p>People who pick up on everyone's mood and pay for it later. You'll learn the difference between tuning in and taking on.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-brain')}</div><h3>Meditators wanting depth</h3><p>You have a practice but it has gone flat. Attunement work gives stillness a direction and a partner.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clipboard')}</div><h3>Helping professionals</h3><p>Therapists, students, teachers, doctors and coaches who want presence to be a skill rather than a good day.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-family')}</div><h3>Couples &amp; close pairs</h3><p>Partners, siblings and friends are welcome to register together and pair up for the breakout practice.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="register" class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Registration Open</span><h2 class="section-title">Register now, seats are capped</h2><p class="section-sub">We keep the group small so every pair gets attention in the breakout rooms. Fill this in and we'll confirm your place, share the fee and send your Zoom link.</p></div>
+    <div class="tm-form fade-up">
+      <div class="tm-row">
+        <div class="tm-field"><label for="tm-name">Full name *</label><input type="text" id="tm-name" placeholder="Your name" autocomplete="name"></div>
+        <div class="tm-field"><label for="tm-phone">WhatsApp number *</label><input type="tel" id="tm-phone" placeholder="+92..." autocomplete="tel"></div>
+      </div>
+      <div class="tm-row">
+        <div class="tm-field"><label for="tm-email">Email address</label><input type="email" id="tm-email" placeholder="your@email.com" autocomplete="email"></div>
+        <div class="tm-field"><label for="tm-city">City &amp; country</label><input type="text" id="tm-city" placeholder="Karachi, Pakistan"></div>
+      </div>
+      <div class="tm-field">
+        <label for="tm-exp">Your meditation experience</label>
+        <select id="tm-exp">
+          <option value="">Select one</option>
+          <option>Complete beginner</option>
+          <option>I've tried it on and off</option>
+          <option>I practise regularly</option>
+          <option>I teach or facilitate</option>
+        </select>
+      </div>
+      <div class="tm-field">
+        <label for="tm-why">What are you hoping to get from these two evenings?</label>
+        <textarea id="tm-why" placeholder="A sentence or two is plenty, and it helps us shape the practice for the group."></textarea>
+      </div>
+      <button type="button" class="btn-primary" id="tm-submit" style="width:100%;justify-content:center">{icon(prefix,'i-wa','18')} Send My Registration</button>
+      <p class="tm-note">Your details open a pre-filled WhatsApp message to our team. Nothing is stored on this website. Prefer to talk first? Call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a>.</p>
+    </div>
+  </div>
+</section>
+
+{faq_block(prefix, TM_FAQS)}
+
+{cta_band(prefix, "Still deciding?", "Message us on WhatsApp with your question about the workshop. A real person from our team will answer, no pressure to sign up.")}
+</main>
+<script>
+(function(){{
+  var btn = document.getElementById('tm-submit');
+  if(!btn) return;
+  function val(id){{ var el = document.getElementById(id); return el ? el.value.trim() : ''; }}
+  function flag(id){{
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.style.borderColor = '#d64545'; el.focus();
+    setTimeout(function(){{ el.style.borderColor = ''; }}, 2200);
+  }}
+  btn.addEventListener('click', function(){{
+    var name = val('tm-name'), phone = val('tm-phone');
+    if(!name){{ flag('tm-name'); return; }}
+    if(!phone){{ flag('tm-phone'); return; }}
+    var lines = [
+      "Hi! I'd like to register for the Telepathy & Meditation online workshop (19-20 September 2026).",
+      '', 'Name: ' + name, 'WhatsApp: ' + phone
+    ];
+    if(val('tm-email')) lines.push('Email: ' + val('tm-email'));
+    if(val('tm-city'))  lines.push('Location: ' + val('tm-city'));
+    if(val('tm-exp'))   lines.push('Meditation experience: ' + val('tm-exp'));
+    if(val('tm-why'))   lines.push('What I am hoping for: ' + val('tm-why'));
+    lines.push('', 'Please share the fee and Zoom details.');
+    window.open('{WA}?text=' + encodeURIComponent(lines.join('\\n')), '_blank', 'noopener');
+  }});
+}})();
+</script>
+"""
+    out += footer(prefix)
+    return out
+
+
 def workshops_page():
     prefix = ""
     url = f"{BASE}/workshops.html"
@@ -1530,6 +1811,16 @@ def workshops_page():
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
             {"@type": "ListItem", "position": 2, "name": "Workshops", "item": url}]},
+        {"@type": "EducationEvent", "name": TM_PLAIN,
+         "startDate": "2026-09-19T19:00:00+05:00", "endDate": "2026-09-20T21:00:00+05:00",
+         "eventStatus": "https://schema.org/EventScheduled",
+         "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+         "image": f"{BASE}/{TM_POSTER}",
+         "url": f"{BASE}/{TM_SLUG}.html",
+         "description": ("A two-evening live online workshop on meditation, limbic resonance and empathic "
+                         "attunement: the science and practice behind feeling genuinely connected to another person."),
+         "organizer": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
+         "location": {"@type": "VirtualLocation", "url": f"{BASE}/{TM_SLUG}.html"}},
         {"@type": "Event", "name": "Applied Psychology Masterclass: 5-Day Certification Series",
          "startDate": "2026-07-27", "endDate": "2026-07-31",
          "eventStatus": "https://schema.org/EventScheduled",
@@ -1548,28 +1839,55 @@ def workshops_page():
 {chr(10).join(li(prefix, k) for k in d['kit'])}
         </ul>
       </article>''' for d in WS_DAYS)
-    out = head("Applied Psychology Masterclass: 5-Day Certification Workshop | MindCare Services®",
-               "Join MindCare's Applied Psychology Masterclass, 27–31 July 2026 in Karachi. 5 days of hands-on clinical training with certification and a complete practitioner toolkit. Apply on WhatsApp.",
+    out = head("Workshops & Trainings | Telepathy & Meditation Online, 19–20 Sept 2026 | MindCare Services®",
+               "MindCare workshops: register now for Telepathy & Meditation, a live online workshop on 19–20 September 2026, plus our Applied Psychology Masterclass certification series in Karachi.",
                url, prefix, schema, og_type="website")
     out = out.replace(f'<meta property="og:image" content="{BASE}/mindcare.png">',
-                      f'<meta property="og:image" content="{BASE}/assets/workshops/00-main-poster.png">')
+                      f'<meta property="og:image" content="{BASE}/{TM_POSTER}">')
     out += nav(prefix, "workshops")
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
     <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Workshops</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-grad')} Upcoming Workshop · 27–31 July 2026</div>
-    <h1>Applied Psychology <em>Masterclass</em></h1>
-    <p class="lede">Five days. Five clinical skill sets. One certification. Go from theory to a practitioner's toolkit you can open during your very first real session, taught the MindCare way: practical, ethical and human.</p>
+    <div class="ph-badge">{icon(prefix,'i-globe')} Next Up · Live Online · {TM_DATES}</div>
+    <h1>Workshops &amp; <em>Trainings</em></h1>
+    <p class="lede">Practical, human, evidence-based learning from the MindCare clinical team, online for anyone, anywhere, and in-person in Karachi. Here's what's open right now.</p>
     <div class="ph-actions">
-      <a href="{WS_WA}" target="_blank" rel="noopener" class="btn-primary">{icon(prefix,'i-wa','18')} Apply on WhatsApp</a>
-      <a href="#schedule" class="btn-secondary">See the 5-Day Journey ↓</a>
+      <a href="{prefix}{TM_SLUG}.html#register" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Now: Online Workshop</a>
+      <a href="#masterclass" class="btn-secondary">See the Masterclass ↓</a>
     </div>
   </div>
 </header>
 
 <section>
   <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Registration Open</span><h2 class="section-title">Our next workshop is online</h2></div>
+    <div class="split-grid fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:36px;align-items:center">
+      <div>
+        <a href="{prefix}{TM_SLUG}.html" aria-label="Telepathy and Meditation workshop details"><img src="{prefix}{TM_POSTER}" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster, 19–20 September 2026" width="900" height="1200" style="width:100%;height:auto;border-radius:18px;box-shadow:0 18px 48px rgba(6,43,49,.24)"></a>
+      </div>
+      <div>
+        <span class="section-tag">{TM_DATES} · {TM_TIME}</span>
+        <h3 style="font-size:1.7rem;margin:10px 0 12px">Telepathy &amp; Meditation: <em>The Art of Deep Attunement</em></h3>
+        <p style="margin-bottom:16px">Two live evenings on Zoom, open to anyone anywhere. We build the meditation that quiets your own noise, then train the listening that lets another person's signal through, with an honest look at the science of empathy, co-regulation and the parts we still can't explain.</p>
+        <ul class="aside-list">
+{li(prefix,'Live on Zoom · small group · cameras on, nothing pre-recorded')}
+{li(prefix,'Guided meditation audio in English &amp; Urdu to keep')}
+{li(prefix,'Paired attunement practice in breakout rooms')}
+{li(prefix,'Recordings for 30 days + attunement workbook')}
+        </ul>
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="{prefix}{TM_SLUG}.html#register" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Now</a>
+          <a href="{prefix}{TM_SLUG}.html" class="btn-secondary">Full details →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="masterclass" class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Certification Series · Karachi</span><h2 class="section-title">Applied Psychology Masterclass</h2><p class="section-sub">Five days. Five clinical skill sets. One certification: our in-person training for students and helping professionals, first run 27–31 July 2026.</p></div>
     <div class="split-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:center">
       <div class="fade-up">
         <img src="assets/workshops/00-main-poster.png" alt="Applied Psychology Masterclass, 5-day certification series poster, 27–31 July 2026" style="width:100%;height:auto;border-radius:18px;box-shadow:0 18px 48px rgba(0,0,0,.18)">
@@ -1591,7 +1909,7 @@ def workshops_page():
   </div>
 </section>
 
-<section id="schedule" class="bg-off">
+<section id="schedule">
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">The 5-Day Journey</span><h2 class="section-title">One skill set per day, one toolkit for life</h2><p class="section-sub">Each day builds on the last, and each day you take home the exact tools professionals use.</p></div>
     <div class="card-grid">
@@ -1600,7 +1918,7 @@ def workshops_page():
   </div>
 </section>
 
-<section>
+<section class="bg-off">
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">Good For</span><h2 class="section-title">Who should attend</h2></div>
     <div class="feature-grid">
@@ -1697,12 +2015,14 @@ def build():
         write(f"articles/{a['slug']}.html", article_page(a, i))
     write("articles.html", articles_index())
     write("workshops.html", workshops_page())
+    write(f"{TM_SLUG}.html", telepathy_meditation_page())
     write("confirmed.html", confirmation_page())
     # sitemap
     urls = [(f"{BASE}/", "1.0"), (f"{BASE}/contact", "0.8"),
             (f"{BASE}/services/", "0.9"), (f"{BASE}/team/", "0.7"),
             (f"{BASE}/guides.html", "0.8"), (f"{BASE}/articles.html", "0.7"),
-            (f"{BASE}/workshops.html", "0.9")]
+            (f"{BASE}/workshops.html", "0.9"),
+            (f"{BASE}/{TM_SLUG}.html", "0.9")]
     urls += [(f"{BASE}/services/{s['slug']}", "0.8") for s in SERVICES]
     urls += [(f"{BASE}/team/{m['slug']}", "0.6") for m in TEAM]
     urls += [(f"{BASE}/{t['slug']}", "0.8") for t in TOPICS]
