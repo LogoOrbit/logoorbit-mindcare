@@ -70,12 +70,12 @@ async function proxy(req, res, functionName, contentType) {
 
   const outgoing = {
     // Written with writeHead rather than res.send, which rewrites the content
-    // type when handed a Buffer and would serve the HTML page as plain text.
-    // contentType pins the value for routes whose shape we already know, since
-    // the header that comes back through Supabase's CDN is not dependable.
-    'Content-Type': contentType || upstream.headers.get('content-type') || 'application/json',
+    // type when handed a Buffer. The type has to be pinned by the caller too:
+    // Supabase's gateway rewrites the Edge Function's own Content-Type to
+    // text/plain on the way out, so relaying the upstream value would serve
+    // the admin page as raw markup.
+    'Content-Type': contentType,
     'Cache-Control': 'no-store',
-    'X-Upstream-Content-Type': upstream.headers.get('content-type') || 'none',
   };
   if (ourCookies.length) outgoing['Set-Cookie'] = ourCookies;
 

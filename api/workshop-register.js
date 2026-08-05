@@ -6,5 +6,5 @@ module.exports = async (req, res) => {
     res.status(405).json({ error: 'Method not allowed.' });
     return;
   }
-  await proxy(req, res, 'workshop-register');
+  await proxy(req, res, 'workshop-register', 'application/json; charset=utf-8');
 };
