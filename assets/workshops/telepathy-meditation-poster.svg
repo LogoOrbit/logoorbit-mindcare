@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-labelledby="tmTitle tmDesc">
   <title id="tmTitle">Telepathy &amp; Meditation: The Art of Deep Attunement</title>
-  <desc id="tmDesc">Poster for the MindCare Services live online workshop on telepathy and meditation, held on Zoom over two evenings. Registration is open.</desc>
+  <desc id="tmDesc">Poster for the MindCare Services live online workshop on telepathy and meditation, held free on Zoom over two evenings. Registration is open.</desc>
 
   <defs>
     <linearGradient id="tmBg" x1="0" y1="0" x2="1" y2="1">
@@ -61,7 +61,7 @@
 
   <!-- title block -->
   <g text-anchor="middle">
-    <text x="450" y="790" font-family="'Trebuchet MS', 'DM Sans', sans-serif" font-size="18" font-weight="700" letter-spacing="6" fill="#f9c58d">UPCOMING WORKSHOP</text>
+    <text x="450" y="790" font-family="'Trebuchet MS', 'DM Sans', sans-serif" font-size="18" font-weight="700" letter-spacing="6" fill="#f9c58d">FREE ONLINE WORKSHOP</text>
     <text x="450" y="874" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#ffffff">Telepathy &amp;</text>
     <text x="450" y="952" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" font-style="italic" fill="#bfeaf0">Meditation</text>
     <rect x="150" y="982" width="600" height="2" fill="url(#tmRule)"/>
@@ -70,8 +70,8 @@
 
   <!-- details -->
   <g text-anchor="middle" font-family="'Trebuchet MS', 'DM Sans', sans-serif">
-    <text x="450" y="1082" font-size="24" font-weight="700" fill="#ffffff">Live on Zoom · Two evenings · Small group</text>
+    <text x="450" y="1082" font-size="24" font-weight="700" fill="#ffffff">Free · Live on Zoom · Two evenings</text>
     <rect x="286" y="1112" width="328" height="52" rx="26" fill="#f9c58d"/>
-    <text x="450" y="1145" font-size="20" font-weight="700" letter-spacing="2" fill="#06333b">REGISTER NOW</text>
+    <text x="450" y="1145" font-size="20" font-weight="700" letter-spacing="2" fill="#06333b">REGISTER FREE</text>
   </g>
 </svg>

@@ -1,23 +1,30 @@
 # Workshop registration backend
 
-The workshop registration form on `/telepathy-meditation-workshop` writes to
-Supabase. Nothing about it is part of the static build, so `build.py` is
-unaffected.
+The registration form on `/telepathy-meditation-register` writes to Supabase.
+The page itself comes from `build.py`; the backend below does not.
+
+The workshop is free. The only payment anywhere on the site is the optional
+certificate of participation (a one-time PKR 1,000), so a receipt is required
+only from people who ask for one.
 
 ## How a registration flows
 
-1. The visitor fills the form and attaches a payment receipt. The browser
-   downscales ordinary images to 1600px JPEG so uploads stay small on a phone.
+1. Step one of the form collects the visitor's details. Step two asks whether
+   they want the certificate; only then are the bank details and the receipt
+   upload shown. The browser downscales ordinary images to 1600px JPEG so
+   uploads stay small on a phone.
 2. `POST /api/workshop-register` (Vercel) forwards the JSON to the
    `workshop-register` Edge Function.
-3. The Edge Function validates the fields, refuses anything without a receipt,
-   stores the file in the private `mindcare-receipts` bucket and inserts a row
-   into `public.mindcare_workshop_registrations`.
+3. The Edge Function validates the fields. When `certificate` is true it
+   refuses anything without a receipt and stores the file in the private
+   `mindcare-receipts` bucket; otherwise `receipt_path` stays null. Either way
+   it inserts a row into `public.mindcare_workshop_registrations`.
 
 Staff read it back at `/submissions`, which rewrites to `/api/submissions` and
 proxies to the `workshop-submissions` Edge Function. That function checks the ID
-and password, sets a signed 8 hour session cookie, and renders the table with
-one hour signed links to each receipt. It also offers search and a CSV export.
+and password, sets a signed 8 hour session cookie, and renders the table with a
+Certificate column and one hour signed links to the receipts that exist. It also
+offers search and a CSV export.
 
 ## Where things live
 
@@ -28,6 +35,9 @@ one hour signed links to each receipt. It also offers search and a CSV export.
 | Receipts | Storage bucket `mindcare-receipts`, private |
 | Functions | `supabase/functions/*`, deployed with `verify_jwt = false` |
 | Vercel proxies | `api/workshop-register.js`, `api/submissions.js` |
+
+The table carries a `certificate boolean not null default false`, and
+`receipt_path` is nullable: free registrations have no receipt at all.
 
 ## Security notes
 

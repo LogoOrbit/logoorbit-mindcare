@@ -1544,13 +1544,26 @@ WS_DAYS = [
 
 # ── Telepathy & Meditation: online live workshop ──
 TM_SLUG = "telepathy-meditation-workshop"
+# Registration lives on its own page: a two-step form, no scrolling and no
+# marketing around it, with the optional certificate fee saved for the last step.
+TM_REG_SLUG = "telepathy-meditation-register"
 TM_TITLE = "Telepathy &amp; Meditation: The Art of Deep Attunement"
 TM_PLAIN = "Telepathy & Meditation: The Art of Deep Attunement"
 TM_POSTER = "assets/workshops/telepathy-meditation-poster.svg"
 # Landscape JPEG card: what chat apps and social platforms show when the link is shared.
 TM_OG = "assets/workshops/telepathy-meditation-og.jpg"
-TM_WA = (WA + "?text=Hi%21%20I%27d%20like%20to%20register%20for%20the%20Telepathy%20%26%20Meditation"
-         "%20online%20workshop.%20Please%20share%20the%20fee%2C%20dates%20and%20Zoom%20details.")
+TM_WA = (WA + "?text=Hi%21%20I%27d%20like%20to%20register%20for%20the%20free%20Telepathy%20%26%20Meditation"
+         "%20online%20workshop.%20Please%20share%20the%20dates%20and%20Zoom%20details.")
+
+# The workshop itself costs nothing. The only money that ever changes hands is
+# the optional certificate, and it is asked for once, at the end of the form.
+TM_CERT_FEE = "PKR 1,000"
+TM_BANK = [
+    ("Account title", "Shaista Tariq", False),
+    ("Bank", "Meezan Bank, Naya Nazimabad, Karachi", False),
+    ("Account number", "10290107651451", True),
+    ("IBAN", "PK90MEZN0010290107651451", True),
+]
 
 TM_SESSIONS = [
     dict(tag="Evening One · Part One", icon="i-brain",
@@ -1597,15 +1610,309 @@ TM_FAQS = [
     ("Which language is it taught in?",
      "English, with Urdu explanations whenever they help, the same way we run our sessions. The guided meditation audio is provided in both English and Urdu."),
     ("When does it run?",
-     "Dates are confirmed batch by batch, and we announce them to registered participants first. Register your interest now and we will send you the schedule, the Zoom link and a calendar invite as soon as the next batch is set."),
-    ("How do I register and what does it cost?",
-     f"Fill the registration form on this page or message us directly on <a href=\"{TM_WA}\" target=\"_blank\" rel=\"noopener\">WhatsApp</a>. We will confirm your place, share the fee and send your Zoom link and calendar invite once the batch dates are set. Seats are capped so the breakout pairing stays workable."),
+     "Dates are confirmed batch by batch, and we announce them to registered participants first. Register now and we will send you the schedule, the Zoom link and a calendar invite as soon as the next batch is set."),
+    ("Is the workshop really free?",
+     "Yes, completely. Both live evenings, the guided audio, the workbook and the 30-day recordings cost you nothing. There is no hidden charge, no upsell in the session and no card details anywhere on the form. We run it free because attunement is the kind of skill that makes people easier to live with, and we would rather it spread."),
+    ("If it's free, what is the PKR 1,000 for?",
+     f"Only for the optional certificate. If you would like an official Certificate of Participation issued by MindCare Services®, it is a one-time fee of {TM_CERT_FEE} that covers verification, issuing and record-keeping. It is entirely optional: you can attend the whole workshop, keep every resource and never pay a rupee. Your certificate is emailed to you within one business day."),
+    ("How do I register?",
+     f"Open the <a href=\"{TM_REG_SLUG}.html\">registration page</a> and fill the short form. That is the whole thing. The last step simply asks whether you want the optional certificate: choose no and you are registered instantly, or choose yes, transfer {TM_CERT_FEE} to the account shown there and attach the payment screenshot. You can also register on <a href=\"{TM_WA}\" target=\"_blank\" rel=\"noopener\">WhatsApp</a>. Seats are capped so the breakout pairing stays workable."),
 ]
+
+
+# Styles shared by the workshop page and the standalone registration page.
+TM_CSS = """
+.tm-hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:40px;align-items:center}
+.tm-poster{width:100%;height:auto;border-radius:20px;box-shadow:0 20px 54px rgba(6,43,49,.28)}
+.tm-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:6px}
+.tm-fact{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}
+.tm-fact strong{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}
+.tm-fact span{font-size:1.02rem;font-weight:600;color:var(--dark)}
+.tm-honest{background:var(--teal-light);border:1px solid var(--border);border-left:5px solid var(--teal);border-radius:16px;padding:24px 28px;max-width:860px;margin:0 auto}
+.tm-honest h3{margin-bottom:10px}
+.tm-free{background:linear-gradient(135deg,rgba(43,189,201,.16),rgba(15,154,168,.06));border:1px solid var(--border);
+ border-radius:22px;padding:34px 30px;max-width:880px;margin:0 auto;text-align:center}
+.tm-free .tm-price{font-family:'Cormorant Garamond',serif;font-size:3.6rem;line-height:1;color:var(--teal-deep);font-weight:600;display:block;margin-bottom:6px}
+.tm-free h3{font-size:1.5rem;margin:0 0 10px}
+.tm-free p{max-width:620px;margin:0 auto 14px;color:var(--gray)}
+.tm-cert{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;max-width:620px;
+ margin:22px auto 0;text-align:left}
+.tm-cert h4{font-size:1rem;margin:0 0 6px}
+.tm-cert p{margin:0;font-size:.9rem;text-align:left}
+.tm-badge-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
+.tm-badge-row span{font-size:.8rem;font-weight:600;color:var(--teal-deep);background:var(--teal-light);
+ border:1px solid var(--border);padding:5px 13px;border-radius:999px}
+html[data-theme="dark"] .tm-fact,html[data-theme="dark"] .tm-cert{background:#12241a}
+html[data-theme="dark"] .tm-honest{background:rgba(15,154,168,.12)}
+@media(max-width:560px){.tm-free{padding:28px 20px}.tm-free .tm-price{font-size:2.9rem}}
+"""
+
+# Registration form: two panels on one page, so the visitor never scrolls
+# through the pitch again and never sees a fee until the final step.
+TM_FORM_CSS = """
+.tm-reg-wrap{max-width:660px;margin:0 auto}
+.tm-form{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:32px;box-shadow:var(--shadow-soft)}
+.tm-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tm-field{margin-bottom:15px}
+.tm-field label{display:block;font-size:.78rem;font-weight:600;margin-bottom:5px;color:var(--dark)}
+.tm-field input,.tm-field select,.tm-field textarea{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:.94rem;background:var(--white);color:var(--dark)}
+.tm-field textarea{min-height:84px;resize:vertical}
+.tm-field input:focus,.tm-field select:focus,.tm-field textarea:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(43,189,201,.13)}
+.tm-field input[type="file"]{padding:9px 11px;background:var(--white);cursor:pointer}
+.tm-field input[type="file"]::file-selector-button{border:1px solid var(--border);background:var(--teal-light);color:var(--teal-deep);
+ border-radius:7px;padding:6px 12px;margin-right:11px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer}
+.tm-req{color:var(--teal-deep)}
+.tm-hint{font-size:.78rem;color:var(--gray);margin:7px 0 0}
+.tm-note{font-size:.82rem;color:var(--gray);margin-top:14px;text-align:center}
+.tm-form-title{font-size:1.25rem;margin:0 0 6px}
+.tm-form-sub{font-size:.9rem;color:var(--gray);margin:0 0 22px}
+.tm-progress{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.tm-progress li{list-style:none;flex:1;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ color:var(--gray);border-top:3px solid var(--border);padding-top:9px}
+.tm-progress li.on{color:var(--teal-deep);border-top-color:var(--teal)}
+.tm-actions{display:flex;gap:12px;margin-top:6px}
+.tm-actions .btn-primary,.tm-actions .btn-secondary{flex:1;justify-content:center}
+.tm-choice{display:block;border:1px solid var(--border);border-radius:16px;padding:18px 20px;margin-bottom:14px;cursor:pointer;background:var(--white)}
+.tm-choice:hover{border-color:var(--teal)}
+.tm-choice input{position:absolute;opacity:0;pointer-events:none}
+.tm-choice-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.tm-choice-head strong{font-size:1.02rem;color:var(--dark)}
+.tm-choice-head em{font-style:normal;font-weight:700;font-size:.95rem;color:var(--teal-deep);white-space:nowrap}
+.tm-choice p{margin:6px 0 0;font-size:.87rem;color:var(--gray)}
+.tm-choice.sel{border-color:var(--teal);box-shadow:0 0 0 3px rgba(43,189,201,.13);background:var(--teal-light)}
+.tm-bank{background:var(--teal-light);border:1px solid var(--border);border-radius:16px;padding:22px 24px;margin:4px 0 18px}
+.tm-bank h4{font-size:.98rem;margin:0 0 4px}
+.tm-bank>p{font-size:.86rem;color:var(--gray);margin:0 0 16px}
+.tm-bank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:0}
+.tm-bank-grid dt{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--teal-deep);font-weight:700;margin-bottom:3px}
+.tm-bank-grid dd{margin:0;font-size:.95rem;font-weight:600;color:var(--dark);display:flex;align-items:center;gap:8px;flex-wrap:wrap;overflow-wrap:anywhere}
+.tm-copy{border:1px solid var(--border);background:var(--card);color:var(--teal-deep);border-radius:7px;padding:3px 9px;
+ font:inherit;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+.tm-copy:hover{border-color:var(--teal)}
+.tm-alert{background:#fdecec;border:1px solid #f3c4c4;color:#a12a2a;border-radius:10px;padding:11px 14px;font-size:.86rem;margin-bottom:15px}
+.tm-done{text-align:center;padding:18px 4px}
+.tm-done h3{font-size:1.4rem;margin:0 0 10px}
+.tm-done p{color:var(--gray);font-size:.94rem;margin:0 auto 8px;max-width:440px}
+.tm-tick{width:58px;height:58px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.8rem}
+html[data-theme="dark"] .tm-form{background:#12241a}
+html[data-theme="dark"] .tm-field input,html[data-theme="dark"] .tm-field select,html[data-theme="dark"] .tm-field textarea{background:#0e1b13;color:var(--dark)}
+html[data-theme="dark"] .tm-choice{background:#0e1b13}
+html[data-theme="dark"] .tm-choice.sel,html[data-theme="dark"] .tm-bank{background:rgba(15,154,168,.12)}
+html[data-theme="dark"] .tm-copy{background:#12241a}
+html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:#f0b4b4}
+@media(max-width:560px){.tm-row{grid-template-columns:1fr}.tm-form{padding:24px 20px}.tm-actions{flex-direction:column-reverse}}
+"""
+
+TM_FORM_JS = """
+(function(){
+  var form  = document.getElementById('tm-form');
+  if(!form) return;
+
+  var step1 = document.getElementById('tm-step1');
+  var step2 = document.getElementById('tm-step2');
+  var pill1 = document.getElementById('tm-pill1');
+  var pill2 = document.getElementById('tm-pill2');
+  var next  = document.getElementById('tm-next');
+  var back  = document.getElementById('tm-back');
+  var alertBox = document.getElementById('tm-alert');
+  var submit   = document.getElementById('tm-submit');
+  var label    = document.getElementById('tm-submit-label');
+  var fileIn   = document.getElementById('tm-receipt');
+  var hint     = document.getElementById('tm-receipt-hint');
+  var payBlock = document.getElementById('tm-pay');
+  var choices  = Array.prototype.slice.call(document.querySelectorAll('.tm-choice'));
+
+  // Receipts travel as base64 inside the JSON body, which inflates them by a
+  // third, so anything we cannot re-compress has to stay comfortably small.
+  var MAX_RAW = 3 * 1024 * 1024;
+  var MAX_EDGE = 1600;
+  var RECEIPT_HINT = 'A screenshot or PDF of your transfer.';
+
+  function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function clearAlert(){ alertBox.hidden = true; alertBox.textContent = ''; }
+  function wantsCertificate(){
+    var picked = document.querySelector('input[name="tm-cert"]:checked');
+    return !!picked && picked.value === 'yes';
+  }
+  function fail(msg, id){
+    alertBox.textContent = msg;
+    alertBox.hidden = false;
+    alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    var el = id && document.getElementById(id);
+    if(el){
+      el.style.borderColor = '#d64545';
+      el.focus();
+      setTimeout(function(){ el.style.borderColor = ''; }, 2600);
+    }
+    return false;
+  }
+
+  function showStep(n){
+    step1.hidden = n !== 1;
+    step2.hidden = n !== 2;
+    pill1.classList.toggle('on', true);
+    pill2.classList.toggle('on', n === 2);
+    clearAlert();
+    // The card is short by design, so the top of it is all anyone needs to see.
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var focusOn = n === 1 ? document.getElementById('tm-name') : choices[0];
+    if(focusOn && focusOn.focus) setTimeout(function(){ focusOn.focus({ preventScroll: true }); }, 260);
+  }
+
+  function syncChoice(){
+    choices.forEach(function(c){
+      var input = c.querySelector('input');
+      c.classList.toggle('sel', !!input && input.checked);
+    });
+    payBlock.hidden = !wantsCertificate();
+    clearAlert();
+  }
+  choices.forEach(function(c){
+    var input = c.querySelector('input');
+    if(input) input.addEventListener('change', syncChoice);
+  });
+  syncChoice();
+
+  document.querySelectorAll('.tm-copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var text = btn.getAttribute('data-copy');
+      var done = function(){
+        var was = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(function(){ btn.textContent = was; }, 1600);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done, function(){});
+      }
+    });
+  });
+
+  if(fileIn) fileIn.addEventListener('change', function(){
+    var file = fileIn.files && fileIn.files[0];
+    hint.textContent = file ? 'Attached: ' + file.name : RECEIPT_HINT;
+    clearAlert();
+  });
+
+  next.addEventListener('click', function(){
+    clearAlert();
+    if(!val('tm-name'))      return fail('Please enter your name.', 'tm-name');
+    if(!val('tm-institute')) return fail('Please enter your institute or university.', 'tm-institute');
+    if(!val('tm-education')) return fail('Please tell us your current education.', 'tm-education');
+    if(!val('tm-phone'))     return fail('Please enter a phone number we can reach you on.', 'tm-phone');
+    if(!val('tm-email'))     return fail('Please enter your email address.', 'tm-email');
+    if(!/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(val('tm-email'))) return fail('That email address does not look right.', 'tm-email');
+    showStep(2);
+  });
+
+  back.addEventListener('click', function(){ showStep(1); });
+
+  /* Reads the receipt and, for ordinary images, downscales it so the upload
+     stays small on a phone connection. Formats the browser cannot draw (PDF,
+     HEIC) are sent as-is and simply have to be under the raw limit. */
+  function readReceipt(file){
+    return new Promise(function(resolve, reject){
+      var reader = new FileReader();
+      reader.onerror = function(){ reject(new Error('We could not read that file. Please try another one.')); };
+      reader.onload = function(){
+        var dataUrl = reader.result;
+        var redrawable = /^image\\/(jpeg|jpg|png|webp)$/.test(file.type);
+        if(!redrawable){
+          if(file.size > MAX_RAW){
+            reject(new Error('That file is too large. Please upload a screenshot or PDF under 3 MB.'));
+            return;
+          }
+          resolve({ name: file.name, type: file.type, data: dataUrl });
+          return;
+        }
+        var img = new Image();
+        img.onerror = function(){
+          if(file.size > MAX_RAW){ reject(new Error('That image is too large. Please upload one under 3 MB.')); return; }
+          resolve({ name: file.name, type: file.type, data: dataUrl });
+        };
+        img.onload = function(){
+          var scale = Math.min(1, MAX_EDGE / Math.max(img.width, img.height));
+          var canvas = document.createElement('canvas');
+          canvas.width  = Math.max(1, Math.round(img.width * scale));
+          canvas.height = Math.max(1, Math.round(img.height * scale));
+          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+          var out = canvas.toDataURL('image/jpeg', 0.85);
+          if(out.length > 2200000) out = canvas.toDataURL('image/jpeg', 0.6);
+          resolve({ name: file.name, type: 'image/jpeg', data: out });
+        };
+        img.src = dataUrl;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function succeed(certificate){
+    var extra = certificate
+      ? 'We will verify your payment and email your Certificate of Participation within one business day of the workshop.'
+      : 'Your seat is free and confirmed. If you change your mind about the certificate later, just message us.';
+    form.innerHTML = '<div class="tm-done">' +
+      '<div class="tm-tick">&#10003;</div>' +
+      '<h3>You are registered</h3>' +
+      '<p>Thank you. We will email and message you the dates, the Zoom link and a calendar invite as soon as the next batch is set.</p>' +
+      '<p>' + extra + '</p>' +
+      '<p style="margin-top:16px"><a href="telepathy-meditation-workshop.html" style="font-weight:600">Back to the workshop details</a></p>' +
+      '</div>';
+    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    clearAlert();
+
+    var certificate = wantsCertificate();
+    var file = fileIn && fileIn.files && fileIn.files[0];
+    if(certificate && !file){
+      return fail('Please attach the payment screenshot so we can verify your certificate fee.', 'tm-receipt');
+    }
+
+    submit.disabled = true;
+    label.textContent = 'Sending...';
+
+    var payload = {
+      workshop: 'Telepathy & Meditation Workshop',
+      name: val('tm-name'),
+      institute: val('tm-institute'),
+      phone: val('tm-phone'),
+      email: val('tm-email'),
+      education: val('tm-education'),
+      prior_info: val('tm-prior'),
+      expectations: val('tm-expect'),
+      certificate: certificate
+    };
+
+    var ready = certificate
+      ? readReceipt(file).then(function(receipt){ payload.receipt = receipt; })
+      : Promise.resolve();
+
+    ready.then(function(){
+      return fetch('/api/workshop-register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    }).then(function(res){
+      return res.json().catch(function(){ return {}; }).then(function(data){
+        if(!res.ok || !data.ok) throw new Error(data.error || 'We could not submit your registration. Please try again.');
+        succeed(certificate);
+      });
+    }).catch(function(err){
+      submit.disabled = false;
+      label.textContent = 'Complete Registration';
+      fail(err.message || 'We could not submit your registration. Please try again.');
+    });
+  });
+})();
+"""
 
 
 def telepathy_meditation_page():
     prefix = ""
     url = f"{BASE}/{TM_SLUG}"
+    reg = f"{prefix}{TM_REG_SLUG}.html"
     schema = {"@context": "https://schema.org", "@graph": [
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
@@ -1617,12 +1924,16 @@ def telepathy_meditation_page():
          "url": url,
          "image": f"{BASE}/{TM_OG}",
          "inLanguage": ["en", "ur"],
-         "isAccessibleForFree": False,
+         "isAccessibleForFree": True,
          "educationalLevel": "Beginner to advanced",
-         "description": ("A two-evening live online workshop from MindCare Services® exploring meditation, "
+         "description": ("A free two-evening live online workshop from MindCare Services® exploring meditation, "
                          "limbic resonance and empathic attunement: the science and practice behind feeling "
                          "genuinely connected to another person. Includes guided audio, a workbook and 30-day "
-                         "recording access."),
+                         "recording access at no cost. An official certificate of participation is optional, "
+                         "a one-time PKR 1,000, emailed within one business day."),
+         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "PKR",
+                    "category": "Free", "availability": "https://schema.org/InStock",
+                    "url": f"{BASE}/{TM_REG_SLUG}"},
          "provider": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
          "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "Online",
                                "courseWorkload": "PT4H",
@@ -1642,45 +1953,24 @@ def telepathy_meditation_page():
         </ul>
       </article>''' for s in TM_SESSIONS)
 
-    out = head("Telepathy & Meditation: Live Online Workshop | MindCare Services®",
-               "Join MindCare's live online workshop on meditation and deep attunement, two evenings on Zoom. "
-               "Learn the real science of empathic connection, guided meditation and listening beneath the words. "
-               "Register now and we'll send you the dates.",
+    out = head("Free Live Online Workshop: Telepathy & Meditation | MindCare Services®",
+               "Join MindCare's free live online workshop on meditation and deep attunement, two evenings on Zoom. "
+               "Guided meditation, the real science of empathic connection and paired practice, at no cost. "
+               "Optional certificate PKR 1,000. Register now and we'll send you the dates.",
                url, prefix, schema, og_type="website")
     out = social_image(out, TM_OG, "Telepathy & Meditation: The Art of Deep Attunement, a live online workshop by MindCare Services®", 1200, 630)
     out += nav(prefix, "workshops")
     out += f"""<main id="main">
-<style>
-.tm-hero-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:40px;align-items:center}}
-.tm-poster{{width:100%;height:auto;border-radius:20px;box-shadow:0 20px 54px rgba(6,43,49,.28)}}
-.tm-facts{{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:6px}}
-.tm-fact{{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}}
-.tm-fact strong{{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}}
-.tm-fact span{{font-size:1.02rem;font-weight:600;color:var(--dark)}}
-.tm-honest{{background:var(--teal-light);border:1px solid var(--border);border-left:5px solid var(--teal);border-radius:16px;padding:24px 28px;max-width:860px;margin:0 auto}}
-.tm-honest h3{{margin-bottom:10px}}
-.tm-form{{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px;max-width:640px;margin:0 auto;box-shadow:var(--shadow-soft)}}
-.tm-row{{display:grid;grid-template-columns:1fr 1fr;gap:14px}}
-.tm-field{{margin-bottom:15px}}
-.tm-field label{{display:block;font-size:.78rem;font-weight:600;margin-bottom:5px;color:var(--dark)}}
-.tm-field input,.tm-field select,.tm-field textarea{{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:.94rem;background:var(--white);color:var(--dark)}}
-.tm-field textarea{{min-height:88px;resize:vertical}}
-.tm-field input:focus,.tm-field select:focus,.tm-field textarea:focus{{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(43,189,201,.13)}}
-.tm-note{{font-size:.82rem;color:var(--gray);margin-top:12px;text-align:center}}
-html[data-theme="dark"] .tm-fact,html[data-theme="dark"] .tm-form{{background:#12241a}}
-html[data-theme="dark"] .tm-field input,html[data-theme="dark"] .tm-field select,html[data-theme="dark"] .tm-field textarea{{background:#0e1b13;color:var(--dark)}}
-html[data-theme="dark"] .tm-honest{{background:rgba(15,154,168,.12)}}
-@media(max-width:560px){{.tm-row{{grid-template-columns:1fr}}}}
-</style>
+<style>{TM_CSS}</style>
 
 <header class="page-hero">
   <div class="ph-inner">
     <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="{prefix}workshops.html">Workshops</a></li><li aria-current="page">Telepathy &amp; Meditation</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-globe')} Upcoming · Live Online · Registration Open</div>
+    <div class="ph-badge">{icon(prefix,'i-globe')} 100% Free · Live on Zoom · Registration Open</div>
     <h1>Telepathy &amp; <em>Meditation</em></h1>
-    <p class="lede">Two evenings on the quietest, most underrated skill there is: the ability to settle yourself, and then genuinely tune in to another human being. No robes, no mysticism, no promises we can't keep. Just stillness, real science and a room full of people practising it together.</p>
+    <p class="lede">Two evenings on the quietest, most underrated skill there is: the ability to settle yourself, and then genuinely tune in to another human being. No robes, no mysticism, no promises we can't keep. And no fee, because this one is completely free.</p>
     <div class="ph-actions">
-      <a href="#register" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Now</a>
+      <a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Free</a>
       <a href="{TM_WA}" target="_blank" rel="noopener" class="btn-secondary">{icon(prefix,'i-wa','18')} Register on WhatsApp</a>
     </div>
   </div>
@@ -1696,20 +1986,39 @@ html[data-theme="dark"] .tm-honest{{background:rgba(15,154,168,.12)}}
         <span class="section-tag">The invitation</span>
         <h2 class="section-title">You already know the feeling. This is the practice behind it.</h2>
         <p style="margin:14px 0 16px">Someone walks into the room and you feel it before they speak. A friend calls the moment you thought of them. A client goes quiet and something in your own chest tightens. We call it telepathy because we don't have a better everyday word for it, but what's actually happening is attunement, and unlike magic, attunement can be trained.</p>
-        <p style="margin-bottom:20px">Over two live evenings we'll build it deliberately: first the meditation that quiets your own noise, then the listening that lets someone else's signal through. Small group, cameras on, real practice in pairs, and an honest conversation about where the science ends and the mystery begins.</p>
+        <p style="margin-bottom:20px">Over two live evenings we'll build it deliberately: first the meditation that quiets your own noise, then the listening that lets someone else's signal through. Small group, cameras on, real practice in pairs, and an honest conversation about where the science ends and the mystery begins. All of it free.</p>
         <div class="tm-facts">
+          <div class="tm-fact"><strong>Fee</strong><span>Free · nothing to pay</span></div>
           <div class="tm-fact"><strong>Where</strong><span>Live on Zoom · join from anywhere</span></div>
           <div class="tm-fact"><strong>Format</strong><span>Two live evenings · small group</span></div>
           <div class="tm-fact"><strong>Language</strong><span>English, with Urdu where it helps</span></div>
-          <div class="tm-fact"><strong>Schedule</strong><span>Dates announced to registered participants</span></div>
         </div>
-        <div style="margin-top:24px"><a href="#register" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Now</a></div>
+        <div style="margin-top:24px"><a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Free</a></div>
       </div>
     </div>
   </div>
 </section>
 
 <section class="bg-off">
+  <div class="section-inner">
+    <div class="tm-free fade-up">
+      <span class="section-tag">The fee, up front</span>
+      <span class="tm-price">Free</span>
+      <h3>Both evenings, every resource, zero rupees</h3>
+      <p>No ticket, no deposit, no card details, and nothing sold to you in the session. You register, we send the Zoom link, you show up. That's the whole arrangement.</p>
+      <div class="tm-badge-row">
+        <span>No fee to attend</span><span>No payment details asked</span><span>Workbook &amp; audio included</span><span>Recordings included</span>
+      </div>
+      <div class="tm-cert">
+        <h4>{icon(prefix,'i-grad','18')} Want it on paper? The certificate is optional.</h4>
+        <p>If you'd like an official <strong>Certificate of Participation</strong> from MindCare Services® for your CV or university file, there's a <strong>one-time fee of {TM_CERT_FEE}</strong> that covers verification, issuing and record-keeping. Pay it only if you want it: your certificate is emailed to you <strong>within one business day</strong>. Everything else about the workshop stays free either way, and we only ask about it on the very last step of the form.</p>
+      </div>
+      <div style="margin-top:24px"><a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Claim Your Free Seat</a></div>
+    </div>
+  </div>
+</section>
+
+<section>
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">The Two Evenings</span><h2 class="section-title">Four movements, one skill</h2><p class="section-sub">Every part is taught live and practised in the session, so you leave each evening having actually done the thing, not just heard about it.</p></div>
     <div class="feature-grid">
@@ -1718,7 +2027,7 @@ html[data-theme="dark"] .tm-honest{{background:rgba(15,154,168,.12)}}
   </div>
 </section>
 
-<section>
+<section class="bg-off">
   <div class="section-inner">
     <div class="tm-honest fade-up">
       <span class="section-tag">Straight talk</span>
@@ -1729,19 +2038,19 @@ html[data-theme="dark"] .tm-honest{{background:rgba(15,154,168,.12)}}
   </div>
 </section>
 
-<section class="bg-off">
+<section>
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">Included</span><h2 class="section-title">What you take home</h2></div>
+    <div class="section-header centered fade-up"><span class="section-tag">Included, at no cost</span><h2 class="section-title">What you take home</h2></div>
     <div class="feature-grid">
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clock')}</div><h3>30-day recording access</h3><p>Both evenings recorded and shared, so a missed session or a shaky connection never costs you the workshop.</p></div>
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-speech')}</div><h3>Guided audio, English &amp; Urdu</h3><p>The meditations from the sessions, recorded in both languages, to keep the practice going after the Zoom window closes.</p></div>
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-book')}</div><h3>The attunement workbook</h3><p>Practice logs, listening scripts, dyad exercise cards and your 21-day plan: a printable PDF sent before session one.</p></div>
-      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Certificate of participation</h3><p>Issued by MindCare Services® to everyone who attends both live evenings.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Certificate, if you want one</h3><p>Optional Certificate of Participation from MindCare Services®, a one-time {TM_CERT_FEE}, emailed within one business day. Everything above is free regardless.</p></div>
     </div>
   </div>
 </section>
 
-<section>
+<section class="bg-off">
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">Good For</span><h2 class="section-title">Who this is for</h2></div>
     <div class="feature-grid">
@@ -1750,73 +2059,147 @@ html[data-theme="dark"] .tm-honest{{background:rgba(15,154,168,.12)}}
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clipboard')}</div><h3>Helping professionals</h3><p>Therapists, students, teachers, doctors and coaches who want presence to be a skill rather than a good day.</p></div>
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-family')}</div><h3>Couples &amp; close pairs</h3><p>Partners, siblings and friends are welcome to register together and pair up for the breakout practice.</p></div>
     </div>
-  </div>
-</section>
-
-<section id="register" class="bg-off">
-  <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">Registration Open</span><h2 class="section-title">Register now, seats are capped</h2><p class="section-sub">We keep the group small so every pair gets attention in the breakout rooms. Fill this in and we'll confirm your place, share the fee and send your Zoom link.</p></div>
-    <div class="tm-form fade-up">
-      <div class="tm-row">
-        <div class="tm-field"><label for="tm-name">Full name *</label><input type="text" id="tm-name" placeholder="Your name" autocomplete="name"></div>
-        <div class="tm-field"><label for="tm-phone">WhatsApp number *</label><input type="tel" id="tm-phone" placeholder="+92..." autocomplete="tel"></div>
-      </div>
-      <div class="tm-row">
-        <div class="tm-field"><label for="tm-email">Email address</label><input type="email" id="tm-email" placeholder="your@email.com" autocomplete="email"></div>
-        <div class="tm-field"><label for="tm-city">City &amp; country</label><input type="text" id="tm-city" placeholder="Karachi, Pakistan"></div>
-      </div>
-      <div class="tm-field">
-        <label for="tm-exp">Your meditation experience</label>
-        <select id="tm-exp">
-          <option value="">Select one</option>
-          <option>Complete beginner</option>
-          <option>I've tried it on and off</option>
-          <option>I practise regularly</option>
-          <option>I teach or facilitate</option>
-        </select>
-      </div>
-      <div class="tm-field">
-        <label for="tm-why">What are you hoping to get from these two evenings?</label>
-        <textarea id="tm-why" placeholder="A sentence or two is plenty, and it helps us shape the practice for the group."></textarea>
-      </div>
-      <button type="button" class="btn-primary" id="tm-submit" style="width:100%;justify-content:center">{icon(prefix,'i-wa','18')} Send My Registration</button>
-      <p class="tm-note">Your details open a pre-filled WhatsApp message to our team. Nothing is stored on this website. Prefer to talk first? Call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a>.</p>
+    <div style="text-align:center;margin-top:40px" class="fade-up">
+      <p style="margin-bottom:16px;font-weight:600">Seats are capped so the breakout pairing stays workable, and free seats go quickly.</p>
+      <a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Free Now</a>
+      <p style="margin-top:14px">or call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a></p>
     </div>
   </div>
 </section>
 
 {faq_block(prefix, TM_FAQS)}
 
-{cta_band(prefix, "Still deciding?", "Message us on WhatsApp with your question about the workshop. A real person from our team will answer, no pressure to sign up.")}
+{cta_band(prefix, "Still deciding?", "It costs nothing to join us, and nothing to ask first. Message us on WhatsApp with your question about the workshop and a real person from our team will answer.")}
 </main>
-<script>
-(function(){{
-  var btn = document.getElementById('tm-submit');
-  if(!btn) return;
-  function val(id){{ var el = document.getElementById(id); return el ? el.value.trim() : ''; }}
-  function flag(id){{
-    var el = document.getElementById(id);
-    if(!el) return;
-    el.style.borderColor = '#d64545'; el.focus();
-    setTimeout(function(){{ el.style.borderColor = ''; }}, 2200);
-  }}
-  btn.addEventListener('click', function(){{
-    var name = val('tm-name'), phone = val('tm-phone');
-    if(!name){{ flag('tm-name'); return; }}
-    if(!phone){{ flag('tm-phone'); return; }}
-    var lines = [
-      "Hi! I'd like to register for the Telepathy & Meditation online workshop.",
-      '', 'Name: ' + name, 'WhatsApp: ' + phone
-    ];
-    if(val('tm-email')) lines.push('Email: ' + val('tm-email'));
-    if(val('tm-city'))  lines.push('Location: ' + val('tm-city'));
-    if(val('tm-exp'))   lines.push('Meditation experience: ' + val('tm-exp'));
-    if(val('tm-why'))   lines.push('What I am hoping for: ' + val('tm-why'));
-    lines.push('', 'Please share the fee and Zoom details.');
-    window.open('{WA}?text=' + encodeURIComponent(lines.join('\\n')), '_blank', 'noopener');
-  }});
-}})();
-</script>
+"""
+    out += footer(prefix)
+    return out
+
+
+def telepathy_register_page():
+    """Standalone two-step registration form.
+
+    Step one is the form and nothing else. Step two is where the optional
+    certificate, and the only fee on this website, is finally mentioned.
+    """
+    prefix = ""
+    url = f"{BASE}/{TM_REG_SLUG}"
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops.html"},
+            {"@type": "ListItem", "position": 3, "name": "Telepathy & Meditation Workshop", "item": f"{BASE}/{TM_SLUG}"},
+            {"@type": "ListItem", "position": 4, "name": "Register", "item": url}]},
+        {"@type": "WebPage", "name": "Register Free: Telepathy & Meditation Workshop | MindCare Services®",
+         "url": url,
+         "description": ("Free registration for the MindCare Services® Telepathy & Meditation live online "
+                         "workshop. Fill the short form to claim your seat. The certificate of participation "
+                         "is optional at a one-time PKR 1,000, emailed within one business day."),
+         "isPartOf": {"@type": "WebSite", "name": "MindCare Services®", "url": BASE}}]}
+
+    bank_rows = "\n".join(
+        f'''        <div><dt>{title}</dt><dd>{value}'''
+        + (f''' <button type="button" class="tm-copy" data-copy="{value}">Copy</button>''' if copyable else "")
+        + "</dd></div>"
+        for title, value, copyable in TM_BANK)
+
+    out = head("Register Free: Telepathy & Meditation Live Online Workshop | MindCare Services®",
+               "Register for MindCare's free Telepathy & Meditation live online workshop. A short two-step form: "
+               "your details, then an optional certificate of participation for a one-time PKR 1,000, emailed "
+               "within one business day.",
+               url, prefix, schema, og_type="website")
+    out = social_image(out, TM_OG, "Telepathy & Meditation: The Art of Deep Attunement, a live online workshop by MindCare Services®", 1200, 630)
+    out += nav(prefix, "workshops")
+    out += f"""<main id="main">
+<style>{TM_FORM_CSS}</style>
+
+<section style="padding-top:132px">
+  <div class="section-inner">
+    <div class="tm-reg-wrap">
+      <div class="section-header centered" style="margin-bottom:26px">
+        <span class="section-tag">Free Registration</span>
+        <h1 class="section-title" style="font-size:2.1rem">Register for Telepathy &amp; Meditation</h1>
+        <p class="section-sub">The workshop is free. Fill this in and we'll confirm your seat, then send the dates, the Zoom link and a calendar invite.</p>
+      </div>
+
+      <form class="tm-form" id="tm-form" novalidate>
+        <ol class="tm-progress">
+          <li id="tm-pill1" class="on">1 · Your details</li>
+          <li id="tm-pill2">2 · Certificate</li>
+        </ol>
+
+        <div id="tm-step1">
+          <h2 class="tm-form-title">Your details</h2>
+          <p class="tm-form-sub">Nothing to pay here, and no payment details are asked for on this step.</p>
+          <div class="tm-field"><label for="tm-name">Name <span class="tm-req">*</span></label><input type="text" id="tm-name" placeholder="Your full name" autocomplete="name"></div>
+          <div class="tm-row">
+            <div class="tm-field"><label for="tm-institute">Institute / University <span class="tm-req">*</span></label><input type="text" id="tm-institute" placeholder="Where you study or work" autocomplete="organization"></div>
+            <div class="tm-field"><label for="tm-education">Current education <span class="tm-req">*</span></label><input type="text" id="tm-education" placeholder="e.g. BS Psychology, 6th semester"></div>
+          </div>
+          <div class="tm-row">
+            <div class="tm-field"><label for="tm-phone">Phone <span class="tm-req">*</span></label><input type="tel" id="tm-phone" placeholder="+92..." autocomplete="tel"></div>
+            <div class="tm-field"><label for="tm-email">Email <span class="tm-req">*</span></label><input type="email" id="tm-email" placeholder="your@email.com" autocomplete="email"></div>
+          </div>
+          <div class="tm-field">
+            <label for="tm-prior">Prior information about the workshop topic?</label>
+            <textarea id="tm-prior" placeholder="Anything you already know or have practised. It is completely fine to write none."></textarea>
+          </div>
+          <div class="tm-field">
+            <label for="tm-expect">Expectations from the workshop?</label>
+            <textarea id="tm-expect" placeholder="A sentence or two is plenty, and it helps us shape the practice for the group."></textarea>
+          </div>
+          <div class="tm-actions">
+            <button type="button" class="btn-primary" id="tm-next">Next: Certificate →</button>
+          </div>
+        </div>
+
+        <div id="tm-step2" hidden>
+          <h2 class="tm-form-title">Last step: do you want a certificate?</h2>
+          <p class="tm-form-sub">Your seat in the workshop is free and stays free whichever you pick.</p>
+
+          <label class="tm-choice" for="tm-cert-no">
+            <input type="radio" name="tm-cert" id="tm-cert-no" value="no" checked>
+            <span class="tm-choice-head"><strong>No certificate, just register me</strong><em>Free</em></span>
+            <p>Both live evenings, the guided audio, the workbook and the 30-day recordings. Nothing to pay, nothing to upload.</p>
+          </label>
+
+          <label class="tm-choice" for="tm-cert-yes">
+            <input type="radio" name="tm-cert" id="tm-cert-yes" value="yes">
+            <span class="tm-choice-head"><strong>Yes, send my Certificate of Participation</strong><em>{TM_CERT_FEE} one-time</em></span>
+            <p>An official certificate issued by MindCare Services®, emailed to you within one business day. Covers verification, issuing and record-keeping.</p>
+          </label>
+
+          <div id="tm-pay" hidden>
+            <div class="tm-bank">
+              <h4>Transfer the {TM_CERT_FEE} certificate fee</h4>
+              <p>Send it to the account below, then attach the screenshot. This is the only payment on this website, and it is optional.</p>
+              <dl class="tm-bank-grid">
+{bank_rows}
+              </dl>
+            </div>
+            <div class="tm-field">
+              <label for="tm-receipt">Upload payment screenshot <span class="tm-req">*</span></label>
+              <input type="file" id="tm-receipt" accept="image/*,application/pdf">
+              <p class="tm-hint" id="tm-receipt-hint">A screenshot or PDF of your transfer.</p>
+            </div>
+          </div>
+
+          <div class="tm-alert" id="tm-alert" role="alert" hidden></div>
+          <div class="tm-actions">
+            <button type="button" class="btn-secondary" id="tm-back">← Back</button>
+            <button type="submit" class="btn-primary" id="tm-submit">{icon(prefix,'i-clipboard','18')} <span id="tm-submit-label">Complete Registration</span></button>
+          </div>
+        </div>
+
+        <p class="tm-note">Your details go straight to the MindCare team and are never shown publicly. Questions first? Call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a> or <a href="{TM_WA}" target="_blank" rel="noopener" style="font-weight:600">message us on WhatsApp</a>.</p>
+      </form>
+
+      <p style="text-align:center;margin-top:22px"><a href="{prefix}{TM_SLUG}.html" class="more" style="font-weight:600">← Read the workshop details</a></p>
+    </div>
+  </div>
+</section>
+</main>
+<script>{TM_FORM_JS}</script>
 """
     out += footer(prefix)
     return out
@@ -1837,8 +2220,12 @@ def workshops_page():
          "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
          "image": f"{BASE}/{TM_POSTER}",
          "url": f"{BASE}/{TM_SLUG}",
-         "description": ("A two-evening live online workshop on meditation, limbic resonance and empathic "
+         "isAccessibleForFree": True,
+         "description": ("A free two-evening live online workshop on meditation, limbic resonance and empathic "
                          "attunement: the science and practice behind feeling genuinely connected to another person."),
+         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "PKR",
+                    "category": "Free", "availability": "https://schema.org/InStock",
+                    "url": f"{BASE}/{TM_REG_SLUG}"},
          "organizer": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
          "location": {"@type": "VirtualLocation", "url": f"{BASE}/{TM_SLUG}"}},
         {"@type": "Event", "name": "Applied Psychology Masterclass: 5-Day Certification Series",
@@ -1859,8 +2246,8 @@ def workshops_page():
 {chr(10).join(li(prefix, k) for k in d['kit'])}
         </ul>
       </article>''' for d in WS_DAYS)
-    out = head("Workshops & Trainings | Telepathy & Meditation Live Online | MindCare Services®",
-               "MindCare workshops: register now for Telepathy & Meditation, a live online workshop on Zoom, plus our Applied Psychology Masterclass certification series in Karachi.",
+    out = head("Workshops & Trainings | Free Telepathy & Meditation Live Online | MindCare Services®",
+               "MindCare workshops: register free for Telepathy & Meditation, a live online workshop on Zoom, plus our Applied Psychology Masterclass certification series in Karachi.",
                url, prefix, schema, og_type="website")
     out = social_image(out, TM_OG, "Telepathy & Meditation: The Art of Deep Attunement, a live online workshop by MindCare Services®", 1200, 630)
     out += nav(prefix, "workshops")
@@ -1868,11 +2255,11 @@ def workshops_page():
 <header class="page-hero">
   <div class="ph-inner">
     <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Workshops</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-globe')} Next Up · Live Online · Registration Open</div>
+    <div class="ph-badge">{icon(prefix,'i-globe')} Next Up · Free · Live Online · Registration Open</div>
     <h1>Workshops &amp; <em>Trainings</em></h1>
-    <p class="lede">Practical, human, evidence-based learning from the MindCare clinical team, online for anyone, anywhere, and in-person in Karachi. Here's what's open right now.</p>
+    <p class="lede">Practical, human, evidence-based learning from the MindCare clinical team, online for anyone, anywhere, and in-person in Karachi. Our next online workshop is free to attend. Here's what's open right now.</p>
     <div class="ph-actions">
-      <a href="{prefix}{TM_SLUG}#register" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Now: Online Workshop</a>
+      <a href="{prefix}{TM_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Free: Online Workshop</a>
       <a href="#masterclass" class="btn-secondary">See the Masterclass ↓</a>
     </div>
   </div>
@@ -1880,23 +2267,25 @@ def workshops_page():
 
 <section>
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">Registration Open</span><h2 class="section-title">Our next workshop is online</h2></div>
+    <div class="section-header centered fade-up"><span class="section-tag">Free · Registration Open</span><h2 class="section-title">Our next workshop is online, and it's free</h2></div>
     <div class="split-grid fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:36px;align-items:center">
       <div>
         <a href="{prefix}{TM_SLUG}" aria-label="Telepathy and Meditation workshop details"><img src="{prefix}{TM_POSTER}" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster" width="900" height="1200" style="width:100%;height:auto;border-radius:18px;box-shadow:0 18px 48px rgba(6,43,49,.24)"></a>
       </div>
       <div>
-        <span class="section-tag">Live on Zoom · Two evenings</span>
+        <span class="section-tag">Free · Live on Zoom · Two evenings</span>
         <h3 style="font-size:1.7rem;margin:10px 0 12px">Telepathy &amp; Meditation: <em>The Art of Deep Attunement</em></h3>
-        <p style="margin-bottom:16px">Two live evenings on Zoom, open to anyone anywhere. We build the meditation that quiets your own noise, then train the listening that lets another person's signal through, with an honest look at the science of empathy, co-regulation and the parts we still can't explain.</p>
+        <p style="margin-bottom:16px">Two live evenings on Zoom, free and open to anyone anywhere. We build the meditation that quiets your own noise, then train the listening that lets another person's signal through, with an honest look at the science of empathy, co-regulation and the parts we still can't explain.</p>
         <ul class="aside-list">
+{li(prefix,'Completely free to attend, no fee and no card details')}
 {li(prefix,'Live on Zoom · small group · cameras on, nothing pre-recorded')}
 {li(prefix,'Guided meditation audio in English &amp; Urdu to keep')}
 {li(prefix,'Paired attunement practice in breakout rooms')}
 {li(prefix,'Recordings for 30 days + attunement workbook')}
+{li(prefix,f'Optional certificate of participation, one-time {TM_CERT_FEE}, emailed within one business day')}
         </ul>
         <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
-          <a href="{prefix}{TM_SLUG}#register" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Now</a>
+          <a href="{prefix}{TM_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Free</a>
           <a href="{prefix}{TM_SLUG}" class="btn-secondary">Full details →</a>
         </div>
       </div>
@@ -2035,13 +2424,15 @@ def build():
     write("articles.html", articles_index())
     write("workshops.html", workshops_page())
     write(f"{TM_SLUG}.html", telepathy_meditation_page())
+    write(f"{TM_REG_SLUG}.html", telepathy_register_page())
     write("confirmed.html", confirmation_page())
     # sitemap
     urls = [(f"{BASE}/", "1.0"), (f"{BASE}/contact", "0.8"),
             (f"{BASE}/services/", "0.9"), (f"{BASE}/team/", "0.7"),
             (f"{BASE}/guides.html", "0.8"), (f"{BASE}/articles.html", "0.7"),
             (f"{BASE}/workshops.html", "0.9"),
-            (f"{BASE}/{TM_SLUG}", "0.9")]
+            (f"{BASE}/{TM_SLUG}", "0.9"),
+            (f"{BASE}/{TM_REG_SLUG}", "0.8")]
     urls += [(f"{BASE}/services/{s['slug']}", "0.8") for s in SERVICES]
     urls += [(f"{BASE}/team/{m['slug']}", "0.6") for m in TEAM]
     urls += [(f"{BASE}/{t['slug']}", "0.8") for t in TOPICS]

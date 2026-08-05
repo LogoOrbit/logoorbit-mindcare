@@ -119,7 +119,7 @@ a{color:var(--teal-deep)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 26px rgba(6,43,49,.06)}
 .search{flex:1;min-width:200px;padding:10px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:.9rem;background:var(--card);color:var(--ink)}
 .tablewrap{overflow-x:auto;border-radius:16px}
-table{border-collapse:collapse;width:100%;min-width:1160px;font-size:.87rem}
+table{border-collapse:collapse;width:100%;min-width:1280px;font-size:.87rem}
 th{position:sticky;top:0;background:#eef4f2;text-align:left;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;
  color:var(--teal-deep);padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
 td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
@@ -197,7 +197,8 @@ type Registration = {
   education: string;
   prior_info: string;
   expectations: string;
-  receipt_path: string;
+  certificate: boolean;
+  receipt_path: string | null;
   receipt_name: string | null;
 };
 
@@ -225,7 +226,7 @@ async function signedReceiptUrls(paths: string[]): Promise<Record<string, string
 
 async function submissionsPage(): Promise<Response> {
   const query = new URLSearchParams({
-    select: "id,created_at,workshop,name,institute,phone,email,education,prior_info,expectations,receipt_path,receipt_name",
+    select: "id,created_at,workshop,name,institute,phone,email,education,prior_info,expectations,certificate,receipt_path,receipt_name",
     order: "created_at.desc",
     limit: "1000",
   });
@@ -241,11 +242,16 @@ async function submissionsPage(): Promise<Response> {
   }
 
   const rows = await res.json() as Registration[];
-  const links = await signedReceiptUrls(rows.map((r) => r.receipt_path).filter(Boolean));
+  const links = await signedReceiptUrls(
+    rows.map((r) => r.receipt_path).filter((p): p is string => !!p),
+  );
 
   const tableRows = rows.map((r) => {
-    const link = links[r.receipt_path];
-    const receiptCell = link
+    // The workshop is free: only people who bought the certificate have a receipt.
+    const link = r.receipt_path ? links[r.receipt_path] : undefined;
+    const receiptCell = !r.certificate
+      ? `<span class="long">Free seat, no payment</span>`
+      : link
       ? `<a class="btn" href="${esc(link)}" target="_blank" rel="noopener">View receipt</a>`
       : `<span class="long">${esc(r.receipt_name || "uploaded")}</span>`;
     return `<tr>
@@ -257,6 +263,7 @@ async function submissionsPage(): Promise<Response> {
       <td>${esc(r.education)}</td>
       <td class="long">${esc(r.prior_info)}</td>
       <td class="long">${esc(r.expectations)}</td>
+      <td class="nowrap">${r.certificate ? "Yes, PKR 1,000" : "No"}</td>
       <td>${receiptCell}</td>
     </tr>`;
   }).join("");
@@ -265,7 +272,7 @@ async function submissionsPage(): Promise<Response> {
     ? `<div class="card tablewrap"><table id="grid">
         <thead><tr>
           <th>Received</th><th>Name</th><th>Institute / University</th><th>Phone</th><th>Email</th>
-          <th>Current education</th><th>Prior knowledge</th><th>Expectations</th><th>Receipt</th>
+          <th>Current education</th><th>Prior knowledge</th><th>Expectations</th><th>Certificate</th><th>Receipt</th>
         </tr></thead>
         <tbody>${tableRows}</tbody>
       </table></div>`
@@ -273,14 +280,15 @@ async function submissionsPage(): Promise<Response> {
 
   const csvData = rows.map((r) => [
     formatWhen(r.created_at), r.workshop, r.name, r.institute, r.phone, r.email,
-    r.education, r.prior_info, r.expectations, r.receipt_name ?? r.receipt_path,
+    r.education, r.prior_info, r.expectations, r.certificate ? "Yes" : "No",
+    r.certificate ? (r.receipt_name ?? r.receipt_path ?? "uploaded") : "",
   ]);
 
   const body = `<div class="wrap">
   <div class="top">
     <div>
       <div class="brand">MIND<span>CARE</span> Submissions<span class="count">${rows.length}</span></div>
-      <div class="sub">Workshop registrations, newest first. Receipt links expire after one hour.</div>
+      <div class="sub">Workshop registrations, newest first. The workshop is free; receipts belong to paid certificates only, and their links expire after one hour.</div>
     </div>
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="Search name, email, institute...">
@@ -307,7 +315,7 @@ async function submissionsPage(): Promise<Response> {
   }
   var btn = document.getElementById('csv');
   if (btn) btn.addEventListener('click', function(){
-    var head = ['Received','Workshop','Name','Institute','Phone','Email','Current education','Prior knowledge','Expectations','Receipt'];
+    var head = ['Received','Workshop','Name','Institute','Phone','Email','Current education','Prior knowledge','Expectations','Certificate','Receipt'];
     var rows = JSON.parse(document.getElementById('rowdata').textContent);
     var csv = [head].concat(rows).map(function(r){
       return r.map(function(c){ return '"' + String(c == null ? '' : c).replace(/"/g,'""') + '"'; }).join(',');
