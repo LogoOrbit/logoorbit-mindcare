@@ -32,7 +32,7 @@ function encodeBody(req) {
  * Forwards the incoming request to a Supabase Edge Function and streams the
  * answer back, preserving status, content type and any session cookie.
  */
-async function proxy(req, res, functionName) {
+async function proxy(req, res, functionName, contentType) {
   const headers = {
     apikey: SUPABASE_ANON_KEY,
     Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
@@ -71,8 +71,11 @@ async function proxy(req, res, functionName) {
   const outgoing = {
     // Written with writeHead rather than res.send, which rewrites the content
     // type when handed a Buffer and would serve the HTML page as plain text.
-    'Content-Type': upstream.headers.get('content-type') || 'application/json',
+    // contentType pins the value for routes whose shape we already know, since
+    // the header that comes back through Supabase's CDN is not dependable.
+    'Content-Type': contentType || upstream.headers.get('content-type') || 'application/json',
     'Cache-Control': 'no-store',
+    'X-Upstream-Content-Type': upstream.headers.get('content-type') || 'none',
   };
   if (ourCookies.length) outgoing['Set-Cookie'] = ourCookies;
 

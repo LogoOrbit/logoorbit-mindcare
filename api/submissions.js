@@ -9,5 +9,7 @@ module.exports = async (req, res) => {
     return;
   }
   res.setHeader('X-Robots-Tag', 'noindex, nofollow');
-  await proxy(req, res, 'workshop-submissions');
+  // This function only ever renders a page, so pin the type rather than trust
+  // whatever survives the hop through Supabase's CDN.
+  await proxy(req, res, 'workshop-submissions', 'text/html; charset=utf-8');
 };
