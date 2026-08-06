@@ -46,6 +46,47 @@
       .map(function (r) { return r.e; });
   }
 
+  /* ---- styles ----
+     Injected here rather than living in styles.css: index.html and
+     contact.html carry their own inline CSS and never load styles.css,
+     so an external rule would leave the overlay completely unstyled.
+     Those pages also name their tokens --ink/--muted where the shared
+     sheet uses --dark/--gray, hence the layered var() fallbacks. */
+  var TXT = "var(--dark, var(--ink, #1b2822))";
+  var DIM = "var(--gray, var(--muted, #44544b))";
+  var CARD = "var(--card, #fff)";
+  var LINE = "var(--border, rgba(128,128,128,.25))";
+  var css = document.createElement("style");
+  css.textContent = [
+    ".ns-overlay{position:fixed;inset:0;z-index:5000;background:rgba(10,20,16,.55);",
+    "-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:none;",
+    "align-items:flex-start;justify-content:center;padding:12vh 20px 20px}",
+    ".ns-overlay.is-open{display:flex}",
+    ".ns-panel{width:100%;max-width:620px;background:" + CARD + ";border:1px solid " + LINE + ";",
+    "border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.28);overflow:hidden;",
+    "font-family:'DM Sans',system-ui,sans-serif}",
+    ".ns-form{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid " + LINE + "}",
+    ".ns-icon{width:20px !important;height:20px !important;flex:0 0 20px;color:var(--teal,#0f9aa8)}",
+    ".ns-input{flex:1;min-width:0;border:0;background:none;color:" + TXT + ";",
+    "font-family:inherit;font-size:1.02rem;line-height:1.4;outline:none}",
+    ".ns-input::placeholder{color:" + DIM + ";opacity:1}",
+    ".ns-close{border:1px solid " + LINE + ";background:none;color:" + DIM + ";font-family:inherit;",
+    "font-size:.72rem;padding:4px 9px;border-radius:6px;cursor:pointer;flex:none}",
+    ".ns-close:hover{color:var(--teal-dark,#12808d);border-color:var(--teal,#0f9aa8)}",
+    ".ns-results{max-height:60vh;overflow-y:auto;padding:8px}",
+    ".ns-hint{color:" + DIM + ";font-size:.9rem;padding:18px 10px;margin:0}",
+    ".ns-item{display:block;padding:10px 12px;border-radius:10px;text-decoration:none}",
+    ".ns-item:hover,.ns-item.is-active{background:var(--teal-light,#e8f9fb)}",
+    ".ns-t{display:block;color:" + TXT + ";font-weight:600;font-size:.95rem;line-height:1.35}",
+    ".ns-item:hover .ns-t,.ns-item.is-active .ns-t{color:var(--teal-dark,#12808d)}",
+    ".ns-d{display:block;color:" + DIM + ";font-size:.82rem;line-height:1.45;margin-top:2px}",
+    ".ns-all{display:block;padding:11px 12px;margin-top:4px;border-top:1px solid " + LINE + ";",
+    "color:var(--teal-dark,#12808d);font-size:.86rem;font-weight:600;text-decoration:none}",
+    ".ns-all:hover{background:var(--teal-light,#e8f9fb)}",
+    "@media (max-width:560px){.ns-overlay{padding:8vh 12px 12px}.ns-close{display:none}}"
+  ].join("");
+  document.head.appendChild(css);
+
   /* ---- overlay markup ---- */
   var overlay = document.createElement("div");
   overlay.className = "ns-overlay";
@@ -55,7 +96,7 @@
   overlay.innerHTML =
     '<div class="ns-panel">' +
       '<form class="ns-form" role="search">' +
-        '<svg class="ns-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+        '<svg class="ns-icon" width="20" height="20" viewBox="0 0 24 24" style="width:20px;height:20px;flex:none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
         '<input type="search" class="ns-input" autocomplete="off" placeholder="Search services, team, articles…" aria-label="Search">' +
         '<button type="button" class="ns-close" aria-label="Close search">Esc</button>' +
       '</form>' +
