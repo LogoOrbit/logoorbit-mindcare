@@ -181,24 +181,26 @@ a{color:var(--teal-deep)}
  .grid{grid-template-columns:1fr;gap:12px}
  .login{margin-top:6vh}
 }
-@media(prefers-color-scheme:dark){
- :root{--bg:#0e1b13;--card:#12241a;--ink:#e8f2ed;--muted:#93a89e;--line:#22392c;
-  --green:#6ede8a;--green-bg:#16281a;--danger:#e8817f}
- .login input{background:#0e1b13;color:var(--ink)}
- .err{background:#3a1c1c;border-color:#5e2b2b;color:#f0b4b4}
- .tag-paid{border-color:rgba(110,222,138,.28)}
- .icon-btn:hover{background:rgba(232,129,127,.12)}
-}
+html[data-theme="dark"]{--bg:#0e1b13;--card:#12241a;--ink:#e8f2ed;--muted:#93a89e;--line:#22392c;
+ --green:#6ede8a;--green-bg:#16281a;--danger:#e8817f}
+html[data-theme="dark"] .login input{background:#0e1b13;color:var(--ink)}
+html[data-theme="dark"] .err{background:#3a1c1c;border-color:#5e2b2b;color:#f0b4b4}
+html[data-theme="dark"] .tag-paid{border-color:rgba(110,222,138,.28)}
+html[data-theme="dark"] .icon-btn:hover{background:rgba(232,129,127,.12)}
+.theme-btn{cursor:pointer}
+html[data-theme="dark"] .theme-btn .sun{display:none}
+html[data-theme="light"] .theme-btn .moon{display:none}
 `;
 
 function shell(title: string, bodyHtml: string): string {
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem('mc-theme')||'light';document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){}})();</script>
 <title>${esc(title)}</title>
 <link rel="icon" href="/mindcare.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -397,6 +399,7 @@ async function submissionsPage(notice?: string): Promise<Response> {
     </div>
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="Search name, email, institute...">
+      <button class="btn theme-btn" id="themeBtn" type="button" aria-label="Toggle theme"><span class="sun">Dark</span><span class="moon">Light</span></button>
       <button class="btn" id="csv" type="button">CSV</button>
       <a class="btn" href="">Refresh</a>
       <form method="POST" action=""><input type="hidden" name="action" value="logout"><button class="btn" type="submit">Sign out</button></form>
@@ -433,6 +436,14 @@ async function submissionsPage(notice?: string): Promise<Response> {
         e.preventDefault();
       }
     });
+  });
+
+  var themeBtn = document.getElementById('themeBtn');
+  if (themeBtn) themeBtn.addEventListener('click', function(){
+    var d = document.documentElement;
+    var t = d.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    d.setAttribute('data-theme', t);
+    try { localStorage.setItem('mc-theme', t); } catch (e) {}
   });
 
   var btn = document.getElementById('csv');
