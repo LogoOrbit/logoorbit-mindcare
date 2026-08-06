@@ -2,13 +2,23 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/submissions", "destination": "/api/submissions" }
+    {
+      "source": "/zohoverify/verifyforzoho.html",
+      "destination": "/api/zohoverify"
+    },
+    {
+      "source": "/submissions",
+      "destination": "/api/submissions"
+    }
   ],
   "headers": [
     {
       "source": "/submissions",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
       ]
     }
   ]
