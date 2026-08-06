@@ -46,6 +46,24 @@
     return url.replace(/^https?:\/\//, "");
   }
 
+  var BROWSE = [
+    { t: "All Services", d: "Therapy, counseling and rehabilitation care under one roof.", h: "services/index.html" },
+    { t: "Our Team", d: "Meet the psychologists and therapists at MindCare.", h: "team/index.html" },
+    { t: "Anxiety Therapy in Karachi", d: "Treatment for anxiety, worry and panic.", h: "anxiety-therapy-karachi.html" },
+    { t: "Depression Treatment", d: "Evidence-based support for low mood and depression.", h: "depression-treatment-karachi.html" },
+    { t: "Child Psychologist", d: "Assessment and therapy for children and teens.", h: "child-psychologist-karachi.html" },
+    { t: "Workshops", d: "Live online sessions and masterclasses.", h: "workshops.html" },
+    { t: "Book a Free Consultation", d: "Talk to us about what you need, no cost.", h: "contact.html" }
+  ];
+
+  function browseHtml(heading) {
+    return '<div class="search-browse"><h2>' + heading + "</h2>" +
+      BROWSE.map(function (b) {
+        return '<a class="sb-item" href="' + b.h + '"><span class="sb-t">' + b.t +
+          '</span><span class="sb-d">' + b.d + "</span></a>";
+      }).join("") + "</div>";
+  }
+
   function render(query, results, page) {
     var total = results.length;
     var pages = Math.max(1, Math.ceil(total / PER_PAGE));
@@ -70,9 +88,11 @@
       .join("");
 
     if (!query) {
-      resultsEl.innerHTML = "";
+      resultsEl.innerHTML = browseHtml("Popular pages");
     } else if (!total) {
-      resultsEl.innerHTML = '<p class="search-empty">Try a different term, or browse <a href="services/index.html">Services</a>, <a href="articles.html">Articles</a> or <a href="workshops.html">Workshops</a>.</p>';
+      resultsEl.innerHTML =
+        '<p class="search-empty">Nothing matched “' + escapeHtml(query) + '”. Try a broader word like ' +
+        '“anxiety”, “therapy” or “children”.</p>' + browseHtml("Or browse these");
     }
 
     pagerEl.innerHTML = "";
