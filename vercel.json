@@ -7,6 +7,10 @@
       "destination": "/api/zohoverify"
     },
     {
+      "source": "/zohoverify/verifyforzoho",
+      "destination": "/api/zohoverify"
+    },
+    {
       "source": "/submissions",
       "destination": "/api/submissions"
     }
