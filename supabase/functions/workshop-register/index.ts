@@ -28,6 +28,16 @@ const EXT_BY_TYPE: Record<string, string> = {
   "application/pdf": "pdf",
 };
 
+// Email alert for every new registration. Sent through Resend. The whole step
+// is optional: with no RESEND_API_KEY set the registration still saves and the
+// visitor still gets a success message, the alert is just skipped.
+const RESEND_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
+const NOTIFY_FROM = Deno.env.get("NOTIFY_FROM") ??
+  "MindCare Website <onboarding@resend.dev>";
+const NOTIFY_TO = (Deno.env.get("NOTIFY_TO") ??
+  "shaistatariq2002@gmail.com,info@themindcareservices.com")
+  .split(",").map((a) => a.trim()).filter(Boolean);
+
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "content-type",
@@ -52,6 +62,72 @@ function decodeBase64(raw: string): Uint8Array {
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
   return bytes;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+/**
+ * Emails the team a copy of a new registration. Failures are logged and
+ * swallowed: a dropped alert must never cost us the registration itself, which
+ * is already safe in the database and visible at /submissions.
+ */
+async function notifyTeam(
+  record: Record<string, unknown>,
+  certificate: boolean,
+  receiptName: string,
+): Promise<void> {
+  if (!RESEND_KEY || !NOTIFY_TO.length) return;
+
+  const row = (label: string, value: unknown) => {
+    const v = text(value);
+    return v
+      ? `<tr><td style="padding:6px 12px 6px 0;color:#5b6b63;font-size:13px;white-space:nowrap">${label}</td>` +
+        `<td style="padding:6px 0;font-size:14px;color:#12241a">${escapeHtml(v)}</td></tr>`
+      : "";
+  };
+
+  const html = `<div style="font-family:Arial,Helvetica,sans-serif;max-width:560px">
+  <h2 style="margin:0 0 4px;font-size:18px;color:#12241a">New workshop registration</h2>
+  <p style="margin:0 0 16px;font-size:13px;color:#5b6b63">${escapeHtml(text(record.workshop))}</p>
+  <table style="border-collapse:collapse;width:100%">
+    ${row("Name", record.name)}
+    ${row("Institute", record.institute)}
+    ${row("Phone", record.phone)}
+    ${row("Email", record.email)}
+    ${row("Current education", record.education)}
+    ${row("Prior knowledge", record.prior_info)}
+    ${row("Expectations", record.expectations)}
+    ${row("Certificate", certificate ? `Yes — receipt: ${receiptName || "uploaded"}` : "No (free seat)")}
+  </table>
+  <p style="margin:18px 0 0;font-size:13px">
+    <a href="https://themindcareservices.com/submissions" style="color:#0F9AA8">Open all submissions</a>
+  </p>
+</div>`;
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: NOTIFY_FROM,
+        to: NOTIFY_TO,
+        // Replying to the alert writes straight back to the person who registered.
+        reply_to: text(record.email) || undefined,
+        subject: `New registration: ${text(record.name)}${certificate ? " (certificate)" : ""}`,
+        html,
+      }),
+    });
+    if (!res.ok) console.error("notification email failed", res.status, await res.text());
+  } catch (err) {
+    console.error("notification email threw", err);
+  }
 }
 
 Deno.serve(async (req: Request) => {
@@ -167,6 +243,8 @@ Deno.serve(async (req: Request) => {
     console.error("registration insert failed", insert.status, await insert.text());
     return json({ error: "We could not save your registration. Please try again in a moment." }, 502);
   }
+
+  await notifyTeam(record, certificate, text(receipt?.name));
 
   return json({ ok: true });
 });
