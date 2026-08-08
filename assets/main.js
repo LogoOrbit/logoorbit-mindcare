@@ -121,7 +121,7 @@
     "Evidence-based":"ثبوت پر مبنی","Real methods that work, explained in plain language.":"کارآمد اور مستند طریقے، آسان زبان میں سمجھائے گئے۔",
     "Care that reaches you":"آپ تک پہنچنے والی دیکھ بھال","Clinic, home visit or online, whatever fits your life.":"کلینک، گھر پر آمد یا آن لائن، جو آپ کی زندگی کے مطابق ہو۔",
     "Services for mind & body":"دماغ و جسم کی خدمات","Specialists on the team":"ٹیم کے ماہرین",
-    "6 days":"6 دن","Open Monday–Saturday":"پیر تا ہفتہ کھلا","Confidential care":"خفیہ دیکھ بھال",
+    "6 days":"6 دن","Open Monday-Saturday":"پیر تا ہفتہ کھلا","Confidential care":"خفیہ دیکھ بھال",
     "Ready when you are.":"جب آپ تیار ہوں۔",
     "A free, confidential consultation is the easiest way to begin. No pressure, no judgment.":"ایک مفت، خفیہ مشورہ شروعات کا آسان ترین طریقہ ہے۔ کوئی دباؤ نہیں، کوئی تنقید نہیں۔",
     // --- contact ---
@@ -130,7 +130,7 @@
     "Get in Touch":"رابطہ کریں","Send a Message":"پیغام بھیجیں",
     "Choose any way that feels comfortable: fill the form, call us, WhatsApp, or email directly. We typically respond within a few hours.":"جو طریقہ آسان لگے اپنائیں، فارم بھریں، کال کریں، واٹس ایپ کریں یا براہِ راست ای میل کریں۔ ہم عموماً چند گھنٹوں میں جواب دیتے ہیں۔",
     "Phone":"فون","Email":"ای میل","Location":"مقام","Website":"ویب سائٹ","Clinic Hours":"کلینک کے اوقات",
-    "Mon–Sat · 9am to 7pm":"پیر تا ہفتہ · صبح 9 تا شام 7","Karachi, Sindh, Pakistan":"کراچی، سندھ، پاکستان",
+    "Mon-Sat · 9am to 7pm":"پیر تا ہفتہ · صبح 9 تا شام 7","Karachi, Sindh, Pakistan":"کراچی، سندھ، پاکستان",
     "Consultation":"مشورہ","Appointment":"اپائنٹمنٹ","General Query":"عام سوال","Message Sent!":"پیغام بھیج دیا گیا!",
     "Full Name *":"پورا نام *","Phone *":"فون *","Email Address":"ای میل ایڈریس","Service Needed":"مطلوبہ خدمت",
     "Tell us a little about what's going on":"تھوڑا بتائیں کہ کیا ہو رہا ہے","Preferred Date":"پسندیدہ تاریخ",

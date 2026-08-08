@@ -230,7 +230,7 @@ SERVICES = [
          included=[("i-brain","Evidence-Based Methods","CBT, psychodynamic and motivational therapy, tailored to your needs."),
                    ("i-lock","Total Confidentiality","Everything you share stays private, always."),
                    ("i-heart-hands","Judgment-Free Space","Come as you are. No problem is too small to bring."),
-                   ("i-clock","Flexible Sessions","In-clinic appointments Mon–Sat, scheduled around you.")],
+                   ("i-clock","Flexible Sessions","In-clinic appointments Mon-Sat, scheduled around you.")],
          faqs=[("Do I need a diagnosis to start therapy?","No. You don't need a referral or a diagnosis to begin. Many people come simply because something feels off, and that's reason enough. We'll figure out the rest together."),
                ("How long does psychotherapy take?","It varies from person to person. Some concerns ease in a handful of sessions; others benefit from longer support. Your therapist will discuss a realistic plan with you and review it as you progress."),
                ("Is what I share really confidential?","Yes. Your sessions are 100% confidential and never disclosed to anyone. Confidentiality is central to how MindCare works.")]),
@@ -238,7 +238,7 @@ SERVICES = [
          title="Family & Relationship Counseling in Karachi | MindCare Services®",
          desc="Family and couples counseling in Karachi to rebuild communication, resolve conflict and navigate change together. Guided, confidential sessions. Book a free consultation.",
          lede="Guided sessions that help families and couples rebuild communication, resolve recurring conflict, and navigate big life transitions together, with a neutral, caring professional in the room.",
-         helps=["Communication breakdowns and repeated arguments", "Parent–child and teenager conflict",
+         helps=["Communication breakdowns and repeated arguments", "Parent-child and teenager conflict",
                 "Marital and relationship strain", "Adjusting to major life changes together",
                 "Blended-family and in-law dynamics", "Grief and loss within the family"],
          approach=["Most family conflict isn't about who's right. It's about patterns that keep repeating. Our counselors help everyone feel heard, then gently surface those patterns so the whole family can change them together.",
@@ -446,7 +446,7 @@ def service_page(s):
         <ul class="aside-list">
           <li>{icon(prefix,'i-shield')} Evidence-based care</li>
           <li>{icon(prefix,'i-lock')} 100% confidential</li>
-          <li>{icon(prefix,'i-clock')} Mon–Sat, 9am–7pm</li>
+          <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm</li>
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
         </ul>
         <div class="aside-actions">
@@ -548,22 +548,22 @@ TEAM = [
          headline="Associate Psychologist | Counsellor | Mental Health Care Provider | Behavior Therapist",
          bio=["Shaista Tariq is an Associate Psychologist, Counsellor, Behavior Therapist and Mental Health Care Provider, and the founder of MindCare Services®. She is personally a verified Member of the Pakistan Psychological Association (PPA).",
               "She founded MindCare on a single belief: no one should have to struggle alone, or feel that what they're going through isn't \"serious enough\" to ask for help. Under her leadership, MindCare has grown into a multidisciplinary team offering holistic, evidence-based care across Karachi.",
-              "Alongside MindCare, Shaista works as a Behavioral Therapist and Additional Needs Coordinator at VIVI – The Bear School, supporting children with additional needs. She works with adults and adolescents using approaches including Cognitive Behavioral Therapy (CBT), Applied Behavior Analysis (ABA) and motivational therapy, and leads awareness sessions and trainings for workplaces, schools and institutions.",
+              "Alongside MindCare, Shaista works as a Behavioral Therapist and Additional Needs Coordinator at VIVI - The Bear School, supporting children with additional needs. She works with adults and adolescents using approaches including Cognitive Behavioral Therapy (CBT), Applied Behavior Analysis (ABA) and motivational therapy, and leads awareness sessions and trainings for workplaces, schools and institutions.",
               "She also writes on mental health, workplaces and the human side of care. You can <a href=\"../articles.html\">read her articles here</a>."],
          focus=["Anxiety, depression and stress", "Behavior therapy &amp; child mental health", "Cognitive Behavioral Therapy (CBT)",
                 "Counselling for individuals and families", "Mental health education &amp; awareness training"],
          knows=["Psychology", "Counselling", "Cognitive Behavioral Therapy", "Applied Behavior Analysis", "Behavioral Therapy", "Child Mental Health", "Mental Health"],
          experience=[
-             {"role": "Founder", "org": "MindCare Services®", "date": "Aug 2024 – Present"},
-             {"role": "Additional Needs Coordinator", "org": "VIVI – The Bear School", "date": "Nov 2025 – Present"},
-             {"role": "Behavioral Therapist", "org": "VIVI – The Bear School", "date": "Dec 2024 – Present"},
-             {"role": "Member", "org": "Pakistan Psychological Association", "date": "Mar 2026 – Present"},
-             {"role": "Child Mental Health Care Provider", "org": "Core Care Clinic", "date": "Feb 2024 – Aug 2024"},
-             {"role": "Management Sub-coordinator", "org": "Core Care Clinic", "date": "Feb 2024 – Aug 2024"},
+             {"role": "Founder", "org": "MindCare Services®", "date": "Aug 2024 - Present"},
+             {"role": "Additional Needs Coordinator", "org": "VIVI - The Bear School", "date": "Nov 2025 - Present"},
+             {"role": "Behavioral Therapist", "org": "VIVI - The Bear School", "date": "Dec 2024 - Present"},
+             {"role": "Member", "org": "Pakistan Psychological Association", "date": "Mar 2026 - Present"},
+             {"role": "Child Mental Health Care Provider", "org": "Core Care Clinic", "date": "Feb 2024 - Aug 2024"},
+             {"role": "Management Sub-coordinator", "org": "Core Care Clinic", "date": "Feb 2024 - Aug 2024"},
          ],
          education=[
              {"title": "ABA Certification, Psychology", "org": "American Council of Training & Development", "date": "2024"},
-             {"title": "Bachelor of Psychology (Social Sciences)", "org": "Jinnah University for Women", "date": "2020 – 2024"},
+             {"title": "Bachelor of Psychology (Social Sciences)", "org": "Jinnah University for Women", "date": "2020 - 2024"},
          ],
          skills=["Business Ownership", "Early-Stage Ventures", "Start-up Leadership", "Cognitive Behavioral Therapy (CBT)",
                  "Applied Behavior Analysis (ABA)", "Behavioral Therapy", "Counselling", "Child Mental Health", "Mental Health Awareness"],
@@ -700,7 +700,7 @@ def team_page(m):
         <h3>Book with {m['name'].split()[0]}</h3>
         <p>Reach out for a free, confidential consultation. We'll help you find the right time and the right support.</p>
         <ul class="aside-list">
-          <li>{icon(prefix,'i-clock')} Mon–Sat, 9am–7pm</li>
+          <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm</li>
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
           <li>{icon(prefix,'i-lock')} 100% confidential</li>
         </ul>
@@ -1008,7 +1008,7 @@ def seo_page(t):
         <ul class="aside-list">
           <li>{icon(prefix,'i-shield')} Evidence-based care</li>
           <li>{icon(prefix,'i-lock')} 100% confidential</li>
-          <li>{icon(prefix,'i-clock')} Mon–Sat, 9am–7pm</li>
+          <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm</li>
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
         </ul>
         <div class="aside-actions">
@@ -1193,7 +1193,7 @@ ARTICLES = [
          blurb="Burnout is common, but we rarely ask why. An honest look at the gap between the professionalism expected of care workers and the reality of how that work is paid.",
          desc="Shaista Tariq on underpaid psychology roles in Pakistan: what Sindh's minimum wage law actually requires of clinics, hospitals and NGOs, and why underpayment fuels burnout.",
          takeaways=[
-             "Sindh's notified minimum wage for a skilled worker in 2025–26 is around PKR 49,628 a month.",
+             "Sindh's notified minimum wage for a skilled worker in 2025-26 is around PKR 49,628 a month.",
              "Private hospitals, clinics and NGOs count as commercial establishments and are covered.",
              "Labelling a formal role an &ldquo;internship&rdquo; does not remove the legal minimum.",
              "Underpaying trained care workers is a direct route to burnout and attrition.",
@@ -1202,14 +1202,14 @@ ARTICLES = [
              ("lead", "Burnout during work is a common thing, but we have to ask why and how it happens. I recently saw a post from a mental health firm offering only PKR 25,000 for a psychologist with two years of experience in addiction care. Like, seriously? Is it even worth wasting our money on degrees?"),
              ("p", "As a psychology learner, this hurts. I assume this happens in other fields as well, but based on this example, it reminds me of one of my own experiences. For my first pay, I worked 12-hour shifts for only PKR 25,000. I have no personal regrets, because it was good learning and I wasn't struggling financially. But what about those who really need a job to support themselves or their families?"),
              ("h2", "What the government says"),
-             ("p", "Now, take a look at what the government says about this. According to the latest notification for the 2025–2026 fiscal year, the minimum wage for a skilled worker in Sindh has been set at approximately <strong>PKR 49,628 per month</strong>."),
+             ("p", "Now, take a look at what the government says about this. According to the latest notification for the 2025-2026 fiscal year, the minimum wage for a skilled worker in Sindh has been set at approximately <strong>PKR 49,628 per month</strong>."),
              ("p", "Moreover, the law mandates that no industrial or commercial establishment, which includes private hospitals, clinics and NGOs, can pay a worker less than the notified rate for their skill category."),
              ("h2", "Which specific laws state this?"),
              ("p", "There are three main legal instruments that define and protect your initial salary limits:"),
              ("kv", [
                  ("Sindh Minimum Wages Act, 2015", "This is the primary law. Section 6 gives the government the power to declare minimum wage rates that employers must follow."),
                  ("Minimum Wages Ordinance, 1961", "This defines a &ldquo;worker&rdquo; as anyone performing skilled, unskilled, intellectual or clerical work."),
-                 ("The Annual Minimum Wage Notification (2025–26)", "Issued by the Labour &amp; Human Resources Department, Government of Sindh. This explicitly lists the PKR 49,628 rate for skilled professionals."),
+                 ("The Annual Minimum Wage Notification (2025-26)", "Issued by the Labour &amp; Human Resources Department, Government of Sindh. This explicitly lists the PKR 49,628 rate for skilled professionals."),
              ]),
              ("note", "Important note on &ldquo;establishments&rdquo;", "By law, specifically the Sindh Terms of Employment Act, 2015, these regulations apply to all commercial establishments. While some small private practices might try to bypass this by calling a role an &ldquo;internship&rdquo;, any formal employment contract for a BS Psychology graduate must legally honour the skilled-worker minimum rate."),
              ("h2", "A call to action for students"),
@@ -1248,14 +1248,14 @@ ARTICLES = [
          blurb="The psychological and human factors behind disengagement, burnout and turnover at work, and what leaders can do to genuinely support their people.",
          desc="Shaista Tariq on why productivity drops and people leave jobs: focus cycles, individual working rhythms, rigid schedules, and the shared responsibility of managers and employees.",
          takeaways=[
-             "Of 6–8 active hours a day, only about 3–5 are genuinely productive.",
-             "Deep focus lasts 60–90 minutes; breaks are essential, not a luxury.",
+             "Of 6-8 active hours a day, only about 3-5 are genuinely productive.",
+             "Deep focus lasts 60-90 minutes; breaks are essential, not a luxury.",
              "Rigid schedules assume time spent equals work done.",
              "Responsibility for low productivity is shared by managers and employees.",
          ],
          body=[
              ("lead", "Over time, I've noticed a recurring pattern behind low productivity and the gradual decline of many businesses. While there are multiple reasons, one factor stands out clearly from my personal experience: the way people are hired and managed."),
-             ("p", "Hiring is often treated as a checklist process: fill the position, set the hours, assign the tasks. But productivity doesn't work that way. The human brain may stay active for 6–8 hours a day, yet only about 3–5 hours are genuinely productive. Deep focus usually lasts 60–90 minutes, after which efficiency drops. This is not laziness; it's biology. Regular breaks are not a luxury; they are essential for maintaining mental clarity and long-term performance."),
+             ("p", "Hiring is often treated as a checklist process: fill the position, set the hours, assign the tasks. But productivity doesn't work that way. The human brain may stay active for 6-8 hours a day, yet only about 3-5 hours are genuinely productive. Deep focus usually lasts 60-90 minutes, after which efficiency drops. This is not laziness; it's biology. Regular breaks are not a luxury; they are essential for maintaining mental clarity and long-term performance."),
              ("h2", "Everyone works to a different rhythm"),
              ("p", "What I've also observed is that everyone has a different working capacity and rhythm. Some people perform best in the morning, others later in the day. Many individuals naturally develop an entrepreneurial mindset, and they know how and when they work best. Unfortunately, this potential often goes unnoticed. Instead of nurturing self-reliant routines, many organisations emphasise rigid schedules and fixed working hours, assuming that time spent equals work done."),
              ("h2", "So who is responsible?"),
@@ -1643,7 +1643,11 @@ MF_CSS = """
 .mf-fact{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}
 .mf-fact strong{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}
 .mf-fact span{font-size:1.02rem;font-weight:600;color:var(--dark)}
-.mf-day{position:relative;padding-left:0}
+.mf-day{position:relative;padding-left:0;display:flex;flex-direction:column}
+.mf-day h3{min-height:2.6em}
+.mf-day>p{flex:1 0 auto}
+.mf-day .aside-list{margin-bottom:0}
+@media(max-width:760px){.mf-day h3{min-height:0}.mf-day>p{flex:0 1 auto}}
 .mf-day .mf-num{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;box-sizing:border-box;width:46px;height:46px;min-width:46px;aspect-ratio:1;border-radius:50%;
  font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:#fff;margin-bottom:12px}
 .mf-day:nth-child(1) .mf-num{background:var(--teal)}
@@ -2547,10 +2551,10 @@ def workshops_page():
 
 <section id="masterclass">
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">Certification Series · Karachi</span><h2 class="section-title">Applied Psychology Masterclass</h2><p class="section-sub">Five days. Five clinical skill sets. One certification: our in-person training for students and helping professionals, delivered 27–31 July 2026. Registration for this run is closed, and we do re-run it.</p></div>
+    <div class="section-header centered fade-up"><span class="section-tag">Certification Series · Karachi</span><h2 class="section-title">Applied Psychology Masterclass</h2><p class="section-sub">Five days. Five clinical skill sets. One certification: our in-person training for students and helping professionals, delivered 27-31 July 2026. Registration for this run is closed, and we do re-run it.</p></div>
     <div class="split-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:36px;align-items:center">
       <div class="fade-up">
-        <span class="ws-shot" style="box-shadow:0 18px 48px rgba(0,0,0,.18);filter:saturate(.78)"><img src="assets/workshops/00-main-poster.png" alt="Applied Psychology Masterclass, 5-day certification series poster, 27–31 July 2026. This masterclass has been completed."></span>
+        <span class="ws-shot" style="box-shadow:0 18px 48px rgba(0,0,0,.18);filter:saturate(.78)"><img src="assets/workshops/00-main-poster.png" alt="Applied Psychology Masterclass, 5-day certification series poster, 27-31 July 2026. This masterclass has been completed."></span>
       </div>
       <div class="fade-up">
         <span class="ws-done-tag">{icon(prefix,'i-check','15')} Completed · Registration Closed</span>
@@ -2658,7 +2662,7 @@ def confirmation_page():
     <div class="section-header centered fade-up"><span class="section-tag">What Happens Next</span><h2 class="section-title">Here's what to expect</h2></div>
     <div class="feature-grid">
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-phone')}</div><h3>1. We'll be in touch</h3><p>Our coordinator will reach out by phone or WhatsApp to confirm your appointment and answer any questions.</p></div>
-      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clock')}</div><h3>2. Confirm your time</h3><p>We'll lock in a slot that suits you. Sessions run Mon–Sat, 9am–7pm, in-clinic in Karachi.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clock')}</div><h3>2. Confirm your time</h3><p>We'll lock in a slot that suits you. Sessions run Mon-Sat, 9am-7pm, in-clinic in Karachi.</p></div>
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>3. Your first session</h3><p>A relaxed, judgment-free conversation. Nothing to prepare, just come as you are.</p></div>
     </div>
     <div style="text-align:center;margin-top:36px">

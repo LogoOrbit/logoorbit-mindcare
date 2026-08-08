@@ -101,7 +101,7 @@ async function notifyTeam(
     ${row("Current education", record.education)}
     ${row("Prior knowledge", record.prior_info)}
     ${row("Expectations", record.expectations)}
-    ${row("Certificate", certificate ? `Yes — receipt: ${receiptName || "uploaded"}` : "No (free seat)")}
+    ${row("Certificate", certificate ? `Yes - receipt: ${receiptName || "uploaded"}` : "No (free seat)")}
   </table>
   <p style="margin:18px 0 0;font-size:13px">
     <a href="https://themindcareservices.com/submissions" style="color:#0F9AA8">Open all submissions</a>
