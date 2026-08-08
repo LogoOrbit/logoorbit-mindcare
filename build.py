@@ -1637,9 +1637,9 @@ MF_FAQS = [
 
 # Styles shared by the Montessori workshop page and its registration page.
 MF_CSS = """
-.mf-hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:40px;align-items:center}
+.mf-hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:40px;align-items:center}
 .mf-poster{width:100%;height:auto;border-radius:20px;box-shadow:0 18px 46px rgba(30,45,40,.16);border:1px solid var(--border);background:#fff}
-.mf-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:6px}
+.mf-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:16px;margin-top:6px}
 .mf-fact{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}
 .mf-fact strong{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}
 .mf-fact span{font-size:1.02rem;font-weight:600;color:var(--dark)}
@@ -1816,7 +1816,7 @@ TM_FAQS = [
 
 # Styles shared by the workshop page and the standalone registration page.
 TM_CSS = """
-.tm-hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:40px;align-items:center}
+.tm-hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:40px;align-items:center}
 .tm-poster{width:100%;height:auto;border-radius:20px;box-shadow:0 20px 54px rgba(6,43,49,.28)}
 .ws-shot{position:relative;display:block;border-radius:18px;overflow:hidden;line-height:0}
 .ws-shot img{display:block;width:100%;height:auto}
@@ -1828,7 +1828,7 @@ TM_CSS = """
  color:#fff;font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:700;letter-spacing:.14em;
  text-transform:uppercase;text-align:center;line-height:1.3}
 @media(max-width:520px){.ws-shot::after{font-size:.66rem;letter-spacing:.1em}}
-.tm-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:6px}
+.tm-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:16px;margin-top:6px}
 .tm-fact{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}
 .tm-fact strong{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}
 .tm-fact span{font-size:1.02rem;font-weight:600;color:var(--dark)}
@@ -1897,7 +1897,7 @@ REG_FORM_CSS = """
 .tm-bank{background:var(--teal-light);border:1px solid var(--border);border-radius:16px;padding:22px 24px;margin:4px 0 18px}
 .tm-bank h4{font-size:.98rem;margin:0 0 4px}
 .tm-bank>p{font-size:.86rem;color:var(--gray);margin:0 0 16px}
-.tm-bank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:0}
+.tm-bank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:14px;margin:0}
 .tm-bank-grid dt{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--teal-deep);font-weight:700;margin-bottom:3px}
 .tm-bank-grid dd{margin:0;font-size:.95rem;font-weight:600;color:var(--dark);display:flex;align-items:center;gap:8px;flex-wrap:wrap;overflow-wrap:anywhere}
 .tm-copy{border:1px solid var(--border);background:var(--card);color:var(--teal-deep);border-radius:7px;padding:3px 9px;
@@ -2427,6 +2427,8 @@ def workshops_page():
         {"@type": "Event", "name": "Applied Psychology Masterclass: 5-Day Certification Series",
          "startDate": "2026-07-27", "endDate": "2026-07-31",
          "eventStatus": "https://schema.org/EventScheduled",
+         "offers": {"@type": "Offer", "availability": "https://schema.org/SoldOut",
+                    "url": f"{BASE}/workshops.html#masterclass"},
          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
          "image": f"{BASE}/assets/workshops/00-main-poster.png",
          "description": "A 5-day applied psychology certification masterclass covering case conceptualization, CBT interventions, trauma-informed care, ethics & crisis management, and practice building. Includes certificate and toolkit manual.",
@@ -2506,7 +2508,7 @@ def workshops_page():
 <section>
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">New · Registration Open</span><h2 class="section-title">Our next workshop is three days on the child</h2></div>
-    <div class="split-grid fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:36px;align-items:center">
+    <div class="split-grid fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:36px;align-items:center">
       <div>
         <a href="{prefix}{MF_SLUG}" aria-label="Mind in the Making, Montessori Fundamentals Certificate workshop details"><img src="{prefix}{MF_POSTER}" alt="{MF_ALT}" width="900" height="1200" class="mf-poster"></a>
       </div>
@@ -2545,15 +2547,16 @@ def workshops_page():
 
 <section id="masterclass">
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">Certification Series · Karachi</span><h2 class="section-title">Applied Psychology Masterclass</h2><p class="section-sub">Five days. Five clinical skill sets. One certification: our in-person training for students and helping professionals, first run 27–31 July 2026.</p></div>
-    <div class="split-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:center">
+    <div class="section-header centered fade-up"><span class="section-tag">Certification Series · Karachi</span><h2 class="section-title">Applied Psychology Masterclass</h2><p class="section-sub">Five days. Five clinical skill sets. One certification: our in-person training for students and helping professionals, delivered 27–31 July 2026. Registration for this run is closed, and we do re-run it.</p></div>
+    <div class="split-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:36px;align-items:center">
       <div class="fade-up">
-        <img src="assets/workshops/00-main-poster.png" alt="Applied Psychology Masterclass, 5-day certification series poster, 27–31 July 2026" style="width:100%;height:auto;border-radius:18px;box-shadow:0 18px 48px rgba(0,0,0,.18)">
+        <span class="ws-shot" style="box-shadow:0 18px 48px rgba(0,0,0,.18);filter:saturate(.78)"><img src="assets/workshops/00-main-poster.png" alt="Applied Psychology Masterclass, 5-day certification series poster, 27–31 July 2026. This masterclass has been completed."></span>
       </div>
       <div class="fade-up">
+        <span class="ws-done-tag">{icon(prefix,'i-check','15')} Completed · Registration Closed</span>
         <span class="section-tag">Why this masterclass</span>
         <h2 class="section-title">Walk out session-ready, not just certified</h2>
-        <p style="margin:14px 0 18px">Most trainings end with a certificate. This one ends with a working clinical toolkit: printed templates, worksheets and scripts you'll actually use with clients, plus the confidence to apply them.</p>
+        <p style="margin:14px 0 18px">Most trainings end with a certificate. This one ended with a working clinical toolkit: printed templates, worksheets and scripts participants actually use with clients, plus the confidence to apply them. This run has been delivered; the full outline is kept here as the record.</p>
         <ul class="aside-list">
 {li(prefix,'Certificate of completion for every participant')}
 {li(prefix,'Complete practitioner toolkit &amp; manual to keep')}
@@ -2561,7 +2564,7 @@ def workshops_page():
 {li(prefix,'Photocopy-ready worksheets for your future clients')}
 {li(prefix,'Taught by MindCare&#39;s clinical team in Karachi')}
         </ul>
-        <div style="margin-top:24px"><a href="{WS_WA}" target="_blank" rel="noopener" class="btn-primary">{icon(prefix,'i-wa','18')} Reserve Your Seat</a></div>
+        <div style="margin-top:24px"><a href="{WS_WA}" target="_blank" rel="noopener" class="btn-secondary">{icon(prefix,'i-wa','18')} Tell me when it runs again</a></div>
       </div>
     </div>
   </div>
@@ -2579,7 +2582,7 @@ def workshops_page():
 <section id="past">
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">Already Delivered</span><h2 class="section-title">Workshops we've already run</h2><p class="section-sub">Kept here as a record of what we teach. Registration for these is closed, but we do re-run the popular ones.</p></div>
-    <div class="split-grid fade-up ws-past" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:36px;align-items:center">
+    <div class="split-grid fade-up ws-past" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:36px;align-items:center">
       <div>
         <a href="{prefix}{TM_SLUG}" class="ws-shot" aria-label="Telepathy and Meditation workshop details, completed"><img src="{prefix}{TM_POSTER}" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster. This workshop has been completed." width="900" height="1200"></a>
       </div>
