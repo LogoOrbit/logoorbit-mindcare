@@ -31,17 +31,26 @@ const EXT_BY_TYPE: Record<string, string> = {
 // Email alert for every new registration. Sent through Resend. The whole step
 // is optional: with no RESEND_API_KEY set the registration still saves and the
 // visitor still gets a success message, the alert is just skipped.
-const RESEND_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
-const NOTIFY_FROM = Deno.env.get("NOTIFY_FROM") ??
+// Read with `|| fallback` rather than `??`: a secret that exists but is blank
+// is exactly how this silently stopped sending, and an empty string is never a
+// usable key or sender.
+const env = (name: string) => (Deno.env.get(name) ?? "").trim();
+const RESEND_KEY = env("RESEND_API_KEY");
+const NOTIFY_FROM = env("NOTIFY_FROM") ||
   "MindCare Website <onboarding@resend.dev>";
 // Every registration is emailed here. shaistatariq2002@gmail.com is always on
 // the list, so a stray NOTIFY_TO secret can never silence the alerts; the
 // variable only adds extra recipients.
+//
+// Keep this list to the Resend account owner while NOTIFY_FROM is the shared
+// onboarding@resend.dev sender: Resend rejects the entire request (403) if any
+// recipient is someone else, which is what was silently dropping every alert.
+// Verify themindcareservices.com in Resend, point NOTIFY_FROM at it, and then
+// extra addresses such as info@themindcareservices.com can go in NOTIFY_TO.
 const ALWAYS_NOTIFY = "shaistatariq2002@gmail.com";
 const NOTIFY_TO = [...new Set([
   ALWAYS_NOTIFY,
-  ...(Deno.env.get("NOTIFY_TO") ?? "info@themindcareservices.com")
-    .split(",").map((a) => a.trim()).filter(Boolean),
+  ...env("NOTIFY_TO").split(",").map((a) => a.trim()).filter(Boolean),
 ])];
 
 const CORS = {
@@ -86,7 +95,10 @@ async function notifyTeam(
   certificate: boolean,
   receiptName: string,
 ): Promise<void> {
-  if (!RESEND_KEY || !NOTIFY_TO.length) return;
+  if (!RESEND_KEY || !NOTIFY_TO.length) {
+    console.error("notification skipped", { hasKey: !!RESEND_KEY, recipients: NOTIFY_TO.length });
+    return;
+  }
 
   const row = (label: string, value: unknown) => {
     const v = text(value);
@@ -131,6 +143,7 @@ async function notifyTeam(
       }),
     });
     if (!res.ok) console.error("notification email failed", res.status, await res.text());
+    else console.log("notification email sent", NOTIFY_TO.join(","));
   } catch (err) {
     console.error("notification email threw", err);
   }
