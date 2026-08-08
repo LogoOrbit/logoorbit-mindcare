@@ -2378,11 +2378,11 @@ def montessori_register_page():
           <div class="tm-field"><label for="mf-email">Email <span class="tm-req">*</span></label><input type="email" id="mf-email" placeholder="your@email.com" autocomplete="email"></div>
         </div>
         <div class="tm-field">
-          <label for="mf-prior">Any Montessori or child development background?</label>
+          <label for="mf-prior">Prior knowledge</label>
           <textarea id="mf-prior" placeholder="Training, teaching experience, or the ages of your own children. It is completely fine to write none."></textarea>
         </div>
         <div class="tm-field">
-          <label for="mf-expect">What would you like to walk away with?</label>
+          <label for="mf-expect">Expectations</label>
           <textarea id="mf-expect" placeholder="A sentence or two is plenty, and it genuinely shapes how we run day three."></textarea>
         </div>
 
