@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f4fbfb">
+<meta name="color-scheme" content="light">
 <script>
 /* no-flash theme + language (white default; Urdu auto for Urdu devices) */
 (function(){try{
@@ -46,7 +47,7 @@
 {"@context":"https://schema.org","@type":"SiteNavigationElement","name":["Services","About","Team","Guides","Articles","Workshops","Contact"],"url":["https://themindcareservices.com/services/","https://themindcareservices.com/about","https://themindcareservices.com/team/","https://themindcareservices.com/guides.html","https://themindcareservices.com/articles.html","https://themindcareservices.com/workshops.html","https://themindcareservices.com/contact.html"]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Course","name":"Telepathy & Meditation: The Art of Deep Attunement","url":"https://themindcareservices.com/telepathy-meditation-workshop","image":"https://themindcareservices.com/assets/workshops/telepathy-meditation-og.jpg","description":"A free two-evening live online workshop from MindCare Services on meditation, limbic resonance and empathic attunement: the science and practice behind feeling genuinely connected to another person. An official certificate of participation is optional, a one-time PKR 1,000, emailed within one business day.","inLanguage":["en","ur"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"PKR","category":"Free","availability":"https://schema.org/InStock","url":"https://themindcareservices.com/telepathy-meditation-register"},"provider":{"@type":"Organization","name":"MindCare Services","url":"https://themindcareservices.com/"},"hasCourseInstance":{"@type":"CourseInstance","courseMode":"Online","courseWorkload":"PT4H","location":{"@type":"VirtualLocation","url":"https://themindcareservices.com/telepathy-meditation-workshop"}}}
+{"@context":"https://schema.org","@type":"Course","name":"Mind in the Making: Montessori Fundamentals Certificate","url":"https://themindcareservices.com/montessori-fundamentals-workshop","image":"https://themindcareservices.com/assets/workshops/montessori-fundamentals-og.jpg","description":"A three-day Montessori fundamentals certificate workshop from MindCare Services in Karachi for parents, early-years teachers and students. Day one decodes the child's perspective, day two covers early childhood psychology, and day three is hands-on with the practical life area of the Montessori curriculum. Certificate of Completion included.","inLanguage":["en","ur"],"teaches":["Decoding the Child's Perspective","Early Childhood Psychology","The Practical Life Area of the Montessori Curriculum"],"offers":{"@type":"Offer","availability":"https://schema.org/InStock","url":"https://themindcareservices.com/montessori-fundamentals-register"},"provider":{"@type":"Organization","name":"MindCare Services","url":"https://themindcareservices.com/"},"hasCourseInstance":{"@type":"CourseInstance","courseMode":"Onsite","courseWorkload":"P3D","location":{"@type":"Place","name":"MindCare Services","address":{"@type":"PostalAddress","addressLocality":"Karachi","addressCountry":"PK"}}}}
 </script>
 
 <style>
@@ -57,6 +58,7 @@
   --bg:#f4fbfb;--surface:#e7f5f4;--card:#ffffff;--ink:#1b2822;--muted:#44544b;
   --border:#d4e9e7;--shadow:0 8px 30px rgba(30,45,40,.08);--radius:20px;
   --hero-a:#e8f6f4;--hero-b:#e3f4f2;--hero-c:#f1fbf8;
+  color-scheme: light;
 }
 html[data-theme="dark"]{
   --teal:#3fd0dc;--teal-dark:#57dbe6;--teal-deep:#8fe8f0;--teal-light:#12312f;
@@ -65,10 +67,14 @@ html[data-theme="dark"]{
   --bg:#0e1b13;--surface:#12241a;--card:#12241a;--ink:#eaf4ee;--muted:#a7bcb0;
   --border:#234034;--shadow:0 8px 30px rgba(0,0,0,.35);
   --hero-a:#0e1b13;--hero-b:#12241a;--hero-c:#0e1b13;
+  color-scheme: dark;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;animation:pageIn .5s ease both}
+/* `backwards`, never `both`: a retained fill leaves a transform on <body>,
+   which makes it the containing block for every position:fixed descendant
+   (the nav, the floating buttons, the workshop-request dialog). */
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;animation:pageIn .5s ease backwards}
 @keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 body.page-exit{opacity:0;transform:translateY(-8px);transition:opacity .28s ease,transform .28s ease}
 @media (prefers-reduced-motion: reduce){body{animation:none}body.page-exit{transition:none;opacity:1;transform:none}}
@@ -371,33 +377,109 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 .news-ctas{display:flex;flex-direction:column;gap:10px;white-space:nowrap}
 .news-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .news-meta span{font-size:.78rem;font-weight:600;color:var(--teal-deep);background:var(--teal-light);border:1px solid var(--border);padding:4px 11px;border-radius:999px}
-.news-foot{text-align:center;margin-top:14px;font-size:.9rem;color:var(--muted)}
+.news-foot{text-align:center;margin-top:18px;font-size:.9rem;color:var(--muted)}
+.news-foot p{margin:0}
 .news-foot a{font-weight:600;color:var(--teal-deep)}
+.news-foot-note{margin-top:8px !important;font-size:.85rem;max-width:520px;margin-inline:auto}
+.btn-request{margin-top:14px;background:var(--card);color:var(--teal-deep);border:1.5px dashed var(--teal);
+ letter-spacing:.09em;text-transform:uppercase;font-size:.82rem;font-weight:700}
+.btn-request:hover{background:var(--teal-light);border-style:solid;transform:translateY(-2px)}
 @media(max-width:860px){.news-card{grid-template-columns:1fr;text-align:center}.news-card img{margin:0 auto;width:190px}.news-ctas{flex-direction:row;justify-content:center;flex-wrap:wrap;white-space:normal}.news-meta{justify-content:center}}
+
+/* REQUEST A WORKSHOP: topic picker that hands off to WhatsApp */
+.rw-back{position:fixed;inset:0;z-index:2000;background:rgba(12,28,22,.55);backdrop-filter:blur(3px);
+ display:flex;align-items:center;justify-content:center;padding:20px}
+.rw-back[hidden]{display:none}
+.rw-modal{background:var(--card);color:var(--ink);border:1px solid var(--border);border-radius:22px;
+ width:min(600px,100%);max-height:88vh;overflow-y:auto;padding:28px;box-shadow:0 24px 70px rgba(0,0,0,.28);
+ animation:rwIn .22s ease both}
+@keyframes rwIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.rw-modal{animation:none}}
+.rw-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:6px}
+.rw-head h2{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;line-height:1.2;margin:0}
+html[lang="ur"] .rw-head h2{font-family:'Noto Naskh Arabic',serif}
+.rw-close{background:none;border:1px solid var(--border);border-radius:50%;width:34px;height:34px;flex:none;
+ cursor:pointer;color:var(--muted);font-size:1.2rem;line-height:1}
+.rw-close:hover{border-color:var(--teal);color:var(--teal-dark)}
+.rw-sub{font-size:.92rem;color:var(--muted);margin:0 0 18px}
+.rw-topics{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px}
+.rw-topics label{cursor:pointer}
+.rw-topics input{position:absolute;opacity:0;pointer-events:none}
+.rw-topics span{display:inline-block;border:1.5px solid var(--border);background:var(--bg);border-radius:999px;
+ padding:9px 16px;font-size:.86rem;font-weight:600;transition:all .18s}
+.rw-topics label:hover span{border-color:var(--teal)}
+.rw-topics input:checked + span{background:var(--teal-btn);border-color:var(--teal-btn);color:#fff}
+.rw-topics input:focus-visible + span{outline:3px solid var(--teal-dark);outline-offset:2px}
+.rw-other{margin-bottom:16px}
+.rw-other[hidden]{display:none}
+.rw-other label{display:block;font-size:.8rem;font-weight:600;margin-bottom:6px}
+.rw-other input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:12px;
+ font-family:inherit;font-size:.95rem;background:var(--bg);color:var(--ink)}
+.rw-other input:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(43,189,201,.15)}
+.rw-err{background:#fdecec;border:1px solid #f3c4c4;color:#a12a2a;border-radius:10px;padding:10px 13px;
+ font-size:.85rem;margin-bottom:14px}
+.rw-err[hidden]{display:none}
+html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f0b4b4}
+.rw-actions{display:flex;gap:10px;flex-wrap:wrap}
+.rw-actions .btn{flex:1;min-width:170px}
+.rw-note{font-size:.8rem;color:var(--muted);margin:14px 0 0;text-align:center}
+@media(max-width:520px){.rw-modal{padding:22px 18px}.rw-head h2{font-size:1.4rem}}
 </style>
-<section class="news-band" aria-label="News: upcoming online workshop">
+<section class="news-band" aria-label="News: upcoming workshop">
   <div class="wrap">
     <div class="news-card">
-      <a href="telepathy-meditation-workshop" aria-label="Telepathy and Meditation online workshop details"><img src="assets/workshops/telepathy-meditation-poster.svg" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster" width="900" height="1200" loading="lazy"></a>
+      <a href="montessori-fundamentals-workshop" aria-label="Mind in the Making, Montessori Fundamentals Certificate workshop details"><img src="assets/workshops/montessori-fundamentals-poster.svg" alt="Mind in the Making, the Montessori Fundamentals Certificate: a three-day workshop by MindCare Services®" width="900" height="1200" loading="lazy"></a>
       <div>
-        <span class="news-tag"><span class="dot" aria-hidden="true"></span><span data-i18n="news.tag">News · Free Online Workshop</span></span>
-        <h3 data-i18n-html="news.title">Telepathy &amp; <em>Meditation</em>: The Art of Deep Attunement</h3>
-        <p data-i18n="news.sub">The art of deep attunement: two live evenings on Zoom, completely free. Guided meditation, the real science of empathic connection, and paired practice in breakout rooms. Registration is open, and seats are capped.</p>
+        <span class="news-tag"><span class="dot" aria-hidden="true"></span><span data-i18n="news.tag">New · 3-Day Certificate Workshop</span></span>
+        <h3 data-i18n-html="news.title">Mind in the <em>Making</em>: Montessori Fundamentals Certificate</h3>
+        <p data-i18n="news.sub">Three days on the child in front of you: decoding their perspective, the psychology of the first six years, and the practical life area of the Montessori curriculum, hands-on. Written for parents and early-years teachers alike. Registration is open and seats are capped.</p>
         <div class="news-meta">
-          <span data-i18n="news.m0">Free to attend</span>
-          <span data-i18n="news.m1">Live on Zoom · join from anywhere</span>
-          <span data-i18n="news.m2">Two live evenings · small group</span>
-          <span data-i18n="news.m3">Beginners welcome</span>
+          <span data-i18n="news.m0">Day 01 · Decoding the child's perspective</span>
+          <span data-i18n="news.m1">Day 02 · Early childhood psychology</span>
+          <span data-i18n="news.m2">Day 03 · The practical life area</span>
+          <span data-i18n="news.m3">Certificate of Completion included</span>
         </div>
       </div>
       <div class="news-ctas">
-        <a href="telepathy-meditation-register" class="btn btn-primary" data-i18n="news.apply">Register Free</a>
-        <a href="telepathy-meditation-workshop" class="btn btn-ghost" data-i18n="news.more">Workshop Details →</a>
+        <a href="montessori-fundamentals-register" class="btn btn-primary" data-i18n="news.apply">Reserve My Place</a>
+        <a href="montessori-fundamentals-workshop" class="btn btn-ghost" data-i18n="news.more">Workshop Details →</a>
       </div>
     </div>
-    <p class="news-foot" data-i18n-html="news.foot">Also from MindCare: our Applied Psychology Masterclass certification series. <a href="workshops.html">See all workshops &amp; trainings →</a></p>
+    <div class="news-foot">
+      <p data-i18n-html="news.foot">Also from MindCare: our Applied Psychology Masterclass certification series. <a href="workshops.html">See all workshops &amp; trainings →</a></p>
+      <button type="button" class="btn btn-request" id="rwOpen" data-i18n="news.request">Request a Workshop</button>
+      <p class="news-foot-note" data-i18n="news.requestnote">Need a workshop on something else, for your school, workplace or community? Tell us the topic and we'll build it.</p>
+    </div>
   </div>
 </section>
+
+<!-- REQUEST A WORKSHOP -->
+<div class="rw-back" id="rwModal" hidden>
+  <div class="rw-modal" role="dialog" aria-modal="true" aria-labelledby="rwTitle">
+    <form id="rwForm" novalidate>
+      <div class="rw-head">
+        <h2 id="rwTitle" data-i18n="rw.title">Request a workshop</h2>
+        <button type="button" class="rw-close" id="rwClose" aria-label="Close">&times;</button>
+      </div>
+      <p class="rw-sub" data-i18n="rw.sub">Pick the topic you'd like us to run, or write your own. We'll open WhatsApp with your request ready to send.</p>
+
+      <div class="rw-topics" id="rwTopics" role="radiogroup" aria-labelledby="rwTitle"></div>
+
+      <div class="rw-other" id="rwOtherWrap" hidden>
+        <label for="rwOther" data-i18n="rw.otherlabel">Your topic</label>
+        <input type="text" id="rwOther" placeholder="e.g. Screen time and children under 10" maxlength="160" autocomplete="off">
+      </div>
+
+      <div class="rw-err" id="rwErr" role="alert" hidden></div>
+
+      <div class="rw-actions">
+        <button type="button" class="btn btn-ghost" id="rwCancel" data-i18n="rw.cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary" data-i18n="rw.send">Send on WhatsApp</button>
+      </div>
+      <p class="rw-note" data-i18n="rw.note">Goes straight to +92 327 2337631. A real person from our team answers.</p>
+    </form>
+  </div>
+</div>
 
 <!-- IMMERSIVE ORB -->
 <style>
@@ -581,7 +663,7 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 var I18N={
  en:{},
  ur:{
-  "nav.home":"ہوم","nav.services":"خدمات","nav.about":"ہمارے بارے میں","nav.team":"ٹیم","nav.articles":"مضامین","nav.workshops":"ورکشاپس","news.tag":"خبر · مفت آن لائن ورکشاپ","news.title":"ٹیلی پیتھی اور <em>مراقبہ</em>: گہرے تعلق کا فن","news.sub":"گہرے تعلق کا فن: زوم پر دو لائیو شامیں، بالکل مفت۔ رہنمائی کے ساتھ مراقبہ، ہمدردی اور جُڑاؤ کے پیچھے اصل سائنس، اور جوڑوں میں عملی مشق۔ رجسٹریشن کھلی ہے اور نشستیں محدود ہیں۔","news.m0":"شرکت مفت","news.m1":"زوم پر لائیو · دنیا میں کہیں سے بھی","news.m2":"دو لائیو شامیں · محدود نشستیں","news.m3":"نئے سیکھنے والوں کے لیے بھی","news.apply":"مفت رجسٹر کریں","news.more":"ورکشاپ کی تفصیلات ←","news.foot":"مائنڈ کیئر کی جانب سے مزید: اپلائیڈ سائیکالوجی ماسٹر کلاس سرٹیفکیشن سیریز۔ <a href=\"workshops.html\">تمام ورکشاپس دیکھیں ←</a>","nav.book":"اپائنٹمنٹ",
+  "nav.home":"ہوم","nav.services":"خدمات","nav.about":"ہمارے بارے میں","nav.team":"ٹیم","nav.articles":"مضامین","nav.workshops":"ورکشاپس","news.tag":"نیا · تین روزہ سرٹیفکیٹ ورکشاپ","news.title":"مائنڈ اِن دی <em>میکنگ</em>: مونٹیسوری فنڈامنٹلز سرٹیفکیٹ","news.sub":"تین دن، بچے کو سمجھنے کے لیے: بچے کے زاویۂ نظر کو جاننا، پہلے چھ برسوں کی نفسیات، اور مونٹیسوری نصاب کا پریکٹیکل لائف ایریا، عملی مشق کے ساتھ۔ والدین اور اساتذہ، دونوں کے لیے۔ رجسٹریشن کھلی ہے اور نشستیں محدود ہیں۔","news.m0":"دن ۱ · بچے کے زاویۂ نظر کو سمجھنا","news.m1":"دن ۲ · ابتدائی بچپن کی نفسیات","news.m2":"دن ۳ · پریکٹیکل لائف ایریا","news.m3":"سرٹیفکیٹ آف کمپلیشن شامل","news.apply":"اپنی نشست محفوظ کریں","news.more":"ورکشاپ کی تفصیلات ←","news.foot":"مائنڈ کیئر کی جانب سے مزید: اپلائیڈ سائیکالوجی ماسٹر کلاس سرٹیفکیشن سیریز۔ <a href=\"workshops.html\">تمام ورکشاپس دیکھیں ←</a>","news.request":"ورکشاپ کی درخواست دیں","news.requestnote":"کسی اور موضوع پر ورکشاپ چاہیے، اپنے اسکول، دفتر یا کمیونٹی کے لیے؟ ہمیں موضوع بتائیے، ہم تیار کر دیں گے۔","rw.title":"ورکشاپ کی درخواست","rw.sub":"جو موضوع آپ چاہتے ہیں منتخب کیجیے، یا اپنا لکھیے۔ ہم واٹس ایپ کھول دیں گے، پیغام تیار ہوگا۔","rw.otherlabel":"آپ کا موضوع","rw.cancel":"منسوخ کریں","rw.send":"واٹس ایپ پر بھیجیں","rw.note":"یہ پیغام براہِ راست ‎+92 327 2337631‎ پر جاتا ہے۔ ہماری ٹیم کا ایک اصل فرد جواب دیتا ہے۔","rw.t1":"والدین اور بچوں کا رویہ","rw.t2":"مونٹیسوری اور ابتدائی بچپن","rw.t3":"اسکول اور اساتذہ کی تربیت","rw.t4":"دفتری ذہنی صحت","rw.t5":"دباؤ اور برن آؤٹ","rw.t6":"پریشانی اور اداسی سے آگاہی","rw.t7":"نوجوانوں کی ذہنی صحت","rw.t8":"ازدواجی اور خاندانی زندگی","rw.t9":"صدمے سے آگاہ نگہداشت","rw.t10":"مراقبہ اور ذہنی یکسوئی","rw.tother":"کوئی اور (اپنا لکھیے)","nav.book":"اپائنٹمنٹ",
   "hero.badge":"کراچی · کلینک · گھر · آن لائن",
   "hero.h1":"خاموشی سے <em>پریشان</em> ہیں؟<br>آئیے بات کرتے ہیں۔",
   "hero.lede":"ایسے لوگ جو واقعی آپ کی بات سنتے ہیں۔ کراچی میں پریشانی، ذہنی دباؤ اور بہت کچھ کے لیے تھراپی۔",
@@ -617,6 +699,108 @@ var I18N={
   "foot.about":"کراچی میں خلوص اور ثبوت پر مبنی ذہنی صحت و بحالی کی خدمات۔"
  }
 };
+</script>
+<script>
+/* REQUEST A WORKSHOP: pick a topic (or write one), hand off to WhatsApp.
+   Runs inline before site.js so the chips exist when the translator sweeps
+   the page for [data-i18n]. Topic values are always sent in English: the
+   message is read by our own team, and a stable label keeps it unambiguous. */
+(function(){
+  var openBtn = document.getElementById('rwOpen');
+  var back    = document.getElementById('rwModal');
+  if(!openBtn || !back) return;
+
+  var form     = document.getElementById('rwForm');
+  var wrap     = document.getElementById('rwTopics');
+  var otherBox = document.getElementById('rwOtherWrap');
+  var otherIn  = document.getElementById('rwOther');
+  var err      = document.getElementById('rwErr');
+  var WA_NUMBER = '923272337631';
+
+  var TOPICS = [
+    ['rw.t1',  'Parenting & child behaviour'],
+    ['rw.t2',  'Montessori & early childhood'],
+    ['rw.t3',  'School & teacher training'],
+    ['rw.t4',  'Workplace mental health'],
+    ['rw.t5',  'Stress & burnout'],
+    ['rw.t6',  'Anxiety & depression awareness'],
+    ['rw.t7',  'Teen & adolescent wellbeing'],
+    ['rw.t8',  'Marriage & family'],
+    ['rw.t9',  'Trauma-informed care'],
+    ['rw.t10', 'Meditation & mindfulness'],
+    ['rw.tother', 'Other (write your own)']
+  ];
+
+  TOPICS.forEach(function(t, i){
+    var key = t[0], text = t[1];
+    var label = document.createElement('label');
+    var input = document.createElement('input');
+    input.type = 'radio';
+    input.name = 'rw-topic';
+    input.value = (key === 'rw.tother') ? '__other__' : text;
+    input.id = 'rw-topic-' + i;
+    var span = document.createElement('span');
+    span.setAttribute('data-i18n', key);
+    span.textContent = text;
+    label.appendChild(input);
+    label.appendChild(span);
+    wrap.appendChild(label);
+  });
+
+  var radios = [].slice.call(wrap.querySelectorAll('input'));
+  var lastFocus = null;
+
+  function clearErr(){ err.hidden = true; err.textContent = ''; }
+  function fail(msg){ err.textContent = msg; err.hidden = false; }
+
+  function syncOther(){
+    var picked = wrap.querySelector('input:checked');
+    var isOther = !!picked && picked.value === '__other__';
+    otherBox.hidden = !isOther;
+    if(isOther) otherIn.focus();
+    clearErr();
+  }
+  radios.forEach(function(r){ r.addEventListener('change', syncOther); });
+
+  function open(){
+    lastFocus = document.activeElement;
+    back.hidden = false;
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ radios[0].focus(); }, 40);
+  }
+  function close(){
+    back.hidden = true;
+    document.body.style.overflow = '';
+    clearErr();
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  openBtn.addEventListener('click', open);
+  document.getElementById('rwClose').addEventListener('click', close);
+  document.getElementById('rwCancel').addEventListener('click', close);
+  back.addEventListener('click', function(e){ if(e.target === back) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !back.hidden) close(); });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    clearErr();
+
+    var picked = wrap.querySelector('input:checked');
+    if(!picked) return fail('Please pick a topic, or choose "Other" and write your own.');
+
+    var topic = picked.value;
+    if(topic === '__other__'){
+      topic = otherIn.value.trim();
+      if(!topic){ otherIn.focus(); return fail('Please write the topic you would like us to run.'); }
+    }
+
+    var msg = 'Hi MindCare! I would like to request a workshop on: ' + topic +
+              '. Please share what is possible.';
+    window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg),
+                '_blank', 'noopener');
+    close();
+  });
+})();
 </script>
 <script src="assets/site.js" defer></script>
 <script src="assets/brain.js" defer></script>

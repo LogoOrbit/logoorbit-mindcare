@@ -35,9 +35,8 @@ def head(title, desc, canonical, prefix, schema, og_type="website"):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){{try{{var t=localStorage.getItem('mc-theme')||'light';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('mc-lang');if(!l){{l=((navigator.language||'').toLowerCase().indexOf('ur')===0)?'ur':'en';}}document.documentElement.setAttribute('lang',l);document.documentElement.setAttribute('dir',l==='ur'?'rtl':'ltr');}}catch(e){{}}}})();</script>
-<meta name="theme-color" content="#2BBDC9" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e1b13" media="(prefers-color-scheme: dark)">
-<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f4fbfb">
+<meta name="color-scheme" content="light">
 <meta name="format-detection" content="telephone=yes">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(desc)}">
@@ -1542,6 +1541,208 @@ WS_DAYS = [
 ]
 
 
+# ── Mind in the Making: Montessori Fundamentals Certificate ──
+# Our current open workshop. Three days, in person in Karachi, written for the
+# two audiences who sit in the same room for this one: parents and early-years
+# teachers. Dates are announced batch by batch, so nothing here carries a date.
+MF_SLUG = "montessori-fundamentals-workshop"
+MF_REG_SLUG = "montessori-fundamentals-register"
+MF_TITLE = "Mind in the Making"
+MF_CERT = "Montessori Fundamentals Certificate"
+MF_PLAIN = f"Mind in the Making: {MF_CERT}"
+MF_POSTER = "assets/workshops/montessori-fundamentals-poster.svg"
+# Landscape JPEG card: what chat apps and social platforms show when the link is shared.
+MF_OG = "assets/workshops/montessori-fundamentals-og.jpg"
+MF_ALT = ("Mind in the Making, the Montessori Fundamentals Certificate: a three-day workshop "
+          "by MindCare Services®")
+MF_WA = (WA + "?text=Hi%21%20I%27d%20like%20to%20register%20for%20the%20Mind%20in%20the%20Making"
+         "%20Montessori%20Fundamentals%20Certificate%20workshop.%20Please%20share%20the%20dates"
+         "%20and%20details.")
+
+MF_DAYS = [
+    dict(num="01", label="Day One", icon="i-brain",
+         title="Decoding the Child&#39;s Perspective",
+         desc="Before any method, any material and any correction, there is one skill: seeing the "
+              "situation the way the child is seeing it. We spend the first day learning to look.",
+         kit=["The world from three feet tall: what a child actually perceives",
+              "The absorbent mind and the sensitive periods, in plain language",
+              "Behaviour as communication: reading the need under the tantrum",
+              "Structured observation, the skill every Montessori guide starts with",
+              "Take home: an observation record sheet and a sensitive-periods chart"]),
+    dict(num="02", label="Day Two", icon="i-heart-hands",
+         title="Early Childhood Psychology",
+         desc="What is actually happening inside a child in the first six years, from attachment and "
+              "temperament to language, movement and the long work of learning to self-regulate.",
+         kit=["Attachment, temperament and why two children in one house differ so much",
+              "Language, movement and the developing brain, birth to six",
+              "Regulation and co-regulation: calming a child by first calming yourself",
+              "Normal variation vs. genuine red flags, and when to seek an assessment",
+              "Take home: a developmental milestones chart and a regulation toolkit"]),
+    dict(num="03", label="Day Three", icon="i-hand",
+         title="The Practical Life Area of the Montessori Curriculum",
+         desc="The most underestimated shelf in any Montessori classroom, and the easiest to "
+              "recreate at home. A hands-on day: you will present exercises, not just watch them.",
+         kit=["Why practical life comes first: concentration, coordination, independence, order",
+              "Presenting an exercise: slow hands, few words, and the art of stepping back",
+              "Care of self, care of the environment, and grace &amp; courtesy",
+              "Building a practical life shelf at home or in class, on a real budget",
+              "Take home: an activity bank, shelf-setup plan and presentation scripts"]),
+]
+
+MF_FAQS = [
+    ("Who is this workshop actually for?",
+     "Parents, early-years teachers and directresses, Montessori and education students, psychology "
+     "students, daycare and playgroup staff, and anyone who spends their days with children under six. "
+     "You do not need a Montessori background, a teaching job or a psychology degree to follow it: "
+     "everything is taught from the ground up, and the two audiences in the room, parents and teachers, "
+     "consistently turn out to have the same questions."),
+    ("Is this a full Montessori diploma?",
+     "No, and we would rather be clear about that than let anyone assume. This is a three-day "
+     "foundations course with a Certificate of Completion issued by MindCare Services®. It is not an "
+     "AMI or AMS diploma and it does not by itself qualify you to run a Montessori classroom. What it "
+     "does give you is a genuine working understanding of the child, the psychology underneath the "
+     "method, and a practical life area you can set up and present properly."),
+    ("Do I get a certificate?",
+     "Yes. Every participant who completes all three days receives a Certificate of Completion in "
+     "Montessori Fundamentals from MindCare Services®, for your CV, your school file or your own record."),
+    ("I am a parent, not a teacher. Will most of it be irrelevant?",
+     "Quite the opposite: day one and day three were written with parents in mind. Decoding your "
+     "child's perspective changes how mornings and bedtimes go, and the practical life work is designed "
+     "to be rebuilt at home with things you already own. Teachers get the classroom version of the same "
+     "material, and the mixed room is part of why the discussion is good."),
+    ("Do I need to bring any materials?",
+     "No. Materials are provided in the session and the practical life work is demonstrated with real "
+     "equipment as well as with the household substitutes we recommend for home. Bring a notebook."),
+    ("Which language is it taught in?",
+     "English, with Urdu explanations whenever they help, the same way we run all our sessions."),
+    ("When does it run, and what does it cost?",
+     "Dates are confirmed batch by batch and we announce them to registered participants first, along "
+     "with the venue and the fee for that batch. Registering costs nothing and commits you to nothing: "
+     "it simply puts you at the front of the queue when the next batch opens."),
+    ("Can I attend just one of the three days?",
+     "The three days are built to stack, so we run it as one certificate rather than as separate "
+     "sessions. If your schedule makes a full three days impossible, message us and we will tell you "
+     "when the next batch runs."),
+    ("Is this therapy or an assessment for my child?",
+     "No. This is an educational workshop for adults, not psychotherapy, diagnosis or treatment for a "
+     "child. If day two raises something about your own child that deserves proper attention, our "
+     "clinical team in Karachi does developmental assessments and child therapy, and we will point you "
+     "to the right person."),
+    ("How do I register?",
+     f"Open the <a href=\"{MF_REG_SLUG}.html\">registration page</a> and fill the short form, and we "
+     f"will confirm your place and send you the dates, venue and fee as soon as the batch is set. You "
+     f"can also register on <a href=\"{MF_WA}\" target=\"_blank\" rel=\"noopener\">WhatsApp</a>. "
+     f"Seats are capped because day three is hands-on."),
+]
+
+# Styles shared by the Montessori workshop page and its registration page.
+MF_CSS = """
+.mf-hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:40px;align-items:center}
+.mf-poster{width:100%;height:auto;border-radius:20px;box-shadow:0 18px 46px rgba(30,45,40,.16);border:1px solid var(--border);background:#fff}
+.mf-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:6px}
+.mf-fact{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}
+.mf-fact strong{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}
+.mf-fact span{font-size:1.02rem;font-weight:600;color:var(--dark)}
+.mf-day{position:relative;padding-left:0}
+.mf-day .mf-num{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;
+ font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:#fff;margin-bottom:12px}
+.mf-day:nth-child(1) .mf-num{background:var(--teal)}
+.mf-day:nth-child(2) .mf-num{background:var(--green)}
+.mf-day:nth-child(3) .mf-num{background:var(--coral)}
+.mf-honest{background:var(--teal-light);border:1px solid var(--border);border-left:5px solid var(--teal);border-radius:16px;padding:24px 28px;max-width:860px;margin:0 auto}
+.mf-honest h3{margin-bottom:10px}
+.mf-badge-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
+.mf-badge-row span{font-size:.8rem;font-weight:600;color:var(--teal-deep);background:var(--teal-light);
+ border:1px solid var(--border);padding:5px 13px;border-radius:999px}
+html[data-theme="dark"] .mf-fact{background:#12241a}
+html[data-theme="dark"] .mf-honest{background:rgba(15,154,168,.12)}
+html[data-theme="dark"] .mf-poster{background:#f7fdfd}
+"""
+
+# Single-step registration. There is no fee to collect on this page: the batch
+# fee is quoted when the dates are announced, so the form only has to capture
+# who is coming and how to reach them.
+MF_FORM_JS = """
+(function(){
+  var form = document.getElementById('mf-form');
+  if(!form) return;
+
+  var alertBox = document.getElementById('mf-alert');
+  var submit   = document.getElementById('mf-submit');
+  var label    = document.getElementById('mf-submit-label');
+
+  function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function clearAlert(){ alertBox.hidden = true; alertBox.textContent = ''; }
+  function fail(msg, id){
+    alertBox.textContent = msg;
+    alertBox.hidden = false;
+    alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    var el = id && document.getElementById(id);
+    if(el){
+      el.style.borderColor = '#d64545';
+      el.focus();
+      setTimeout(function(){ el.style.borderColor = ''; }, 2600);
+    }
+    return false;
+  }
+
+  function succeed(){
+    form.innerHTML = '<div class="tm-done">' +
+      '<div class="tm-tick">&#10003;</div>' +
+      '<h3>Your place is reserved</h3>' +
+      '<p>Thank you. We will email and message you the dates, the venue and the fee for the next batch ' +
+      'as soon as it is set, and registered participants always hear first.</p>' +
+      '<p>Nothing is due now, and nothing is confirmed until you tell us it works for you.</p>' +
+      '<p style="margin-top:16px"><a href="montessori-fundamentals-workshop.html" style="font-weight:600">Back to the workshop details</a></p>' +
+      '</div>';
+    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    clearAlert();
+
+    if(!val('mf-name'))     return fail('Please enter your name.', 'mf-name');
+    if(!val('mf-institute'))return fail('Please tell us your school, institute or "home" if you are a parent.', 'mf-institute');
+    if(!val('mf-role'))     return fail('Please tell us your role or current education.', 'mf-role');
+    if(!val('mf-phone'))    return fail('Please enter a phone number we can reach you on.', 'mf-phone');
+    if(!val('mf-email'))    return fail('Please enter your email address.', 'mf-email');
+    if(!/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(val('mf-email'))) return fail('That email address does not look right.', 'mf-email');
+
+    submit.disabled = true;
+    label.textContent = 'Sending...';
+
+    fetch('/api/workshop-register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        workshop: 'Mind in the Making: Montessori Fundamentals Certificate',
+        name: val('mf-name'),
+        institute: val('mf-institute'),
+        phone: val('mf-phone'),
+        email: val('mf-email'),
+        education: val('mf-role'),
+        prior_info: val('mf-prior'),
+        expectations: val('mf-expect'),
+        // The certificate is part of this workshop rather than a paid add-on,
+        // so nothing is ever uploaded here and the flag stays false.
+        certificate: false
+      })
+    }).then(function(res){
+      return res.json().catch(function(){ return {}; }).then(function(data){
+        if(!res.ok || !data.ok) throw new Error(data.error || 'We could not submit your registration. Please try again.');
+        succeed();
+      });
+    }).catch(function(err){
+      submit.disabled = false;
+      label.textContent = 'Reserve My Place';
+      fail(err.message || 'We could not submit your registration. Please try again.');
+    });
+  });
+})();
+"""
+
+
 # ── Telepathy & Meditation: online live workshop ──
 TM_SLUG = "telepathy-meditation-workshop"
 # Registration lives on its own page: a two-step form, no scrolling and no
@@ -1558,13 +1759,6 @@ TM_WA = (WA + "?text=Hi%21%20I%27d%20like%20to%20register%20for%20the%20free%20T
 # The workshop itself costs nothing. The only money that ever changes hands is
 # the optional certificate, and it is asked for once, at the end of the form.
 TM_CERT_FEE = "PKR 1,000"
-TM_BANK = [
-    ("Account title", "Shaista Tariq", False),
-    ("Bank", "Meezan Bank, Naya Nazimabad, Karachi", False),
-    ("Account number", "10290107651451", True),
-    ("IBAN", "PK90MEZN0010290107651451", True),
-]
-
 TM_SESSIONS = [
     dict(tag="Evening One · Part One", icon="i-brain",
          title="Stillness First: The Meditation Foundation",
@@ -1609,14 +1803,14 @@ TM_FAQS = [
      "Every registered participant gets the session recordings for 30 days, plus the guided audio practices and the workbook, so you can catch up and keep practising in your own time."),
     ("Which language is it taught in?",
      "English, with Urdu explanations whenever they help, the same way we run our sessions. The guided meditation audio is provided in both English and Urdu."),
-    ("When does it run?",
-     "Dates are confirmed batch by batch, and we announce them to registered participants first. Register now and we will send you the schedule, the Zoom link and a calendar invite as soon as the next batch is set."),
-    ("Is the workshop really free?",
+    ("Has this workshop already run?",
+     "Yes. This batch has been delivered and registration is closed. Recordings, the guided audio and the workbook went out to everyone who registered. We do re-run popular workshops, so if you would like to be told when this one comes back, message us and we will add you to the list."),
+    ("Was the workshop really free?",
      "Yes, completely. Both live evenings, the guided audio, the workbook and the 30-day recordings cost you nothing. There is no hidden charge, no upsell in the session and no card details anywhere on the form. We run it free because attunement is the kind of skill that makes people easier to live with, and we would rather it spread."),
     ("If it's free, what is the PKR 1,000 for?",
      f"Only for the optional certificate. If you would like an official Certificate of Participation issued by MindCare Services®, it is a one-time fee of {TM_CERT_FEE} that covers verification, issuing and record-keeping. It is entirely optional: you can attend the whole workshop, keep every resource and never pay a rupee. Your certificate is emailed to you within one business day."),
-    ("How do I register?",
-     f"Open the <a href=\"{TM_REG_SLUG}.html\">registration page</a> and fill the short form. That is the whole thing. The last step simply asks whether you want the optional certificate: choose no and you are registered instantly, or choose yes, transfer {TM_CERT_FEE} to the account shown there and attach the payment screenshot. You can also register on <a href=\"{TM_WA}\" target=\"_blank\" rel=\"noopener\">WhatsApp</a>. Seats are capped so the breakout pairing stays workable."),
+    ("Can I still join this one?",
+     f"No, this batch has finished. What is open right now is <a href=\"{MF_SLUG}.html\">Mind in the Making, our Montessori Fundamentals Certificate</a>: three days in Karachi on the child's perspective, early childhood psychology and the practical life area of the Montessori curriculum. If you want to hear the moment Telepathy &amp; Meditation runs again, <a href=\"{TM_WA}\" target=\"_blank\" rel=\"noopener\">message us on WhatsApp</a> and we will keep you on the list."),
 ]
 
 
@@ -1624,6 +1818,16 @@ TM_FAQS = [
 TM_CSS = """
 .tm-hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:40px;align-items:center}
 .tm-poster{width:100%;height:auto;border-radius:20px;box-shadow:0 20px 54px rgba(6,43,49,.28)}
+.ws-shot{position:relative;display:block;border-radius:18px;overflow:hidden;line-height:0}
+.ws-shot img{display:block;width:100%;height:auto}
+/* A soft fade rather than a hard band: the poster's own call to action sits in
+   the bottom eighth, and a gradient covers it without slicing the line above. */
+.ws-shot::after{content:'Completed · Registration Closed';position:absolute;left:0;right:0;bottom:0;
+ height:14%;min-height:44px;display:flex;align-items:flex-end;justify-content:center;
+ padding:0 10px 3.2%;background:linear-gradient(180deg,rgba(11,95,109,0) 0%,rgba(11,95,109,.92) 42%,rgba(11,95,109,.97) 100%);
+ color:#fff;font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:700;letter-spacing:.14em;
+ text-transform:uppercase;text-align:center;line-height:1.3}
+@media(max-width:520px){.ws-shot::after{font-size:.66rem;letter-spacing:.1em}}
 .tm-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:6px}
 .tm-fact{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}
 .tm-fact strong{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}
@@ -1645,15 +1849,16 @@ TM_CSS = """
 /* Money is always green on this site: it reads as affordable and safe rather
    than as a charge, which matters when the only fee is a small optional one. */
 .tm-amount{color:var(--green);font-weight:700;white-space:nowrap}
+.tm-done-badge{color:var(--green);border-color:rgba(45,106,31,.3);background:var(--green-light)}
 html[data-theme="dark"] .tm-fact,html[data-theme="dark"] .tm-cert{background:#12241a}
 html[data-theme="dark"] .tm-amount{color:#6ede8a}
 html[data-theme="dark"] .tm-honest{background:rgba(15,154,168,.12)}
 @media(max-width:560px){.tm-free{padding:28px 20px}.tm-free .tm-price{font-size:2.9rem}}
 """
 
-# Registration form: two panels on one page, so the visitor never scrolls
-# through the pitch again and never sees a fee until the final step.
-TM_FORM_CSS = """
+# Shared registration-form styles. The `.tm-*` class names are historical: they
+# were written for the first workshop's form and are now used by every one.
+REG_FORM_CSS = """
 .tm-reg-wrap{max-width:660px;margin:0 auto}
 .tm-form{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:32px;box-shadow:var(--shadow-soft)}
 .tm-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -1714,216 +1919,9 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
 @media(max-width:560px){.tm-row{grid-template-columns:1fr}.tm-form{padding:24px 20px}.tm-actions{flex-direction:column-reverse}}
 """
 
-TM_FORM_JS = """
-(function(){
-  var form  = document.getElementById('tm-form');
-  if(!form) return;
-
-  var step1 = document.getElementById('tm-step1');
-  var step2 = document.getElementById('tm-step2');
-  var pill1 = document.getElementById('tm-pill1');
-  var pill2 = document.getElementById('tm-pill2');
-  var next  = document.getElementById('tm-next');
-  var back  = document.getElementById('tm-back');
-  var alertBox = document.getElementById('tm-alert');
-  var submit   = document.getElementById('tm-submit');
-  var label    = document.getElementById('tm-submit-label');
-  var fileIn   = document.getElementById('tm-receipt');
-  var hint     = document.getElementById('tm-receipt-hint');
-  var payBlock = document.getElementById('tm-pay');
-  var choices  = Array.prototype.slice.call(document.querySelectorAll('.tm-choice'));
-
-  // Receipts travel as base64 inside the JSON body, which inflates them by a
-  // third, so anything we cannot re-compress has to stay comfortably small.
-  var MAX_RAW = 3 * 1024 * 1024;
-  var MAX_EDGE = 1600;
-  var RECEIPT_HINT = 'A screenshot or PDF of your transfer.';
-
-  function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; }
-  function clearAlert(){ alertBox.hidden = true; alertBox.textContent = ''; }
-  function wantsCertificate(){
-    var picked = document.querySelector('input[name="tm-cert"]:checked');
-    return !!picked && picked.value === 'yes';
-  }
-  function fail(msg, id){
-    alertBox.textContent = msg;
-    alertBox.hidden = false;
-    alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    var el = id && document.getElementById(id);
-    if(el){
-      el.style.borderColor = '#d64545';
-      el.focus();
-      setTimeout(function(){ el.style.borderColor = ''; }, 2600);
-    }
-    return false;
-  }
-
-  function showStep(n){
-    step1.hidden = n !== 1;
-    step2.hidden = n !== 2;
-    pill1.classList.toggle('on', true);
-    pill2.classList.toggle('on', n === 2);
-    clearAlert();
-    // The card is short by design, so the top of it is all anyone needs to see.
-    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    var focusOn = n === 1 ? document.getElementById('tm-name') : choices[0];
-    if(focusOn && focusOn.focus) setTimeout(function(){ focusOn.focus({ preventScroll: true }); }, 260);
-  }
-
-  function syncChoice(){
-    choices.forEach(function(c){
-      var input = c.querySelector('input');
-      c.classList.toggle('sel', !!input && input.checked);
-    });
-    payBlock.hidden = !wantsCertificate();
-    clearAlert();
-  }
-  choices.forEach(function(c){
-    var input = c.querySelector('input');
-    if(input) input.addEventListener('change', syncChoice);
-  });
-  syncChoice();
-
-  document.querySelectorAll('.tm-copy').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var text = btn.getAttribute('data-copy');
-      var done = function(){
-        var was = btn.textContent;
-        btn.textContent = 'Copied';
-        setTimeout(function(){ btn.textContent = was; }, 1600);
-      };
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done, function(){});
-      }
-    });
-  });
-
-  if(fileIn) fileIn.addEventListener('change', function(){
-    var file = fileIn.files && fileIn.files[0];
-    hint.textContent = file ? 'Attached: ' + file.name : RECEIPT_HINT;
-    clearAlert();
-  });
-
-  next.addEventListener('click', function(){
-    clearAlert();
-    if(!val('tm-name'))      return fail('Please enter your name.', 'tm-name');
-    if(!val('tm-institute')) return fail('Please enter your institute or university.', 'tm-institute');
-    if(!val('tm-education')) return fail('Please tell us your current education.', 'tm-education');
-    if(!val('tm-phone'))     return fail('Please enter a phone number we can reach you on.', 'tm-phone');
-    if(!val('tm-email'))     return fail('Please enter your email address.', 'tm-email');
-    if(!/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(val('tm-email'))) return fail('That email address does not look right.', 'tm-email');
-    showStep(2);
-  });
-
-  back.addEventListener('click', function(){ showStep(1); });
-
-  /* Reads the receipt and, for ordinary images, downscales it so the upload
-     stays small on a phone connection. Formats the browser cannot draw (PDF,
-     HEIC) are sent as-is and simply have to be under the raw limit. */
-  function readReceipt(file){
-    return new Promise(function(resolve, reject){
-      var reader = new FileReader();
-      reader.onerror = function(){ reject(new Error('We could not read that file. Please try another one.')); };
-      reader.onload = function(){
-        var dataUrl = reader.result;
-        var redrawable = /^image\\/(jpeg|jpg|png|webp)$/.test(file.type);
-        if(!redrawable){
-          if(file.size > MAX_RAW){
-            reject(new Error('That file is too large. Please upload a screenshot or PDF under 3 MB.'));
-            return;
-          }
-          resolve({ name: file.name, type: file.type, data: dataUrl });
-          return;
-        }
-        var img = new Image();
-        img.onerror = function(){
-          if(file.size > MAX_RAW){ reject(new Error('That image is too large. Please upload one under 3 MB.')); return; }
-          resolve({ name: file.name, type: file.type, data: dataUrl });
-        };
-        img.onload = function(){
-          var scale = Math.min(1, MAX_EDGE / Math.max(img.width, img.height));
-          var canvas = document.createElement('canvas');
-          canvas.width  = Math.max(1, Math.round(img.width * scale));
-          canvas.height = Math.max(1, Math.round(img.height * scale));
-          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-          var out = canvas.toDataURL('image/jpeg', 0.85);
-          if(out.length > 2200000) out = canvas.toDataURL('image/jpeg', 0.6);
-          resolve({ name: file.name, type: 'image/jpeg', data: out });
-        };
-        img.src = dataUrl;
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  function succeed(certificate){
-    var extra = certificate
-      ? 'We will verify your payment and email your Certificate of Participation within one business day of the workshop.'
-      : 'Your seat is free and confirmed. If you change your mind about the certificate later, just message us.';
-    form.innerHTML = '<div class="tm-done">' +
-      '<div class="tm-tick">&#10003;</div>' +
-      '<h3>You are registered</h3>' +
-      '<p>Thank you. We will email and message you the dates, the Zoom link and a calendar invite as soon as the next batch is set.</p>' +
-      '<p>' + extra + '</p>' +
-      '<p style="margin-top:16px"><a href="telepathy-meditation-workshop.html" style="font-weight:600">Back to the workshop details</a></p>' +
-      '</div>';
-    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    clearAlert();
-
-    var certificate = wantsCertificate();
-    var file = fileIn && fileIn.files && fileIn.files[0];
-    if(certificate && !file){
-      return fail('Please attach the payment screenshot so we can verify your certificate fee.', 'tm-receipt');
-    }
-
-    submit.disabled = true;
-    label.textContent = 'Sending...';
-
-    var payload = {
-      workshop: 'Telepathy & Meditation Workshop',
-      name: val('tm-name'),
-      institute: val('tm-institute'),
-      phone: val('tm-phone'),
-      email: val('tm-email'),
-      education: val('tm-education'),
-      prior_info: val('tm-prior'),
-      expectations: val('tm-expect'),
-      certificate: certificate
-    };
-
-    var ready = certificate
-      ? readReceipt(file).then(function(receipt){ payload.receipt = receipt; })
-      : Promise.resolve();
-
-    ready.then(function(){
-      return fetch('/api/workshop-register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    }).then(function(res){
-      return res.json().catch(function(){ return {}; }).then(function(data){
-        if(!res.ok || !data.ok) throw new Error(data.error || 'We could not submit your registration. Please try again.');
-        succeed(certificate);
-      });
-    }).catch(function(err){
-      submit.disabled = false;
-      label.textContent = 'Complete Registration';
-      fail(err.message || 'We could not submit your registration. Please try again.');
-    });
-  });
-})();
-"""
-
-
 def telepathy_meditation_page():
     prefix = ""
     url = f"{BASE}/{TM_SLUG}"
-    reg = f"{prefix}{TM_REG_SLUG}.html"
     schema = {"@context": "https://schema.org", "@graph": [
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
@@ -1943,8 +1941,8 @@ def telepathy_meditation_page():
                          "recording access at no cost. An official certificate of participation is optional, "
                          "a one-time PKR 1,000, emailed within one business day."),
          "offers": {"@type": "Offer", "price": "0", "priceCurrency": "PKR",
-                    "category": "Free", "availability": "https://schema.org/InStock",
-                    "url": f"{BASE}/{TM_REG_SLUG}"},
+                    "category": "Free", "availability": "https://schema.org/SoldOut",
+                    "url": f"{BASE}/{TM_SLUG}"},
          "provider": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
          "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "Online",
                                "courseWorkload": "PT4H",
@@ -1964,10 +1962,10 @@ def telepathy_meditation_page():
         </ul>
       </article>''' for s in TM_SESSIONS)
 
-    out = head("Free Live Online Workshop: Telepathy & Meditation | MindCare Services®",
-               "Join MindCare's free live online workshop on meditation and deep attunement, two evenings on Zoom. "
-               "Guided meditation, the real science of empathic connection and paired practice, at no cost. "
-               "Optional certificate PKR 1,000. Register now and we'll send you the dates.",
+    out = head("Telepathy & Meditation: Completed Live Online Workshop | MindCare Services®",
+               "MindCare's free live online workshop on meditation and deep attunement has now been "
+               "delivered and registration is closed. Read what the two evenings covered, and see the "
+               "workshop that is open next: our Montessori Fundamentals Certificate.",
                url, prefix, schema, og_type="website")
     out = social_image(out, TM_OG, "Telepathy & Meditation: The Art of Deep Attunement, a live online workshop by MindCare Services®", 1200, 630)
     out += nav(prefix, "workshops")
@@ -1977,12 +1975,12 @@ def telepathy_meditation_page():
 <header class="page-hero">
   <div class="ph-inner">
     <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="{prefix}workshops.html">Workshops</a></li><li aria-current="page">Telepathy &amp; Meditation</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-globe')} 100% Free · Live on Zoom · Registration Open</div>
+    <div class="ph-badge tm-done-badge">{icon(prefix,'i-check')} Completed · Registration Closed</div>
     <h1>Telepathy &amp; <em>Meditation</em></h1>
-    <p class="lede">Two evenings on the quietest, most underrated skill there is: the ability to settle yourself, and then genuinely tune in to another human being. No robes, no mysticism, no promises we can't keep. And no fee, because this one is completely free.</p>
+    <p class="lede">Two evenings on the quietest, most underrated skill there is: the ability to settle yourself, and then genuinely tune in to another human being. This workshop has now been delivered, and this page is kept as the record of what it covered.</p>
     <div class="ph-actions">
-      <a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Free</a>
-      <a href="{TM_WA}" target="_blank" rel="noopener" class="btn-secondary">{icon(prefix,'i-wa','18')} Register on WhatsApp</a>
+      <a href="{prefix}{MF_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} See the workshop that&#39;s open now</a>
+      <a href="{TM_WA}" target="_blank" rel="noopener" class="btn-secondary">{icon(prefix,'i-wa','18')} Tell me when it runs again</a>
     </div>
   </div>
 </header>
@@ -1991,20 +1989,20 @@ def telepathy_meditation_page():
   <div class="section-inner">
     <div class="tm-hero-grid">
       <div class="fade-up">
-        <img src="{prefix}{TM_POSTER}" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster" class="tm-poster" width="900" height="1200">
+        <span class="ws-shot tm-poster"><img src="{prefix}{TM_POSTER}" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster. This workshop has been completed." width="900" height="1200"></span>
       </div>
       <div class="fade-up">
-        <span class="section-tag">The invitation</span>
+        <span class="section-tag">Completed</span>
         <h2 class="section-title">You already know the feeling. This is the practice behind it.</h2>
         <p style="margin:14px 0 16px">Someone walks into the room and you feel it before they speak. A friend calls the moment you thought of them. A client goes quiet and something in your own chest tightens. We call it telepathy because we don't have a better everyday word for it, but what's actually happening is attunement, and unlike magic, attunement can be trained.</p>
-        <p style="margin-bottom:20px">Over two live evenings we'll build it deliberately: first the meditation that quiets your own noise, then the listening that lets someone else's signal through. Small group, cameras on, real practice in pairs, and an honest conversation about where the science ends and the mystery begins. All of it free.</p>
+        <p style="margin-bottom:20px">Over two live evenings we built it deliberately: first the meditation that quiets your own noise, then the listening that lets someone else's signal through. Small group, cameras on, real practice in pairs, and an honest conversation about where the science ends and the mystery begins. All of it free.</p>
         <div class="tm-facts">
-          <div class="tm-fact"><strong>Fee</strong><span>Free · nothing to pay</span></div>
-          <div class="tm-fact"><strong>Where</strong><span>Live on Zoom · join from anywhere</span></div>
-          <div class="tm-fact"><strong>Format</strong><span>Two live evenings · small group</span></div>
+          <div class="tm-fact"><strong>Status</strong><span>Completed · registration closed</span></div>
+          <div class="tm-fact"><strong>Fee</strong><span>Free · nothing was charged</span></div>
+          <div class="tm-fact"><strong>Format</strong><span>Two live evenings on Zoom</span></div>
           <div class="tm-fact"><strong>Language</strong><span>English, with Urdu where it helps</span></div>
         </div>
-        <div style="margin-top:24px"><a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Free</a></div>
+        <div style="margin-top:24px"><a href="{prefix}{MF_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} What&#39;s open now</a></div>
       </div>
     </div>
   </div>
@@ -2013,25 +2011,25 @@ def telepathy_meditation_page():
 <section class="bg-off">
   <div class="section-inner">
     <div class="tm-free fade-up">
-      <span class="section-tag">The fee, up front</span>
-      <span class="tm-price">Free</span>
-      <h3>Both evenings, every resource, zero rupees</h3>
-      <p>No ticket, no deposit, no card details, and nothing sold to you in the session. You register, we send the Zoom link, you show up. That's the whole arrangement.</p>
+      <span class="section-tag">How it went</span>
+      <span class="tm-price">Done</span>
+      <h3>Both evenings ran, and everything promised went out</h3>
+      <p>No ticket, no deposit, no card details, and nothing sold in the session. Every registered participant received the Zoom link, the guided audio in English and Urdu, the attunement workbook and thirty days of recordings, at no cost.</p>
       <div class="tm-badge-row">
-        <span>No fee to attend</span><span>No payment details asked</span><span>Workbook &amp; audio included</span><span>Recordings included</span>
+        <span>Delivered free, as promised</span><span>Workbook &amp; audio sent</span><span>Recordings shared</span><span>Certificates issued</span>
       </div>
       <div class="tm-cert">
-        <h4>{icon(prefix,'i-grad','18')} Want it on paper? The certificate is optional.</h4>
-        <p>If you'd like an official <strong>Certificate of Participation</strong> from MindCare Services® for your CV or university file, there's a <strong>one-time fee of <span class="tm-amount">{TM_CERT_FEE}</span></strong> that covers verification, issuing and record-keeping. Pay it only if you want it: your certificate is emailed to you <strong>within one business day</strong>. Everything else about the workshop stays free either way, and we only ask about it on the very last step of the form.</p>
+        <h4>{icon(prefix,'i-grad','18')} Attended, and still want the certificate?</h4>
+        <p>The optional <strong>Certificate of Participation</strong> from MindCare Services® is still available to anyone who joined the sessions, at the same one-time <span class="tm-amount">{TM_CERT_FEE}</span>. Message us on WhatsApp and we will arrange it. Everything else about the workshop was, and stays, free.</p>
       </div>
-      <div style="margin-top:24px"><a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Claim Your Free Seat</a></div>
+      <div style="margin-top:24px"><a href="{TM_WA}" target="_blank" rel="noopener" class="btn-primary">{icon(prefix,'i-wa','18')} Message us about a certificate</a></div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">The Two Evenings</span><h2 class="section-title">Four movements, one skill</h2><p class="section-sub">Every part is taught live and practised in the session, so you leave each evening having actually done the thing, not just heard about it.</p></div>
+    <div class="section-header centered fade-up"><span class="section-tag">The Two Evenings</span><h2 class="section-title">Four movements, one skill</h2><p class="section-sub">What the workshop covered. Every part was taught live and practised in the session, so nobody left having only heard about it.</p></div>
     <div class="feature-grid">
 {session_cards}
     </div>
@@ -2056,7 +2054,7 @@ def telepathy_meditation_page():
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clock')}</div><h3>30-day recording access</h3><p>Both evenings recorded and shared, so a missed session or a shaky connection never costs you the workshop.</p></div>
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-speech')}</div><h3>Guided audio, English &amp; Urdu</h3><p>The meditations from the sessions, recorded in both languages, to keep the practice going after the Zoom window closes.</p></div>
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-book')}</div><h3>The attunement workbook</h3><p>Practice logs, listening scripts, dyad exercise cards and your 21-day plan: a printable PDF sent before session one.</p></div>
-      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Certificate, if you want one</h3><p>Optional Certificate of Participation from MindCare Services®, a one-time <span class="tm-amount">{TM_CERT_FEE}</span>, emailed within one business day. Everything above is free regardless.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Certificate, if you wanted one</h3><p>Optional Certificate of Participation from MindCare Services®, a one-time <span class="tm-amount">{TM_CERT_FEE}</span>, emailed within one business day. Everything above was free regardless.</p></div>
     </div>
   </div>
 </section>
@@ -2071,8 +2069,8 @@ def telepathy_meditation_page():
       <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-family')}</div><h3>Couples &amp; close pairs</h3><p>Partners, siblings and friends are welcome to register together and pair up for the breakout practice.</p></div>
     </div>
     <div style="text-align:center;margin-top:40px" class="fade-up">
-      <p style="margin-bottom:16px;font-weight:600">Seats are capped so the breakout pairing stays workable, and free seats go quickly.</p>
-      <a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Free Now</a>
+      <p style="margin-bottom:16px;font-weight:600">This batch has finished. Our next workshop, <em>{MF_TITLE}: {MF_CERT}</em>, is open for registration now.</p>
+      <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register for the next workshop</a>
       <p style="margin-top:14px">or call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a></p>
     </div>
   </div>
@@ -2080,7 +2078,7 @@ def telepathy_meditation_page():
 
 {faq_block(prefix, TM_FAQS)}
 
-{cta_band(prefix, "Still deciding?", "It costs nothing to join us, and nothing to ask first. Message us on WhatsApp with your question about the workshop and a real person from our team will answer.")}
+{cta_band(prefix, "Missed this one?", "Message us on WhatsApp and we will tell you the moment it runs again. In the meantime, our Montessori Fundamentals Certificate is open for registration.")}
 </main>
 """
     out += footer(prefix)
@@ -2088,10 +2086,11 @@ def telepathy_meditation_page():
 
 
 def telepathy_register_page():
-    """Standalone two-step registration form.
+    """Registration for a workshop that has finished running.
 
-    Step one is the form and nothing else. Step two is where the optional
-    certificate, and the only fee on this website, is finally mentioned.
+    The URL is kept alive rather than deleted: it has been shared, indexed and
+    printed on a poster, so it should explain what happened and hand the visitor
+    the workshop that is actually open instead of a dead form.
     """
     prefix = ""
     url = f"{BASE}/{TM_REG_SLUG}"
@@ -2101,116 +2100,300 @@ def telepathy_register_page():
             {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops.html"},
             {"@type": "ListItem", "position": 3, "name": "Telepathy & Meditation Workshop", "item": f"{BASE}/{TM_SLUG}"},
             {"@type": "ListItem", "position": 4, "name": "Register", "item": url}]},
-        {"@type": "WebPage", "name": "Register Free: Telepathy & Meditation Workshop | MindCare Services®",
+        {"@type": "WebPage", "name": "Registration Closed: Telepathy & Meditation Workshop | MindCare Services®",
          "url": url,
-         "description": ("Free registration for the MindCare Services® Telepathy & Meditation live online "
-                         "workshop. Fill the short form to claim your seat. The certificate of participation "
-                         "is optional at a one-time PKR 1,000, emailed within one business day."),
+         "description": ("Registration for the MindCare Services® Telepathy & Meditation live online "
+                         "workshop is now closed: the workshop has been delivered. Our current open "
+                         "workshop is Mind in the Making, the Montessori Fundamentals Certificate."),
          "isPartOf": {"@type": "WebSite", "name": "MindCare Services®", "url": BASE}}]}
 
-    bank_rows = "\n".join(
-        f'''        <div><dt>{title}</dt><dd>{value}'''
-        + (f''' <button type="button" class="tm-copy" data-copy="{value}">Copy</button>''' if copyable else "")
-        + "</dd></div>"
-        for title, value, copyable in TM_BANK)
-
-    out = head("Register Free: Telepathy & Meditation Live Online Workshop | MindCare Services®",
-               "Register for MindCare's free Telepathy & Meditation live online workshop. A short two-step form: "
-               "your details, then an optional certificate of participation for a one-time PKR 1,000, emailed "
-               "within one business day.",
+    out = head("Registration Closed: Telepathy & Meditation Workshop | MindCare Services®",
+               "Registration for the Telepathy & Meditation live online workshop is closed: this "
+               "workshop has now been delivered. See what's open next from MindCare Services®, "
+               "including our Montessori Fundamentals Certificate.",
                url, prefix, schema, og_type="website")
-    out = social_image(out, TM_OG, "Telepathy & Meditation: The Art of Deep Attunement, a live online workshop by MindCare Services®", 1200, 630)
+    # A closed form is not a page we want ranking for "register".
+    out = out.replace('<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">',
+                      '<meta name="robots" content="noindex, follow">')
+    out = social_image(out, MF_OG, MF_ALT, 1200, 630)
     out += nav(prefix, "workshops")
     out += f"""<main id="main">
-<style>{TM_FORM_CSS}</style>
+<style>{REG_FORM_CSS}</style>
+
+<section style="padding-top:132px">
+  <div class="section-inner">
+    <div class="tm-reg-wrap">
+      <div class="tm-form">
+        <div class="tm-done">
+          <div class="tm-tick" style="background:var(--green)">&#10003;</div>
+          <h3>This workshop has been completed</h3>
+          <p>Registration for <strong>Telepathy &amp; Meditation: The Art of Deep Attunement</strong> is now
+             closed. Thank you to everyone who joined us: the recordings, guided audio and workbook have
+             gone out to every registered participant.</p>
+          <p>Attended and still want your optional Certificate of Participation? Message us and we will
+             sort it out.</p>
+          <div class="tm-actions" style="justify-content:center;margin-top:22px">
+            <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register for our next workshop</a>
+          </div>
+          <p style="margin-top:18px"><a href="{TM_WA}" target="_blank" rel="noopener" style="font-weight:600">Message us on WhatsApp</a>
+             or call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a></p>
+        </div>
+      </div>
+
+      <div class="tm-form" style="margin-top:22px">
+        <span class="section-tag">Open now</span>
+        <h2 class="tm-form-title" style="margin-top:8px">{MF_TITLE}: <em>{MF_CERT}</em></h2>
+        <p class="tm-form-sub">A three-day certificate workshop in Karachi for parents and early-years
+           teachers: decoding the child's perspective, early childhood psychology, and the practical life
+           area of the Montessori curriculum. Registration is open and dates go to registered
+           participants first.</p>
+        <div class="tm-actions">
+          <a href="{prefix}{MF_SLUG}.html" class="btn-secondary" style="text-align:center">Read the details</a>
+          <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
+        </div>
+      </div>
+
+      <p style="text-align:center;margin-top:22px"><a href="{prefix}{TM_SLUG}.html" class="more" style="font-weight:600">← Read about the completed workshop</a></p>
+    </div>
+  </div>
+</section>
+</main>
+"""
+    out += footer(prefix)
+    return out
+
+
+def montessori_page():
+    """Mind in the Making: the three-day Montessori Fundamentals Certificate.
+
+    Modelled on the first workshop's page, minus the dates: batches are
+    announced to registered participants first, so nothing here is dated.
+    """
+    prefix = ""
+    reg = f"{prefix}{MF_REG_SLUG}.html"
+    url = f"{BASE}/{MF_SLUG}"
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops.html"},
+            {"@type": "ListItem", "position": 3, "name": MF_PLAIN, "item": url}]},
+        # Course rather than Event: dates are announced batch by batch, and an
+        # Event without a startDate is invalid structured data.
+        {"@type": "Course", "name": MF_PLAIN,
+         "url": url,
+         "image": f"{BASE}/{MF_OG}",
+         "inLanguage": ["en", "ur"],
+         "educationalLevel": "Foundation, no prior Montessori experience required",
+         "description": ("A three-day Montessori fundamentals certificate workshop from MindCare "
+                         "Services® in Karachi for parents, early-years teachers and students. Day one "
+                         "decodes the child's perspective, day two covers early childhood psychology, "
+                         "and day three is hands-on with the practical life area of the Montessori "
+                         "curriculum. Certificate of Completion included."),
+         "teaches": [d["title"].replace("&#39;", "'") for d in MF_DAYS],
+         "offers": {"@type": "Offer", "availability": "https://schema.org/InStock",
+                    "url": f"{BASE}/{MF_REG_SLUG}"},
+         "provider": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
+         "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "Onsite",
+                               "courseWorkload": "P3D",
+                               "location": {"@type": "Place", "name": "MindCare Services®",
+                                            "address": {"@type": "PostalAddress",
+                                                        "addressLocality": "Karachi",
+                                                        "addressCountry": "PK"}}}},
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q,
+             "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", a)}}
+            for q, a in MF_FAQS]}]}
+
+    day_cards = "\n".join(f'''      <article class="feature-card fade-up mf-day">
+        <span class="mf-num">{d['num']}</span>
+        <span class="section-tag">{d['label']}</span>
+        <h3 style="margin-top:10px">{d['title']}</h3>
+        <p>{d['desc']}</p>
+        <ul class="aside-list" style="margin-top:12px">
+{chr(10).join(li(prefix, k) for k in d['kit'])}
+        </ul>
+      </article>''' for d in MF_DAYS)
+
+    out = head(f"{MF_PLAIN} | 3-Day Workshop in Karachi | MindCare Services®",
+               "Mind in the Making: a three-day Montessori Fundamentals Certificate workshop in Karachi "
+               "for parents and early-years teachers. Decoding the child's perspective, early childhood "
+               "psychology, and the practical life area of the Montessori curriculum. Registration open.",
+               url, prefix, schema, og_type="website")
+    out = social_image(out, MF_OG, MF_ALT, 1200, 630)
+    out += nav(prefix, "workshops")
+    out += f"""<main id="main">
+<style>{MF_CSS}</style>
+
+<header class="page-hero">
+  <div class="ph-inner">
+    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="{prefix}workshops.html">Workshops</a></li><li aria-current="page">Mind in the Making</li></ol>
+    <div class="ph-badge">{icon(prefix,'i-school')} New · 3-Day Certificate · Registration Open</div>
+    <h1>Mind in the <em>Making</em></h1>
+    <p class="lede">Three days on the child in front of you: how they actually see the world, what is happening in their first six years, and how the quiet, practical part of the Montessori curriculum turns all of it into independence. For parents and teachers, in the same room, on purpose.</p>
+    <div class="ph-actions">
+      <a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
+      <a href="{MF_WA}" target="_blank" rel="noopener" class="btn-secondary">{icon(prefix,'i-wa','18')} Ask us on WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="section-inner">
+    <div class="mf-hero-grid">
+      <div class="fade-up">
+        <img src="{prefix}{MF_POSTER}" alt="{MF_ALT}" class="mf-poster" width="900" height="1200">
+      </div>
+      <div class="fade-up">
+        <span class="section-tag">The invitation</span>
+        <h2 class="section-title">&ldquo;{MF_CERT}&rdquo;</h2>
+        <p style="margin:14px 0 16px">A child who will not put their shoes on is not being difficult. A three-year-old who screams when the bread is cut the wrong way is not being unreasonable. From inside their own head, both are behaving perfectly logically, and almost everything that goes wrong in an early-years room or a family morning comes from missing that.</p>
+        <p style="margin-bottom:20px">Maria Montessori's whole method rests on one habit: watch the child before you correct the child. Over three days we build that habit properly, put the developmental psychology underneath it, and then hand you the most practical part of the curriculum, the practical life area, ready to set up at home or in class.</p>
+        <div class="mf-facts">
+          <div class="mf-fact"><strong>Format</strong><span>Three days · hands-on</span></div>
+          <div class="mf-fact"><strong>Where</strong><span>In person in Karachi</span></div>
+          <div class="mf-fact"><strong>For</strong><span>Parents, teachers &amp; students</span></div>
+          <div class="mf-fact"><strong>You leave with</strong><span>Certificate of Completion</span></div>
+        </div>
+        <div style="margin-top:24px"><a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">The Three Days</span><h2 class="section-title">One question per day, answered properly</h2><p class="section-sub">Each day stands on the one before it: see the child, understand the child, then set up the environment the child can actually work in.</p></div>
+    <div class="feature-grid">
+{day_cards}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Included</span><h2 class="section-title">What you take home</h2></div>
+    <div class="feature-grid">
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Certificate of Completion</h3><p>Issued by MindCare Services® to every participant who completes all three days, for your CV, your school file or your own record.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clipboard')}</div><h3>Observation &amp; milestone charts</h3><p>The record sheet Montessori guides actually use, a sensitive-periods chart and a birth-to-six developmental milestones reference.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-home')}</div><h3>A practical life activity bank</h3><p>Exercises, presentation scripts and a shelf-setup plan you can build at home or in a classroom without importing anything.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>A regulation toolkit</h3><p>What to actually say and do in the middle of a meltdown, for the adult as much as for the child.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Good For</span><h2 class="section-title">Who this is for</h2></div>
+    <div class="feature-grid">
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-family')}</div><h3>Parents</h3><p>Especially of under-sixes. You will leave with a different read on the behaviour you were about to punish, and a shelf you can build this weekend.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-school')}</div><h3>Early-years teachers</h3><p>Montessori directresses, playgroup and daycare staff, and anyone running a room full of three-year-olds with more instinct than training.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Education &amp; psychology students</h3><p>Developmental theory with the practical half attached, taught by clinicians who assess and treat children every week.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>Caregivers &amp; helpers</h3><p>Grandparents, nannies and anyone else who spends whole days with a small child and wants to do it with more understanding.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px" class="fade-up">
+      <p style="margin-bottom:16px;font-weight:600">Seats are capped because day three is hands-on, and registered participants hear the dates first.</p>
+      <a href="{reg}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
+      <p style="margin-top:14px">or call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="mf-honest fade-up">
+      <span class="section-tag">Straight talk</span>
+      <h3 style="margin-top:10px">What this certificate is, and what it isn&#39;t</h3>
+      <p style="margin-bottom:14px"><strong>It is</strong> a three-day foundations course with a Certificate of Completion from MindCare Services®: a genuine working understanding of the child, the developmental psychology underneath the Montessori method, and a practical life area you can set up and present properly.</p>
+      <p><strong>It isn&#39;t</strong> an AMI or AMS diploma, and on its own it does not qualify you to run a Montessori classroom. It is also not therapy or an assessment for your child, though if day two raises something worth looking at, our clinical team in Karachi does exactly that work.</p>
+    </div>
+  </div>
+</section>
+
+{faq_block(prefix, MF_FAQS)}
+
+{cta_band(prefix, "Not sure if it's for you?", "Tell us whether you're coming as a parent, a teacher or a student and we'll tell you honestly what you'll get out of it. A real person from our team answers.")}
+</main>
+"""
+    out += footer(prefix)
+    return out
+
+
+def montessori_register_page():
+    """One-step registration: who you are, and how we reach you.
+
+    There is no fee to collect here. The batch fee and venue are quoted when the
+    dates are announced, so asking for money on this page would be guesswork.
+    """
+    prefix = ""
+    url = f"{BASE}/{MF_REG_SLUG}"
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops.html"},
+            {"@type": "ListItem", "position": 3, "name": MF_PLAIN, "item": f"{BASE}/{MF_SLUG}"},
+            {"@type": "ListItem", "position": 4, "name": "Register", "item": url}]},
+        {"@type": "WebPage", "name": f"Register: {MF_PLAIN} | MindCare Services®",
+         "url": url,
+         "description": ("Registration for the MindCare Services® Mind in the Making three-day "
+                         "Montessori Fundamentals Certificate workshop in Karachi. A short form: "
+                         "we confirm your place and send the dates, venue and fee for the next batch."),
+         "isPartOf": {"@type": "WebSite", "name": "MindCare Services®", "url": BASE}}]}
+
+    out = head(f"Register: {MF_PLAIN} | MindCare Services®",
+               "Reserve your place on Mind in the Making, MindCare's three-day Montessori Fundamentals "
+               "Certificate workshop in Karachi. One short form, nothing to pay now: we send the dates, "
+               "venue and fee for the next batch to registered participants first.",
+               url, prefix, schema, og_type="website")
+    out = social_image(out, MF_OG, MF_ALT, 1200, 630)
+    out += nav(prefix, "workshops")
+    out += f"""<main id="main">
+<style>{REG_FORM_CSS}</style>
 
 <section style="padding-top:132px">
   <div class="section-inner">
     <div class="tm-reg-wrap">
       <div class="section-header centered" style="margin-bottom:26px">
-        <span class="section-tag">Free Registration</span>
-        <h1 class="section-title" style="font-size:2.1rem">Register for Telepathy &amp; Meditation</h1>
-        <p class="section-sub">The workshop is free. Fill this in and we'll confirm your seat, then send the dates, the Zoom link and a calendar invite.</p>
+        <span class="section-tag">Registration Open</span>
+        <h1 class="section-title" style="font-size:2.1rem">Register for {MF_TITLE}</h1>
+        <p class="section-sub">The three-day <em>{MF_CERT}</em>. Fill this in and we'll confirm your place, then send the dates, the venue and the fee for the next batch before we announce them anywhere else.</p>
       </div>
 
-      <form class="tm-form" id="tm-form" novalidate>
-        <ol class="tm-progress">
-          <li id="tm-pill1" class="on">1 · Your details</li>
-          <li id="tm-pill2">2 · Certificate</li>
-        </ol>
+      <form class="tm-form" id="mf-form" novalidate>
+        <h2 class="tm-form-title">Your details</h2>
+        <p class="tm-form-sub">Nothing to pay on this page, and no payment details are asked for anywhere on it.</p>
 
-        <div id="tm-step1">
-          <h2 class="tm-form-title">Your details</h2>
-          <p class="tm-form-sub">Nothing to pay here, and no payment details are asked for on this step.</p>
-          <div class="tm-field"><label for="tm-name">Name <span class="tm-req">*</span></label><input type="text" id="tm-name" placeholder="Your full name" autocomplete="name"></div>
-          <div class="tm-row">
-            <div class="tm-field"><label for="tm-institute">Institute / University <span class="tm-req">*</span></label><input type="text" id="tm-institute" placeholder="Where you study or work" autocomplete="organization"></div>
-            <div class="tm-field"><label for="tm-education">Current education <span class="tm-req">*</span></label><input type="text" id="tm-education" placeholder="e.g. BS Psychology, 6th semester"></div>
-          </div>
-          <div class="tm-row">
-            <div class="tm-field"><label for="tm-phone">Phone <span class="tm-req">*</span></label><input type="tel" id="tm-phone" placeholder="+92..." autocomplete="tel"></div>
-            <div class="tm-field"><label for="tm-email">Email <span class="tm-req">*</span></label><input type="email" id="tm-email" placeholder="your@email.com" autocomplete="email"></div>
-          </div>
-          <div class="tm-field">
-            <label for="tm-prior">Prior information about the workshop topic?</label>
-            <textarea id="tm-prior" placeholder="Anything you already know or have practised. It is completely fine to write none."></textarea>
-          </div>
-          <div class="tm-field">
-            <label for="tm-expect">Expectations from the workshop?</label>
-            <textarea id="tm-expect" placeholder="A sentence or two is plenty, and it helps us shape the practice for the group."></textarea>
-          </div>
-          <div class="tm-actions">
-            <button type="button" class="btn-primary" id="tm-next">Next: Certificate →</button>
-          </div>
+        <div class="tm-field"><label for="mf-name">Name <span class="tm-req">*</span></label><input type="text" id="mf-name" placeholder="Your full name" autocomplete="name"></div>
+        <div class="tm-row">
+          <div class="tm-field"><label for="mf-institute">School / Institute <span class="tm-req">*</span></label><input type="text" id="mf-institute" placeholder="Where you teach or study, or &quot;home&quot;" autocomplete="organization"></div>
+          <div class="tm-field"><label for="mf-role">Your role or education <span class="tm-req">*</span></label><input type="text" id="mf-role" placeholder="e.g. Parent, Montessori directress, BS Psychology"></div>
+        </div>
+        <div class="tm-row">
+          <div class="tm-field"><label for="mf-phone">Phone <span class="tm-req">*</span></label><input type="tel" id="mf-phone" placeholder="+92..." autocomplete="tel"></div>
+          <div class="tm-field"><label for="mf-email">Email <span class="tm-req">*</span></label><input type="email" id="mf-email" placeholder="your@email.com" autocomplete="email"></div>
+        </div>
+        <div class="tm-field">
+          <label for="mf-prior">Any Montessori or child development background?</label>
+          <textarea id="mf-prior" placeholder="Training, teaching experience, or the ages of your own children. It is completely fine to write none."></textarea>
+        </div>
+        <div class="tm-field">
+          <label for="mf-expect">What would you like to walk away with?</label>
+          <textarea id="mf-expect" placeholder="A sentence or two is plenty, and it genuinely shapes how we run day three."></textarea>
         </div>
 
-        <div id="tm-step2" hidden>
-          <h2 class="tm-form-title">Last step: do you want a certificate?</h2>
-          <p class="tm-form-sub">Your seat in the workshop is free and stays free whichever you pick.</p>
-
-          <label class="tm-choice" for="tm-cert-no">
-            <input type="radio" name="tm-cert" id="tm-cert-no" value="no" checked>
-            <span class="tm-choice-head"><strong>No certificate, just register me</strong><em class="tm-amount">Free</em></span>
-            <p>Both live evenings, the guided audio, the workbook and the 30-day recordings. Nothing to pay, nothing to upload.</p>
-          </label>
-
-          <label class="tm-choice" for="tm-cert-yes">
-            <input type="radio" name="tm-cert" id="tm-cert-yes" value="yes">
-            <span class="tm-choice-head"><strong>Yes, send my Certificate of Participation</strong><em class="tm-amount">{TM_CERT_FEE} one-time</em></span>
-            <p>An official certificate issued by MindCare Services®, emailed to you within one business day. Covers verification, issuing and record-keeping.</p>
-          </label>
-
-          <div id="tm-pay" hidden>
-            <div class="tm-bank">
-              <h4>Transfer the <span class="tm-amount">{TM_CERT_FEE}</span> certificate fee</h4>
-              <p>Send it to the account below, then attach the screenshot. This is the only payment on this website, and it is optional.</p>
-              <dl class="tm-bank-grid">
-{bank_rows}
-              </dl>
-            </div>
-            <div class="tm-field">
-              <label for="tm-receipt">Upload payment screenshot <span class="tm-req">*</span></label>
-              <input type="file" id="tm-receipt" accept="image/*,application/pdf">
-              <p class="tm-hint" id="tm-receipt-hint">A screenshot or PDF of your transfer.</p>
-            </div>
-          </div>
-
-          <div class="tm-alert" id="tm-alert" role="alert" hidden></div>
-          <div class="tm-actions">
-            <button type="button" class="btn-secondary" id="tm-back">← Back</button>
-            <button type="submit" class="btn-primary" id="tm-submit">{icon(prefix,'i-clipboard','18')} <span id="tm-submit-label">Complete Registration</span></button>
-          </div>
+        <div class="tm-alert" id="mf-alert" role="alert" hidden></div>
+        <div class="tm-actions">
+          <button type="submit" class="btn-primary" id="mf-submit">{icon(prefix,'i-clipboard','18')} <span id="mf-submit-label">Reserve My Place</span></button>
         </div>
 
-        <p class="tm-note">Your details go straight to the MindCare team and are never shown publicly. Questions first? Call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a> or <a href="{TM_WA}" target="_blank" rel="noopener" style="font-weight:600">message us on WhatsApp</a>.</p>
+        <p class="tm-note">Registering costs nothing and commits you to nothing: it puts you first in line when the next batch opens. Your details go straight to the MindCare team and are never shown publicly. Questions first? Call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a> or <a href="{MF_WA}" target="_blank" rel="noopener" style="font-weight:600">message us on WhatsApp</a>.</p>
       </form>
 
-      <p style="text-align:center;margin-top:22px"><a href="{prefix}{TM_SLUG}.html" class="more" style="font-weight:600">← Read the workshop details</a></p>
+      <p style="text-align:center;margin-top:22px"><a href="{prefix}{MF_SLUG}.html" class="more" style="font-weight:600">← Read the workshop details</a></p>
     </div>
   </div>
 </section>
 </main>
-<script>{TM_FORM_JS}</script>
+<script>{MF_FORM_JS}</script>
 """
     out += footer(prefix)
     return out
@@ -2225,20 +2408,22 @@ def workshops_page():
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
             {"@type": "ListItem", "position": 2, "name": "Workshops", "item": url}]},
-        {"@type": "EducationEvent", "name": TM_PLAIN,
-         "startDate": "2026-09-19T19:00:00+05:00", "endDate": "2026-09-20T21:00:00+05:00",
-         "eventStatus": "https://schema.org/EventScheduled",
-         "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
-         "image": f"{BASE}/{TM_POSTER}",
-         "url": f"{BASE}/{TM_SLUG}",
-         "isAccessibleForFree": True,
-         "description": ("A free two-evening live online workshop on meditation, limbic resonance and empathic "
-                         "attunement: the science and practice behind feeling genuinely connected to another person."),
-         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "PKR",
-                    "category": "Free", "availability": "https://schema.org/InStock",
-                    "url": f"{BASE}/{TM_REG_SLUG}"},
-         "organizer": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
-         "location": {"@type": "VirtualLocation", "url": f"{BASE}/{TM_SLUG}"}},
+        {"@type": "Course", "name": MF_PLAIN,
+         "url": f"{BASE}/{MF_SLUG}",
+         "image": f"{BASE}/{MF_OG}",
+         "inLanguage": ["en", "ur"],
+         "description": ("A three-day Montessori fundamentals certificate workshop in Karachi for "
+                         "parents, early-years teachers and students, covering the child's "
+                         "perspective, early childhood psychology and the practical life area of the "
+                         "Montessori curriculum."),
+         "offers": {"@type": "Offer", "availability": "https://schema.org/InStock",
+                    "url": f"{BASE}/{MF_REG_SLUG}"},
+         "provider": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
+         "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "Onsite", "courseWorkload": "P3D",
+                               "location": {"@type": "Place", "name": "MindCare Services®",
+                                            "address": {"@type": "PostalAddress",
+                                                        "addressLocality": "Karachi",
+                                                        "addressCountry": "PK"}}}},
         {"@type": "Event", "name": "Applied Psychology Masterclass: 5-Day Certification Series",
          "startDate": "2026-07-27", "endDate": "2026-07-31",
          "eventStatus": "https://schema.org/EventScheduled",
@@ -2247,7 +2432,29 @@ def workshops_page():
          "description": "A 5-day applied psychology certification masterclass covering case conceptualization, CBT interventions, trauma-informed care, ethics & crisis management, and practice building. Includes certificate and toolkit manual.",
          "organizer": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
          "location": {"@type": "Place", "name": "MindCare Services®",
-                      "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}}}]}
+                      "address": {"@type": "PostalAddress", "addressLocality": "Karachi",
+                                  "addressCountry": "PK"}}},
+        # Kept in the graph as a completed course: the page still documents it.
+        {"@type": "Course", "name": TM_PLAIN,
+         "url": f"{BASE}/{TM_SLUG}",
+         "image": f"{BASE}/{TM_POSTER}",
+         "isAccessibleForFree": True,
+         "description": ("A free two-evening live online workshop on meditation, limbic resonance and "
+                         "empathic attunement. This workshop has been delivered and registration is closed."),
+         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "PKR", "category": "Free",
+                    "availability": "https://schema.org/SoldOut", "url": f"{BASE}/{TM_SLUG}"},
+         "provider": {"@type": "Organization", "name": "MindCare Services®", "url": BASE},
+         "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "Online",
+                               "courseWorkload": "PT4H",
+                               "location": {"@type": "VirtualLocation", "url": f"{BASE}/{TM_SLUG}"}}}]}
+
+    mf_days = "\n".join(f'''      <article class="feature-card fade-up mf-day">
+        <span class="mf-num">{d['num']}</span>
+        <span class="section-tag">{d['label']}</span>
+        <h3 style="margin-top:10px">{d['title']}</h3>
+        <p>{d['desc']}</p>
+      </article>''' for d in MF_DAYS)
+
     day_cards = "\n".join(f'''      <article class="feature-card fade-up ws-day">
         <img src="assets/workshops/{d['img']}" alt="{html.escape(d['title'])}, Applied Psychology Masterclass {d['day']}" loading="lazy" style="width:100%;height:auto;border-radius:14px;margin-bottom:16px">
         <span class="section-tag">{d['day']}</span>
@@ -2257,20 +2464,40 @@ def workshops_page():
 {chr(10).join(li(prefix, k) for k in d['kit'])}
         </ul>
       </article>''' for d in WS_DAYS)
-    out = head("Workshops & Trainings | Free Telepathy & Meditation Live Online | MindCare Services®",
-               "MindCare workshops: register free for Telepathy & Meditation, a live online workshop on Zoom, plus our Applied Psychology Masterclass certification series in Karachi.",
+
+    out = head("Workshops & Trainings | Montessori Fundamentals Certificate, Karachi | MindCare Services®",
+               "MindCare workshops: register for Mind in the Making, our three-day Montessori "
+               "Fundamentals Certificate in Karachi, plus the Applied Psychology Masterclass "
+               "certification series. See what's open and what we've already run.",
                url, prefix, schema, og_type="website")
-    out = social_image(out, TM_OG, "Telepathy & Meditation: The Art of Deep Attunement, a live online workshop by MindCare Services®", 1200, 630)
+    out = social_image(out, MF_OG, MF_ALT, 1200, 630)
     out += nav(prefix, "workshops")
     out += f"""<main id="main">
+<style>{MF_CSS}
+.ws-past .ws-shot{{filter:saturate(.78);box-shadow:0 14px 36px rgba(6,43,49,.18)}}
+.ws-shot{{position:relative;display:block;border-radius:18px;overflow:hidden;line-height:0}}
+.ws-shot img{{display:block;width:100%;height:auto}}
+/* A soft fade rather than a hard band: the poster's own call to action sits in
+   the bottom eighth, and a gradient covers it without slicing the line above. */
+.ws-shot::after{{content:'Completed · Registration Closed';position:absolute;left:0;right:0;bottom:0;
+ height:14%;min-height:44px;display:flex;align-items:flex-end;justify-content:center;
+ padding:0 10px 3.2%;background:linear-gradient(180deg,rgba(11,95,109,0) 0%,rgba(11,95,109,.92) 42%,rgba(11,95,109,.97) 100%);
+ color:#fff;font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:700;letter-spacing:.14em;
+ text-transform:uppercase;text-align:center;line-height:1.3}}
+@media(max-width:520px){{.ws-shot::after{{font-size:.66rem;letter-spacing:.1em}}}}
+.ws-done-tag{{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--green);background:var(--green-light);border:1px solid rgba(45,106,31,.22);
+ padding:6px 14px;border-radius:50px;margin-bottom:12px}}
+</style>
+
 <header class="page-hero">
   <div class="ph-inner">
     <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Workshops</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-globe')} Next Up · Free · Live Online · Registration Open</div>
+    <div class="ph-badge">{icon(prefix,'i-school')} Next Up · 3-Day Certificate · Registration Open</div>
     <h1>Workshops &amp; <em>Trainings</em></h1>
-    <p class="lede">Practical, human, evidence-based learning from the MindCare clinical team, online for anyone, anywhere, and in-person in Karachi. Our next online workshop is free to attend. Here's what's open right now.</p>
+    <p class="lede">Practical, human, evidence-based learning from the MindCare clinical team, in person in Karachi and online. Open for registration right now: <strong>{MF_TITLE}</strong>, our three-day Montessori Fundamentals Certificate for parents and early-years teachers.</p>
     <div class="ph-actions">
-      <a href="{prefix}{TM_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Free: Online Workshop</a>
+      <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
       <a href="#masterclass" class="btn-secondary">See the Masterclass ↓</a>
     </div>
   </div>
@@ -2278,33 +2505,45 @@ def workshops_page():
 
 <section>
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">Free · Registration Open</span><h2 class="section-title">Our next workshop is online, and it's free</h2></div>
+    <div class="section-header centered fade-up"><span class="section-tag">New · Registration Open</span><h2 class="section-title">Our next workshop is three days on the child</h2></div>
     <div class="split-grid fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:36px;align-items:center">
       <div>
-        <a href="{prefix}{TM_SLUG}" aria-label="Telepathy and Meditation workshop details"><img src="{prefix}{TM_POSTER}" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster" width="900" height="1200" style="width:100%;height:auto;border-radius:18px;box-shadow:0 18px 48px rgba(6,43,49,.24)"></a>
+        <a href="{prefix}{MF_SLUG}" aria-label="Mind in the Making, Montessori Fundamentals Certificate workshop details"><img src="{prefix}{MF_POSTER}" alt="{MF_ALT}" width="900" height="1200" class="mf-poster"></a>
       </div>
       <div>
-        <span class="section-tag">Free · Live on Zoom · Two evenings</span>
-        <h3 style="font-size:1.7rem;margin:10px 0 12px">Telepathy &amp; Meditation: <em>The Art of Deep Attunement</em></h3>
-        <p style="margin-bottom:16px">Two live evenings on Zoom, free and open to anyone anywhere. We build the meditation that quiets your own noise, then train the listening that lets another person's signal through, with an honest look at the science of empathy, co-regulation and the parts we still can't explain.</p>
+        <span class="section-tag">3 Days · Karachi · Certificate</span>
+        <h3 style="font-size:1.7rem;margin:10px 0 12px">{MF_TITLE}: <em>{MF_CERT}</em></h3>
+        <p style="margin-bottom:16px">Watch the child before you correct the child. Three days that teach you to see a small child's world from the inside, explain what is actually happening developmentally in the first six years, and then hand you the practical life area of the Montessori curriculum to set up at home or in your classroom.</p>
         <ul class="aside-list">
-{li(prefix,'Completely free to attend, no fee and no card details')}
-{li(prefix,'Live on Zoom · small group · cameras on, nothing pre-recorded')}
-{li(prefix,'Guided meditation audio in English &amp; Urdu to keep')}
-{li(prefix,'Paired attunement practice in breakout rooms')}
-{li(prefix,'Recordings for 30 days + attunement workbook')}
-{li(prefix,f'Optional certificate of participation, one-time {TM_CERT_FEE}, emailed within one business day')}
+{li(prefix,'Day 01 · Decoding the child&#39;s perspective')}
+{li(prefix,'Day 02 · Early childhood psychology')}
+{li(prefix,'Day 03 · The practical life area of the Montessori curriculum')}
+{li(prefix,'Certificate of Completion for every participant')}
+{li(prefix,'Written for parents and early-years teachers alike')}
+{li(prefix,'Observation sheets, milestone charts &amp; an activity bank to keep')}
         </ul>
         <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
-          <a href="{prefix}{TM_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register Free</a>
-          <a href="{prefix}{TM_SLUG}" class="btn-secondary">Full details →</a>
+          <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
+          <a href="{prefix}{MF_SLUG}" class="btn-secondary">Full details →</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="masterclass" class="bg-off">
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">The Three Days</span><h2 class="section-title">One question per day, answered properly</h2><p class="section-sub">Each day stands on the one before it: see the child, understand the child, then set up the environment the child can actually work in.</p></div>
+    <div class="feature-grid">
+{mf_days}
+    </div>
+    <div style="text-align:center;margin-top:36px" class="fade-up">
+      <a href="{prefix}{MF_SLUG}" class="btn-secondary">Read the full three-day breakdown →</a>
+    </div>
+  </div>
+</section>
+
+<section id="masterclass">
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">Certification Series · Karachi</span><h2 class="section-title">Applied Psychology Masterclass</h2><p class="section-sub">Five days. Five clinical skill sets. One certification: our in-person training for students and helping professionals, first run 27–31 July 2026.</p></div>
     <div class="split-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:center">
@@ -2328,7 +2567,7 @@ def workshops_page():
   </div>
 </section>
 
-<section id="schedule">
+<section id="schedule" class="bg-off">
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">The 5-Day Journey</span><h2 class="section-title">One skill set per day, one toolkit for life</h2><p class="section-sub">Each day builds on the last, and each day you take home the exact tools professionals use.</p></div>
     <div class="card-grid">
@@ -2337,27 +2576,48 @@ def workshops_page():
   </div>
 </section>
 
+<section id="past">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Already Delivered</span><h2 class="section-title">Workshops we've already run</h2><p class="section-sub">Kept here as a record of what we teach. Registration for these is closed, but we do re-run the popular ones.</p></div>
+    <div class="split-grid fade-up ws-past" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:36px;align-items:center">
+      <div>
+        <a href="{prefix}{TM_SLUG}" class="ws-shot" aria-label="Telepathy and Meditation workshop details, completed"><img src="{prefix}{TM_POSTER}" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster. This workshop has been completed." width="900" height="1200"></a>
+      </div>
+      <div>
+        <span class="ws-done-tag">{icon(prefix,'i-check','15')} Completed · Registration Closed</span>
+        <h3 style="font-size:1.5rem;margin:4px 0 12px">Telepathy &amp; Meditation: <em>The Art of Deep Attunement</em></h3>
+        <p style="margin-bottom:16px">Two free live evenings on Zoom: the meditation that quiets your own noise, then the listening that lets another person's signal through, with an honest look at the science of empathy and co-regulation. Delivered free as promised, with the guided audio, workbook and recordings sent to every participant.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="{prefix}{TM_SLUG}" class="btn-secondary">See what it covered →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="bg-off">
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">Good For</span><h2 class="section-title">Who should attend</h2></div>
     <div class="feature-grid">
-      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Psychology students</h3><p>Bridge the gap between the classroom and the therapy room before you graduate.</p></div>
-      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-clipboard')}</div><h3>Fresh graduates</h3><p>Start your first placements with intake forms, frameworks and worksheets already in hand.</p></div>
-      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>Helping professionals</h3><p>Teachers, counselors and caregivers who want evidence-based tools they can use responsibly.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-family')}</div><h3>Parents &amp; caregivers</h3><p>Understand the child in front of you before you correct them, and build an environment they can actually work in.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-school')}</div><h3>Teachers &amp; early-years staff</h3><p>Montessori directresses, playgroup and daycare staff who want the psychology underneath the method.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-grad')}</div><h3>Students &amp; fresh graduates</h3><p>Bridge the gap between the classroom and the real room, with tools and templates already in hand.</p></div>
+      <div class="feature-card fade-up"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>Helping professionals</h3><p>Counselors, therapists and community workers who want evidence-based tools they can use responsibly.</p></div>
     </div>
     <div style="text-align:center;margin-top:40px" class="fade-up">
-      <p style="margin-bottom:16px;font-weight:600">Seats are limited, and applications close when the batch is full.</p>
-      <a href="{WS_WA}" target="_blank" rel="noopener" class="btn-primary">{icon(prefix,'i-wa','18')} Apply Now on WhatsApp</a>
+      <p style="margin-bottom:16px;font-weight:600">Seats are limited, and registration closes when the batch is full.</p>
+      <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
       <p style="margin-top:14px">or call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a></p>
     </div>
   </div>
 </section>
 
-{cta_band(prefix, "Ready to become session-ready?", "Message us on WhatsApp with your name and background, and we'll confirm your seat and share the fee & venue details.")}
+{cta_band(prefix, "Want a workshop we haven't listed?", "Tell us the topic and who it's for, and we'll build it for your school, workplace or community. Message us on WhatsApp and a real person from our team will answer.")}
 </main>
 """
     out += footer(prefix)
     return out
+
 
 
 def confirmation_page():
@@ -2434,6 +2694,8 @@ def build():
         write(f"articles/{a['slug']}.html", article_page(a, i))
     write("articles.html", articles_index())
     write("workshops.html", workshops_page())
+    write(f"{MF_SLUG}.html", montessori_page())
+    write(f"{MF_REG_SLUG}.html", montessori_register_page())
     write(f"{TM_SLUG}.html", telepathy_meditation_page())
     write(f"{TM_REG_SLUG}.html", telepathy_register_page())
     write("confirmed.html", confirmation_page())
@@ -2442,8 +2704,11 @@ def build():
             (f"{BASE}/services/", "0.9"), (f"{BASE}/team/", "0.7"),
             (f"{BASE}/guides.html", "0.8"), (f"{BASE}/articles.html", "0.7"),
             (f"{BASE}/workshops.html", "0.9"),
-            (f"{BASE}/{TM_SLUG}", "0.9"),
-            (f"{BASE}/{TM_REG_SLUG}", "0.8")]
+            (f"{BASE}/{MF_SLUG}", "0.9"),
+            (f"{BASE}/{MF_REG_SLUG}", "0.8"),
+            # The completed workshop stays in the sitemap; its closed
+            # registration page is noindex, so it does not.
+            (f"{BASE}/{TM_SLUG}", "0.6")]
     urls += [(f"{BASE}/services/{s['slug']}", "0.8") for s in SERVICES]
     urls += [(f"{BASE}/team/{m['slug']}", "0.6") for m in TEAM]
     urls += [(f"{BASE}/{t['slug']}", "0.8") for t in TOPICS]

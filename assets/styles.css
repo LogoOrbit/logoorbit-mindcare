@@ -6,10 +6,16 @@
   --sand: #edf8f7; --peach: #f9c58d; --coral: #ef8354; --lav: #b8a9e8;
   --white: #f4fbfb; --off-white: #e7f5f4; --card: #ffffff; --gray: #44544b; --dark: #1b2822;
   --border: #d4e9e7; --shadow-soft: 0 6px 30px rgba(30,45,40,0.07); --radius: 20px;
+  /* White is the default: never let the OS dark preference paint the
+     browser's own controls, scrollbars or form widgets. */
+  color-scheme: light;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; animation: pageIn .5s ease both; }
+/* `backwards`, never `both`: a retained fill leaves a transform on <body>,
+   which makes it the containing block for every position:fixed descendant
+   (the nav, the WhatsApp button, any dialog). */
+body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; animation: pageIn .5s ease backwards; }
 @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 body.page-exit { opacity: 0; transform: translateY(-8px); transition: opacity .28s ease, transform .28s ease; }
 img, svg { max-width: 100%; }
@@ -203,7 +209,7 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
 @keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
 
 /* DARK MODE: manual toggle only (default is white/light) */
-html[data-theme="dark"] { --white:#0e1b13; --off-white:#12241a; --card:#12241a; --dark:#eaf4ee; --gray:#a7bcb0; --border:#234034; --teal:#3fd0dc; --teal-dark:#57dbe6; --teal-deep:#8fe8f0; --teal-light:#13312f; --teal-btn:#0a7f90; --teal-btn-hover:#096b79; --green-light:#16281a; --sand:#17251b; --shadow-soft:0 6px 30px rgba(0,0,0,0.3); }
+html[data-theme="dark"] { color-scheme: dark; --white:#0e1b13; --off-white:#12241a; --card:#12241a; --dark:#eaf4ee; --gray:#a7bcb0; --border:#234034; --teal:#3fd0dc; --teal-dark:#57dbe6; --teal-deep:#8fe8f0; --teal-light:#13312f; --teal-btn:#0a7f90; --teal-btn-hover:#096b79; --green-light:#16281a; --sand:#17251b; --shadow-soft:0 6px 30px rgba(0,0,0,0.3); }
 html[data-theme="dark"] body { background:#0e1b13; }
 html[data-theme="dark"] nav { background: rgba(14,27,19,0.92); }
 html[data-theme="dark"] .mobile-menu { background:#0e1b13; }
