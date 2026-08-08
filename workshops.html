@@ -210,8 +210,10 @@
 .mf-fact{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}
 .mf-fact strong{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}
 .mf-fact span{font-size:1.02rem;font-weight:600;color:var(--dark)}
-.mf-day{position:relative;padding-left:0;display:flex;flex-direction:column}
-.mf-day h3{min-height:2.6em}
+.mf-day{position:relative;display:flex;flex-direction:column;align-items:flex-start}
+.mf-day .section-tag{align-self:flex-start}
+.mf-day h3{min-height:2.6em;align-self:stretch}
+.mf-day>p,.mf-day .aside-list{align-self:stretch}
 .mf-day>p{flex:1 0 auto}
 .mf-day .aside-list{margin-bottom:0}
 @media(max-width:760px){.mf-day h3{min-height:0}.mf-day>p{flex:0 1 auto}}
