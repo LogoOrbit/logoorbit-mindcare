@@ -34,9 +34,15 @@ const EXT_BY_TYPE: Record<string, string> = {
 const RESEND_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
 const NOTIFY_FROM = Deno.env.get("NOTIFY_FROM") ??
   "MindCare Website <onboarding@resend.dev>";
-const NOTIFY_TO = (Deno.env.get("NOTIFY_TO") ??
-  "shaistatariq2002@gmail.com,info@themindcareservices.com")
-  .split(",").map((a) => a.trim()).filter(Boolean);
+// Every registration is emailed here. shaistatariq2002@gmail.com is always on
+// the list, so a stray NOTIFY_TO secret can never silence the alerts; the
+// variable only adds extra recipients.
+const ALWAYS_NOTIFY = "shaistatariq2002@gmail.com";
+const NOTIFY_TO = [...new Set([
+  ALWAYS_NOTIFY,
+  ...(Deno.env.get("NOTIFY_TO") ?? "info@themindcareservices.com")
+    .split(",").map((a) => a.trim()).filter(Boolean),
+])];
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
