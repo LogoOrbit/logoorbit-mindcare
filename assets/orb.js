@@ -24,18 +24,7 @@
   var CAM_Z = 7.2;
   camera.position.set(0, 0, CAM_Z);
 
-  // ---- theme ----
-  // Additive blending can only push a colour toward white, so the pale-mint palette
-  // that glows on the dark page dissolves into a white one. In light mode we swap to
-  // normal blending with deeper teals; dark mode keeps the original look untouched.
-  var docEl = document.documentElement;
-  function isLight() { return docEl.getAttribute("data-theme") !== "dark"; }
-  var light = isLight();
-  function blend() { return light ? THREE.NormalBlending : THREE.AdditiveBlending; }
-
-  var GREEN_DARK = new THREE.Color(0x4dffbe);
-  var GREEN_LIGHT = new THREE.Color(0x0e9c74);
-  var GREEN = new THREE.Color().copy(light ? GREEN_LIGHT : GREEN_DARK);
+  var GREEN = new THREE.Color(0x4dffbe);
   var group = new THREE.Group();
   scene.add(group);
 
@@ -105,8 +94,7 @@
   // ---- orb core (displaced shader sphere) ----
   var uniforms = {
     uTime: { value: 0 }, uAmp: { value: 0 }, uLow: { value: 0 },
-    uMid: { value: 0 }, uHigh: { value: 0 }, uColor: { value: GREEN },
-    uLight: { value: light ? 1 : 0 }
+    uMid: { value: 0 }, uHigh: { value: 0 }, uColor: { value: GREEN }
   };
   var orbGeo = new THREE.IcosahedronGeometry(1.35, lowPerf ? 4 : 6);
   var orbMat = new THREE.ShaderMaterial({
@@ -128,21 +116,13 @@
       " gl_Position=projectionMatrix*mv;}"
     ].join("\n"),
     fragmentShader: [
-      "uniform vec3 uColor;uniform float uAmp,uHigh,uLight;varying float vN;varying vec3 vView;",
+      "uniform vec3 uColor;uniform float uAmp,uHigh;varying float vN;varying vec3 vView;",
       "void main(){",
       " float fres=pow(1.0-abs(vView.z),2.2);",
       " float plasma=0.65+0.75*vN;",
       " vec3 col=uColor*(plasma+fres*2.1)+vec3(0.10,0.55,0.38)*fres;",
       " col+=vec3(0.10,0.55,0.35)*uHigh*2.4;",
       " float a=0.32+fres*0.95+uAmp*0.45;",
-      // On a light page the rim must go deeper, not brighter, or it vanishes into the
-      // background: darken toward the core teal and lean on opacity for the silhouette.
-      " if(uLight>0.5){",
-      "  vec3 deep=uColor*(0.35+0.45*vN);",
-      "  col=mix(deep,uColor*0.85,fres);",
-      "  col+=vec3(0.0,0.18,0.12)*uHigh;",
-      "  a=0.62+fres*0.30+uAmp*0.20;",
-      " }",
       " gl_FragColor=vec4(col,a);}"
     ].join("\n")
   });
@@ -155,9 +135,8 @@
     var m = new THREE.Mesh(
       new THREE.IcosahedronGeometry(r, 2),
       new THREE.MeshBasicMaterial({
-        color: GREEN, transparent: true,
-        opacity: (light ? 0.30 : 0.11) - i * (light ? 0.06 : 0.02),
-        blending: blend(), depthWrite: false,
+        color: GREEN, transparent: true, opacity: 0.11 - i * 0.02,
+        blending: THREE.AdditiveBlending, depthWrite: false,
         wireframe: true
       })
     );
@@ -165,58 +144,43 @@
   });
 
   // soft bloom-ish core glow sprite
-  function glowTex(forLight) {
+  function glowTex() {
     var c = document.createElement("canvas"); c.width = c.height = 128;
     var g = c.getContext("2d");
     var rg = g.createRadialGradient(64, 64, 0, 64, 64, 64);
-    if (forLight) {
-      // a teal haze that tints the white page rather than bleaching it
-      rg.addColorStop(0, "rgba(20,150,112,0.55)");
-      rg.addColorStop(0.22, "rgba(16,140,105,0.34)");
-      rg.addColorStop(0.5, "rgba(30,160,120,0.14)");
-      rg.addColorStop(1, "rgba(30,160,120,0)");
-    } else {
-      rg.addColorStop(0, "rgba(180,255,230,1)");
-      rg.addColorStop(0.22, "rgba(90,255,206,0.8)");
-      rg.addColorStop(0.5, "rgba(47,230,166,0.35)");
-      rg.addColorStop(1, "rgba(0,40,25,0)");
-    }
+    rg.addColorStop(0, "rgba(180,255,230,1)");
+    rg.addColorStop(0.22, "rgba(90,255,206,0.8)");
+    rg.addColorStop(0.5, "rgba(47,230,166,0.35)");
+    rg.addColorStop(1, "rgba(0,40,25,0)");
     g.fillStyle = rg; g.fillRect(0, 0, 128, 128);
     var t = new THREE.CanvasTexture(c); return t;
   }
-  var gtexDark = glowTex(false), gtexLight = glowTex(true);
-  var gtex = light ? gtexLight : gtexDark;
+  var gtex = glowTex();
   var glow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: gtex, color: light ? 0xffffff : 0x5affce, transparent: true, opacity: light ? 0.5 : 0.8,
-    blending: blend(), depthWrite: false
+    map: gtex, color: 0x5affce, transparent: true, opacity: 0.8,
+    blending: THREE.AdditiveBlending, depthWrite: false
   }));
   glow.scale.set(8.5, 8.5, 1); scene.add(glow);
 
   // light-ray sprite (soft vertical volumetric feel)
   var ray = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: gtex, color: 0x1f7a5a, transparent: true, opacity: light ? 0.10 : 0.16,
-    blending: blend(), depthWrite: false
+    map: gtex, color: 0x1f7a5a, transparent: true, opacity: 0.16,
+    blending: THREE.AdditiveBlending, depthWrite: false
   }));
   ray.scale.set(4, 16, 1); ray.position.z = -3; scene.add(ray);
 
   // ---- particle helpers ----
-  function pointTex(forLight) {
+  function pointTex() {
     var c = document.createElement("canvas"); c.width = c.height = 32;
     var g = c.getContext("2d");
     var rg = g.createRadialGradient(16, 16, 0, 16, 16, 16);
-    if (forLight) {
-      rg.addColorStop(0, "rgba(255,255,255,1)");
-      rg.addColorStop(0.5, "rgba(255,255,255,0.55)");
-    } else {
-      rg.addColorStop(0, "rgba(160,255,220,1)");
-      rg.addColorStop(0.5, "rgba(47,230,166,0.6)");
-    }
-    rg.addColorStop(1, "rgba(255,255,255,0)");
+    rg.addColorStop(0, "rgba(160,255,220,1)");
+    rg.addColorStop(0.5, "rgba(47,230,166,0.6)");
+    rg.addColorStop(1, "rgba(0,0,0,0)");
     g.fillStyle = rg; g.fillRect(0, 0, 32, 32);
     return new THREE.CanvasTexture(c);
   }
-  var ptexDark = pointTex(false), ptexLight = pointTex(true);
-  var ptex = light ? ptexLight : ptexDark;
+  var ptex = pointTex();
 
   // ---- circular energy field (organic audio spectrum) ----
   var fGeo = new THREE.BufferGeometry();
@@ -237,8 +201,8 @@
   }
   fGeo.setAttribute("position", new THREE.BufferAttribute(fPos, 3));
   var field = new THREE.Points(fGeo, new THREE.PointsMaterial({
-    size: lowPerf ? 0.06 : 0.045, map: ptex, color: light ? 0x0f9c72 : 0x6affce,
-    transparent: true, opacity: 1.0, blending: blend(),
+    size: lowPerf ? 0.06 : 0.045, map: ptex, color: 0x6affce,
+    transparent: true, opacity: 1.0, blending: THREE.AdditiveBlending,
     depthWrite: false, sizeAttenuation: true
   }));
   group.add(field);
@@ -257,8 +221,8 @@
   }
   oGeo.setAttribute("position", new THREE.BufferAttribute(oPos, 3));
   var orbit = new THREE.Points(oGeo, new THREE.PointsMaterial({
-    size: 0.075, map: ptex, color: light ? 0x0b7d5c : 0xb6ffe4, transparent: true,
-    opacity: 1.0, blending: blend(), depthWrite: false
+    size: 0.075, map: ptex, color: 0xb6ffe4, transparent: true,
+    opacity: 1.0, blending: THREE.AdditiveBlending, depthWrite: false
   }));
   group.add(orbit);
 
@@ -272,51 +236,10 @@
   }
   dGeo.setAttribute("position", new THREE.BufferAttribute(dPos, 3));
   var dust = new THREE.Points(dGeo, new THREE.PointsMaterial({
-    size: 0.04, map: ptex, color: light ? 0x158a67 : 0x2fbf8f, transparent: true,
-    opacity: light ? 0.55 : 0.4, blending: blend(), depthWrite: false
+    size: 0.04, map: ptex, color: 0x2fbf8f, transparent: true,
+    opacity: 0.4, blending: THREE.AdditiveBlending, depthWrite: false
   }));
   scene.add(dust);
-
-  // ---- live theme swap (the header toggle flips data-theme on <html>) ----
-  function applyTheme() {
-    var next = isLight();
-    if (next === light) return;
-    light = next;
-    var b = blend();
-    GREEN.copy(light ? GREEN_LIGHT : GREEN_DARK);
-    uniforms.uLight.value = light ? 1 : 0;
-    orbMat.needsUpdate = true;
-
-    shells.forEach(function (m, i) {
-      m.material.color.copy(GREEN);
-      m.material.opacity = (light ? 0.30 : 0.11) - i * (light ? 0.06 : 0.02);
-      m.material.blending = b;
-      m.material.needsUpdate = true;
-    });
-
-    var gt = light ? gtexLight : gtexDark;
-    glow.material.map = gt;
-    glow.material.color.set(light ? 0xffffff : 0x5affce);
-    glow.material.blending = b; glow.material.needsUpdate = true;
-    ray.material.map = gt;
-    ray.material.opacity = light ? 0.10 : 0.16;
-    ray.material.blending = b; ray.material.needsUpdate = true;
-
-    var pt = light ? ptexLight : ptexDark;
-    [[field, 0x0f9c72, 0x6affce], [orbit, 0x0b7d5c, 0xb6ffe4], [dust, 0x158a67, 0x2fbf8f]]
-      .forEach(function (e) {
-        e[0].material.map = pt;
-        e[0].material.color.set(light ? e[1] : e[2]);
-        e[0].material.blending = b;
-        e[0].material.needsUpdate = true;
-      });
-    dust.material.opacity = light ? 0.55 : 0.4;
-
-    if (!running) { running = true; requestAnimationFrame(loop); }
-  }
-  if (window.MutationObserver) {
-    new MutationObserver(applyTheme).observe(docEl, { attributes: true, attributeFilter: ["data-theme"] });
-  }
 
   // ---- resize ----
   function resize() {
@@ -382,7 +305,7 @@
       shells[s].scale.setScalar(1 + amp * 0.12 + Math.sin(t * 0.5 + s) * 0.02);
     }
     glow.scale.setScalar(8 + amp * 4.5 + low * 2.2);
-    glow.material.opacity = light ? (0.42 + amp * 0.25) : (0.7 + amp * 0.55);
+    glow.material.opacity = 0.7 + amp * 0.55;
 
     // energy field: organic radial spectrum
     for (var i = 0; i < FIELD; i++) {
@@ -395,7 +318,7 @@
       fPos[i * 3 + 2] = Math.sin(a2) * rad;
     }
     fGeo.attributes.position.needsUpdate = true;
-    field.material.opacity = light ? (0.75 + high * 0.25) : (0.6 + high * 0.4);
+    field.material.opacity = 0.6 + high * 0.4;
 
     // orbiting particles drift outward on peaks
     var push = 1 + amp * 0.5;
