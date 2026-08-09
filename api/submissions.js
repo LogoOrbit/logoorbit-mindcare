@@ -4,7 +4,7 @@ const { proxy } = require('./_supabase');
 // check and the rendering both happen inside the Supabase Edge Function.
 module.exports = async (req, res) => {
   if (req.method !== 'GET' && req.method !== 'HEAD' && req.method !== 'POST') {
-    res.setHeader('Allow', 'GET, POST');
+    res.setHeader('Allow', 'GET, HEAD, POST');
     res.status(405).send('Method not allowed');
     return;
   }

@@ -1,20 +1,20 @@
 /* Live site search from the nav icon, on every page.
-   The icon's href tells us how deep we are ("search.html" vs "../search.html"),
-   so the same script works from the root, /services/, /team/ and /articles/. */
+   Every link the site serves is a site-absolute clean URL, so this script needs
+   no notion of how deep the current page sits: it works the same from the root,
+   /services/, /team/ and /articles/. */
 (function () {
   "use strict";
 
-  var trigger = document.querySelector('.nav-tools a.icon-btn[href$="search.html"]');
+  var trigger = document.querySelector('.nav-tools a.icon-btn[href="/search"]');
   if (!trigger) return;
 
-  var PREFIX = trigger.getAttribute("href").replace(/search\.html$/, "");
   var MAX = 7;
   var INDEX = null;
   var loading = null;
 
   function loadIndex() {
     if (loading) return loading;
-    loading = fetch(PREFIX + "assets/search-index.json")
+    loading = fetch("/assets/search-index.json")
       .then(function (r) { return r.json(); })
       .then(function (d) { INDEX = d; return d; })
       .catch(function () { INDEX = []; return []; });
@@ -125,12 +125,12 @@
       return;
     }
     list.innerHTML = results.map(function (e, i) {
-      return '<a class="ns-item" role="option" data-i="' + i + '" href="' + esc(PREFIX + e.path) + '">' +
+      return '<a class="ns-item" role="option" data-i="' + i + '" href="' + esc(e.path) + '">' +
         '<span class="ns-t">' + esc(e.title.split("|")[0].trim()) + "</span>" +
         '<span class="ns-d">' + esc((e.desc || "").slice(0, 95)) + "…</span>" +
         "</a>";
     }).join("") +
-      '<a class="ns-all" href="' + esc(PREFIX + "search.html") + "?q=" + encodeURIComponent(q) + '">See all results for “' + esc(q) + '” →</a>';
+      '<a class="ns-all" href="/search?q=' + encodeURIComponent(q) + '">See all results for “' + esc(q) + '” →</a>';
   }
 
   function setActive(n) {
@@ -175,7 +175,7 @@
     var items = list.querySelectorAll(".ns-item");
     if (active >= 0 && items[active]) { window.location.href = items[active].href; return; }
     var q = input.value.trim();
-    if (q) window.location.href = PREFIX + "search.html?q=" + encodeURIComponent(q);
+    if (q) window.location.href = "/search?q=" + encodeURIComponent(q);
   });
 
   input.addEventListener("keydown", function (e) {

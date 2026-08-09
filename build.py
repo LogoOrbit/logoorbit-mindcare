@@ -4,7 +4,7 @@ Generates /services/*.html and /team/*.html plus their index pages from the
 data tables below, so every interior page shares one design system and a
 consistent SEO/schema baseline. Run: python3 build.py
 """
-import os, re, html, json, datetime
+import os, re, html, json, datetime, subprocess
 from urllib.parse import quote as urlquote
 
 BASE = "https://themindcareservices.com"
@@ -100,17 +100,17 @@ def nav(prefix, active=None):
     def cls(key):
         return ' class="active"' if active == key else ''
     return f"""<nav id="navbar" aria-label="Primary navigation">
-  <a href="{prefix}index.html" class="nav-logo" aria-label="MindCare Services home">
-    <img src="{prefix}mindcare.png" width="120" height="54" alt="MindCare Services®, a psychotherapy and mental health clinic in Karachi">
+  <a href="/" class="nav-logo" aria-label="MindCare Services home">
+    <img src="{prefix}mindcare.png" width="790" height="316" alt="MindCare Services®, a psychotherapy and mental health clinic in Karachi">
   </a>
   <ul class="nav-links">
-    <li><a href="{prefix}index.html"{cls('home')}>Home</a></li>
-    <li><a href="{prefix}services/index.html"{cls('services')}>Services</a></li>
-    <li><a href="{prefix}about.html"{cls('about')}>About</a></li>
-    <li><a href="{prefix}team/index.html"{cls('team')}>Team</a></li>
-    <li><a href="{prefix}articles.html"{cls('articles')}>Articles</a></li>
-    <li><a href="{prefix}workshops.html"{cls('workshops')}>Workshops</a></li>
-    <li><a href="{prefix}contact.html" class="nav-cta">Book</a></li>
+    <li><a href="/"{cls('home')}>Home</a></li>
+    <li><a href="/services/"{cls('services')}>Services</a></li>
+    <li><a href="/about"{cls('about')}>About</a></li>
+    <li><a href="/team/"{cls('team')}>Team</a></li>
+    <li><a href="/articles"{cls('articles')}>Articles</a></li>
+    <li><a href="/workshops"{cls('workshops')}>Workshops</a></li>
+    <li><a href="/contact" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
     <button class="icon-btn" id="langBtn" type="button" aria-label="Change language">اردو</button>
@@ -119,13 +119,13 @@ def nav(prefix, active=None):
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="{prefix}index.html">Home</a>
-  <a href="{prefix}services/index.html">Services</a>
-  <a href="{prefix}about.html">About</a>
-  <a href="{prefix}team/index.html">Team</a>
-  <a href="{prefix}articles.html">Articles</a>
-  <a href="{prefix}workshops.html">Workshops</a>
-  <a href="{prefix}contact.html" class="m-cta">Book a Consultation</a>
+  <a href="/">Home</a>
+  <a href="/services/">Services</a>
+  <a href="/about">About</a>
+  <a href="/team/">Team</a>
+  <a href="/articles">Articles</a>
+  <a href="/workshops">Workshops</a>
+  <a href="/contact" class="m-cta">Book a Consultation</a>
 </div>
 <div class="wa-float">
   <div class="wa-tooltip">Chat on WhatsApp</div>
@@ -139,7 +139,7 @@ def cta_band(prefix, heading, sub):
   <div class="cta-band-inner fade-up">
     <div><h2>{heading}</h2><p>{sub}</p></div>
     <div class="cta-band-btns">
-      <a href="{prefix}contact.html" class="btn-white">Book Free Consultation</a>
+      <a href="/contact" class="btn-white">Book Free Consultation</a>
       <a href="{WA}" target="_blank" rel="noopener" class="btn-white wa">{icon(prefix,'i-wa','18')} WhatsApp Us</a>
     </div>
   </div>
@@ -160,28 +160,28 @@ def footer(prefix):
       </div>
     </div>
     <div class="footer-col"><h4>Services</h4><ul>
-      <li><a href="{prefix}services/individual-psychotherapy.html">Psychotherapy</a></li>
-      <li><a href="{prefix}services/family-counseling.html">Family Counseling</a></li>
-      <li><a href="{prefix}services/speech-therapy.html">Speech Therapy</a></li>
-      <li><a href="{prefix}services/physiotherapy.html">Physiotherapy</a></li>
-      <li><a href="{prefix}services/behavioral-therapy.html">Behavioral Therapy</a></li>
-      <li><a href="{prefix}services/index.html">All Services</a></li>
+      <li><a href="/services/individual-psychotherapy">Psychotherapy</a></li>
+      <li><a href="/services/family-counseling">Family Counseling</a></li>
+      <li><a href="/services/speech-therapy">Speech Therapy</a></li>
+      <li><a href="/services/physiotherapy">Physiotherapy</a></li>
+      <li><a href="/services/behavioral-therapy">Behavioral Therapy</a></li>
+      <li><a href="/services/">All Services</a></li>
     </ul></div>
     <div class="footer-col"><h4>Company</h4><ul>
-      <li><a href="{prefix}index.html#about">About Us</a></li>
-      <li><a href="{prefix}index.html#journey">How It Works</a></li>
-      <li><a href="{prefix}team/index.html">Our Team</a></li>
-      <li><a href="{prefix}articles.html">Articles</a></li>
-      <li><a href="{prefix}guides.html">Help &amp; Guides</a></li>
-      <li><a href="{prefix}workshops.html">Workshops</a></li>
-      <li><a href="{prefix}index.html#faq">FAQ</a></li>
-      <li><a href="{prefix}contact.html">Book Appointment</a></li>
+      <li><a href="/#about">About Us</a></li>
+      <li><a href="/#journey">How It Works</a></li>
+      <li><a href="/team/">Our Team</a></li>
+      <li><a href="/articles">Articles</a></li>
+      <li><a href="/guides">Help &amp; Guides</a></li>
+      <li><a href="/workshops">Workshops</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li><a href="/contact">Book Appointment</a></li>
     </ul></div>
     <div class="footer-col"><h4>Contact</h4><ul>
       <li><a href="tel:{PHONE}">{PHONE_H}</a></li>
       <li><a href="https://www.instagram.com/mindcare.services/" target="_blank" rel="noopener">@mindcare.services</a></li>
       <li><a href="mailto:shaistatariq2002@gmail.com">shaistatariq2002@gmail.com</a></li>
-      <li><a href="{prefix}contact.html">Book Consultation</a></li>
+      <li><a href="/contact">Book Consultation</a></li>
       <li><span>Karachi, Pakistan</span></li>
     </ul></div>
   </div>
@@ -410,7 +410,7 @@ def service_page(s):
         for ic, t, d in s["included"])
     related = [x for x in SERVICES if x["slug"] != s["slug"]][:3]
     related_cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="{r['slug']}.html"><div class="fi">{icon(prefix,r['icon'])}</div><h3>{r['name']}</h3><p>{r['lede'][:96]}…</p><span class="more">Learn more →</span></a>'''
+        f'''      <a class="link-card fade-up" href="/services/{r['slug']}"><div class="fi">{icon(prefix,r['icon'])}</div><h3>{r['name']}</h3><p>{r['lede'][:96]}…</p><span class="more">Learn more →</span></a>'''
         for r in related)
 
     out = head(s["title"], s["desc"], url, prefix, schema)
@@ -418,12 +418,12 @@ def service_page(s):
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="index.html">Services</a></li><li aria-current="page">{s['name']}</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/services/">Services</a></li><li aria-current="page">{s['name']}</li></ol>
     <div class="ph-badge">{icon(prefix,'i-shield')} Evidence-based · Confidential · Karachi</div>
     <h1>{s['name']}</h1>
     <p class="lede">{s['lede']}</p>
     <div class="ph-actions">
-      <a href="{prefix}contact.html" class="btn-primary">Book Free Consultation</a>
+      <a href="/contact" class="btn-primary">Book Free Consultation</a>
       <a href="{WA}" target="_blank" rel="noopener" class="btn-secondary">Ask on WhatsApp</a>
     </div>
   </div>
@@ -450,7 +450,7 @@ def service_page(s):
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
         </ul>
         <div class="aside-actions">
-          <a href="{prefix}contact.html" class="btn-primary" style="justify-content:center">Book a Consultation</a>
+          <a href="/contact" class="btn-primary" style="justify-content:center">Book a Consultation</a>
           <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
         </div>
       </aside>
@@ -499,7 +499,7 @@ def services_index():
             for i, s in enumerate(SERVICES)]},
     ]}
     cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="{prefix}services/{s['slug']}.html"><div class="fi">{icon(prefix,s['icon'])}</div><h3>{s['name']}</h3><p>{s['lede'][:120]}…</p><span class="more">Learn more →</span></a>'''
+        f'''      <a class="link-card fade-up" href="/services/{s['slug']}"><div class="fi">{icon(prefix,s['icon'])}</div><h3>{s['name']}</h3><p>{s['lede'][:120]}…</p><span class="more">Learn more →</span></a>'''
         for s in SERVICES)
     out = head("Our Services | Psychotherapy, Counseling & Therapy in Karachi | MindCare Services®",
                "Explore all MindCare Services® offerings in Karachi: psychotherapy, family counseling, speech therapy, physiotherapy, occupational and behavioral therapy, assessments and more.",
@@ -508,11 +508,11 @@ def services_index():
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Services</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Services</li></ol>
     <div class="ph-badge">{icon(prefix,'i-puzzle')} 10 services · One caring team</div>
     <h1>Comprehensive care for <em>mind &amp; body</em></h1>
     <p class="lede">A holistic range of therapy and clinical services, all under one roof in Karachi, delivered by experienced professionals. Choose a service to learn more.</p>
-    <div class="ph-actions"><a href="{prefix}contact.html" class="btn-primary">Book Free Consultation</a></div>
+    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Free Consultation</a></div>
   </div>
 </header>
 <section>
@@ -549,7 +549,7 @@ TEAM = [
          bio=["Shaista Tariq is an Associate Psychologist, Counsellor, Behavior Therapist and Mental Health Care Provider, and the founder of MindCare Services®. She is personally a verified Member of the Pakistan Psychological Association (PPA).",
               "She founded MindCare on a single belief: no one should have to struggle alone, or feel that what they're going through isn't \"serious enough\" to ask for help. Under her leadership, MindCare has grown into a multidisciplinary team offering holistic, evidence-based care across Karachi.",
               "Alongside MindCare, Shaista works as a Behavioral Therapist and Additional Needs Coordinator at VIVI - The Bear School, supporting children with additional needs. She works with adults and adolescents using approaches including Cognitive Behavioral Therapy (CBT), Applied Behavior Analysis (ABA) and motivational therapy, and leads awareness sessions and trainings for workplaces, schools and institutions.",
-              "She also writes on mental health, workplaces and the human side of care. You can <a href=\"../articles.html\">read her articles here</a>."],
+              "She also writes on mental health, workplaces and the human side of care. You can <a href=\"/articles\">read her articles here</a>."],
          focus=["Anxiety, depression and stress", "Behavior therapy &amp; child mental health", "Cognitive Behavioral Therapy (CBT)",
                 "Counselling for individuals and families", "Mental health education &amp; awareness training"],
          knows=["Psychology", "Counselling", "Cognitive Behavioral Therapy", "Applied Behavior Analysis", "Behavioral Therapy", "Child Mental Health", "Mental Health"],
@@ -666,13 +666,13 @@ def team_page(m):
     svc_link = ""
     if svc:
         sname = SERVICE_BY_SLUG[svc]["name"]
-        svc_link = f'<p style="margin-top:18px"><a href="{prefix}services/{svc}.html" class="more" style="font-weight:600">See {sname} →</a></p>'
+        svc_link = f'<p style="margin-top:18px"><a href="/services/{svc}" class="more" style="font-weight:600">See {sname} →</a></p>'
     out = head(m["title"], m["desc"], url, prefix, schema, og_type="profile")
     out += nav(prefix, "team")
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="index.html">Team</a></li><li aria-current="page">{m['name']}</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/team/">Team</a></li><li aria-current="page">{m['name']}</li></ol>
     <div class="profile-head">
       <div class="profile-avatar">{AV[m['av']]}</div>
       <div>
@@ -705,7 +705,7 @@ def team_page(m):
           <li>{icon(prefix,'i-lock')} 100% confidential</li>
         </ul>
         <div class="aside-actions">
-          <a href="{prefix}contact.html" class="btn-primary" style="justify-content:center">Book a Consultation</a>
+          <a href="/contact" class="btn-primary" style="justify-content:center">Book a Consultation</a>
           <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
         </div>
       </aside>
@@ -732,7 +732,7 @@ def team_index():
             {"@type": "ListItem", "position": i + 1, "name": m["name"], "url": f"{BASE}/team/{m['slug']}"}
             for i, m in enumerate(TEAM)]}]}
     cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="{prefix}team/{m['slug']}.html" style="text-align:center">
+        f'''      <a class="link-card fade-up" href="/team/{m['slug']}" style="text-align:center">
         <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px">{AV[m['av']]}</div>
         <h3>{m['name']}</h3><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">{m['role']}</p>
         <span class="more">View profile →</span></a>''' for m in TEAM)
@@ -743,11 +743,11 @@ def team_index():
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Team</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Team</li></ol>
     <div class="ph-badge">{icon(prefix,'i-family')} A multidisciplinary team</div>
     <h1>Meet the people behind <em>your care</em></h1>
     <p class="lede">A dedicated group of specialists united by one mission: compassionate, professional, impactful care. Get to know each of them.</p>
-    <div class="ph-actions"><a href="{prefix}contact.html" class="btn-primary">Book Free Consultation</a></div>
+    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Free Consultation</a></div>
   </div>
 </header>
 <section>
@@ -964,7 +964,7 @@ def seo_page(t):
          "speakable": {"@type": "SpeakableSpecification", "cssSelector": ["h1", ".lede"]}},
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
-            {"@type": "ListItem", "position": 2, "name": "Guides", "item": f"{BASE}/guides.html"},
+            {"@type": "ListItem", "position": 2, "name": "Guides", "item": f"{BASE}/guides"},
             {"@type": "ListItem", "position": 3, "name": t["h1"], "item": url}]},
         {"@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in t["faqs"]]},
@@ -973,19 +973,19 @@ def seo_page(t):
     help_p = "\n".join(f"        <p>{p}</p>" for p in t["help"])
     sibs = [x for x in TOPICS if x["slug"] != t["slug"]][:3]
     sib_cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="{s['slug']}.html"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>{s['h1']}</h3><p>{s['lede'][:92]}…</p><span class="more">Read more →</span></a>'''
+        f'''      <a class="link-card fade-up" href="/{s['slug']}"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>{s['h1']}</h3><p>{s['lede'][:92]}…</p><span class="more">Read more →</span></a>'''
         for s in sibs)
     out = head(t["title"], t["desc"], url, prefix, schema, og_type="article")
     out += nav(prefix)
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="guides.html">Guides</a></li><li aria-current="page">{t['h1']}</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/guides">Guides</a></li><li aria-current="page">{t['h1']}</li></ol>
     <div class="ph-badge">{icon(prefix,'i-heart-hands')} Confidential · Judgment-free · Karachi</div>
     <h1>{t['h1']}</h1>
     <p class="lede">{t['lede']}</p>
     <div class="ph-actions">
-      <a href="{prefix}contact.html" class="btn-primary">Book Free Consultation</a>
+      <a href="/contact" class="btn-primary">Book Free Consultation</a>
       <a href="{WA}" target="_blank" rel="noopener" class="btn-secondary">Ask on WhatsApp</a>
     </div>
   </div>
@@ -1000,7 +1000,7 @@ def seo_page(t):
         </ul>
         <h2>How we help</h2>
 {help_p}
-        <p style="margin-top:6px"><a href="{prefix}services/{svc['slug']}.html" class="more" style="font-weight:600">Learn about our {svc['name']} service →</a></p>
+        <p style="margin-top:6px"><a href="/services/{svc['slug']}" class="more" style="font-weight:600">Learn about our {svc['name']} service →</a></p>
       </div>
       <aside class="aside-card fade-up">
         <h3>Take the first step</h3>
@@ -1012,7 +1012,7 @@ def seo_page(t):
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
         </ul>
         <div class="aside-actions">
-          <a href="{prefix}contact.html" class="btn-primary" style="justify-content:center">Book a Consultation</a>
+          <a href="/contact" class="btn-primary" style="justify-content:center">Book a Consultation</a>
           <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
         </div>
       </aside>
@@ -1026,7 +1026,7 @@ def seo_page(t):
     <div class="card-grid">
 {sib_cards}
     </div>
-    <div style="text-align:center;margin-top:32px" class="fade-up"><a href="{prefix}guides.html" class="btn-secondary">See all help topics →</a></div>
+    <div style="text-align:center;margin-top:32px" class="fade-up"><a href="/guides" class="btn-secondary">See all help topics →</a></div>
   </div>
 </section>
 {cta_band(prefix, "You don't have to figure this out alone.", "Reach out today. A free, confidential consultation is the first step.")}
@@ -1038,7 +1038,7 @@ def seo_page(t):
 
 def guides_index():
     prefix = ""
-    url = f"{BASE}/guides.html"
+    url = f"{BASE}/guides"
     schema = {"@context": "https://schema.org", "@graph": [
         {"@type": "CollectionPage", "name": "Mental Health Help & Guides | MindCare Services®", "url": url,
          "description": "Guides and support pages for anxiety, depression, stress, trauma, relationships, children and more in Karachi."},
@@ -1049,7 +1049,7 @@ def guides_index():
             {"@type": "ListItem", "position": i + 1, "name": t["h1"], "url": f"{BASE}/{t['slug']}"}
             for i, t in enumerate(TOPICS)]}]}
     cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="{t['slug']}.html"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>{t['h1']}</h3><p>{t['lede'][:110]}…</p><span class="more">Read more →</span></a>'''
+        f'''      <a class="link-card fade-up" href="/{t['slug']}"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>{t['h1']}</h3><p>{t['lede'][:110]}…</p><span class="more">Read more →</span></a>'''
         for t in TOPICS)
     out = head("Mental Health Help & Guides in Karachi | Anxiety, Depression & More | MindCare Services®",
                "Find help for anxiety, depression, stress, trauma, relationships, children's needs and more in Karachi. Practical guides and support from MindCare Services®.",
@@ -1058,11 +1058,11 @@ def guides_index():
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Guides</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Guides</li></ol>
     <div class="ph-badge">{icon(prefix,'i-heart-hands')} Whatever you're facing</div>
     <h1>Find the <em>right support</em> for what you're going through</h1>
     <p class="lede">Not sure where to start? Pick what resonates below. Each guide explains the signs and how we can help, right here in Karachi.</p>
-    <div class="ph-actions"><a href="{prefix}contact.html" class="btn-primary">Book Free Consultation</a></div>
+    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Free Consultation</a></div>
   </div>
 </header>
 <section>
@@ -1337,7 +1337,7 @@ def article_page(a, idx):
          "isBasedOn": a["url"]},
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
-            {"@type": "ListItem", "position": 2, "name": "Articles", "item": f"{BASE}/articles.html"},
+            {"@type": "ListItem", "position": 2, "name": "Articles", "item": f"{BASE}/articles"},
             {"@type": "ListItem", "position": 3, "name": plain_title, "item": url}]}]}
     mins = read_time(a)
     takeaways = "\n        ".join(
@@ -1346,13 +1346,13 @@ def article_page(a, idx):
     next_a = ARTICLES[idx + 1] if idx < len(ARTICLES) - 1 else None
     pn = ""
     if prev_a:
-        pn += (f'      <a href="{prev_a["slug"]}.html" class="pv"><span class="art-pn-l">← Previous</span>'
+        pn += (f'      <a href="/articles/{prev_a["slug"]}" class="pv"><span class="art-pn-l">← Previous</span>'
                f'<strong>{prev_a["title"]}</strong></a>\n')
     if next_a:
-        pn += (f'      <a href="{next_a["slug"]}.html" class="nx"><span class="art-pn-l">Next →</span>'
+        pn += (f'      <a href="/articles/{next_a["slug"]}" class="nx"><span class="art-pn-l">Next →</span>'
                f'<strong>{next_a["title"]}</strong></a>\n')
     others = [x for x in ARTICLES if x["slug"] != a["slug"]][:3]
-    more = "\n".join(art_card(x, base="") for x in others)
+    more = "\n".join(art_card(x) for x in others)
 
     out = head(f"{plain_title} | Shaista Tariq | MindCare Services®", a["desc"], url, prefix,
                schema, og_type="article")
@@ -1360,7 +1360,7 @@ def article_page(a, idx):
     out += f"""<main id="main">
 <header class="page-hero art-hero" style="--a1:{a['a1']};--a2:{a['a2']}">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="{prefix}articles.html">Articles</a></li><li aria-current="page">{a['title']}</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/articles">Articles</a></li><li aria-current="page">{a['title']}</li></ol>
     {art_motif(a, 'art-art art-hero-motif')}
     <span class="art-chip">{a['category']}</span>
     <h1>{a['title']}</h1>
@@ -1368,7 +1368,7 @@ def article_page(a, idx):
     <div class="art-byline">
       <span class="art-avatar">{AV['shaista']}</span>
       <span class="art-by-who">
-        <a class="art-by-name" href="{prefix}team/shaista-tariq.html">Shaista Tariq</a>
+        <a class="art-by-name" href="/team/shaista-tariq">Shaista Tariq</a>
         <span class="art-by-role">Founder &amp; Associate Psychologist · PPA Member</span>
       </span>
       <span class="art-by-meta"><time datetime="{a['date']}">{a['date_h']}</time> · {mins} min read</span>
@@ -1389,7 +1389,7 @@ def article_page(a, idx):
       {art_body(a['body'])}
         <div class="art-end">
           <span class="art-avatar sm">{AV['shaista']}</span>
-          <p>Written by <a href="{prefix}team/shaista-tariq.html">Shaista Tariq</a>, founder of MindCare Services®. Originally published on LinkedIn. <a href="{a['url']}" target="_blank" rel="noopener">read the original post ↗</a></p>
+          <p>Written by <a href="/team/shaista-tariq">Shaista Tariq</a>, founder of MindCare Services®. Originally published on LinkedIn. <a href="{a['url']}" target="_blank" rel="noopener">read the original post ↗</a></p>
         </div>
       </article>
       <aside class="aside-card fade-up">
@@ -1409,7 +1409,7 @@ def article_page(a, idx):
         <h3>Talk to someone</h3>
         <p>If anything here resonated, a free and confidential consultation is a good place to start.</p>
         <div class="aside-actions">
-          <a href="{prefix}contact.html" class="btn-primary" style="justify-content:center">Book a Consultation</a>
+          <a href="/contact" class="btn-primary" style="justify-content:center">Book a Consultation</a>
           <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
         </div>
       </aside>
@@ -1435,10 +1435,9 @@ def article_page(a, idx):
     return out
 
 
-def art_card(a, base="articles/"):
-    """Magazine-style card used on the index and in 'keep reading' rails.
-    `base` is the path from the current page to the articles folder."""
-    href = f"{base}{a['slug']}.html"
+def art_card(a):
+    """Magazine-style card used on the index and in 'keep reading' rails."""
+    href = f"/articles/{a['slug']}"
     return f'''      <article class="art-card fade-up" style="--a1:{a['a1']};--a2:{a['a2']}">
         {art_motif(a)}
         <div class="art-card-body">
@@ -1455,7 +1454,7 @@ def art_card(a, base="articles/"):
 
 def articles_index():
     prefix = ""
-    url = f"{BASE}/articles.html"
+    url = f"{BASE}/articles"
     lead, rest = ARTICLES[0], ARTICLES[1:]
     schema = {"@context": "https://schema.org", "@graph": [
         {"@type": "Blog", "name": "Articles by Shaista Tariq | MindCare Services®", "url": url,
@@ -1480,12 +1479,12 @@ def articles_index():
     out += f"""<main id="main">
 <header class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Articles</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Articles</li></ol>
     <div class="ph-badge">{icon(prefix,'i-book')} {len(ARTICLES)} essays &amp; reflections</div>
     <h1>Articles by <em>Shaista Tariq</em></h1>
     <p class="lede">Long-form writing on mental health, the human side of care, workplaces and behaviour, by the founder of MindCare Services®. Every piece is here in full, no login required.</p>
     <div class="art-pills">{topics}</div>
-    <div class="ph-actions"><a href="{prefix}team/shaista-tariq.html" class="btn-secondary">About Shaista →</a></div>
+    <div class="ph-actions"><a href="/team/shaista-tariq" class="btn-secondary">About Shaista →</a></div>
   </div>
 </header>
 <section>
@@ -1495,7 +1494,7 @@ def articles_index():
       {art_motif(lead)}
       <div class="art-feature-body">
         <span class="art-chip">{lead['category']}</span>
-        <h2><a href="articles/{lead['slug']}.html">{lead['title']}</a></h2>
+        <h2><a href="/articles/{lead['slug']}">{lead['title']}</a></h2>
         <p class="art-kicker">{lead['kicker']}</p>
         <p>{lead['blurb']}</p>
         <div class="art-card-foot">
@@ -1629,7 +1628,7 @@ MF_FAQS = [
      "clinical team in Karachi does developmental assessments and child therapy, and we will point you "
      "to the right person."),
     ("How do I register?",
-     f"Open the <a href=\"{MF_REG_SLUG}.html\">registration page</a> and fill the short form, and we "
+     f"Open the <a href=\"/{MF_REG_SLUG}\">registration page</a> and fill the short form, and we "
      f"will confirm your place and send you the dates, venue and fee as soon as the batch is set. You "
      f"can also register on <a href=\"{MF_WA}\" target=\"_blank\" rel=\"noopener\">WhatsApp</a>. "
      f"Seats are capped because day three is hands-on."),
@@ -1699,7 +1698,7 @@ MF_FORM_JS = """
       '<p>Thank you. We will email and message you the dates, the venue and the fee for the next batch ' +
       'as soon as it is set, and registered participants always hear first.</p>' +
       '<p>Nothing is due now, and nothing is confirmed until you tell us it works for you.</p>' +
-      '<p style="margin-top:16px"><a href="montessori-fundamentals-workshop.html" style="font-weight:600">Back to the workshop details</a></p>' +
+      '<p style="margin-top:16px"><a href="/montessori-fundamentals-workshop" style="font-weight:600">Back to the workshop details</a></p>' +
       '</div>';
     form.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
@@ -1816,7 +1815,7 @@ TM_FAQS = [
     ("If it's free, what is the PKR 1,000 for?",
      f"Only for the optional certificate. If you would like an official Certificate of Participation issued by MindCare Services®, it is a one-time fee of {TM_CERT_FEE} that covers verification, issuing and record-keeping. It is entirely optional: you can attend the whole workshop, keep every resource and never pay a rupee. Your certificate is emailed to you within one business day."),
     ("Can I still join this one?",
-     f"No, this batch has finished. What is open right now is <a href=\"{MF_SLUG}.html\">Mind in the Making, our Montessori Fundamentals Certificate</a>: three days in Karachi on the child's perspective, early childhood psychology and the practical life area of the Montessori curriculum. If you want to hear the moment Telepathy &amp; Meditation runs again, <a href=\"{TM_WA}\" target=\"_blank\" rel=\"noopener\">message us on WhatsApp</a> and we will keep you on the list."),
+     f"No, this batch has finished. What is open right now is <a href=\"/{MF_SLUG}\">Mind in the Making, our Montessori Fundamentals Certificate</a>: three days in Karachi on the child's perspective, early childhood psychology and the practical life area of the Montessori curriculum. If you want to hear the moment Telepathy &amp; Meditation runs again, <a href=\"{TM_WA}\" target=\"_blank\" rel=\"noopener\">message us on WhatsApp</a> and we will keep you on the list."),
 ]
 
 
@@ -1911,7 +1910,7 @@ REG_FORM_CSS = """
 .tm-copy:hover{border-color:var(--teal)}
 .tm-alert{background:#fdecec;border:1px solid #f3c4c4;color:#a12a2a;border-radius:10px;padding:11px 14px;font-size:.86rem;margin-bottom:15px}
 .tm-done{text-align:center;padding:18px 4px}
-.tm-done h3{font-size:1.4rem;margin:0 0 10px}
+.tm-done h1,.tm-done h3{font-size:1.4rem;margin:0 0 10px}
 .tm-done p{color:var(--gray);font-size:.94rem;margin:0 auto 8px;max-width:440px}
 .tm-tick{width:58px;height:58px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.8rem}
 html[data-theme="dark"] .tm-form{background:#12241a}
@@ -1931,7 +1930,7 @@ def telepathy_meditation_page():
     schema = {"@context": "https://schema.org", "@graph": [
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
-            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops.html"},
+            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops"},
             {"@type": "ListItem", "position": 3, "name": "Telepathy & Meditation Workshop", "item": url}]},
         # Course rather than Event: dates are announced batch by batch, and an Event
         # without a startDate is invalid structured data.
@@ -1980,12 +1979,12 @@ def telepathy_meditation_page():
 
 <header class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="{prefix}workshops.html">Workshops</a></li><li aria-current="page">Telepathy &amp; Meditation</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/workshops">Workshops</a></li><li aria-current="page">Telepathy &amp; Meditation</li></ol>
     <div class="ph-badge tm-done-badge">{icon(prefix,'i-check')} Completed · Registration Closed</div>
     <h1>Telepathy &amp; <em>Meditation</em></h1>
     <p class="lede">Two evenings on the quietest, most underrated skill there is: the ability to settle yourself, and then genuinely tune in to another human being. This workshop has now been delivered, and this page is kept as the record of what it covered.</p>
     <div class="ph-actions">
-      <a href="{prefix}{MF_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} See the workshop that&#39;s open now</a>
+      <a href="/{MF_SLUG}" class="btn-primary">{icon(prefix,'i-clipboard','18')} See the workshop that&#39;s open now</a>
       <a href="{TM_WA}" target="_blank" rel="noopener" class="btn-secondary">{icon(prefix,'i-wa','18')} Tell me when it runs again</a>
     </div>
   </div>
@@ -2008,7 +2007,7 @@ def telepathy_meditation_page():
           <div class="tm-fact"><strong>Format</strong><span>Two live evenings on Zoom</span></div>
           <div class="tm-fact"><strong>Language</strong><span>English, with Urdu where it helps</span></div>
         </div>
-        <div style="margin-top:24px"><a href="{prefix}{MF_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} What&#39;s open now</a></div>
+        <div style="margin-top:24px"><a href="/{MF_SLUG}" class="btn-primary">{icon(prefix,'i-clipboard','18')} What&#39;s open now</a></div>
       </div>
     </div>
   </div>
@@ -2076,7 +2075,7 @@ def telepathy_meditation_page():
     </div>
     <div style="text-align:center;margin-top:40px" class="fade-up">
       <p style="margin-bottom:16px;font-weight:600">This batch has finished. Our next workshop, <em>{MF_TITLE}: {MF_CERT}</em>, is open for registration now.</p>
-      <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register for the next workshop</a>
+      <a href="/{MF_REG_SLUG}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register for the next workshop</a>
       <p style="margin-top:14px">or call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a></p>
     </div>
   </div>
@@ -2103,7 +2102,7 @@ def telepathy_register_page():
     schema = {"@context": "https://schema.org", "@graph": [
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
-            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops.html"},
+            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops"},
             {"@type": "ListItem", "position": 3, "name": "Telepathy & Meditation Workshop", "item": f"{BASE}/{TM_SLUG}"},
             {"@type": "ListItem", "position": 4, "name": "Register", "item": url}]},
         {"@type": "WebPage", "name": "Registration Closed: Telepathy & Meditation Workshop | MindCare Services®",
@@ -2132,14 +2131,14 @@ def telepathy_register_page():
       <div class="tm-form">
         <div class="tm-done">
           <div class="tm-tick" style="background:var(--green)">&#10003;</div>
-          <h3>This workshop has been completed</h3>
+          <h1>This workshop has been completed</h1>
           <p>Registration for <strong>Telepathy &amp; Meditation: The Art of Deep Attunement</strong> is now
              closed. Thank you to everyone who joined us: the recordings, guided audio and workbook have
              gone out to every registered participant.</p>
           <p>Attended and still want your optional Certificate of Participation? Message us and we will
              sort it out.</p>
           <div class="tm-actions" style="justify-content:center;margin-top:22px">
-            <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register for our next workshop</a>
+            <a href="/{MF_REG_SLUG}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Register for our next workshop</a>
           </div>
           <p style="margin-top:18px"><a href="{TM_WA}" target="_blank" rel="noopener" style="font-weight:600">Message us on WhatsApp</a>
              or call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a></p>
@@ -2154,12 +2153,12 @@ def telepathy_register_page():
            area of the Montessori curriculum. Registration is open and dates go to registered
            participants first.</p>
         <div class="tm-actions">
-          <a href="{prefix}{MF_SLUG}.html" class="btn-secondary" style="text-align:center">Read the details</a>
-          <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
+          <a href="/{MF_SLUG}" class="btn-secondary" style="text-align:center">Read the details</a>
+          <a href="/{MF_REG_SLUG}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
         </div>
       </div>
 
-      <p style="text-align:center;margin-top:22px"><a href="{prefix}{TM_SLUG}.html" class="more" style="font-weight:600">← Read about the completed workshop</a></p>
+      <p style="text-align:center;margin-top:22px"><a href="/{TM_SLUG}" class="more" style="font-weight:600">← Read about the completed workshop</a></p>
     </div>
   </div>
 </section>
@@ -2176,12 +2175,12 @@ def montessori_page():
     announced to registered participants first, so nothing here is dated.
     """
     prefix = ""
-    reg = f"{prefix}{MF_REG_SLUG}.html"
+    reg = f"/{MF_REG_SLUG}"
     url = f"{BASE}/{MF_SLUG}"
     schema = {"@context": "https://schema.org", "@graph": [
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
-            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops.html"},
+            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops"},
             {"@type": "ListItem", "position": 3, "name": MF_PLAIN, "item": url}]},
         # Course rather than Event: dates are announced batch by batch, and an
         # Event without a startDate is invalid structured data.
@@ -2232,7 +2231,7 @@ def montessori_page():
 
 <header class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li><a href="{prefix}workshops.html">Workshops</a></li><li aria-current="page">Mind in the Making</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/workshops">Workshops</a></li><li aria-current="page">Mind in the Making</li></ol>
     <div class="ph-badge">{icon(prefix,'i-school')} New · 3-Day Certificate · Registration Open</div>
     <h1>Mind in the <em>Making</em></h1>
     <p class="lede">Three days on the child in front of you: how they actually see the world, what is happening in their first six years, and how the quiet, practical part of the Montessori curriculum turns all of it into independence. For parents and teachers, in the same room, on purpose.</p>
@@ -2335,7 +2334,7 @@ def montessori_register_page():
     schema = {"@context": "https://schema.org", "@graph": [
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
-            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops.html"},
+            {"@type": "ListItem", "position": 2, "name": "Workshops", "item": f"{BASE}/workshops"},
             {"@type": "ListItem", "position": 3, "name": MF_PLAIN, "item": f"{BASE}/{MF_SLUG}"},
             {"@type": "ListItem", "position": 4, "name": "Register", "item": url}]},
         {"@type": "WebPage", "name": f"Register: {MF_PLAIN} | MindCare Services®",
@@ -2394,7 +2393,7 @@ def montessori_register_page():
         <p class="tm-note">Registering costs nothing and commits you to nothing: it puts you first in line when the next batch opens. Your details go straight to the MindCare team and are never shown publicly. Questions first? Call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a> or <a href="{MF_WA}" target="_blank" rel="noopener" style="font-weight:600">message us on WhatsApp</a>.</p>
       </form>
 
-      <p style="text-align:center;margin-top:22px"><a href="{prefix}{MF_SLUG}.html" class="more" style="font-weight:600">← Read the workshop details</a></p>
+      <p style="text-align:center;margin-top:22px"><a href="/{MF_SLUG}" class="more" style="font-weight:600">← Read the workshop details</a></p>
     </div>
   </div>
 </section>
@@ -2407,7 +2406,7 @@ def montessori_register_page():
 
 def workshops_page():
     prefix = ""
-    url = f"{BASE}/workshops.html"
+    url = f"{BASE}/workshops"
     schema = {"@context": "https://schema.org", "@graph": [
         {"@type": "CollectionPage", "name": "Workshops & Trainings | MindCare Services®", "url": url,
          "description": "Professional psychology workshops and certification trainings by MindCare Services® in Karachi."},
@@ -2434,7 +2433,7 @@ def workshops_page():
          "startDate": "2026-07-27", "endDate": "2026-07-31",
          "eventStatus": "https://schema.org/EventScheduled",
          "offers": {"@type": "Offer", "availability": "https://schema.org/SoldOut",
-                    "url": f"{BASE}/workshops.html#masterclass"},
+                    "url": f"{BASE}/workshops#masterclass"},
          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
          "image": f"{BASE}/assets/workshops/00-main-poster.png",
          "description": "A 5-day applied psychology certification masterclass covering case conceptualization, CBT interventions, trauma-informed care, ethics & crisis management, and practice building. Includes certificate and toolkit manual.",
@@ -2464,7 +2463,7 @@ def workshops_page():
       </article>''' for d in MF_DAYS)
 
     day_cards = "\n".join(f'''      <article class="feature-card fade-up ws-day">
-        <img src="assets/workshops/{d['img']}" alt="{html.escape(d['title'])}, Applied Psychology Masterclass {d['day']}" loading="lazy" style="width:100%;height:auto;border-radius:14px;margin-bottom:16px">
+        <img src="assets/workshops/{d['img']}" alt="{html.escape(d['title'])}, Applied Psychology Masterclass {d['day']}" width="1080" height="1350" loading="lazy" style="width:100%;height:auto;border-radius:14px;margin-bottom:16px">
         <span class="section-tag">{d['day']}</span>
         <h3 style="margin-top:10px">{html.escape(d['title'])}</h3>
         <p>{html.escape(d['desc'])}</p>
@@ -2500,12 +2499,12 @@ def workshops_page():
 
 <header class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="{prefix}index.html">Home</a></li><li aria-current="page">Workshops</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Workshops</li></ol>
     <div class="ph-badge">{icon(prefix,'i-school')} Next Up · 3-Day Certificate · Registration Open</div>
     <h1>Workshops &amp; <em>Trainings</em></h1>
     <p class="lede">Practical, human, evidence-based learning from the MindCare clinical team, in person in Karachi and online. Open for registration right now: <strong>{MF_TITLE}</strong>, our three-day Montessori Fundamentals Certificate for parents and early-years teachers.</p>
     <div class="ph-actions">
-      <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
+      <a href="/{MF_REG_SLUG}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
       <a href="#masterclass" class="btn-secondary">See the Masterclass ↓</a>
     </div>
   </div>
@@ -2516,7 +2515,7 @@ def workshops_page():
     <div class="section-header centered fade-up"><span class="section-tag">New · Registration Open</span><h2 class="section-title">Our next workshop is three days on the child</h2></div>
     <div class="split-grid fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:36px;align-items:center">
       <div>
-        <a href="{prefix}{MF_SLUG}" aria-label="Mind in the Making, Montessori Fundamentals Certificate workshop details"><img src="{prefix}{MF_POSTER}" alt="{MF_ALT}" width="900" height="1200" class="mf-poster"></a>
+        <a href="/{MF_SLUG}" aria-label="Mind in the Making, Montessori Fundamentals Certificate workshop details"><img src="{prefix}{MF_POSTER}" alt="{MF_ALT}" width="900" height="1200" class="mf-poster"></a>
       </div>
       <div>
         <span class="section-tag">3 Days · Karachi · Certificate</span>
@@ -2531,8 +2530,8 @@ def workshops_page():
 {li(prefix,'Observation sheets, milestone charts &amp; an activity bank to keep')}
         </ul>
         <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
-          <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
-          <a href="{prefix}{MF_SLUG}" class="btn-secondary">Full details →</a>
+          <a href="/{MF_REG_SLUG}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
+          <a href="/{MF_SLUG}" class="btn-secondary">Full details →</a>
         </div>
       </div>
     </div>
@@ -2546,7 +2545,7 @@ def workshops_page():
 {mf_days}
     </div>
     <div style="text-align:center;margin-top:36px" class="fade-up">
-      <a href="{prefix}{MF_SLUG}" class="btn-secondary">Read the full three-day breakdown →</a>
+      <a href="/{MF_SLUG}" class="btn-secondary">Read the full three-day breakdown →</a>
     </div>
   </div>
 </section>
@@ -2556,7 +2555,7 @@ def workshops_page():
     <div class="section-header centered fade-up"><span class="section-tag">Certification Series · Karachi</span><h2 class="section-title">Applied Psychology Masterclass</h2><p class="section-sub">Five days. Five clinical skill sets. One certification: our in-person training for students and helping professionals, delivered 27-31 July 2026. Registration for this run is closed, and we do re-run it.</p></div>
     <div class="split-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:36px;align-items:center">
       <div class="fade-up">
-        <span class="ws-shot" style="box-shadow:0 18px 48px rgba(0,0,0,.18);filter:saturate(.78)"><img src="assets/workshops/00-main-poster.png" alt="Applied Psychology Masterclass, 5-day certification series poster, 27-31 July 2026. This masterclass has been completed."></span>
+        <span class="ws-shot" style="box-shadow:0 18px 48px rgba(0,0,0,.18);filter:saturate(.78)"><img src="assets/workshops/00-main-poster.png" alt="Applied Psychology Masterclass, 5-day certification series poster, 27-31 July 2026. This masterclass has been completed." width="1080" height="1350" loading="lazy"></span>
       </div>
       <div class="fade-up">
         <span class="ws-done-tag">{icon(prefix,'i-check','15')} Completed · Registration Closed</span>
@@ -2590,14 +2589,14 @@ def workshops_page():
     <div class="section-header centered fade-up"><span class="section-tag">Already Delivered</span><h2 class="section-title">Workshops we've already run</h2><p class="section-sub">Kept here as a record of what we teach. Registration for these is closed, but we do re-run the popular ones.</p></div>
     <div class="split-grid fade-up ws-past" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:36px;align-items:center">
       <div>
-        <a href="{prefix}{TM_SLUG}" class="ws-shot" aria-label="Telepathy and Meditation workshop details, completed"><img src="{prefix}{TM_POSTER}" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster. This workshop has been completed." width="900" height="1200"></a>
+        <a href="/{TM_SLUG}" class="ws-shot" aria-label="Telepathy and Meditation workshop details, completed"><img src="{prefix}{TM_POSTER}" alt="Telepathy &amp; Meditation: The Art of Deep Attunement, live online workshop poster. This workshop has been completed." width="900" height="1200"></a>
       </div>
       <div>
         <span class="ws-done-tag">{icon(prefix,'i-check','15')} Completed · Registration Closed</span>
         <h3 style="font-size:1.5rem;margin:4px 0 12px">Telepathy &amp; Meditation: <em>The Art of Deep Attunement</em></h3>
         <p style="margin-bottom:16px">Two free live evenings on Zoom: the meditation that quiets your own noise, then the listening that lets another person's signal through, with an honest look at the science of empathy and co-regulation. Delivered free as promised, with the guided audio, workbook and recordings sent to every participant.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <a href="{prefix}{TM_SLUG}" class="btn-secondary">See what it covered →</a>
+          <a href="/{TM_SLUG}" class="btn-secondary">See what it covered →</a>
         </div>
       </div>
     </div>
@@ -2615,7 +2614,7 @@ def workshops_page():
     </div>
     <div style="text-align:center;margin-top:40px" class="fade-up">
       <p style="margin-bottom:16px;font-weight:600">Seats are limited, and registration closes when the batch is full.</p>
-      <a href="{prefix}{MF_REG_SLUG}.html" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
+      <a href="/{MF_REG_SLUG}" class="btn-primary">{icon(prefix,'i-clipboard','18')} Reserve My Place</a>
       <p style="margin-top:14px">or call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a></p>
     </div>
   </div>
@@ -2654,7 +2653,7 @@ def confirmation_page():
     <p class="lede">Thank you for reaching out to MindCare Services®. We've received your request and a member of our team will contact you shortly to finalise the date, time and details of your session.</p>
     <div class="ph-actions" style="justify-content:center">
       <a href="{WA}?text=Hi%2C%20I%20just%20booked%20an%20appointment%20and%20wanted%20to%20confirm%20the%20details." target="_blank" rel="noopener" class="btn-primary">{icon(prefix,'i-wa','18')} Message us on WhatsApp</a>
-      <a href="{prefix}index.html" class="btn-secondary">Back to Home</a>
+      <a href="/" class="btn-secondary">Back to Home</a>
     </div>
   </div>
 </header>
@@ -2669,7 +2668,7 @@ def confirmation_page():
     </div>
     <div style="text-align:center;margin-top:36px">
       <p style="margin-bottom:14px">Need to reach us sooner? Call <a href="tel:{PHONE}" style="font-weight:600">{PHONE_H}</a>.</p>
-      <a href="{prefix}services/index.html" class="more" style="font-weight:600">Explore our services →</a>
+      <a href="/services/" class="more" style="font-weight:600">Explore our services →</a>
     </div>
   </div>
 </section>
@@ -2687,6 +2686,25 @@ def write(path, content):
     with open(full, "w", encoding="utf-8") as f:
         f.write(content)
     print("wrote", path)
+
+
+def last_modified(path):
+    """The date a page really changed, for <lastmod>.
+
+    Stamping every URL with today's date on every build tells crawlers the
+    whole site changed when nothing did, and rewrites all fifty lines of the
+    sitemap in each diff. So: a page with uncommitted edits changed today,
+    anything else carries the date of the commit that last touched it.
+    """
+    def git(*args):
+        return subprocess.run(("git", *args), cwd=ROOT, capture_output=True,
+                              text=True, check=True).stdout.strip()
+    try:
+        if git("status", "--porcelain", "--", path):
+            return TODAY
+        return git("log", "-1", "--format=%cs", "--", path) or TODAY
+    except (OSError, subprocess.SubprocessError):
+        return TODAY
 
 
 def build():
@@ -2708,23 +2726,29 @@ def build():
     write(f"{TM_SLUG}.html", telepathy_meditation_page())
     write(f"{TM_REG_SLUG}.html", telepathy_register_page())
     write("confirmed.html", confirmation_page())
-    # sitemap
-    urls = [(f"{BASE}/", "1.0"), (f"{BASE}/contact", "0.8"),
-            (f"{BASE}/services/", "0.9"), (f"{BASE}/team/", "0.7"),
-            (f"{BASE}/guides.html", "0.8"), (f"{BASE}/articles.html", "0.7"),
-            (f"{BASE}/workshops.html", "0.9"),
-            (f"{BASE}/{MF_SLUG}", "0.9"),
-            (f"{BASE}/{MF_REG_SLUG}", "0.8"),
-            # The completed workshop stays in the sitemap; its closed
-            # registration page is noindex, so it does not.
-            (f"{BASE}/{TM_SLUG}", "0.6")]
-    urls += [(f"{BASE}/services/{s['slug']}", "0.8") for s in SERVICES]
-    urls += [(f"{BASE}/team/{m['slug']}", "0.6") for m in TEAM]
-    urls += [(f"{BASE}/{t['slug']}", "0.8") for t in TOPICS]
-    urls += [(art_url(a), "0.7") for a in ARTICLES]
+    # sitemap. Every entry is (served URL, source file, priority): the file is
+    # what lastmod is read from, so a page only claims to have changed when it
+    # actually has. /confirmed and the closed telepathy registration are
+    # noindex, so they are deliberately absent.
+    urls = [(f"{BASE}/", "index.html", "1.0"),
+            (f"{BASE}/about", "about.html", "0.7"),
+            (f"{BASE}/contact", "contact.html", "0.8"),
+            (f"{BASE}/services/", "services/index.html", "0.9"),
+            (f"{BASE}/team/", "team/index.html", "0.7"),
+            (f"{BASE}/guides", "guides.html", "0.8"),
+            (f"{BASE}/articles", "articles.html", "0.7"),
+            (f"{BASE}/workshops", "workshops.html", "0.9"),
+            (f"{BASE}/{MF_SLUG}", f"{MF_SLUG}.html", "0.9"),
+            (f"{BASE}/{MF_REG_SLUG}", f"{MF_REG_SLUG}.html", "0.8"),
+            (f"{BASE}/{TM_SLUG}", f"{TM_SLUG}.html", "0.6")]
+    urls += [(f"{BASE}/services/{s['slug']}", f"services/{s['slug']}.html", "0.8") for s in SERVICES]
+    urls += [(f"{BASE}/team/{m['slug']}", f"team/{m['slug']}.html", "0.6") for m in TEAM]
+    urls += [(f"{BASE}/{t['slug']}", f"{t['slug']}.html", "0.8") for t in TOPICS]
+    urls += [(art_url(a), f"articles/{a['slug']}.html", "0.7") for a in ARTICLES]
     body = "\n".join(
-        f"  <url><loc>{u}</loc><lastmod>{TODAY}</lastmod><changefreq>monthly</changefreq><priority>{p}</priority></url>"
-        for u, p in urls)
+        f"  <url><loc>{u}</loc><lastmod>{last_modified(f)}</lastmod>"
+        f"<changefreq>monthly</changefreq><priority>{p}</priority></url>"
+        for u, f, p in urls)
     sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                f"{body}\n</urlset>\n")

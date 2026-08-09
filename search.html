@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="assets/styles.css">
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"MindCare Services®","url":"https://themindcareservices.com/","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://themindcareservices.com/search.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+{"@context":"https://schema.org","@type":"WebSite","name":"MindCare Services®","url":"https://themindcareservices.com/","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://themindcareservices.com/search?q={search_term_string}"},"query-input":"required name=search_term_string"}}
 </script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZFCFZT32R"></script>
@@ -81,35 +81,35 @@
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 <nav id="navbar" aria-label="Primary navigation">
-  <a href="index.html" class="nav-logo" aria-label="MindCare Services home">
-    <img src="mindcare.png" width="120" height="54" alt="MindCare Services®, a psychotherapy and mental health clinic in Karachi"
+  <a href="/" class="nav-logo" aria-label="MindCare Services home">
+    <img src="mindcare.png" width="790" height="316" alt="MindCare Services®, a psychotherapy and mental health clinic in Karachi"
          onerror="this.style.display='none';document.getElementById('nav-logo-text').style.display='flex'">
     <span class="nav-logo-text" id="nav-logo-text" style="display:none">MIND<span>CARE</span></span>
   </a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="services/index.html">Services</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="team/index.html">Team</a></li>
-    <li><a href="articles.html">Articles</a></li>
-    <li><a href="workshops.html">Workshops</a></li>
-    <li><a href="contact.html" class="nav-cta">Book</a></li>
+    <li><a href="/">Home</a></li>
+    <li><a href="/services/">Services</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/team/">Team</a></li>
+    <li><a href="/articles">Articles</a></li>
+    <li><a href="/workshops">Workshops</a></li>
+    <li><a href="/contact" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
-  <a class="icon-btn" href="search.html" aria-label="Search"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a><button class="icon-btn" id="langBtn" type="button" aria-label="Change language">اردو</button>
+  <a class="icon-btn" href="/search" aria-label="Search"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a><button class="icon-btn" id="langBtn" type="button" aria-label="Change language">اردو</button>
   <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></svg></button>
   <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </div>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="services/index.html">Services</a>
-  <a href="about.html">About</a>
-  <a href="team/index.html">Team</a>
-  <a href="articles.html">Articles</a>
-  <a href="workshops.html">Workshops</a>
-  <a href="contact.html" class="m-cta">Book a Consultation</a>
+  <a href="/">Home</a>
+  <a href="/services/">Services</a>
+  <a href="/about">About</a>
+  <a href="/team/">Team</a>
+  <a href="/articles">Articles</a>
+  <a href="/workshops">Workshops</a>
+  <a href="/contact" class="m-cta">Book a Consultation</a>
 </div>
 
 <div class="wa-float">
@@ -123,7 +123,7 @@
 <main id="main">
 <div class="page-hero">
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="index.html">Home</a></li><li aria-current="page">Search</li></ol>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Search</li></ol>
     <h1>Search <em>MindCare Services®</em></h1>
     <form class="search-box" id="searchForm" role="search">
       <input type="search" id="searchInput" name="q" placeholder="Search services, articles, workshops…" aria-label="Search">
@@ -154,26 +154,26 @@
       </div>
     </div>
     <div class="footer-col"><h4>Services</h4><ul>
-      <li><a href="services/individual-psychotherapy.html">Psychotherapy</a></li>
-      <li><a href="services/family-counseling.html">Family Counseling</a></li>
-      <li><a href="services/speech-therapy.html">Speech Therapy</a></li>
-      <li><a href="services/physiotherapy.html">Physiotherapy</a></li>
-      <li><a href="services/behavioral-therapy.html">Behavioral Therapy</a></li>
-      <li><a href="services/index.html">All Services</a></li>
+      <li><a href="/services/individual-psychotherapy">Psychotherapy</a></li>
+      <li><a href="/services/family-counseling">Family Counseling</a></li>
+      <li><a href="/services/speech-therapy">Speech Therapy</a></li>
+      <li><a href="/services/physiotherapy">Physiotherapy</a></li>
+      <li><a href="/services/behavioral-therapy">Behavioral Therapy</a></li>
+      <li><a href="/services/">All Services</a></li>
     </ul></div>
     <div class="footer-col"><h4>Company</h4><ul>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="team/index.html">Our Team</a></li>
-      <li><a href="articles.html">Articles</a></li>
-    <li><a href="workshops.html">Workshops</a></li>
-      <li><a href="guides.html">Help &amp; Guides</a></li>
-      <li><a href="contact.html">Book Appointment</a></li>
+      <li><a href="/about">About Us</a></li>
+      <li><a href="/team/">Our Team</a></li>
+      <li><a href="/articles">Articles</a></li>
+    <li><a href="/workshops">Workshops</a></li>
+      <li><a href="/guides">Help &amp; Guides</a></li>
+      <li><a href="/contact">Book Appointment</a></li>
     </ul></div>
     <div class="footer-col"><h4>Contact</h4><ul>
       <li><a href="tel:+92-327-2337631">+92 327 2337631</a></li>
       <li><a href="https://www.instagram.com/mindcare.services/" target="_blank" rel="noopener">@mindcare.services</a></li>
       <li><a href="mailto:shaistatariq2002@gmail.com">shaistatariq2002@gmail.com</a></li>
-      <li><a href="contact.html">Book Consultation</a></li>
+      <li><a href="/contact">Book Consultation</a></li>
       <li><span>Karachi, Pakistan</span></li>
     </ul></div>
   </div>

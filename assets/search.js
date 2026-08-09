@@ -9,7 +9,7 @@
   if (!form || !input || !resultsEl) return;
 
   var INDEX = null;
-  var indexPromise = fetch("assets/search-index.json")
+  var indexPromise = fetch("/assets/search-index.json")
     .then(function (r) { return r.json(); })
     .then(function (data) { INDEX = data; return data; })
     .catch(function () { INDEX = []; return []; });
@@ -47,13 +47,13 @@
   }
 
   var BROWSE = [
-    { t: "All Services", d: "Therapy, counseling and rehabilitation care under one roof.", h: "services/index.html" },
-    { t: "Our Team", d: "Meet the psychologists and therapists at MindCare.", h: "team/index.html" },
-    { t: "Anxiety Therapy in Karachi", d: "Treatment for anxiety, worry and panic.", h: "anxiety-therapy-karachi.html" },
-    { t: "Depression Treatment", d: "Evidence-based support for low mood and depression.", h: "depression-treatment-karachi.html" },
-    { t: "Child Psychologist", d: "Assessment and therapy for children and teens.", h: "child-psychologist-karachi.html" },
-    { t: "Workshops", d: "Live online sessions and masterclasses.", h: "workshops.html" },
-    { t: "Book a Free Consultation", d: "Talk to us about what you need, no cost.", h: "contact.html" }
+    { t: "All Services", d: "Therapy, counseling and rehabilitation care under one roof.", h: "/services/" },
+    { t: "Our Team", d: "Meet the psychologists and therapists at MindCare.", h: "/team/" },
+    { t: "Anxiety Therapy in Karachi", d: "Treatment for anxiety, worry and panic.", h: "/anxiety-therapy-karachi" },
+    { t: "Depression Treatment", d: "Evidence-based support for low mood and depression.", h: "/depression-treatment-karachi" },
+    { t: "Child Psychologist", d: "Assessment and therapy for children and teens.", h: "/child-psychologist-karachi" },
+    { t: "Workshops", d: "Live online sessions and masterclasses.", h: "/workshops" },
+    { t: "Book a Free Consultation", d: "Talk to us about what you need, no cost.", h: "/contact" }
   ];
 
   function browseHtml(heading) {

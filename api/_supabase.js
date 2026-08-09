@@ -13,6 +13,17 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY ||
 // Must match SESSION_COOKIE in supabase/functions/workshop-submissions.
 const SESSION_COOKIE = 'mc_submissions';
 
+/** Reads one cookie out of a Cookie header, raw, exactly as the browser sent it. */
+function readCookie(header, name) {
+  if (!header) return null;
+  for (const part of header.split(';')) {
+    const eq = part.indexOf('=');
+    if (eq === -1) continue;
+    if (part.slice(0, eq).trim() === name) return part.slice(eq + 1).trim();
+  }
+  return null;
+}
+
 function encodeBody(req) {
   const type = (req.headers['content-type'] || '').toLowerCase();
   const body = req.body;
@@ -37,7 +48,10 @@ async function proxy(req, res, functionName, contentType) {
     apikey: SUPABASE_ANON_KEY,
     Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
   };
-  if (req.headers.cookie) headers.cookie = req.headers.cookie;
+  // Only the session cookie is any of Supabase's business. Forwarding the whole
+  // header would hand it the visitor's analytics cookies as well.
+  const session = readCookie(req.headers.cookie, SESSION_COOKIE);
+  if (session !== null) headers.cookie = `${SESSION_COOKIE}=${session}`;
   if (req.headers['user-agent']) headers['user-agent'] = req.headers['user-agent'];
 
   const forwardedFor = req.headers['x-forwarded-for'] || req.socket?.remoteAddress;
