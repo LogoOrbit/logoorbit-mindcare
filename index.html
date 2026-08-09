@@ -484,7 +484,12 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
 <!-- IMMERSIVE ORB -->
 <style>
 #orb-scene{position:relative;width:100%;height:100vh;min-height:560px;background:transparent;overflow:hidden;isolation:isolate;line-height:0}
-#orb-canvas{display:block;width:100%;height:100%;background:transparent}
+/* The glow sprite and particle field spill past the canvas box, so its top and
+   bottom edges clip them into a hard horizontal line. Feather those edges so the
+   scene dissolves into the page instead of stopping dead. */
+#orb-canvas{display:block;width:100%;height:100%;background:transparent;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.55) 12%,#000 28%,#000 74%,rgba(0,0,0,.55) 90%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.55) 12%,#000 28%,#000 74%,rgba(0,0,0,.55) 90%,transparent 100%)}
 @media(max-width:720px){#orb-scene{height:70vh;min-height:420px}}
 @media(max-width:480px){#orb-scene{height:60vh;min-height:360px}}
 </style>
