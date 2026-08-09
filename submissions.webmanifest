@@ -1,14 +1,13 @@
 {
-  "name": "MindCare Services®",
-  "short_name": "MindCare",
-  "description": "Karachi's trusted psychotherapy and mental health clinic. Evidence-based therapy, counseling and holistic care.",
-  "start_url": "/",
+  "name": "MindCare Submissions",
+  "short_name": "Submissions",
+  "description": "Workshop registrations for MindCare Services. Authorised staff only.",
+  "start_url": "/submissions",
   "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2BBDC9",
   "lang": "en-PK",
-  "categories": ["health", "medical", "lifestyle"],
   "icons": [
     {
       "src": "/assets/icons/icon-192.png",

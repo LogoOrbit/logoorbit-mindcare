@@ -55,7 +55,7 @@ def head(title, desc, canonical, prefix, schema, og_type="website"):
 <meta name="twitter:description" content="{html.escape(desc)}">
 <meta name="twitter:image" content="{BASE}/mindcare.png">
 <link rel="icon" href="{prefix}mindcare.png" type="image/png">
-<link rel="apple-touch-icon" href="{prefix}mindcare.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="{prefix}site.webmanifest">
 {GTAG}
 {FONTS}

@@ -22,7 +22,8 @@ only from people who ask for one.
 
 Staff read it back at `/submissions`, which rewrites to `/api/submissions` and
 proxies to the `workshop-submissions` Edge Function. That function checks the ID
-and password, sets a signed 8 hour session cookie, and renders one card per
+and password, sets a signed one year session cookie that is renewed on every
+visit (so a phone stays signed in until Sign out is tapped), and renders one card per
 registration, badged free or paid certificate, with one hour signed links to the
 receipts that exist. It also offers search, a CSV export and per-registration
 delete.
@@ -42,6 +43,7 @@ refuses to disappear.
 | --- | --- |
 | Supabase project | `MindCare` tables inside the `TalkLive` project, `kcamfetippgrawhgiabo` |
 | Table | `public.mindcare_workshop_registrations` |
+| Push subscriptions | `public.mindcare_push_subscriptions` |
 | Receipts | Storage bucket `mindcare-receipts`, private |
 | Functions | `supabase/functions/*`, deployed with `verify_jwt = false` |
 | Vercel proxies | `api/workshop-register.js`, `api/submissions.js` |
@@ -78,3 +80,29 @@ printf 'mindcare-submissions:<new-id>:<new-password>' | sha256sum
 supabase functions deploy workshop-register    --project-ref kcamfetippgrawhgiabo --no-verify-jwt
 supabase functions deploy workshop-submissions --project-ref kcamfetippgrawhgiabo --no-verify-jwt
 ```
+
+## Phone alerts (Web Push)
+
+Alongside the email, every registration can ring the staff phones.
+
+1. Open `/submissions` on the phone, install it to the home screen, and tap
+   **Alerts**. The browser registers `/sw.js`, asks for notification
+   permission and stores the subscription in
+   `public.mindcare_push_subscriptions` (service role only, same lockdown as
+   the registrations table). Tapping again turns alerts back off.
+2. `workshop-register` signs a VAPID token per push service and sends a
+   payload-less push to every stored subscription, so no registration details
+   travel through Google's or Apple's servers. Tapping the notification opens
+   `/submissions`.
+3. Dead subscriptions (404/410) are deleted automatically.
+
+The VAPID public key is in the source of both functions - the browser needs it.
+The private half must be set once as a Supabase function secret, otherwise the
+push step is skipped silently and only the email goes out:
+
+```
+supabase secrets set VAPID_PRIVATE_KEY=... VAPID_SUBJECT=mailto:info@themindcareservices.com
+```
+
+iOS only delivers push to a PWA that was added to the home screen; on Android
+Chrome the installed app or the browser tab both work.

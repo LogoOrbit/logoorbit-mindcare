@@ -25,7 +25,14 @@ const CREDENTIAL_HASH = Deno.env.get("SUBMISSIONS_HASH") ??
   "d2e575cacc657d37ff02286715540343538c3359dd375713c1971a371e4d7373";
 
 const SESSION_COOKIE = "mc_submissions";
-const SESSION_SECONDS = 8 * 60 * 60;
+// A signed in phone stays signed in. The cookie lasts a year and is renewed on
+// every visit, so the dashboard only ever asks again after someone taps Sign
+// out (or a full year away from it).
+const SESSION_SECONDS = 365 * 24 * 60 * 60;
+const PUSH_TABLE = "mindcare_push_subscriptions";
+// Public half of the VAPID pair. Must match the copy in workshop-register.
+const VAPID_PUBLIC_KEY =
+  "BPeDHwj_As58mnmxaXsAoqd4WQ-v2fOuZHOl4Ylucqdmxmr25sTGpdrZsMrPaakFTwYx5TXBs1MgRd5fy6XQNFc";
 const RECEIPT_LINK_SECONDS = 60 * 60;
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -116,6 +123,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",-apple
 a{color:var(--teal-deep)}
 .wrap{max-width:1180px;margin:0 auto;padding:22px 16px 56px}
 .top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:18px}
+.brandline{display:flex;align-items:center;gap:11px}
+.logo{width:44px;height:44px;flex:none;border-radius:11px;background:#fff;padding:3px;border:1px solid var(--line)}
 .brand{font-size:1.3rem;font-weight:700;letter-spacing:-.01em;line-height:1.2}
 .brand span{color:var(--teal-deep)}
 .sub{color:var(--muted);font-size:.85rem;margin-top:4px;max-width:52ch}
@@ -163,7 +172,10 @@ a{color:var(--teal-deep)}
 .empty{padding:56px 20px;text-align:center;color:var(--muted)}
 .noresults{text-align:center;color:var(--muted);padding:34px 10px;font-size:.9rem}
 .login{max-width:390px;margin:12vh auto 0;padding:30px}
-.login h1{font-size:1.25rem;margin:0 0 4px}
+.login .logo{width:66px;height:66px;display:block;margin:0 auto 14px}
+.login h1{font-size:1.25rem;margin:0 0 4px;text-align:center}
+.login p{text-align:center}
+.btn-on{border-color:var(--teal);color:var(--teal-deep)}
 .login p{color:var(--muted);font-size:.88rem;margin:0 0 22px}
 .login label{display:block;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
 .login input{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-bottom:16px;background:#fff;color:var(--ink)}
@@ -202,7 +214,10 @@ function shell(title: string, bodyHtml: string): string {
 <meta name="color-scheme" content="light dark">
 <script>(function(){try{var t=localStorage.getItem('mc-theme')||'light';document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){}})();</script>
 <title>${esc(title)}</title>
-<link rel="icon" href="/mindcare.png" type="image/png">
+<link rel="icon" href="/assets/icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/submissions.webmanifest">
+<meta name="theme-color" content="#2BBDC9">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -223,7 +238,9 @@ function loginPage(error?: string): Response {
   return htmlResponse(
     `<div class="wrap">
   <form class="card login" method="POST" action="">
-    <h1>MIND<span style="color:var(--teal-deep)">CARE</span> Submissions</h1>
+    <img class="logo" src="/mindcare.png" alt="MindCare Services" width="66" height="66"
+         style="width:auto;max-width:200px;height:auto">
+    <h1>Submissions</h1>
     <p>Workshop registrations. Authorised staff only.</p>
     ${error ? `<div class="err">${esc(error)}</div>` : ""}
     <label for="id">ID</label>
@@ -394,12 +411,16 @@ async function submissionsPage(notice?: string): Promise<Response> {
   const body = `<div class="wrap">
   <div class="top">
     <div>
-      <div class="brand">MIND<span>CARE</span> Submissions<span class="count">${rows.length}</span></div>
+      <div class="brandline">
+        <img class="logo" src="/assets/icons/icon-192.png" alt="MindCare Services" width="44" height="44">
+        <div class="brand">MIND<span>CARE</span> Submissions<span class="count">${rows.length}</span></div>
+      </div>
       <div class="sub">Newest first. The workshop is free; receipts belong to paid certificates only and their links expire after one hour.</div>
     </div>
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="Search name, email, institute...">
       <button class="btn theme-btn" id="themeBtn" type="button" aria-label="Toggle theme"><span class="sun">Dark</span><span class="moon">Light</span></button>
+      <button class="btn" id="alerts" type="button" hidden>Alerts</button>
       <button class="btn" id="csv" type="button">CSV</button>
       <a class="btn" href="">Refresh</a>
       <form method="POST" action=""><input type="hidden" name="action" value="logout"><button class="btn" type="submit">Sign out</button></form>
@@ -446,6 +467,84 @@ async function submissionsPage(notice?: string): Promise<Response> {
     try { localStorage.setItem('mc-theme', t); } catch (e) {}
   });
 
+  // Phone alerts. The service worker lives at the site root so it keeps working
+  // when the dashboard is installed to the home screen, which is what Chrome on
+  // Android and Safari on iOS need before a push can arrive at all.
+  var alerts = document.getElementById('alerts');
+  if (alerts && 'serviceWorker' in navigator && 'PushManager' in window && window.isSecureContext) {
+    var VAPID = '${VAPID_PUBLIC_KEY}';
+    var reg = null;
+    alerts.hidden = false;
+
+    function keyBytes(value) {
+      var padded = (value + '==='.slice((value.length + 3) % 4)).replace(/-/g, '+').replace(/_/g, '/');
+      var raw = atob(padded);
+      var out = new Uint8Array(raw.length);
+      for (var i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+      return out;
+    }
+    function paint(on, busy) {
+      alerts.textContent = busy ? 'Working...' : (on ? 'Alerts on' : 'Alerts off');
+      alerts.className = 'btn' + (on && !busy ? ' btn-on' : '');
+      alerts.disabled = !!busy;
+    }
+    function tell(payload) {
+      return fetch('', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        credentials: 'same-origin'
+      });
+    }
+
+    paint(false, true);
+    navigator.serviceWorker.register('/sw.js').then(function (r) {
+      reg = r;
+      return r.pushManager.getSubscription();
+    }).then(function (sub) {
+      paint(!!sub && Notification.permission === 'granted');
+    }).catch(function () { paint(false); });
+
+    alerts.addEventListener('click', function () {
+      if (!reg) return;
+      paint(false, true);
+      reg.pushManager.getSubscription().then(function (sub) {
+        if (sub && Notification.permission === 'granted') {
+          var endpoint = sub.endpoint;
+          return sub.unsubscribe().then(function () {
+            return tell({ action: 'unsubscribe', endpoint: endpoint });
+          }).then(function () { paint(false); });
+        }
+        return Notification.requestPermission().then(function (permission) {
+          if (permission !== 'granted') {
+            paint(false);
+            alert('Notifications are blocked for this site. Allow them in your browser settings, then tap Alerts again.');
+            return;
+          }
+          return reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: keyBytes(VAPID)
+          }).then(function (fresh) {
+            var json = fresh.toJSON();
+            return tell({
+              action: 'subscribe',
+              endpoint: json.endpoint,
+              p256dh: json.keys.p256dh,
+              auth: json.keys.auth
+            }).then(function (res) {
+              if (!res.ok) throw new Error('save failed');
+              paint(true);
+            });
+          });
+        });
+      }).catch(function (err) {
+        console.error(err);
+        paint(false);
+        alert('We could not turn alerts on just now. Please try again.');
+      });
+    });
+  }
+
   var btn = document.getElementById('csv');
   if (btn) btn.addEventListener('click', function(){
     var head = ['Received','Workshop','Name','Institute','Phone','Email','Current education','Prior knowledge','Expectations','Certificate','Receipt'];
@@ -474,8 +573,61 @@ function withCookie(res: Response, value: string, maxAge: number): Response {
   return new Response(res.body, { status: res.status, headers });
 }
 
+/** Stores (or drops) one phone's push subscription. Session required. */
+async function handlePushJson(req: Request): Promise<Response> {
+  if (!await sessionIsValid(readCookie(req, SESSION_COOKIE))) {
+    return new Response(JSON.stringify({ error: "Please sign in again." }), {
+      status: 401,
+      headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+    });
+  }
+
+  const body = await req.json().catch(() => null) as Record<string, unknown> | null;
+  const endpoint = typeof body?.endpoint === "string" ? body.endpoint : "";
+  const action = body?.action;
+  let ok = false;
+
+  if (endpoint.startsWith("https://") && (action === "subscribe" || action === "unsubscribe")) {
+    if (action === "unsubscribe") {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/${PUSH_TABLE}?endpoint=eq.${encodeURIComponent(endpoint)}`,
+        { method: "DELETE", headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` } },
+      );
+      ok = res.ok;
+      if (!ok) console.error("push unsubscribe failed", res.status, await res.text());
+    } else if (typeof body?.p256dh === "string" && typeof body?.auth === "string") {
+      // The same phone re-subscribing keeps one row: the endpoint is unique.
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${PUSH_TABLE}?on_conflict=endpoint`, {
+        method: "POST",
+        headers: {
+          apikey: SERVICE_KEY,
+          Authorization: `Bearer ${SERVICE_KEY}`,
+          "Content-Type": "application/json",
+          Prefer: "resolution=merge-duplicates,return=minimal",
+        },
+        body: JSON.stringify({
+          endpoint,
+          p256dh: body.p256dh,
+          auth: body.auth,
+          user_agent: (req.headers.get("user-agent") ?? "").slice(0, 400) || null,
+        }),
+      });
+      ok = res.ok;
+      if (!ok) console.error("push subscribe failed", res.status, await res.text());
+    }
+  }
+
+  return new Response(JSON.stringify(ok ? { ok: true } : { error: "That did not work." }), {
+    status: ok ? 200 : 400,
+    headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+  });
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "POST") {
+    if ((req.headers.get("content-type") ?? "").includes("application/json")) {
+      return await handlePushJson(req);
+    }
     const form = await req.formData().catch(() => null);
     if (!form) return loginPage("Something went wrong. Please try again.");
     const action = form.get("action");
@@ -508,6 +660,10 @@ Deno.serve(async (req: Request) => {
     return new Response("Method not allowed", { status: 405 });
   }
 
-  if (await sessionIsValid(readCookie(req, SESSION_COOKIE))) return await submissionsPage();
+  // Renewing on every visit is what keeps a signed in phone signed in: the
+  // year only ever starts counting from the last time the page was opened.
+  if (await sessionIsValid(readCookie(req, SESSION_COOKIE))) {
+    return withCookie(await submissionsPage(), await issueSession(), SESSION_SECONDS);
+  }
   return loginPage();
 });

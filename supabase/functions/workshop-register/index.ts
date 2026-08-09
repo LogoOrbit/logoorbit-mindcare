@@ -53,6 +53,102 @@ const NOTIFY_TO = [...new Set([
   ...env("NOTIFY_TO").split(",").map((a) => a.trim()).filter(Boolean),
 ])];
 
+// Phone alerts. Staff subscribe from the /submissions dashboard (installed to
+// the home screen) and every registration then rings their phone through the
+// Web Push protocol. Like the email, the whole step is optional: with no
+// VAPID_PRIVATE_KEY set the registration still saves silently.
+//
+// The public half is not a secret - the browser needs it to subscribe - so it
+// lives in the source and must match the copy in workshop-submissions.
+const VAPID_PUBLIC_KEY =
+  "BPeDHwj_As58mnmxaXsAoqd4WQ-v2fOuZHOl4Ylucqdmxmr25sTGpdrZsMrPaakFTwYx5TXBs1MgRd5fy6XQNFc";
+const VAPID_PRIVATE_KEY = env("VAPID_PRIVATE_KEY");
+const VAPID_SUBJECT = env("VAPID_SUBJECT") || "mailto:info@themindcareservices.com";
+const PUSH_TABLE = "mindcare_push_subscriptions";
+
+function b64url(bytes: Uint8Array): string {
+  return btoa(String.fromCharCode(...bytes)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+/**
+ * Signs a VAPID token for one push service origin. The notification itself is
+ * sent without a payload, which keeps the registration's details off Google's
+ * servers and means no message encryption is needed here.
+ */
+async function vapidHeader(audience: string): Promise<string | null> {
+  if (!VAPID_PRIVATE_KEY) return null;
+  const raw = atob(VAPID_PUBLIC_KEY.replace(/-/g, "+").replace(/_/g, "/"));
+  const pub = Uint8Array.from(raw, (c) => c.charCodeAt(0));
+  const key = await crypto.subtle.importKey(
+    "jwk",
+    {
+      kty: "EC",
+      crv: "P-256",
+      d: VAPID_PRIVATE_KEY,
+      x: b64url(pub.slice(1, 33)),
+      y: b64url(pub.slice(33, 65)),
+      ext: true,
+    },
+    { name: "ECDSA", namedCurve: "P-256" },
+    false,
+    ["sign"],
+  );
+
+  const enc = (obj: unknown) => b64url(new TextEncoder().encode(JSON.stringify(obj)));
+  const signingInput = `${enc({ typ: "JWT", alg: "ES256" })}.${
+    enc({ aud: audience, exp: Math.floor(Date.now() / 1000) + 12 * 60 * 60, sub: VAPID_SUBJECT })
+  }`;
+  const signature = await crypto.subtle.sign(
+    { name: "ECDSA", hash: "SHA-256" },
+    key,
+    new TextEncoder().encode(signingInput),
+  );
+  return `vapid t=${signingInput}.${b64url(new Uint8Array(signature))}, k=${VAPID_PUBLIC_KEY}`;
+}
+
+/**
+ * Rings every subscribed phone. Failures are logged and swallowed for the same
+ * reason as the email: an alert is never worth losing a registration over.
+ * Subscriptions the push service has retired (404/410) are dropped so the list
+ * does not fill up with dead phones.
+ */
+async function notifyPhones(): Promise<void> {
+  if (!VAPID_PRIVATE_KEY) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${PUSH_TABLE}?select=id,endpoint`, {
+      headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` },
+    });
+    if (!res.ok) {
+      console.error("loading push subscriptions failed", res.status, await res.text());
+      return;
+    }
+    const subs = await res.json() as Array<{ id: string; endpoint: string }>;
+
+    await Promise.all(subs.map(async (sub) => {
+      try {
+        const auth = await vapidHeader(new URL(sub.endpoint).origin);
+        if (!auth) return;
+        const sent = await fetch(sub.endpoint, {
+          method: "POST",
+          headers: { Authorization: auth, TTL: "86400" },
+        });
+        if (sent.status === 404 || sent.status === 410) {
+          await fetch(`${SUPABASE_URL}/rest/v1/${PUSH_TABLE}?id=eq.${sub.id}`, {
+            method: "DELETE",
+            headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` },
+          });
+        } else if (!sent.ok) {
+          console.error("push failed", sent.status, await sent.text());
+        }
+      } catch (err) {
+        console.error("push threw", err);
+      }
+    }));
+  } catch (err) {
+    console.error("push notification threw", err);
+  }
+}
+
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "content-type",
@@ -264,6 +360,7 @@ Deno.serve(async (req: Request) => {
   }
 
   await notifyTeam(record, certificate, text(receipt?.name));
+  await notifyPhones();
 
   return json({ ok: true });
 });
