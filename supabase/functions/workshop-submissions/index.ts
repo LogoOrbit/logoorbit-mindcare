@@ -172,11 +172,10 @@ a{color:var(--teal-deep)}
 .empty{padding:56px 20px;text-align:center;color:var(--muted)}
 .noresults{text-align:center;color:var(--muted);padding:34px 10px;font-size:.9rem}
 .login{max-width:390px;margin:12vh auto 0;padding:30px}
-.login .logo{width:66px;height:66px;display:block;margin:0 auto 14px}
+.login .logo{width:auto;max-width:210px;height:auto;display:block;margin:0 auto 16px;border:0;background:none;padding:0}
 .login h1{font-size:1.25rem;margin:0 0 4px;text-align:center}
-.login p{text-align:center}
+.login p{color:var(--muted);font-size:.88rem;margin:0 0 22px;text-align:center}
 .btn-on{border-color:var(--teal);color:var(--teal-deep)}
-.login p{color:var(--muted);font-size:.88rem;margin:0 0 22px}
 .login label{display:block;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
 .login input{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-bottom:16px;background:#fff;color:var(--ink)}
 .login input:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(43,189,201,.15)}
@@ -238,8 +237,7 @@ function loginPage(error?: string): Response {
   return htmlResponse(
     `<div class="wrap">
   <form class="card login" method="POST" action="">
-    <img class="logo" src="/mindcare.png" alt="MindCare Services" width="66" height="66"
-         style="width:auto;max-width:200px;height:auto">
+    <img class="logo" src="/mindcare.png" alt="MindCare Services" width="210" height="84">
     <h1>Submissions</h1>
     <p>Workshop registrations. Authorised staff only.</p>
     ${error ? `<div class="err">${esc(error)}</div>` : ""}
