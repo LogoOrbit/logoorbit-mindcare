@@ -304,8 +304,8 @@
       shells[s].rotation.x = t * 0.02 * (s + 1);
       shells[s].scale.setScalar(1 + amp * 0.12 + Math.sin(t * 0.5 + s) * 0.02);
     }
-    glow.scale.setScalar(8 + amp * 4.5 + low * 2.2);
-    glow.material.opacity = 0.7 + amp * 0.55;
+    // base glow size; the scroll reveal below scales and positions it to match the orb
+    var glowBase = 8 + amp * 4.5 + low * 2.2;
 
     // energy field: organic radial spectrum
     for (var i = 0; i < FIELD; i++) {
@@ -347,10 +347,23 @@
     revealS += (eased - revealS) * 0.1;
 
     // orb rises up and scales in, then gently sinks as it exits
-    group.scale.setScalar(0.55 + revealS * 0.45);
-    group.position.y = (1 - revealS) * -2.4 + travel * 1.2;
+    var revealScale = 0.55 + revealS * 0.45;
+    var revealY = (1 - revealS) * -2.4 + travel * 1.2;
+    group.scale.setScalar(revealScale);
+    group.position.y = revealY;
     group.rotation.y = t * 0.06 + scrollSpin * 1.6 + spin;
     group.rotation.x = Math.sin(t * 0.1) * 0.05 - scrollSpin * 0.25;
+
+    // The glow and ray sprites hang off the scene, not the group, so they have to
+    // follow the reveal by hand. Without this they stay full size and centred while
+    // the orb is still small and low, and the scene reads as a bare glowing blob
+    // until the section is fully scrolled in.
+    glow.scale.setScalar(glowBase * revealScale);
+    glow.position.y = revealY;
+    glow.material.opacity = (0.7 + amp * 0.55) * (0.45 + revealS * 0.55);
+    ray.scale.set(4 * revealScale, 16 * revealScale, 1);
+    ray.position.y = revealY;
+    ray.material.opacity = 0.16 * (0.45 + revealS * 0.55);
 
     // subtle cinematic camera drift + responsive depth
     camera.position.x = Math.sin(t * 0.08) * 0.35;
