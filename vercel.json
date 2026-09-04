@@ -1,6 +1,28 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/montessori-fundamentals-workshop",
+      "destination": "/montessori-course",
+      "permanent": true
+    },
+    {
+      "source": "/montessori-fundamentals-register",
+      "destination": "/montessori-course/register",
+      "permanent": true
+    },
+    {
+      "source": "/montessori-teacher-training-course",
+      "destination": "/montessori-course",
+      "permanent": true
+    },
+    {
+      "source": "/montessori-teacher-training-register",
+      "destination": "/montessori-course/register",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/zohoverify/verifyforzoho.html",

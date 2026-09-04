@@ -1,8 +1,12 @@
 # Workshop registration backend
 
-The registration form on `/montessori-fundamentals-register` writes to Supabase.
-The workshop pages are hand-maintained; `build.py` only generates `/services/*`
-and `/team/*`.
+The registration form on `/montessori-course/register` writes to Supabase.
+The course and workshop pages are hand-maintained; `build.py` only generates
+`/services/*` and `/team/*`.
+
+Two Montessori offerings share this backend: the paid three-month course at
+`/montessori-course` and the free three-day workshop at `/montessori-workshop`,
+whose form still sends the old free-seat payload.
 
 The Montessori Teacher Training Course charges a **PKR 2,500 registration fee**,
 with two optional extras: the course notes as a PDF (PKR 1,000) and the MindCare

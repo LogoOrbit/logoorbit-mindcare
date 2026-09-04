@@ -406,7 +406,7 @@ async function submissionsPage(notice?: string): Promise<Response> {
   const csvData = rows.map((r) => [
     formatWhen(r.created_at), r.workshop, r.name, r.institute, r.phone, r.email,
     r.education, r.prior_info, r.expectations, r.certificate ? "Yes" : "No",
-    r.certificate ? (r.receipt_name ?? r.receipt_path ?? "uploaded") : "",
+    r.receipt_path ? (r.receipt_name ?? r.receipt_path) : "",
   ]);
 
   const body = `<div class="wrap">
