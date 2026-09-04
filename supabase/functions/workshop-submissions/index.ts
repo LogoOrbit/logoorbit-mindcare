@@ -15,6 +15,7 @@ const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const BUCKET = "mindcare-receipts";
 const TABLE = "mindcare_workshop_registrations";
+// Kept for the older free workshops, whose only payment was the certificate.
 const CERT_FEE = "PKR 1,000";
 
 // Credentials are checked against a salted SHA-256 digest so the plaintext
@@ -353,10 +354,10 @@ async function submissionsPage(notice?: string): Promise<Response> {
   );
 
   const cards = rows.map((r) => {
-    // The workshop is free: only people who bought the certificate have a receipt.
+    // A paid registration has a receipt; a free seat has nothing to collect,
+    // and the badge already says so.
     const link = r.receipt_path ? links[r.receipt_path] : undefined;
-    // A free seat has nothing to collect, and the badge already says so.
-    const receipt = !r.certificate
+    const receipt = !r.receipt_path
       ? ""
       : link
       ? `<a class="btn" href="${esc(link)}" target="_blank" rel="noopener">View receipt</a>`
@@ -378,8 +379,10 @@ async function submissionsPage(notice?: string): Promise<Response> {
                   aria-label="Delete the registration from ${esc(r.name)}">${TRASH_ICON}</button>
         </form>
       </div>
-      <span class="tag ${r.certificate ? "tag-paid" : "tag-free"}">${
-      r.certificate ? `Certificate &middot; ${CERT_FEE}` : "Free seat"
+      <span class="tag ${r.receipt_path ? "tag-paid" : "tag-free"}">${
+      r.receipt_path
+        ? `Paid${r.certificate ? " &middot; with certificate" : ""}`
+        : (r.certificate ? `Certificate &middot; ${CERT_FEE}` : "Free seat")
     }</span>
       <dl class="reg-fields">
         <div><dt>Institute / University</dt><dd>${esc(r.institute)}</dd></div>
@@ -413,7 +416,7 @@ async function submissionsPage(notice?: string): Promise<Response> {
         <img class="logo" src="/assets/icons/icon-192.png" alt="MindCare Services" width="44" height="44">
         <div class="brand">MIND<span>CARE</span> Submissions<span class="count">${rows.length}</span></div>
       </div>
-      <div class="sub">Newest first. The workshop is free; receipts belong to paid certificates only and their links expire after one hour.</div>
+      <div class="sub">Newest first. The fee paid is on each card's footer line; receipt links expire after one hour.</div>
     </div>
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="Search name, email, institute...">

@@ -1,9 +1,11 @@
 // Workshop registration intake for themindcareservices.com.
 //
-// Accepts a JSON registration and, when the visitor opted into the paid
-// certificate of participation, a base64 payment receipt. The workshop itself
-// is free, so a registration without a receipt is perfectly valid; a receipt is
-// only required when `certificate` is true. Receipts go to the private
+// Accepts a JSON registration and, when the registration is a paid one, a
+// base64 payment receipt. `paid` is what makes a receipt compulsory: the
+// Montessori Teacher Training Course charges a registration fee, so every one
+// of its registrations carries a receipt, while `certificate` stays a plain
+// record of whether the optional certificate add-on was bought. A free
+// workshop sends neither and remains perfectly valid. Receipts go to the private
 // `mindcare-receipts` bucket and the details to
 // `mindcare_workshop_registrations`. Both are service-role only; the data is
 // read back through the password-protected `workshop-submissions` function.
@@ -190,6 +192,8 @@ async function notifyTeam(
   record: Record<string, unknown>,
   certificate: boolean,
   receiptName: string,
+  feeSummary: string,
+  notes: boolean,
 ): Promise<void> {
   if (!RESEND_KEY || !NOTIFY_TO.length) {
     console.error("notification skipped", { hasKey: !!RESEND_KEY, recipients: NOTIFY_TO.length });
@@ -215,7 +219,10 @@ async function notifyTeam(
     ${row("Current education", record.education)}
     ${row("Prior knowledge", record.prior_info)}
     ${row("Expectations", record.expectations)}
-    ${row("Certificate", certificate ? `Yes - receipt: ${receiptName || "uploaded"}` : "No (free seat)")}
+    ${row("Fee paid", feeSummary)}
+    ${row("Notes PDF", feeSummary ? (notes ? "Yes" : "No") : "")}
+    ${row("Certificate", certificate ? "Yes" : (feeSummary ? "No" : "No (free seat)"))}
+    ${row("Receipt", receiptName || (feeSummary ? "uploaded" : ""))}
   </table>
   <p style="margin:18px 0 0;font-size:13px">
     <a href="https://themindcareservices.com/submissions" style="color:#0F9AA8">Open all submissions</a>
@@ -234,7 +241,7 @@ async function notifyTeam(
         to: NOTIFY_TO,
         // Replying to the alert writes straight back to the person who registered.
         reply_to: text(record.email) || undefined,
-        subject: `New registration: ${text(record.name)}${certificate ? " (certificate)" : ""}`,
+        subject: `New registration: ${text(record.name)}${feeSummary ? ` (${feeSummary})` : ""}`,
         html,
       }),
     });
@@ -257,9 +264,17 @@ Deno.serve(async (req: Request) => {
   }
 
   const certificate = body.certificate === true || body.certificate === "true";
+  const notes = body.notes === true || body.notes === "true";
+  // A receipt is demanded whenever money changed hands. Paid registration is
+  // the general case now; the certificate-only flow is kept working for the
+  // older free workshops, which send `certificate` and nothing else.
+  const paid = certificate || body.paid === true || body.paid === "true";
+  const feeSummary = text(body.fee_summary).slice(0, 300);
 
   const record = {
-    workshop: text(body.workshop) || "Telepathy & Meditation Workshop",
+    // Carries the fee breakdown for paid courses, so it is capped rather than
+    // trusted to be a short label.
+    workshop: text(body.workshop).slice(0, 300) || "Telepathy & Meditation Workshop",
     name: text(body.name),
     institute: text(body.institute),
     phone: text(body.phone),
@@ -282,16 +297,14 @@ Deno.serve(async (req: Request) => {
     return json({ error: "Please enter a valid phone number.", fields: ["phone"] }, 400);
   }
 
-  // Attending is free, so a receipt is only demanded from people who asked for
-  // the paid certificate. Everyone else registers with nothing to upload.
   const receipt = body.receipt as Record<string, unknown> | undefined;
   let path: string | null = null;
   let receiptType = "";
 
-  if (certificate) {
+  if (paid) {
     if (!receipt || !text(receipt.data)) {
       return json({
-        error: "Please attach the payment screenshot so we can verify your certificate fee.",
+        error: "Please attach the screenshot of your payment so we can verify it.",
         fields: ["receipt"],
       }, 400);
     }
@@ -348,7 +361,7 @@ Deno.serve(async (req: Request) => {
     body: JSON.stringify({
       ...record,
       receipt_path: path,
-      receipt_name: (certificate && text(receipt?.name).slice(0, 200)) || null,
+      receipt_name: (paid && text(receipt?.name).slice(0, 200)) || null,
       receipt_type: receiptType || null,
       source_ip: (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || null,
       user_agent: (req.headers.get("user-agent") ?? "").slice(0, 400) || null,
@@ -359,7 +372,7 @@ Deno.serve(async (req: Request) => {
     return json({ error: "We could not save your registration. Please try again in a moment." }, 502);
   }
 
-  await notifyTeam(record, certificate, text(receipt?.name));
+  await notifyTeam(record, certificate, text(receipt?.name), feeSummary, notes);
   await notifyPhones();
 
   return json({ ok: true });
