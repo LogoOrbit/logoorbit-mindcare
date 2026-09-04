@@ -156,8 +156,14 @@
   "path": "/workplace-mental-health-karachi"
  },
  {
-  "title": "Workshops & Trainings | Free Telepathy & Meditation Live Online | MindCare Services®",
-  "desc": "MindCare workshops: register free for Telepathy & Meditation, a live online workshop on Zoom, plus our Applied Psychology Masterclass certification series in Karachi.",
+  "title": "Courses | Montessori Teacher Training Course, Online | MindCare Services®",
+  "desc": "MindCare Services® courses: the three-month online Montessori Teacher Training Course for teachers, caregivers and early childhood education enthusiasts, starting 15 September 2026. Live sessions, mentor guidance, assignments and continuous monitoring, with a MindCare Services Certificate.",
+  "url": "https://themindcareservices.com/courses",
+  "path": "/courses"
+ },
+ {
+  "title": "Workshops & Trainings | Montessori Fundamentals Certificate, Karachi | MindCare Services®",
+  "desc": "MindCare workshops and trainings in Karachi: Mind in the Making, our three-day Montessori Fundamentals Certificate for parents and early-years teachers, plus the Applied Psychology Masterclass certification series.",
   "url": "https://themindcareservices.com/workshops",
   "path": "/workshops"
  },
