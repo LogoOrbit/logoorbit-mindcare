@@ -92,7 +92,16 @@ collapse separate registrations into one trimmed thread.
 3. When `paid` (or the legacy `certificate`) is true it refuses anything without
    a receipt and stores the file in the private `mindcare-receipts` bucket;
    otherwise `receipt_path` stays null. Either way a row goes into
-   `public.mindcare_workshop_registrations`.
+   `public.mindcare_workshop_registrations`. If the upload itself fails the
+   registration is still saved and the reply carries `receipt_missing: true`, so
+   the page asks for the screenshot on WhatsApp instead of throwing away a form
+   whose payment has already been made.
+
+   Every Storage call sends `apikey` as well as `Authorization`. This project
+   uses the newer Supabase key format, which is not a JWT, and Storage answers
+   `Invalid Compact JWS` to a bearer token it cannot parse as one. Leaving the
+   header off is what made every paid registration fail with "We could not save
+   your receipt".
 4. The alert email goes out, and whether it worked is written back onto the row
    as `notify_status`. A failure shows as a red badge on that card at
    `/submissions`, so a broken provider is never silent again.
@@ -187,7 +196,11 @@ functions read it from there.
    `public.mindcare_push_subscriptions`. Tapping again turns alerts back off.
 2. `workshop-register` signs a VAPID token per push service and sends a
    payload-less push to every stored subscription, so no submission details
-   travel through Google's or Apple's servers. Tapping the notification opens
+   travel through Google's or Apple's servers. `sw.js` then asks our own
+   `/submissions?latest=1` over the signed-in session what just arrived, so the
+   notification reads "New appointment: Bilal Ahmed" rather than a generic line,
+   with the details still never leaving our servers. A signed-out phone gets a
+   401 there and shows the generic notification instead. Tapping it opens
    `/submissions`.
 3. Dead subscriptions (404/410) are deleted automatically.
 

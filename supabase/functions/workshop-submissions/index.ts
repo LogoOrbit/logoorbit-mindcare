@@ -413,8 +413,10 @@ async function deleteRegistration(id: string): Promise<string | null> {
   // a file that will not delete is logged and left rather than failing the action.
   if (row.receipt_path) {
     const dropped = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${row.receipt_path}`, {
+      // apikey as well as the bearer token: the newer Supabase keys are not
+      // JWTs, and Storage rejects a bearer token it cannot parse as one.
       method: "DELETE",
-      headers: { Authorization: `Bearer ${SERVICE_KEY}` },
+      headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` },
     });
     if (!dropped.ok) console.error("receipt delete failed", dropped.status, await dropped.text());
   }
@@ -848,6 +850,45 @@ async function submissionsPage(notice?: string): Promise<Response> {
   return htmlResponse(body);
 }
 
+/**
+ * What the newest submission is, in one line, for the phone notification.
+ *
+ * The service worker calls this when a push arrives: the push carries no
+ * payload, so the name and the kind are fetched from here over the staff
+ * session instead of travelling through Google's push service. A signed-out
+ * phone gets a 401 and shows its generic notification.
+ */
+async function latestJson(req: Request): Promise<Response> {
+  const headers = { "Content-Type": "application/json", "Cache-Control": "no-store" };
+  if (!await sessionIsValid(readCookie(req, SESSION_COOKIE))) {
+    return new Response(JSON.stringify({ error: "Please sign in again." }), { status: 401, headers });
+  }
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,kind,name,workshop,service&order=created_at.desc&limit=1`,
+    { headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` } },
+  );
+  if (!res.ok) {
+    console.error("latest lookup failed", res.status, await res.text());
+    return new Response(JSON.stringify({ error: "unavailable" }), { status: 502, headers });
+  }
+  const [row] = await res.json() as Array<
+    { id: string; kind: string; name: string; workshop: string; service: string }
+  >;
+  if (!row) return new Response(JSON.stringify({ error: "empty" }), { status: 404, headers });
+
+  // The subject line matters more than the form name on a lock screen, so the
+  // service is preferred where there is one and the workshop name otherwise.
+  const detail = row.service || row.workshop;
+  return new Response(
+    JSON.stringify({
+      title: `New ${(KIND_LABELS[row.kind] ?? "submission").toLowerCase()}: ${row.name}`,
+      body: detail ? `${detail}. Tap to open the dashboard.` : "Tap to open the dashboard.",
+      tag: row.id,
+    }),
+    { headers },
+  );
+}
+
 function withCookie(res: Response, value: string, maxAge: number): Response {
   const headers = new Headers(res.headers);
   headers.append(
@@ -967,6 +1008,10 @@ Deno.serve(async (req: Request) => {
   if (req.method !== "GET" && req.method !== "HEAD") {
     return new Response("Method not allowed", { status: 405 });
   }
+
+  // Answered before the session is renewed below: this is the service worker
+  // asking what to put on a notification, not somebody opening the page.
+  if (new URL(req.url).searchParams.has("latest")) return await latestJson(req);
 
   // Renewing on every visit is what keeps a signed in phone signed in: the
   // year only ever starts counting from the last time the page was opened.

@@ -66,9 +66,14 @@ async function proxy(req, res, functionName, contentType) {
     }
   }
 
+  // The query string is part of the request: /submissions?latest=1 is how the
+  // service worker asks what to put on a push notification, and dropping it
+  // would quietly hand it the whole dashboard page instead.
+  const query = req.url.indexOf('?') === -1 ? '' : req.url.slice(req.url.indexOf('?'));
+
   let upstream;
   try {
-    upstream = await fetch(`${SUPABASE_URL}/functions/v1/${functionName}`, init);
+    upstream = await fetch(`${SUPABASE_URL}/functions/v1/${functionName}${query}`, init);
   } catch (err) {
     console.error(`proxy to ${functionName} failed`, err);
     res.status(502).json({ error: 'The service is unreachable right now. Please try again in a moment.' });

@@ -746,6 +746,9 @@ Deno.serve(async (req: Request) => {
   const receipt = body.receipt as Record<string, unknown> | undefined;
   let path: string | null = null;
   let receiptType = "";
+  // Set when a receipt was sent but could not be stored. The registration still
+  // saves; the alert says the screenshot has to be collected by hand.
+  let receiptMissing = false;
 
   if (paid) {
     if (!receipt || !str(receipt.data)) {
@@ -784,6 +787,12 @@ Deno.serve(async (req: Request) => {
     const upload = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`, {
       method: "POST",
       headers: {
+        // `apikey` as well as the bearer token: this project uses the newer
+        // Supabase key format, which is not a JWT, and Storage answers
+        // "Invalid Compact JWS" to a bearer token it cannot parse as one. The
+        // apikey header is what identifies the key. Every PostgREST call here
+        // already sends both, which is why inserts worked while uploads did not.
+        apikey: SERVICE_KEY,
         Authorization: `Bearer ${SERVICE_KEY}`,
         "Content-Type": receiptType,
         "x-upsert": "false",
@@ -791,8 +800,12 @@ Deno.serve(async (req: Request) => {
       body: bytes,
     });
     if (!upload.ok) {
+      // The money has already left their account and the form is filled in, so
+      // a storage failure must not throw the registration away. Save it without
+      // the receipt and tell them to send the screenshot on WhatsApp instead.
       console.error("receipt upload failed", upload.status, await upload.text());
-      return json({ error: "We could not save your receipt. Please try again in a moment." }, 502);
+      path = null;
+      receiptMissing = true;
     }
   }
 
@@ -842,7 +855,12 @@ Deno.serve(async (req: Request) => {
     ["Fee paid", feeSummary],
     ["Notes PDF", feeSummary ? (notes ? "Yes" : "No") : ""],
     ["Certificate", isWorkshop ? (certificate ? "Yes" : (feeSummary ? "No" : "No (free seat)")) : ""],
-    ["Receipt", str(receipt?.name) || (paid ? "uploaded" : "")],
+    [
+      "Receipt",
+      receiptMissing
+        ? `NOT SAVED (${str(receipt?.name) || "upload failed"}). Ask them for the screenshot on WhatsApp.`
+        : (str(receipt?.name) || (paid ? "uploaded" : "")),
+    ],
   ]);
 
   const alert = await sendMail({
@@ -877,5 +895,7 @@ Deno.serve(async (req: Request) => {
 
   await notifyPhones();
 
-  return json({ ok: true });
+  // `receipt_missing` lets the page ask for the screenshot on WhatsApp rather
+  // than pretending everything is filed.
+  return json(receiptMissing ? { ok: true, receipt_missing: true } : { ok: true });
 });

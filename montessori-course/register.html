@@ -150,6 +150,13 @@
  color:var(--gray);border-top:3px solid var(--border);padding-top:9px}
 .tm-progress li.on{color:var(--teal-deep);border-top-color:var(--teal)}
 .tm-actions{display:flex;gap:12px;margin-top:6px}
+.btn-wa{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;
+ background:#25D366;color:#0b2016;border:none;border-radius:50px;padding:14px 22px;
+ font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;line-height:1;
+ transition:transform .18s,box-shadow .18s;box-shadow:0 6px 18px rgba(37,211,102,.28)}
+.btn-wa:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(37,211,102,.36)}
+.btn-wa:disabled{opacity:.6;cursor:default;transform:none}
+.btn-wa svg{flex:none}
 .tm-actions .btn-primary,.tm-actions .btn-secondary{flex:1;justify-content:center}
 .tm-choice{display:block;border:1px solid var(--border);border-radius:16px;padding:18px 20px;margin-bottom:14px;cursor:pointer;background:var(--white)}
 .tm-choice:hover{border-color:var(--teal)}
@@ -288,6 +295,8 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
             <label for="mf-receipt">Upload payment screenshot <span class="tm-req">*</span></label>
             <input type="file" id="mf-receipt" accept="image/*,application/pdf">
             <p class="tm-hint" id="mf-receipt-hint">A screenshot or PDF of your transfer.</p>
+            <p class="tm-hint">Prefer WhatsApp? Submit the form first, then send us the same screenshot
+              on WhatsApp from the next screen. Seats are confirmed fastest that way.</p>
           </div>
 
           <div class="tm-alert" id="mf-alert" role="alert" hidden></div>
@@ -329,6 +338,8 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
 
   var FEE_REG = 2500, FEE_NOTES = 1000, FEE_CERT = 3500;
   var WORKSHOP = 'Montessori Teacher Training Course (3 Months)';
+  // Chat link for the fallback path; the text is appended url-encoded.
+  var WA_LINK = 'https://wa.me/923272337631?text=';
 
   // Receipts travel as base64 inside the JSON body, which inflates them by a
   // third, so anything we cannot re-compress has to stay comfortably small.
@@ -465,15 +476,89 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
     });
   }
 
-  function succeed(sum){
+  /* The details, written out the way they read in a WhatsApp message. */
+  function whatsappText(sum){
+    var lines = [
+      'Assalam o Alaikum! I have registered for the Montessori Teacher Training Course.',
+      '',
+      'Name: ' + val('mf-name'),
+      'School / Institute: ' + val('mf-institute'),
+      'Role / education: ' + val('mf-role'),
+      'Phone: ' + val('mf-phone'),
+      'Email: ' + val('mf-email'),
+      'Paid for: ' + items().join(' + '),
+      'Total: ' + money(sum)
+    ];
+    if(val('mf-prior'))  lines.push('Prior knowledge: ' + val('mf-prior'));
+    if(val('mf-expect')) lines.push('Expectations: ' + val('mf-expect'));
+    lines.push('', 'My payment screenshot is attached.');
+    return lines.join('\n');
+  }
+
+  /* Sends the details to WhatsApp, with the screenshot itself where the phone
+     allows it. navigator.share is the only way a web page can hand a file to
+     WhatsApp; where it is unavailable (most desktops) we open the chat with the
+     details filled in and ask for the screenshot to be attached by hand, which
+     is the honest fallback rather than a button that silently drops the image. */
+  function sendOnWhatsApp(text, file, btn){
+    var canShareFile = file && navigator.canShare &&
+      navigator.canShare({ files: [file], text: text });
+
+    if(canShareFile){
+      if(btn) btn.disabled = true;
+      navigator.share({ files: [file], text: text, title: 'MindCare course registration' })
+        .catch(function(){
+          // Cancelled, or the share sheet refused: fall back to the chat link.
+          window.open(WA_LINK + encodeURIComponent(text), '_blank', 'noopener');
+        })
+        .then(function(){ if(btn) btn.disabled = false; });
+      return;
+    }
+    window.open(WA_LINK + encodeURIComponent(text), '_blank', 'noopener');
+  }
+
+  /* Shown under the error box when the form could not be submitted at all. The
+     transfer has already been made by this point, so WhatsApp is the way the
+     registration still reaches us. */
+  function offerWhatsAppFallback(text, file){
+    if(document.getElementById('mf-wa-fallback')) return;
+    var wrap = document.createElement('div');
+    wrap.id = 'mf-wa-fallback';
+    wrap.style.marginTop = '12px';
+    wrap.innerHTML = '<button type="button" class="btn-wa" id="mf-wa-alt">' +
+      '<svg width="19" height="19" fill="currentColor" aria-hidden="true"><use href="../assets/sprite.svg#i-wa"/></svg>' +
+      ' Send it to us on WhatsApp instead</button>' +
+      '<p class="tm-note">Your details are written out for you. Nothing is lost.</p>';
+    alertBox.parentNode.insertBefore(wrap, alertBox.nextSibling);
+    var btn = document.getElementById('mf-wa-alt');
+    btn.addEventListener('click', function(){ sendOnWhatsApp(text, file, btn); });
+  }
+
+  function succeed(sum, file, receiptMissing, text){
     form.innerHTML = '<div class="tm-done">' +
       '<div class="tm-tick">&#10003;</div>' +
       '<h3>Your registration is in</h3>' +
-      '<p>Thank you. We will verify your ' + money(sum) + ' transfer against your form, confirm your seat, ' +
-      'and send you the class timings and the joining link before the course starts on 15 September 2026.</p>' +
-      '<p>If anything about the payment does not add up we will message you first rather than quietly drop it.</p>' +
+      (receiptMissing
+        ? '<p>Your registration is saved, but your screenshot did not upload. ' +
+          '<strong>Please send it to us on WhatsApp now</strong> so we can match your payment to your form.</p>'
+        : '<p>Thank you. We will verify your ' + money(sum) + ' transfer against your form, confirm your seat, ' +
+          'and send you the class timings and the joining link before the course starts on 15 September 2026.</p>') +
+      '<p>Sending your screenshot on WhatsApp as well is the fastest way to get your seat confirmed.</p>' +
+      '<div class="tm-actions" style="margin-top:18px">' +
+        '<button type="button" class="btn-wa" id="mf-wa">' +
+        '<svg width="19" height="19" fill="currentColor" aria-hidden="true"><use href="../assets/sprite.svg#i-wa"/></svg>' +
+        ' Send my details &amp; screenshot on WhatsApp</button>' +
+      '</div>' +
+      '<p class="tm-note" id="mf-wa-note">Opens WhatsApp with your details already written out.</p>' +
       '<p style="margin-top:16px"><a href="/montessori-course" style="font-weight:600">Back to the course details</a></p>' +
       '</div>';
+
+    var wa = document.getElementById('mf-wa');
+    var note = document.getElementById('mf-wa-note');
+    if(note && !(file && navigator.canShare && navigator.canShare({ files: [file] }))){
+      note.textContent = 'Opens WhatsApp with your details already written out. Attach the screenshot there.';
+    }
+    if(wa) wa.addEventListener('click', function(){ sendOnWhatsApp(text, file, wa); });
     form.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
@@ -485,6 +570,9 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
     if(!file) return fail('Please attach the screenshot of your payment so we can verify it.', 'mf-receipt');
 
     var sum = total();
+    // Composed now, while the fields still exist: succeed() replaces the form's
+    // markup, and reading the inputs after that gives nothing but blanks.
+    var waText = whatsappText(sum);
     submit.disabled = true;
     label.textContent = 'Sending...';
 
@@ -517,12 +605,17 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
     }).then(function(res){
       return res.json().catch(function(){ return {}; }).then(function(data){
         if(!res.ok || !data.ok) throw new Error(data.error || 'We could not submit your registration. Please try again.');
-        succeed(sum);
+        // `receipt_missing` means the row saved but the screenshot did not, so
+        // the success screen asks for it on WhatsApp instead.
+        succeed(sum, file, data.receipt_missing === true, waText);
       });
     }).catch(function(err){
       submit.disabled = false;
       label.textContent = 'Complete Registration';
+      // Their money has already been transferred, so a failure here must not be
+      // a dead end: offer WhatsApp as the way through.
       fail(err.message || 'We could not submit your registration. Please try again.');
+      offerWhatsAppFallback(waText, file);
     });
   });
 })();
