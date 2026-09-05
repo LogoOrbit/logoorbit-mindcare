@@ -1,5 +1,11 @@
 [
  {
+  "title": "MindCare Services | Therapy & Mental Health in Karachi",
+  "desc": "Warm, evidence-based therapy and rehab care in Karachi, in clinic, at home, or online. Book a free consultation with MindCare Services.",
+  "url": "https://themindcareservices.com/",
+  "path": "/"
+ },
+ {
   "title": "About Us | MindCare Services® | Psychotherapy Clinic in Karachi",
   "desc": "MindCare Services® is a Karachi psychotherapy and mental health clinic founded by Shaista Tariq. Warm, evidence-based care for mind and body, in clinic, at home, or online.",
   "url": "https://themindcareservices.com/about",
@@ -30,6 +36,30 @@
   "path": "/articles"
  },
  {
+  "title": "Consistency vs. Correction | Shaista Tariq | MindCare Services®",
+  "desc": "Shaista Tariq on why consistency alone leads to burnout or stagnation, and how pairing steady effort with regular self-correction turns work into meaningful growth.",
+  "url": "https://themindcareservices.com/articles/consistency-vs-correction",
+  "path": "/articles/consistency-vs-correction"
+ },
+ {
+  "title": "The Cost of Professionalism vs. The Reality of Pay | Shaista Tariq | MindCare Services®",
+  "desc": "Shaista Tariq on underpaid psychology roles in Pakistan: what Sindh's minimum wage law actually requires of clinics, hospitals and NGOs, and why underpayment fuels burnout.",
+  "url": "https://themindcareservices.com/articles/cost-of-professionalism-vs-reality-of-pay",
+  "path": "/articles/cost-of-professionalism-vs-reality-of-pay"
+ },
+ {
+  "title": "The Soul Cannot Be Coded | Shaista Tariq | MindCare Services®",
+  "desc": "Shaista Tariq on the Chinese Room, instinct, the subconscious and the soul as scientific inference: a philosophical case for why human consciousness cannot be replicated by machines.",
+  "url": "https://themindcareservices.com/articles/the-soul-cannot-be-coded",
+  "path": "/articles/the-soul-cannot-be-coded"
+ },
+ {
+  "title": "Why People Leave Jobs, Productivity Drops & Businesses Struggle | Shaista Tariq | MindCare Services®",
+  "desc": "Shaista Tariq on why productivity drops and people leave jobs: focus cycles, individual working rhythms, rigid schedules, and the shared responsibility of managers and employees.",
+  "url": "https://themindcareservices.com/articles/why-people-leave-jobs-and-productivity-drops",
+  "path": "/articles/why-people-leave-jobs-and-productivity-drops"
+ },
+ {
   "title": "Psychologist in Karachi | Trusted Mental Health Care | MindCare Services®",
   "desc": "Searching for a trusted psychologist in Karachi? MindCare Services®, founded by PPA member Shaista Tariq, offers evidence-based, confidential care. Book today.",
   "url": "https://themindcareservices.com/best-psychologist-karachi",
@@ -54,6 +84,12 @@
   "path": "/contact"
  },
  {
+  "title": "Courses | Montessori Teacher Training Course, Online | MindCare Services®",
+  "desc": "MindCare Services® courses: the three-month online Montessori Teacher Training Course for teachers, caregivers and early childhood education enthusiasts, starting 15 September 2026. Live sessions, mentor guidance, assignments and continuous monitoring, with a MindCare Services Certificate.",
+  "url": "https://themindcareservices.com/courses",
+  "path": "/courses"
+ },
+ {
   "title": "Depression Treatment & Counseling in Karachi | MindCare Services®",
   "desc": "Compassionate depression treatment and counseling in Karachi. Evidence-based therapy for low mood, hopelessness and loss of motivation. Book a free consultation today.",
   "url": "https://themindcareservices.com/depression-treatment-karachi",
@@ -72,12 +108,6 @@
   "path": "/guides"
  },
  {
-  "title": "MindCare Services | Therapy & Mental Health in Karachi",
-  "desc": "Warm, evidence-based therapy and rehab care in Karachi, in clinic, at home, or online. Book a free consultation with MindCare Services.",
-  "url": "https://themindcareservices.com/",
-  "path": "/"
- },
- {
   "title": "Marriage & Couples Counseling in Karachi | MindCare Services®",
   "desc": "Rebuild communication and connection with marriage and couples counseling in Karachi. Neutral, confidential guidance at MindCare Services®. Book a free consultation.",
   "url": "https://themindcareservices.com/marriage-couples-counseling-karachi",
@@ -88,6 +118,30 @@
   "desc": "MindCare Services® is a trusted mental health clinic in Karachi offering psychotherapy, counseling, and multidisciplinary therapy under one roof. Book a free consultation.",
   "url": "https://themindcareservices.com/mental-health-clinic-karachi",
   "path": "/mental-health-clinic-karachi"
+ },
+ {
+  "title": "Montessori Teacher Training Course | 3-Month Online Course with Certificate | MindCare Services®",
+  "desc": "A practical, interactive three-month online Montessori Teacher Training Course from MindCare Services® for teachers, caregivers and early childhood education enthusiasts. Live sessions, mentor guidance, assignments and continuous monitoring, with a MindCare Services Certificate. Starts 15 September 2026. Registration fee PKR 2,500.",
+  "url": "https://themindcareservices.com/montessori-course",
+  "path": "/montessori-course"
+ },
+ {
+  "title": "Register: Montessori Teacher Training Course | MindCare Services®",
+  "desc": "Register for the MindCare Services® three-month online Montessori Teacher Training Course, starting 15 September 2026. Registration fee PKR 2,500, with optional course notes (PKR 1,000) and certificate (PKR 3,500). Pay by bank transfer and attach your payment screenshot to the form.",
+  "url": "https://themindcareservices.com/montessori-course/register",
+  "path": "/montessori-course/register"
+ },
+ {
+  "title": "Mind in the Making: Montessori Fundamentals Certificate | 3-Day Workshop in Karachi | MindCare Services®",
+  "desc": "Mind in the Making: a three-day Montessori Fundamentals Certificate workshop in Karachi for parents and early-years teachers. Decoding the child's perspective, early childhood psychology, and the practical life area of the Montessori curriculum. Registration open.",
+  "url": "https://themindcareservices.com/montessori-workshop",
+  "path": "/montessori-workshop"
+ },
+ {
+  "title": "Register: Mind in the Making: Montessori Fundamentals Certificate | MindCare Services®",
+  "desc": "Reserve your place on Mind in the Making, MindCare's three-day Montessori Fundamentals Certificate workshop in Karachi. One short form, nothing to pay now: we send the dates, venue and fee for the next batch to registered participants first.",
+  "url": "https://themindcareservices.com/montessori-workshop/register",
+  "path": "/montessori-workshop/register"
  },
  {
   "title": "OCD Therapy & Treatment in Karachi | MindCare Services®",
@@ -120,52 +174,10 @@
   "path": "/self-esteem-confidence-therapy-karachi"
  },
  {
-  "title": "Speech Therapy for Children in Karachi | Language Delay Help | MindCare Services®",
-  "desc": "Children's speech therapy in Karachi for language delays, articulation and stammering. Warm, structured, play-based support at MindCare Services®. Book an assessment.",
-  "url": "https://themindcareservices.com/speech-therapy-for-children-karachi",
-  "path": "/speech-therapy-for-children-karachi"
- },
- {
-  "title": "Stress Management & Burnout Therapy in Karachi | MindCare Services®",
-  "desc": "Overwhelmed by stress or burnout in Karachi? Learn practical, evidence-based tools to manage stress and recover balance with MindCare Services®. Book a free consultation.",
-  "url": "https://themindcareservices.com/stress-management-karachi",
-  "path": "/stress-management-karachi"
- },
- {
-  "title": "Teenage & Adolescent Therapy in Karachi | MindCare Services®",
-  "desc": "Supportive therapy for teenagers in Karachi for anxiety, low mood, exam stress, self-esteem and more. Confidential, teen-friendly care at MindCare Services®.",
-  "url": "https://themindcareservices.com/teen-adolescent-therapy-karachi",
-  "path": "/teen-adolescent-therapy-karachi"
- },
- {
-  "title": "Telepathy & Meditation: Completed Live Online Workshop | MindCare Services®",
-  "desc": "MindCare's free live online workshop on meditation and deep attunement has now been delivered and registration is closed. Read what the two evenings covered, and see what is open next: our three-month online Montessori Teacher Training Course.",
-  "url": "https://themindcareservices.com/telepathy-meditation-workshop",
-  "path": "/telepathy-meditation-workshop"
- },
- {
-  "title": "Trauma Therapy & PTSD Support in Karachi | MindCare Services®",
-  "desc": "Gentle, evidence-based trauma therapy in Karachi for difficult past experiences and PTSD symptoms. Safe, confidential support at MindCare Services®. Book today.",
-  "url": "https://themindcareservices.com/trauma-therapy-karachi",
-  "path": "/trauma-therapy-karachi"
- },
- {
-  "title": "Corporate & Workplace Mental Health Programs in Karachi | MindCare Services®",
-  "desc": "Boost employee wellbeing with corporate mental health awareness sessions and trainings in Karachi from MindCare Services®. Reduce stigma, build resilience. Enquire now.",
-  "url": "https://themindcareservices.com/workplace-mental-health-karachi",
-  "path": "/workplace-mental-health-karachi"
- },
- {
-  "title": "Courses | Montessori Teacher Training Course, Online | MindCare Services®",
-  "desc": "MindCare Services® courses: the three-month online Montessori Teacher Training Course for teachers, caregivers and early childhood education enthusiasts, starting 15 September 2026. Live sessions, mentor guidance, assignments and continuous monitoring, with a MindCare Services Certificate.",
-  "url": "https://themindcareservices.com/courses",
-  "path": "/courses"
- },
- {
-  "title": "Workshops & Trainings | Montessori Fundamentals Certificate, Karachi | MindCare Services®",
-  "desc": "MindCare workshops and trainings in Karachi: Mind in the Making, our three-day Montessori Fundamentals Certificate for parents and early-years teachers, plus the Applied Psychology Masterclass certification series.",
-  "url": "https://themindcareservices.com/workshops",
-  "path": "/workshops"
+  "title": "Our Services | Psychotherapy, Counseling & Therapy in Karachi | MindCare Services®",
+  "desc": "Explore all MindCare Services® offerings in Karachi: psychotherapy, family counseling, speech therapy, physiotherapy, occupational and behavioral therapy, assessments and more.",
+  "url": "https://themindcareservices.com/services/",
+  "path": "/services/"
  },
  {
   "title": "Mental Health Awareness Sessions & Corporate Trainings in Karachi | MindCare Services®",
@@ -198,12 +210,6 @@
   "path": "/services/family-counseling"
  },
  {
-  "title": "Our Services | Psychotherapy, Counseling & Therapy in Karachi | MindCare Services®",
-  "desc": "Explore all MindCare Services® offerings in Karachi: psychotherapy, family counseling, speech therapy, physiotherapy, occupational and behavioral therapy, assessments and more.",
-  "url": "https://themindcareservices.com/services/",
-  "path": "/services/"
- },
- {
   "title": "Individual Psychotherapy in Karachi | CBT for Anxiety & Depression | MindCare Services®",
   "desc": "One-on-one psychotherapy in Karachi for anxiety, depression, stress and trauma. Evidence-based CBT and talk therapy for adults and adolescents. Book a free consultation.",
   "url": "https://themindcareservices.com/services/individual-psychotherapy",
@@ -234,6 +240,24 @@
   "path": "/services/speech-therapy"
  },
  {
+  "title": "Speech Therapy for Children in Karachi | Language Delay Help | MindCare Services®",
+  "desc": "Children's speech therapy in Karachi for language delays, articulation and stammering. Warm, structured, play-based support at MindCare Services®. Book an assessment.",
+  "url": "https://themindcareservices.com/speech-therapy-for-children-karachi",
+  "path": "/speech-therapy-for-children-karachi"
+ },
+ {
+  "title": "Stress Management & Burnout Therapy in Karachi | MindCare Services®",
+  "desc": "Overwhelmed by stress or burnout in Karachi? Learn practical, evidence-based tools to manage stress and recover balance with MindCare Services®. Book a free consultation.",
+  "url": "https://themindcareservices.com/stress-management-karachi",
+  "path": "/stress-management-karachi"
+ },
+ {
+  "title": "Our Team | Psychotherapists & Specialists in Karachi | MindCare Services®",
+  "desc": "Meet the MindCare Services® team in Karachi: psychotherapists, physiotherapists, a psychologist, dental consultant and coordinators led by founder Shaista Tariq (PPA Member).",
+  "url": "https://themindcareservices.com/team/",
+  "path": "/team/"
+ },
+ {
   "title": "Ejaz Fatima, Physiotherapist | MindCare Services® Karachi",
   "desc": "Ejaz Fatima is a physiotherapist at MindCare Services® in Karachi, specialising in rehabilitation and pain management to help clients move and recover.",
   "url": "https://themindcareservices.com/team/ejaz-fatima",
@@ -244,12 +268,6 @@
   "desc": "Hareem Tariq is the dental consultant at MindCare Services® in Karachi, offering preventive and restorative oral-health advice and treatment planning.",
   "url": "https://themindcareservices.com/team/hareem-tariq",
   "path": "/team/hareem-tariq"
- },
- {
-  "title": "Our Team | Psychotherapists & Specialists in Karachi | MindCare Services®",
-  "desc": "Meet the MindCare Services® team in Karachi: psychotherapists, physiotherapists, a psychologist, dental consultant and coordinators led by founder Shaista Tariq (PPA Member).",
-  "url": "https://themindcareservices.com/team/",
-  "path": "/team/"
  },
  {
   "title": "Ribqah Arshad, Team Coordinator | MindCare Services® Karachi",
@@ -276,51 +294,33 @@
   "path": "/team/shaista-tariq"
  },
  {
-  "title": "Consistency vs. Correction | Shaista Tariq | MindCare Services®",
-  "desc": "Shaista Tariq on why consistency alone leads to burnout or stagnation, and how pairing steady effort with regular self-correction turns work into meaningful growth.",
-  "url": "https://themindcareservices.com/articles/consistency-vs-correction",
-  "path": "/articles/consistency-vs-correction"
+  "title": "Teenage & Adolescent Therapy in Karachi | MindCare Services®",
+  "desc": "Supportive therapy for teenagers in Karachi for anxiety, low mood, exam stress, self-esteem and more. Confidential, teen-friendly care at MindCare Services®.",
+  "url": "https://themindcareservices.com/teen-adolescent-therapy-karachi",
+  "path": "/teen-adolescent-therapy-karachi"
  },
  {
-  "title": "The Cost of Professionalism vs. The Reality of Pay | Shaista Tariq | MindCare Services®",
-  "desc": "Shaista Tariq on underpaid psychology roles in Pakistan: what Sindh's minimum wage law actually requires of clinics, hospitals and NGOs, and why underpayment fuels burnout.",
-  "url": "https://themindcareservices.com/articles/cost-of-professionalism-vs-reality-of-pay",
-  "path": "/articles/cost-of-professionalism-vs-reality-of-pay"
+  "title": "Telepathy & Meditation: Completed Live Online Workshop | MindCare Services®",
+  "desc": "MindCare's free live online workshop on meditation and deep attunement has now been delivered and registration is closed. Read what the two evenings covered, and see what is open next: our three-month online Montessori Teacher Training Course.",
+  "url": "https://themindcareservices.com/telepathy-meditation-workshop",
+  "path": "/telepathy-meditation-workshop"
  },
  {
-  "title": "The Soul Cannot Be Coded | Shaista Tariq | MindCare Services®",
-  "desc": "Shaista Tariq on the Chinese Room, instinct, the subconscious and the soul as scientific inference: a philosophical case for why human consciousness cannot be replicated by machines.",
-  "url": "https://themindcareservices.com/articles/the-soul-cannot-be-coded",
-  "path": "/articles/the-soul-cannot-be-coded"
+  "title": "Trauma Therapy & PTSD Support in Karachi | MindCare Services®",
+  "desc": "Gentle, evidence-based trauma therapy in Karachi for difficult past experiences and PTSD symptoms. Safe, confidential support at MindCare Services®. Book today.",
+  "url": "https://themindcareservices.com/trauma-therapy-karachi",
+  "path": "/trauma-therapy-karachi"
  },
  {
-  "title": "Why People Leave Jobs, Productivity Drops & Businesses Struggle | Shaista Tariq | MindCare Services®",
-  "desc": "Shaista Tariq on why productivity drops and people leave jobs: focus cycles, individual working rhythms, rigid schedules, and the shared responsibility of managers and employees.",
-  "url": "https://themindcareservices.com/articles/why-people-leave-jobs-and-productivity-drops",
-  "path": "/articles/why-people-leave-jobs-and-productivity-drops"
+  "title": "Corporate & Workplace Mental Health Programs in Karachi | MindCare Services®",
+  "desc": "Boost employee wellbeing with corporate mental health awareness sessions and trainings in Karachi from MindCare Services®. Reduce stigma, build resilience. Enquire now.",
+  "url": "https://themindcareservices.com/workplace-mental-health-karachi",
+  "path": "/workplace-mental-health-karachi"
  },
  {
-  "title": "Montessori Teacher Training Course | 3-Month Online Course with Certificate | MindCare Services®",
-  "desc": "A practical, interactive three-month online Montessori Teacher Training Course from MindCare Services® for teachers, caregivers and early childhood education enthusiasts. Live sessions, mentor guidance, assignments and continuous monitoring, with a MindCare Services Certificate. Starts 15 September 2026. Registration fee PKR 2,500.",
-  "url": "https://themindcareservices.com/montessori-course",
-  "path": "/montessori-course"
- },
- {
-  "title": "Register: Montessori Teacher Training Course | MindCare Services®",
-  "desc": "Register for the MindCare Services® three-month online Montessori Teacher Training Course, starting 15 September 2026. Registration fee PKR 2,500, with optional course notes (PKR 1,000) and certificate (PKR 3,500). Pay by bank transfer and attach your payment screenshot to the form.",
-  "url": "https://themindcareservices.com/montessori-course/register",
-  "path": "/montessori-course/register"
- },
- {
-  "title": "Mind in the Making: Montessori Fundamentals Certificate | 3-Day Workshop in Karachi | MindCare Services®",
-  "desc": "Mind in the Making: a three-day Montessori Fundamentals Certificate workshop in Karachi for parents and early-years teachers. Decoding the child's perspective, early childhood psychology, and the practical life area of the Montessori curriculum. Registration open.",
-  "url": "https://themindcareservices.com/montessori-workshop",
-  "path": "/montessori-workshop"
- },
- {
-  "title": "Register: Mind in the Making, Montessori Fundamentals Certificate | MindCare Services®",
-  "desc": "Reserve your place on Mind in the Making, MindCare's three-day Montessori Fundamentals Certificate workshop in Karachi. One short form, nothing to pay now: we send the dates, venue and fee for the next batch to registered participants first.",
-  "url": "https://themindcareservices.com/montessori-workshop/register",
-  "path": "/montessori-workshop/register"
+  "title": "Workshops & Trainings | Montessori Fundamentals Certificate, Karachi | MindCare Services®",
+  "desc": "MindCare workshops and trainings in Karachi: Mind in the Making, our three-day Montessori Fundamentals Certificate for parents and early-years teachers, plus the Applied Psychology Masterclass certification series. See what's open and what we've already run.",
+  "url": "https://themindcareservices.com/workshops",
+  "path": "/workshops"
  }
 ]

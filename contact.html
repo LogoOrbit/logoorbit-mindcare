@@ -289,6 +289,11 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
 .form-group textarea:focus,
 .form-group select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(43,189,201,0.1); }
 .form-group textarea { min-height: 96px; resize: vertical; }
+.form-err { background:#fdecec; border:1px solid #f3c4c4; color:#a12a2a; border-radius:10px;
+  padding:10px 13px; font-size:.85rem; line-height:1.45; margin:0 0 14px; }
+.form-err[hidden] { display:none; }
+html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; color:#f0b4b4; }
+.mc-hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
 
 .privacy-note { display: flex; align-items: center; gap: 8px; font-size: 0.74rem; color: var(--gray); margin: -4px 0 12px; }
 .privacy-note svg { width: 13px; height: 13px; flex-shrink: 0; color: var(--green); }
@@ -441,7 +446,7 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
 
 <!-- WA FLOAT -->
 <a href="https://wa.me/923272337631?text=Hi%2C%20I'd%20like%20to%20book%20a%20consultation."
-   target="_blank" class="wa-float" aria-label="WhatsApp MindCare">
+   target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp MindCare">
   <div class="wa-float-btn">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </div>
@@ -491,21 +496,21 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
       <div class="contact-card-icon">🌐</div>
       <div>
         <h4>Website</h4>
-        <a href="https://themindcareservices.com" target="_blank">themindcareservices.com</a>
+        <a href="https://themindcareservices.com" target="_blank" rel="noopener">themindcareservices.com</a>
       </div>
     </div>
 
     <!-- Social -->
     <div class="social-row">
-      <a href="https://www.instagram.com/mindcare.services/" target="_blank" class="social-pill">
+      <a href="https://www.instagram.com/mindcare.services/" target="_blank" rel="noopener" class="social-pill">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         @mindcare.services
       </a>
-      <a href="https://wa.me/923272337631" target="_blank" class="social-pill">
+      <a href="https://wa.me/923272337631" target="_blank" rel="noopener" class="social-pill">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
         WhatsApp
       </a>
-      <a href="https://www.linkedin.com/company/mindcare-services/" target="_blank" class="social-pill">
+      <a href="https://www.linkedin.com/company/mindcare-services/" target="_blank" rel="noopener" class="social-pill">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         LinkedIn
       </a>
@@ -517,7 +522,7 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
       <div class="ftitle">Founder & Associate Psychologist · PPA Member</div>
       <p>You can reach Shaista directly for consultations, referrals, or to learn more about MindCare's approach.</p>
       <div class="founder-contact-btns">
-        <a href="https://wa.me/923272337631?text=Hi%20Shaista%2C%20I'd%20like%20to%20book%20a%20consultation%20with%20MindCare%20Services." target="_blank" class="btn-founder btn-wa">
+        <a href="https://wa.me/923272337631?text=Hi%20Shaista%2C%20I'd%20like%20to%20book%20a%20consultation%20with%20MindCare%20Services." target="_blank" rel="noopener" class="btn-founder btn-wa">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           WhatsApp Shaista Directly
         </a>
@@ -540,30 +545,33 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
     </div>
 
     <!-- Tabs -->
-    <div class="tab-bar">
-      <button class="tab-btn active" onclick="switchTab('consultation', this)">Consultation</button>
-      <button class="tab-btn" onclick="switchTab('appointment', this)">Appointment</button>
-      <button class="tab-btn" onclick="switchTab('general', this)">General Query</button>
+    <div class="tab-bar" role="tablist" aria-label="How to get in touch">
+      <button type="button" class="tab-btn active" id="tabbtn-consultation" role="tab" aria-selected="true"
+              aria-controls="tab-consultation" onclick="switchTab('consultation', this)">Consultation</button>
+      <button type="button" class="tab-btn" id="tabbtn-appointment" role="tab" aria-selected="false"
+              aria-controls="tab-appointment" onclick="switchTab('appointment', this)">Appointment</button>
+      <button type="button" class="tab-btn" id="tabbtn-general" role="tab" aria-selected="false"
+              aria-controls="tab-general" onclick="switchTab('general', this)">General Query</button>
     </div>
 
     <!-- CONSULTATION TAB -->
-    <div class="tab-panel active" id="tab-consultation">
+    <div class="tab-panel active" id="tab-consultation" role="tabpanel" aria-labelledby="tabbtn-consultation">
       <div class="form-row">
         <div class="form-group">
-          <label>Full Name *</label>
+          <label for="c1-name">Full Name *</label>
           <input type="text" placeholder="Your name" id="c1-name">
         </div>
         <div class="form-group">
-          <label>Phone *</label>
+          <label for="c1-phone">Phone *</label>
           <input type="tel" placeholder="+92..." id="c1-phone">
         </div>
       </div>
       <div class="form-group">
-        <label>Email Address</label>
+        <label for="c1-email">Email Address</label>
         <input type="email" placeholder="your@email.com" id="c1-email">
       </div>
       <div class="form-group">
-        <label>Service Needed</label>
+        <label for="c1-service">Service Needed</label>
         <select id="c1-service">
           <option value="">Select a service</option>
           <option>Individual Psychotherapy</option>
@@ -580,40 +588,45 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
         </select>
       </div>
       <div class="form-group">
-        <label>Tell us a little about what's going on</label>
+        <label for="c1-msg">Tell us a little about what's going on</label>
         <textarea placeholder="You don't have to share everything. Just a sentence or two is fine. Everything is confidential." id="c1-msg"></textarea>
       </div>
       <div class="privacy-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         100% confidential. We never share your information.
       </div>
+      <div class="mc-hp" aria-hidden="true">
+        <label for="c1-company">Company (leave this empty)</label>
+        <input type="text" id="c1-company" name="company" tabindex="-1" autocomplete="off">
+      </div>
+      <p class="form-err" id="c1-err" role="alert" hidden></p>
       <button class="btn-submit" id="c1-btn" onclick="submitForm('c1')">Book Free Consultation →</button>
       <p class="cta-micro">No commitment · Takes 30 seconds</p>
     </div>
 
     <!-- APPOINTMENT TAB -->
-    <div class="tab-panel" id="tab-appointment">
+    <div class="tab-panel" id="tab-appointment" role="tabpanel" aria-labelledby="tabbtn-appointment">
       <div class="form-row">
         <div class="form-group">
-          <label>Full Name *</label>
+          <label for="c2-name">Full Name *</label>
           <input type="text" placeholder="Your name" id="c2-name">
         </div>
         <div class="form-group">
-          <label>Phone *</label>
+          <label for="c2-phone">Phone *</label>
           <input type="tel" placeholder="+92..." id="c2-phone">
         </div>
       </div>
       <div class="form-group">
-        <label>Email Address</label>
+        <label for="c2-email">Email Address</label>
         <input type="email" placeholder="your@email.com" id="c2-email">
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label>Preferred Date</label>
+          <label for="c2-date">Preferred Date</label>
           <input type="date" id="c2-date">
         </div>
         <div class="form-group">
-          <label>Preferred Time</label>
+          <label for="c2-time">Preferred Time</label>
           <select id="c2-time">
             <option value="">Select time</option>
             <option>9:00 AM - 11:00 AM</option>
@@ -625,7 +638,7 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
         </div>
       </div>
       <div class="form-group">
-        <label>Service / Specialist</label>
+        <label for="c2-service">Service / Specialist</label>
         <select id="c2-service">
           <option value="">Select a service</option>
           <option>Individual Psychotherapy with Shaista Tariq</option>
@@ -640,37 +653,47 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
         </select>
       </div>
       <div class="form-group">
-        <label>Notes</label>
+        <label for="c2-msg">Notes</label>
         <textarea placeholder="Any additional info for us to know before the appointment..." id="c2-msg" style="min-height:80px"></textarea>
       </div>
       <div class="privacy-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         100% confidential. We never share your information.
       </div>
+      <div class="mc-hp" aria-hidden="true">
+        <label for="c2-company">Company (leave this empty)</label>
+        <input type="text" id="c2-company" name="company" tabindex="-1" autocomplete="off">
+      </div>
+      <p class="form-err" id="c2-err" role="alert" hidden></p>
       <button class="btn-submit" id="c2-btn" onclick="submitForm('c2')">Book Appointment →</button>
       <p class="cta-micro">We'll confirm your slot via call or WhatsApp</p>
     </div>
 
     <!-- GENERAL QUERY TAB -->
-    <div class="tab-panel" id="tab-general">
+    <div class="tab-panel" id="tab-general" role="tabpanel" aria-labelledby="tabbtn-general">
       <div class="form-row">
         <div class="form-group">
-          <label>Your Name</label>
+          <label for="c3-name">Your Name</label>
           <input type="text" placeholder="Name" id="c3-name">
         </div>
         <div class="form-group">
-          <label>Phone / Email</label>
+          <label for="c3-contact">Phone / Email</label>
           <input type="text" placeholder="+92... or email" id="c3-contact">
         </div>
       </div>
       <div class="form-group">
-        <label>Your Question or Message</label>
+        <label for="c3-msg">Your Question or Message</label>
         <textarea placeholder="Ask us anything about services, team, pricing, or anything else." id="c3-msg" style="min-height:130px"></textarea>
       </div>
       <div class="privacy-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         We'll get back to you within a few hours.
       </div>
+      <div class="mc-hp" aria-hidden="true">
+        <label for="c3-company">Company (leave this empty)</label>
+        <input type="text" id="c3-company" name="company" tabindex="-1" autocomplete="off">
+      </div>
+      <p class="form-err" id="c3-err" role="alert" hidden></p>
       <button class="btn-submit" id="c3-btn" onclick="submitForm('c3')">Send Message →</button>
     </div>
   </div>
@@ -681,9 +704,13 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
 // Tab switching
 function switchTab(id, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
 }
 function showModal(msg) {
   document.getElementById('modalMsg').textContent = msg;
@@ -701,26 +728,124 @@ function showToast(msg) {
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 5000);
 }
+// Each tab posts to the same intake as the workshop forms, so a consultation
+// request lands in the database and is emailed to the team exactly like a
+// registration. Nothing is confirmed to the visitor until the server has
+// actually accepted it.
+const FORMS = {
+  c1: {
+    kind: 'consultation',
+    subject: 'Free consultation request',
+    done: 'Your free consultation request is in. We\'ll call or WhatsApp you within a few hours.'
+  },
+  c2: {
+    kind: 'appointment',
+    subject: 'Appointment request',
+    done: 'Your appointment request is in. We\'ll call or WhatsApp you to confirm the exact slot.'
+  },
+  c3: {
+    kind: 'question',
+    subject: 'Question from the website',
+    done: 'Your message is in. We typically reply within 2–4 hours during working hours.'
+  }
+};
+
+function fieldValue(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function showFormError(prefix, message, fieldId) {
+  const box = document.getElementById(prefix + '-err');
+  if (box) { box.textContent = message; box.hidden = false; }
+  const el = fieldId && document.getElementById(fieldId);
+  if (el) {
+    el.style.borderColor = '#c2413f';
+    el.focus();
+    setTimeout(() => { el.style.borderColor = ''; }, 2400);
+  }
+}
+
 function submitForm(prefix) {
+  const config = FORMS[prefix];
+  if (!config) return;
   const btn = document.getElementById(prefix + '-btn');
-  const nameEl = document.getElementById(prefix + '-name');
-  const name = nameEl ? nameEl.value.trim() : '';
-  const phoneEl = document.getElementById(prefix + '-phone');
-  if (phoneEl && !phoneEl.value.trim()) { phoneEl.style.borderColor = 'red'; phoneEl.focus(); setTimeout(() => phoneEl.style.borderColor = '', 2000); return; }
-  if (nameEl && !name) { nameEl.style.borderColor = 'red'; nameEl.focus(); setTimeout(() => nameEl.style.borderColor = '', 2000); return; }
-  btn.textContent = 'Sending…'; btn.classList.add('loading');
-  setTimeout(() => {
+  const errBox = document.getElementById(prefix + '-err');
+  if (errBox) { errBox.hidden = true; errBox.textContent = ''; }
+
+  const name = fieldValue(prefix + '-name');
+  if (!name) return showFormError(prefix, 'Please tell us your name.', prefix + '-name');
+
+  // The general query tab takes a phone number or an email in one field, so it
+  // is split here rather than asking for both.
+  let phone = fieldValue(prefix + '-phone');
+  let email = fieldValue(prefix + '-email');
+  const either = fieldValue(prefix + '-contact');
+  if (either) { if (either.indexOf('@') !== -1) email = either; else phone = either; }
+
+  if (document.getElementById(prefix + '-phone') && !phone) {
+    return showFormError(prefix, 'Please leave a phone number we can reach you on.', prefix + '-phone');
+  }
+  if (!phone && !email) {
+    return showFormError(prefix, 'Please leave a phone number or an email address so we can reply.',
+      prefix + '-contact');
+  }
+  if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    return showFormError(prefix, 'That email address does not look right.',
+      document.getElementById(prefix + '-email') ? prefix + '-email' : prefix + '-contact');
+  }
+
+  btn.textContent = 'Sending…';
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      kind: config.kind,
+      workshop: config.subject,
+      name: name,
+      phone: phone,
+      email: email,
+      service: fieldValue(prefix + '-service'),
+      preferred_date: fieldValue(prefix + '-date'),
+      preferred_time: fieldValue(prefix + '-time'),
+      message: fieldValue(prefix + '-msg'),
+      company: fieldValue(prefix + '-company')
+    })
+  }).then(function (res) {
+    return res.json().catch(function () { return {}; }).then(function (data) {
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || 'We could not send that just now. Please try again, or WhatsApp us.');
+      }
+      ['-name', '-phone', '-email', '-contact', '-msg', '-service', '-date', '-time'].forEach(function (suffix) {
+        const el = document.getElementById(prefix + suffix);
+        if (el) el.value = '';
+      });
+      showModal(config.done);
+    });
+  }).catch(function (err) {
+    showFormError(prefix, err.message || 'We could not send that just now. Please try again, or WhatsApp us.');
+  }).then(function () {
     btn.textContent = btn.dataset.originalText || 'Send';
     btn.classList.remove('loading');
-    const messages = {
-      c1: 'Your free consultation request has been received! We\'ll call or WhatsApp you within a few hours.',
-      c2: 'Your appointment request is confirmed! We\'ll call or WhatsApp you to confirm the exact slot.',
-      c3: 'Your message has been received! We typically reply within 2\u20134 hours during working hours.'
-    };
-    showModal(messages[prefix] || 'Your message has been sent! We\'ll get back to you soon.');
-  }, 1400);
+    btn.disabled = false;
+  });
 }
+
 document.querySelectorAll('.btn-submit').forEach(btn => { btn.dataset.originalText = btn.textContent; });
+
+// Enter anywhere in a tab sends it, the way a real form would.
+document.querySelectorAll('.tab-panel').forEach(panel => {
+  panel.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' || e.target.tagName === 'TEXTAREA') return;
+    const btn = panel.querySelector('.btn-submit');
+    if (!btn || btn.disabled) return;
+    e.preventDefault();
+    btn.click();
+  });
+});
 </script>
 <script src="assets/main.js" defer></script>
 <script src="assets/nav-search.js" defer></script>

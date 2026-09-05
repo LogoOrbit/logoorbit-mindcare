@@ -1,9 +1,11 @@
-// Password-protected viewer for workshop registrations, served at /submissions.
+// Password-protected viewer for everything the website collects, served at
+// /submissions: workshop and course registrations, and the consultation,
+// appointment and question forms on /contact.
 //
-// GET  -> login screen (or the registrations, if a valid session cookie is present)
-// POST -> login, logout, or deleting one registration
+// GET  -> login screen (or the submissions, if a valid session cookie is present)
+// POST -> login, logout, deleting one submission, or saving the alert settings
 //
-// The registrations are laid out as a card grid rather than a wide table, so
+// The submissions are laid out as a card grid rather than a wide table, so
 // the page never scrolls sideways and reads properly on a phone.
 //
 // Deployed with verify_jwt = false: this function implements its own
@@ -31,10 +33,57 @@ const SESSION_COOKIE = "mc_submissions";
 // out (or a full year away from it).
 const SESSION_SECONDS = 365 * 24 * 60 * 60;
 const PUSH_TABLE = "mindcare_push_subscriptions";
-// Public half of the VAPID pair. Must match the copy in workshop-register.
-const VAPID_PUBLIC_KEY =
-  "BPeDHwj_As58mnmxaXsAoqd4WQ-v2fOuZHOl4Ylucqdmxmr25sTGpdrZsMrPaakFTwYx5TXBs1MgRd5fy6XQNFc";
+const SETTINGS_TABLE = "mindcare_settings";
 const RECEIPT_LINK_SECONDS = 60 * 60;
+// Shown on the settings sheet. Must match ALWAYS_NOTIFY in workshop-register,
+// which is the address every alert is sent to no matter what is configured.
+const ALWAYS_NOTIFY = "shaistatariq2002@gmail.com";
+
+// What each form is called on a card and in the filter row.
+const KIND_LABELS: Record<string, string> = {
+  "workshop": "Registration",
+  "consultation": "Free consultation",
+  "appointment": "Appointment",
+  "question": "Question",
+  "workshop-request": "Workshop request",
+};
+
+type Settings = Record<string, Record<string, unknown>>;
+
+/** Reads the notification settings. Service role only, same as everything else here. */
+async function loadSettings(): Promise<Settings> {
+  const out: Settings = {};
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${SETTINGS_TABLE}?select=key,value`, {
+      headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` },
+    });
+    if (!res.ok) {
+      console.error("loading settings failed", res.status, await res.text());
+      return out;
+    }
+    for (const row of await res.json() as Array<{ key: string; value: Record<string, unknown> }>) {
+      out[row.key] = row.value ?? {};
+    }
+  } catch (err) {
+    console.error("loading settings threw", err);
+  }
+  return out;
+}
+
+async function saveSettings(key: string, value: Record<string, unknown>): Promise<boolean> {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${SETTINGS_TABLE}?on_conflict=key`, {
+    method: "POST",
+    headers: {
+      apikey: SERVICE_KEY,
+      Authorization: `Bearer ${SERVICE_KEY}`,
+      "Content-Type": "application/json",
+      Prefer: "resolution=merge-duplicates,return=minimal",
+    },
+    body: JSON.stringify({ key, value, updated_at: new Date().toISOString() }),
+  });
+  if (!res.ok) console.error("saving settings failed", res.status, await res.text());
+  return res.ok;
+}
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -157,6 +206,44 @@ a{color:var(--teal-deep)}
 /* Money is green across the site, so a paid certificate reads green here too. */
 .tag-paid{color:var(--green);background:var(--green-bg);border:1px solid rgba(45,106,31,.22)}
 .tag-free{color:var(--muted);background:var(--bg);border:1px solid var(--line)}
+.tag-kind{color:var(--teal-deep);background:rgba(43,189,201,.1);border:1px solid rgba(43,189,201,.28)}
+.tag-warn{color:var(--danger);background:rgba(194,65,63,.08);border:1px solid rgba(194,65,63,.28);margin-left:6px}
+
+/* filter chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:8px 14px;
+ font:inherit;font-size:.8rem;font-weight:600;cursor:pointer;min-height:38px}
+.chip.on{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff}
+
+/* settings sheet */
+.notice-warn{background:var(--danger)}
+.sheet{position:fixed;inset:0;z-index:60;background:rgba(6,20,16,.55);display:flex;align-items:flex-start;
+ justify-content:center;padding:18px;overflow-y:auto;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.sheet[hidden]{display:none}
+.sheet-card{width:100%;max-width:460px;margin:auto;padding:22px}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.sheet-head h2{font-size:1.1rem;margin:0}
+.sheet-head .icon-btn{font-size:1.4rem;line-height:1}
+.sheet-note{color:var(--muted);font-size:.85rem;line-height:1.5;margin:0 0 18px}
+.sheet-hint{color:var(--muted);font-size:.78rem;line-height:1.45;margin:-10px 0 16px}
+.sheet label{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.sheet input[type=text],.sheet input[type=password],.sheet input:not([type]),.sheet select{
+ width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-bottom:16px;
+ background:var(--card);color:var(--ink)}
+.sheet input:focus,.sheet select:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(43,189,201,.15)}
+.sheet-more{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:16px}
+.sheet-more summary{cursor:pointer;font-size:.85rem;font-weight:600}
+.sheet-more>*:not(summary){margin-top:12px}
+.sheet-check{display:flex;align-items:center;gap:9px;text-transform:none;letter-spacing:0;font-size:.87rem;
+ font-weight:500;margin-bottom:18px}
+.sheet-check input{width:18px;height:18px;margin:0;flex:none}
+.sheet-actions{display:flex;gap:9px;flex-wrap:wrap}
+.sheet-actions .btn{flex:1;min-width:140px}
+.sheet-result{margin:14px 0 0;font-size:.85rem;line-height:1.5;padding:10px 13px;border-radius:10px;
+ background:var(--green-bg);color:var(--green);overflow-wrap:anywhere}
+.sheet-result[hidden]{display:none}
+.sheet-result.bad{background:#fdecec;color:#a12a2a}
+html[data-theme="dark"] .sheet-result.bad{background:#3a1c1c;color:#f0b4b4}
 
 .reg-fields{display:grid;grid-template-columns:1fr;gap:11px;margin:14px 0 0}
 .reg-fields>div{margin:0}
@@ -240,7 +327,7 @@ function loginPage(error?: string): Response {
   <form class="card login" method="POST" action="">
     <img class="logo" src="/mindcare.png" alt="MindCare Services" width="210" height="84">
     <h1>Submissions</h1>
-    <p>Workshop registrations. Authorised staff only.</p>
+    <p>Website submissions. Authorised staff only.</p>
     ${error ? `<div class="err">${esc(error)}</div>` : ""}
     <label for="id">ID</label>
     <input id="id" name="id" autocomplete="username" autocapitalize="none" spellcheck="false" required autofocus>
@@ -256,6 +343,7 @@ function loginPage(error?: string): Response {
 type Registration = {
   id: string;
   created_at: string;
+  kind: string;
   workshop: string;
   name: string;
   institute: string;
@@ -264,9 +352,15 @@ type Registration = {
   education: string;
   prior_info: string;
   expectations: string;
+  service: string;
+  message: string;
+  preferred_date: string;
+  preferred_time: string;
   certificate: boolean;
   receipt_path: string | null;
   receipt_name: string | null;
+  notify_status: string;
+  notified_at: string | null;
 };
 
 async function signedReceiptUrls(paths: string[]): Promise<Record<string, string>> {
@@ -333,7 +427,9 @@ const TRASH_ICON =
 
 async function submissionsPage(notice?: string): Promise<Response> {
   const query = new URLSearchParams({
-    select: "id,created_at,workshop,name,institute,phone,email,education,prior_info,expectations,certificate,receipt_path,receipt_name",
+    select: "id,created_at,kind,workshop,name,institute,phone,email,education,prior_info," +
+      "expectations,service,message,preferred_date,preferred_time,certificate," +
+      "receipt_path,receipt_name,notify_status,notified_at",
     order: "created_at.desc",
     limit: "1000",
   });
@@ -341,9 +437,9 @@ async function submissionsPage(notice?: string): Promise<Response> {
     headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` },
   });
   if (!res.ok) {
-    console.error("fetching registrations failed", res.status, await res.text());
+    console.error("fetching submissions failed", res.status, await res.text());
     return htmlResponse(
-      `<div class="wrap"><div class="card empty">We could not load the registrations right now. Please refresh in a moment.</div></div>`,
+      `<div class="wrap"><div class="card empty">We could not load the submissions right now. Please refresh in a moment.</div></div>`,
       502,
     );
   }
@@ -354,6 +450,8 @@ async function submissionsPage(notice?: string): Promise<Response> {
   );
 
   const cards = rows.map((r) => {
+    const kind = KIND_LABELS[r.kind] ? r.kind : "workshop";
+    const isWorkshop = kind === "workshop";
     // A paid registration has a receipt; a free seat has nothing to collect,
     // and the badge already says so.
     const link = r.receipt_path ? links[r.receipt_path] : undefined;
@@ -366,7 +464,29 @@ async function submissionsPage(notice?: string): Promise<Response> {
       value
         ? `<div class="reg-note"><span class="reg-note-label">${label}</span><p>${esc(value)}</p></div>`
         : "";
-    return `<article class="reg" data-row>
+    const field = (label: string, value: string, href?: string) =>
+      value
+        ? `<div><dt>${label}</dt><dd>${
+          href ? `<a href="${esc(href)}">${esc(value)}</a>` : esc(value)
+        }</dd></div>`
+        : "";
+    // A registration is badged by what was paid. Everything else is badged by
+    // which form it came from, because that is the thing worth seeing first.
+    const badge = isWorkshop
+      ? `<span class="tag ${r.receipt_path ? "tag-paid" : "tag-free"}">${
+        r.receipt_path
+          ? `Paid${r.certificate ? " &middot; with certificate" : ""}`
+          : (r.certificate ? `Certificate &middot; ${CERT_FEE}` : "Free seat")
+      }</span>`
+      : `<span class="tag tag-kind">${esc(KIND_LABELS[kind])}</span>`;
+    // An alert that did not go out is worth knowing about here rather than in
+    // the function logs, because this page is the only other copy.
+    const alertState = r.notify_status && r.notify_status !== "sent"
+      ? `<span class="tag tag-warn" title="${esc(r.notify_status)}">Alert email failed</span>`
+      : "";
+    const when = [r.preferred_date, r.preferred_time].filter(Boolean).join(" at ");
+
+    return `<article class="reg" data-row data-kind="${esc(kind)}">
       <div class="reg-top">
         <div>
           <h2 class="reg-name">${esc(r.name)}</h2>
@@ -375,21 +495,20 @@ async function submissionsPage(notice?: string): Promise<Response> {
         <form class="reg-del" method="POST" action="" data-delete data-name="${esc(r.name)}">
           <input type="hidden" name="action" value="delete">
           <input type="hidden" name="id" value="${esc(r.id)}">
-          <button class="icon-btn" type="submit" title="Delete this registration"
-                  aria-label="Delete the registration from ${esc(r.name)}">${TRASH_ICON}</button>
+          <button class="icon-btn" type="submit" title="Delete this submission"
+                  aria-label="Delete the submission from ${esc(r.name)}">${TRASH_ICON}</button>
         </form>
       </div>
-      <span class="tag ${r.receipt_path ? "tag-paid" : "tag-free"}">${
-      r.receipt_path
-        ? `Paid${r.certificate ? " &middot; with certificate" : ""}`
-        : (r.certificate ? `Certificate &middot; ${CERT_FEE}` : "Free seat")
-    }</span>
+      ${badge}${alertState}
       <dl class="reg-fields">
-        <div><dt>Institute / University</dt><dd>${esc(r.institute)}</dd></div>
-        <div><dt>Current education</dt><dd>${esc(r.education)}</dd></div>
-        <div><dt>Phone</dt><dd><a href="tel:${esc(r.phone.replace(/[^\d+]/g, ""))}">${esc(r.phone)}</a></dd></div>
-        <div><dt>Email</dt><dd><a href="mailto:${esc(r.email)}">${esc(r.email)}</a></dd></div>
+        ${field("Phone", r.phone, r.phone ? `tel:${r.phone.replace(/[^\d+]/g, "")}` : undefined)}
+        ${field("Email", r.email, r.email ? `mailto:${r.email}` : undefined)}
+        ${field("Service", r.service)}
+        ${field("Preferred slot", when)}
+        ${field("Institute / University", r.institute)}
+        ${field("Current education", r.education)}
       </dl>
+      ${note("Message", r.message)}
       ${note("Prior knowledge", r.prior_info)}
       ${note("Expectations", r.expectations)}
       <div class="reg-foot">
@@ -399,15 +518,46 @@ async function submissionsPage(notice?: string): Promise<Response> {
     </article>`;
   }).join("");
 
+  const counts: Record<string, number> = {};
+  for (const r of rows) {
+    const kind = KIND_LABELS[r.kind] ? r.kind : "workshop";
+    counts[kind] = (counts[kind] ?? 0) + 1;
+  }
+  const filters = [`<button class="chip on" type="button" data-filter="">All ${rows.length}</button>`]
+    .concat(
+      Object.keys(KIND_LABELS)
+        .filter((k) => counts[k])
+        .map((k) =>
+          `<button class="chip" type="button" data-filter="${esc(k)}">${
+            esc(KIND_LABELS[k])
+          } ${counts[k]}</button>`
+        ),
+    ).join("");
+
   const list = rows.length
-    ? `<div class="grid" id="grid">${cards}</div><p class="noresults" id="noresults" hidden>No registrations match that search.</p>`
-    : `<div class="card empty">No registrations yet. They will appear here as soon as someone submits the workshop form.</div>`;
+    ? `<div class="chips">${filters}</div><div class="grid" id="grid">${cards}</div>` +
+      `<p class="noresults" id="noresults" hidden>Nothing matches that search.</p>`
+    : `<div class="card empty">No submissions yet. Registrations, consultation and appointment
+       requests and messages from the website all appear here the moment they are sent.</div>`;
 
   const csvData = rows.map((r) => [
-    formatWhen(r.created_at), r.workshop, r.name, r.institute, r.phone, r.email,
-    r.education, r.prior_info, r.expectations, r.certificate ? "Yes" : "No",
+    formatWhen(r.created_at), KIND_LABELS[r.kind] ?? r.kind, r.workshop, r.name, r.phone, r.email,
+    r.service, [r.preferred_date, r.preferred_time].filter(Boolean).join(" "), r.message,
+    r.institute, r.education, r.prior_info, r.expectations, r.certificate ? "Yes" : "No",
     r.receipt_path ? (r.receipt_name ?? r.receipt_path) : "",
+    r.notify_status || (r.notified_at ? "sent" : ""),
   ]);
+
+  const settings = await loadSettings();
+  const notify = settings.notify ?? {};
+  const smtp = (notify.smtp ?? {}) as Record<string, unknown>;
+  const vapidPublic = typeof settings.push?.vapid_public === "string" ? settings.push.vapid_public : "";
+  const value = (v: unknown) => esc(typeof v === "string" ? v : "");
+  const failed = rows.filter((r) => r.notify_status && r.notify_status !== "sent").length;
+  // Either a credential of some kind, or a function secret doing the same job.
+  const smtpReady = !!(smtp.host && smtp.user && smtp.pass);
+  const configured = !!(typeof notify.api_key === "string" && notify.api_key) || smtpReady ||
+    !!Deno.env.get("RESEND_API_KEY") || !!Deno.env.get("SMTP_HOST");
 
   const body = `<div class="wrap">
   <div class="top">
@@ -416,19 +566,96 @@ async function submissionsPage(notice?: string): Promise<Response> {
         <img class="logo" src="/assets/icons/icon-192.png" alt="MindCare Services" width="44" height="44">
         <div class="brand">MIND<span>CARE</span> Submissions<span class="count">${rows.length}</span></div>
       </div>
-      <div class="sub">Newest first. The fee paid is on each card's footer line; receipt links expire after one hour.</div>
+      <div class="sub">Every registration, consultation and message from the website, newest first.
+        Receipt links expire after one hour.</div>
     </div>
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="Search name, email, institute...">
       <button class="btn theme-btn" id="themeBtn" type="button" aria-label="Toggle theme"><span class="sun">Dark</span><span class="moon">Light</span></button>
       <button class="btn" id="alerts" type="button" hidden>Alerts</button>
+      <button class="btn" id="settingsBtn" type="button">Settings</button>
       <button class="btn" id="csv" type="button">CSV</button>
       <a class="btn" href="">Refresh</a>
       <form method="POST" action=""><input type="hidden" name="action" value="logout"><button class="btn" type="submit">Sign out</button></form>
     </div>
   </div>
   ${notice ? `<div class="notice">${esc(notice)}</div>` : ""}
+  ${
+    configured
+      ? (failed
+        ? `<div class="notice notice-warn">${failed} alert email${failed === 1 ? "" : "s"} could not be
+           sent. Open Settings, check the email provider and send a test.</div>`
+        : "")
+      : `<div class="notice notice-warn">No email provider is set up yet, so nothing here has been
+         emailed to you. Tap <strong>Settings</strong>, paste an API key from Email Bump, Resend or Brevo
+         (or your mailbox's SMTP details), save, then tap <strong>Send test email</strong>. Everything
+         below is safe either way.</div>`
+  }
   ${list}
+</div>
+
+<div class="sheet" id="settings" hidden>
+  <form class="card sheet-card" method="POST" action="">
+    <input type="hidden" name="action" value="settings">
+    <div class="sheet-head">
+      <h2>Alert settings</h2>
+      <button class="icon-btn" type="button" id="settingsClose" aria-label="Close settings">&times;</button>
+    </div>
+    <p class="sheet-note">Every submission is emailed to <strong>${esc(ALWAYS_NOTIFY)}</strong>,
+      always. Add an email provider below so those alerts can actually be sent, then use
+      <strong>Send test email</strong> to prove it.</p>
+
+    <label for="s-extra">Also email these addresses</label>
+    <input id="s-extra" name="extra_to" value="${value(notify.extra_to)}"
+           placeholder="info@themindcareservices.com, someone@else.com" autocapitalize="none" spellcheck="false">
+
+    <label for="s-provider">Provider</label>
+    <select id="s-provider" name="provider">
+      ${
+    [["", "Detect from the key"], ["emailbump", "Email Bump"], ["resend", "Resend"], ["brevo", "Brevo"], [
+      "sendgrid",
+      "SendGrid",
+    ], ["smtp", "Any mailbox over SMTP (Zoho, Gmail, ...)"]]
+      .map(([v, label]) =>
+        `<option value="${v}"${value(notify.provider) === v ? " selected" : ""}>${label}</option>`
+      ).join("")
+  }
+    </select>
+
+    <label for="s-key">API key</label>
+    <input id="s-key" name="api_key" type="password" value="${value(notify.api_key)}"
+           placeholder="ebk_... or re_... or xkeysib-... or SG...." autocapitalize="none" spellcheck="false">
+
+    <label for="s-from">Send from</label>
+    <input id="s-from" name="from" value="${value(notify.from)}"
+           placeholder="MindCare Website &lt;alerts@themindcareservices.com&gt;" autocapitalize="none" spellcheck="false">
+    <p class="sheet-hint">Leave empty to use the provider's shared sender. Once themindcareservices.com
+      is verified with the provider, put an address on it here: a borrowed sender is the main reason
+      alerts land in spam.</p>
+
+    <details class="sheet-more"${smtp.host ? " open" : ""}>
+      <summary>SMTP details (only for the SMTP provider)</summary>
+      <label for="s-host">Host</label>
+      <input id="s-host" name="smtp_host" value="${value(smtp.host)}" placeholder="smtp.zoho.com" autocapitalize="none" spellcheck="false">
+      <label for="s-port">Port</label>
+      <input id="s-port" name="smtp_port" value="${value(String(smtp.port ?? ""))}" placeholder="465" inputmode="numeric">
+      <label for="s-user">Username</label>
+      <input id="s-user" name="smtp_user" value="${value(smtp.user)}" placeholder="info@themindcareservices.com" autocapitalize="none" spellcheck="false">
+      <label for="s-pass">Password</label>
+      <input id="s-pass" name="smtp_pass" type="password" value="${value(smtp.pass)}" autocapitalize="none" spellcheck="false">
+    </details>
+
+    <label class="sheet-check">
+      <input type="checkbox" name="confirm_registrant" value="1"${notify.confirm_registrant === false ? "" : " checked"}>
+      Also send the person a short confirmation
+    </label>
+
+    <div class="sheet-actions">
+      <button class="btn" type="button" id="testBtn">Send test email</button>
+      <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+    <p class="sheet-result" id="testResult" hidden></p>
+  </form>
 </div>
 <script id="rowdata" type="application/json">${
     JSON.stringify(csvData).replace(/</g, "\\u003c")
@@ -438,23 +665,77 @@ async function submissionsPage(notice?: string): Promise<Response> {
   var q = document.getElementById('q');
   var grid = document.getElementById('grid');
   var none = document.getElementById('noresults');
-  if (q && grid) {
-    q.addEventListener('input', function(){
-      var needle = q.value.toLowerCase();
-      var shown = 0;
-      Array.prototype.forEach.call(grid.querySelectorAll('[data-row]'), function(card){
-        var hit = card.textContent.toLowerCase().indexOf(needle) !== -1;
-        card.style.display = hit ? '' : 'none';
-        if (hit) shown++;
-      });
-      if (none) none.hidden = shown !== 0;
+  var kind = '';
+
+  // Search and the kind chips narrow the same list, so they are applied together
+  // rather than one undoing the other.
+  function refilter(){
+    if (!grid) return;
+    var needle = q ? q.value.toLowerCase() : '';
+    var shown = 0;
+    Array.prototype.forEach.call(grid.querySelectorAll('[data-row]'), function(card){
+      var hit = (!needle || card.textContent.toLowerCase().indexOf(needle) !== -1) &&
+                (!kind || card.getAttribute('data-kind') === kind);
+      card.style.display = hit ? '' : 'none';
+      if (hit) shown++;
     });
+    if (none) none.hidden = shown !== 0;
   }
+  if (q) q.addEventListener('input', refilter);
+  Array.prototype.forEach.call(document.querySelectorAll('.chip'), function(chip){
+    chip.addEventListener('click', function(){
+      kind = chip.getAttribute('data-filter') || '';
+      Array.prototype.forEach.call(document.querySelectorAll('.chip'), function(c){
+        c.classList.toggle('on', c === chip);
+      });
+      refilter();
+    });
+  });
+
+  // Alert settings.
+  var sheet = document.getElementById('settings');
+  var openBtn = document.getElementById('settingsBtn');
+  var closeBtn = document.getElementById('settingsClose');
+  var testBtn = document.getElementById('testBtn');
+  var testOut = document.getElementById('testResult');
+  function closeSheet(){ if (sheet) sheet.hidden = true; }
+  if (openBtn && sheet) openBtn.addEventListener('click', function(){ sheet.hidden = false; });
+  if (closeBtn) closeBtn.addEventListener('click', closeSheet);
+  if (sheet) sheet.addEventListener('click', function(e){ if (e.target === sheet) closeSheet(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeSheet(); });
+
+  if (testBtn && testOut) testBtn.addEventListener('click', function(){
+    testBtn.disabled = true;
+    testOut.hidden = false;
+    testOut.className = 'sheet-result';
+    testOut.textContent = 'Sending...';
+    // Goes through the registration endpoint, which owns the sending code and
+    // accepts this session cookie. Save first: it sends with what is stored.
+    fetch('/api/workshop-register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'test' }),
+      credentials: 'same-origin'
+    }).then(function(res){
+      return res.json().catch(function(){ return {}; }).then(function(data){
+        if (res.ok && data.ok) {
+          testOut.textContent = 'Sent to ' + (data.to || []).join(', ') +
+            '. If it is not in the inbox, look in spam and mark it "Not spam".';
+        } else {
+          testOut.className = 'sheet-result bad';
+          testOut.textContent = data.error || 'The test email could not be sent.';
+        }
+      });
+    }).catch(function(){
+      testOut.className = 'sheet-result bad';
+      testOut.textContent = 'The test email could not be sent. Please try again.';
+    }).then(function(){ testBtn.disabled = false; });
+  });
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-delete]'), function(form){
     form.addEventListener('submit', function(e){
       var who = form.getAttribute('data-name') || 'this registration';
-      if (!confirm('Delete the registration from ' + who + '?\\n\\nThe details and any uploaded receipt are removed for good.')) {
+      if (!confirm('Delete the submission from ' + who + '?\\n\\nThe details and any uploaded receipt are removed for good.')) {
         e.preventDefault();
       }
     });
@@ -472,8 +753,8 @@ async function submissionsPage(notice?: string): Promise<Response> {
   // when the dashboard is installed to the home screen, which is what Chrome on
   // Android and Safari on iOS need before a push can arrive at all.
   var alerts = document.getElementById('alerts');
-  if (alerts && 'serviceWorker' in navigator && 'PushManager' in window && window.isSecureContext) {
-    var VAPID = '${VAPID_PUBLIC_KEY}';
+  var VAPID = '${vapidPublic}';
+  if (VAPID && alerts && 'serviceWorker' in navigator && 'PushManager' in window && window.isSecureContext) {
     var reg = null;
     alerts.hidden = false;
 
@@ -548,14 +829,16 @@ async function submissionsPage(notice?: string): Promise<Response> {
 
   var btn = document.getElementById('csv');
   if (btn) btn.addEventListener('click', function(){
-    var head = ['Received','Workshop','Name','Institute','Phone','Email','Current education','Prior knowledge','Expectations','Certificate','Receipt'];
+    var head = ['Received','Type','Workshop / subject','Name','Phone','Email','Service','Preferred slot',
+                'Message','Institute','Current education','Prior knowledge','Expectations','Certificate',
+                'Receipt','Alert email'];
     var rows = JSON.parse(document.getElementById('rowdata').textContent);
     var csv = [head].concat(rows).map(function(r){
       return r.map(function(c){ return '"' + String(c == null ? '' : c).replace(/"/g,'""') + '"'; }).join(',');
     }).join('\\r\\n');
     var url = URL.createObjectURL(new Blob(['\\ufeff' + csv], {type:'text/csv;charset=utf-8'}));
     var a = document.createElement('a');
-    a.href = url; a.download = 'mindcare-workshop-registrations.csv';
+    a.href = url; a.download = 'mindcare-submissions.csv';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
   });
@@ -635,6 +918,30 @@ Deno.serve(async (req: Request) => {
 
     if (action === "logout") return withCookie(loginPage(), "", 0);
 
+    if (action === "settings") {
+      if (!await sessionIsValid(readCookie(req, SESSION_COOKIE))) return loginPage();
+      const field = (name: string) => String(form.get(name) ?? "").trim();
+      const port = Number(field("smtp_port"));
+      const saved = await saveSettings("notify", {
+        provider: field("provider"),
+        api_key: field("api_key"),
+        from: field("from"),
+        extra_to: field("extra_to"),
+        confirm_registrant: form.get("confirm_registrant") !== null,
+        smtp: {
+          host: field("smtp_host"),
+          port: Number.isFinite(port) && port > 0 ? port : 465,
+          user: field("smtp_user"),
+          pass: field("smtp_pass"),
+        },
+      });
+      return await submissionsPage(
+        saved
+          ? "Alert settings saved. Open Settings again and tap Send test email to check them."
+          : "Those settings could not be saved. Please try again.",
+      );
+    }
+
     if (action === "delete") {
       // Deleting is only ever reachable with a live session. SameSite=Lax on the
       // cookie keeps a cross-site form from posting here on someone's behalf.
@@ -642,8 +949,8 @@ Deno.serve(async (req: Request) => {
       const name = await deleteRegistration(String(form.get("id") ?? ""));
       return await submissionsPage(
         name
-          ? `Deleted the registration from ${name}.`
-          : "That registration could not be deleted. It may already be gone.",
+          ? `Deleted the submission from ${name}.`
+          : "That submission could not be deleted. It may already be gone.",
       );
     }
 

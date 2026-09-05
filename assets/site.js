@@ -162,7 +162,9 @@ if("IntersectionObserver" in window && !reduce){
   }
   function setBtn(){ if(btn){ btn.setAttribute("aria-pressed",String(enabled)); btn.classList.toggle("muted",!enabled); } }
   setBtn();
-  start();
+  // No start() before a gesture. Autoplay is blocked anyway, and calling play()
+  // is what pulls roughly 10 MB of audio down the wire: a visitor who reads the
+  // page and leaves without tapping ENTER should never pay for it.
   ["pointerdown","keydown","touchstart"].forEach(function(ev){
     window.addEventListener(ev,function(){ start(); schedule(); },{passive:true});
   });

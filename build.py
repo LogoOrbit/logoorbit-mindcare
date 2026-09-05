@@ -5,7 +5,8 @@ data tables below, so every interior page shares one design system and a
 consistent SEO/schema baseline. Run: python3 build.py
 """
 import os, re, html, json, datetime, subprocess
-from urllib.parse import quote as urlquote
+from urllib.parse import quote as urlquote, urlparse
+from html import unescape
 
 BASE = "https://themindcareservices.com"
 PHONE = "+92-327-2337631"
@@ -1584,6 +1585,34 @@ def write(path, content):
     print("wrote", path)
 
 
+def search_index(urls):
+    """Builds assets/search-index.json from the pages that were just written.
+
+    The nav search and /search both read this file. It used to be maintained by
+    hand, which meant a new page was invisible to the site's own search until
+    somebody remembered. Reading the title and description straight back out of
+    each page keeps the two in step by construction.
+    """
+    entries = []
+    for url, path, _priority in urls:
+        with open(os.path.join(ROOT, path), encoding="utf-8") as f:
+            markup = f.read()
+        title = re.search(r"<title>(.*?)</title>", markup, re.S)
+        desc = re.search(r'<meta name="description" content="(.*?)"', markup, re.S)
+        entries.append({
+            "title": unescape(title.group(1).strip()) if title else "",
+            "desc": unescape(desc.group(1).strip()) if desc else "",
+            "url": url,
+            "path": urlparse(url).path or "/",
+        })
+    entries.sort(key=lambda e: e["path"])
+    body = ",\n".join(
+        " {\n" + ",\n".join(f'  "{k}": {json.dumps(v, ensure_ascii=False)}' for k, v in e.items()) + "\n }"
+        for e in entries
+    )
+    return f"[\n{body}\n]\n"
+
+
 def last_modified(path):
     """The date a page really changed, for <lastmod>.
 
@@ -1659,6 +1688,7 @@ def build():
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                f"{body}\n</urlset>\n")
     write("sitemap.xml", sitemap)
+    write("assets/search-index.json", search_index(urls))
     print(f"\nDone: {len(SERVICES)} services + {len(TEAM)} team + 2 index + sitemap")
 
 
