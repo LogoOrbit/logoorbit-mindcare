@@ -152,8 +152,10 @@
 .tm-actions{display:flex;gap:12px;margin-top:6px}
 .btn-wa{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;
  background:#25D366;color:#0b2016;border:none;border-radius:50px;padding:14px 22px;
- font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;line-height:1;
+ font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;line-height:1.25;
+ text-decoration:none;box-sizing:border-box;text-align:center;
  transition:transform .18s,box-shadow .18s;box-shadow:0 6px 18px rgba(37,211,102,.28)}
+.btn-wa:visited{color:#0b2016}
 .btn-wa:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(37,211,102,.36)}
 .btn-wa:disabled{opacity:.6;cursor:default;transform:none}
 .btn-wa svg{flex:none}
@@ -338,7 +340,7 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
 
   var FEE_REG = 2500, FEE_NOTES = 1000, FEE_CERT = 3500;
   var WORKSHOP = 'Montessori Teacher Training Course (3 Months)';
-  // Chat link for the fallback path; the text is appended url-encoded.
+  // Chat link; the message is appended url-encoded.
   var WA_LINK = 'https://wa.me/923272337631?text=';
 
   // Receipts travel as base64 inside the JSON body, which inflates them by a
@@ -491,50 +493,42 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
     ];
     if(val('mf-prior'))  lines.push('Prior knowledge: ' + val('mf-prior'));
     if(val('mf-expect')) lines.push('Expectations: ' + val('mf-expect'));
-    lines.push('', 'My payment screenshot is attached.');
+    lines.push('', 'Please confirm my seat. I am attaching my payment screenshot here as well.');
     return lines.join('\n');
   }
 
-  /* Sends the details to WhatsApp, with the screenshot itself where the phone
-     allows it. navigator.share is the only way a web page can hand a file to
-     WhatsApp; where it is unavailable (most desktops) we open the chat with the
-     details filled in and ask for the screenshot to be attached by hand, which
-     is the honest fallback rather than a button that silently drops the image. */
-  function sendOnWhatsApp(text, file, btn){
-    var canShareFile = file && navigator.canShare &&
-      navigator.canShare({ files: [file], text: text });
+  /* The WhatsApp chat link, ready to be dropped into an href. A plain link is
+     the one thing every phone and desktop handles on a single tap: Android and
+     iOS hand wa.me straight to the installed app, and desktops land on WhatsApp
+     Web. It deliberately does not go through navigator.share or window.open --
+     the share sheet asks the user to pick an app, and a scripted window is what
+     the pop-up blocker stops. */
+  function waHref(text){
+    return WA_LINK + encodeURIComponent(text);
+  }
 
-    if(canShareFile){
-      if(btn) btn.disabled = true;
-      navigator.share({ files: [file], text: text, title: 'MindCare course registration' })
-        .catch(function(){
-          // Cancelled, or the share sheet refused: fall back to the chat link.
-          window.open(WA_LINK + encodeURIComponent(text), '_blank', 'noopener');
-        })
-        .then(function(){ if(btn) btn.disabled = false; });
-      return;
-    }
-    window.open(WA_LINK + encodeURIComponent(text), '_blank', 'noopener');
+  /* Escapes a URL for use inside an HTML attribute. */
+  function attr(s){
+    return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   }
 
   /* Shown under the error box when the form could not be submitted at all. The
      transfer has already been made by this point, so WhatsApp is the way the
      registration still reaches us. */
-  function offerWhatsAppFallback(text, file){
+  function offerWhatsAppFallback(text){
     if(document.getElementById('mf-wa-fallback')) return;
     var wrap = document.createElement('div');
     wrap.id = 'mf-wa-fallback';
     wrap.style.marginTop = '12px';
-    wrap.innerHTML = '<button type="button" class="btn-wa" id="mf-wa-alt">' +
+    wrap.innerHTML = '<a class="btn-wa" id="mf-wa-alt" href="' + attr(waHref(text)) + '"' +
+      ' target="_blank" rel="noopener">' +
       '<svg width="19" height="19" fill="currentColor" aria-hidden="true"><use href="../assets/sprite.svg#i-wa"/></svg>' +
-      ' Send it to us on WhatsApp instead</button>' +
-      '<p class="tm-note">Your details are written out for you. Nothing is lost.</p>';
+      ' Send it to us on WhatsApp instead</a>' +
+      '<p class="tm-note">Your details are written out for you. Attach your screenshot in the chat. Nothing is lost.</p>';
     alertBox.parentNode.insertBefore(wrap, alertBox.nextSibling);
-    var btn = document.getElementById('mf-wa-alt');
-    btn.addEventListener('click', function(){ sendOnWhatsApp(text, file, btn); });
   }
 
-  function succeed(sum, file, receiptMissing, text){
+  function succeed(sum, receiptMissing, text){
     form.innerHTML = '<div class="tm-done">' +
       '<div class="tm-tick">&#10003;</div>' +
       '<h3>Your registration is in</h3>' +
@@ -543,22 +537,20 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
           '<strong>Please send it to us on WhatsApp now</strong> so we can match your payment to your form.</p>'
         : '<p>Thank you. We will verify your ' + money(sum) + ' transfer against your form, confirm your seat, ' +
           'and send you the class timings and the joining link before the course starts on 15 September 2026.</p>') +
-      '<p>Sending your screenshot on WhatsApp as well is the fastest way to get your seat confirmed.</p>' +
+      '<p>Saying hello on WhatsApp is the fastest way to get your seat confirmed.</p>' +
       '<div class="tm-actions" style="margin-top:18px">' +
-        '<button type="button" class="btn-wa" id="mf-wa">' +
+        '<a class="btn-wa" id="mf-wa" href="' + attr(waHref(text)) + '" target="_blank" rel="noopener">' +
         '<svg width="19" height="19" fill="currentColor" aria-hidden="true"><use href="../assets/sprite.svg#i-wa"/></svg>' +
-        ' Send my details &amp; screenshot on WhatsApp</button>' +
+        ' Message us on WhatsApp</a>' +
       '</div>' +
-      '<p class="tm-note" id="mf-wa-note">Opens WhatsApp with your details already written out.</p>' +
+      '<p class="tm-note" id="mf-wa-note">One tap. WhatsApp opens with your details already typed out&nbsp;&mdash; just press send.</p>' +
       '<p style="margin-top:16px"><a href="/montessori-course" style="font-weight:600">Back to the course details</a></p>' +
       '</div>';
 
-    var wa = document.getElementById('mf-wa');
-    var note = document.getElementById('mf-wa-note');
-    if(note && !(file && navigator.canShare && navigator.canShare({ files: [file] }))){
-      note.textContent = 'Opens WhatsApp with your details already written out. Attach the screenshot there.';
+    if(receiptMissing){
+      var note = document.getElementById('mf-wa-note');
+      if(note) note.textContent = 'One tap. WhatsApp opens with your details already typed out — attach your screenshot there and press send.';
     }
-    if(wa) wa.addEventListener('click', function(){ sendOnWhatsApp(text, file, wa); });
     form.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
@@ -607,7 +599,7 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
         if(!res.ok || !data.ok) throw new Error(data.error || 'We could not submit your registration. Please try again.');
         // `receipt_missing` means the row saved but the screenshot did not, so
         // the success screen asks for it on WhatsApp instead.
-        succeed(sum, file, data.receipt_missing === true, waText);
+        succeed(sum, data.receipt_missing === true, waText);
       });
     }).catch(function(err){
       submit.disabled = false;
@@ -615,7 +607,7 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
       // Their money has already been transferred, so a failure here must not be
       // a dead end: offer WhatsApp as the way through.
       fail(err.message || 'We could not submit your registration. Please try again.');
-      offerWhatsAppFallback(waText, file);
+      offerWhatsAppFallback(waText);
     });
   });
 })();

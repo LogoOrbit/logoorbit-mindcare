@@ -809,8 +809,16 @@ var I18N={
 
     var msg = 'Hi MindCare! I would like to request a workshop on: ' + topic +
               '. Please share what is possible.';
-    window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg),
-                '_blank', 'noopener');
+    // A clicked link, not window.open: a scripted window with a features string
+    // is what pop-up blockers stop, and on phones it can open a stranded window
+    // that never reaches the WhatsApp app.
+    var link = document.createElement('a');
+    link.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+    link.target = '_blank';
+    link.rel = 'noopener';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     close();
   });
 })();
