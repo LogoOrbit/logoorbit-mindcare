@@ -86,7 +86,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; -webkit-font-smoothing: antialiased; animation: pageIn .5s ease both; }
+body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; -webkit-font-smoothing: antialiased; animation: pageIn .5s ease backwards; }
 @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 body.page-exit { opacity: 0; transform: translateY(-8px); transition: opacity .28s ease, transform .28s ease; }
 @media (prefers-reduced-motion: reduce) { body { animation: none; } body.page-exit { transition: none; opacity: 1; transform: none; } }
