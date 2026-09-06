@@ -333,8 +333,8 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 </div>
 
 <!-- preload="none": between them these three tracks are about 10 MB, and nothing
-     can play until someone taps ENTER anyway. site.js loads them at that tap,
-     so a visitor who never turns the sound on never pays for them. -->
+     can play before the visitor's first gesture anyway. site.js loads them at that
+     gesture, so a visitor who never turns the sound on never pays for them. -->
 <audio id="bgm" src="assets/Background%20Music%20For%20Website.mp3" loop preload="none"></audio>
 <audio id="medi" src="assets/English%20Meditation%20Audio.mp3" data-src-en="assets/English%20Meditation%20Audio.mp3" data-src-ur="assets/Urdu%20Meditation%20Audio.mp3" crossorigin="anonymous" loop preload="none"></audio>
 <button id="bgmBtn" class="bgm-btn" type="button" aria-label="Toggle background music" aria-pressed="true" title="Music on/off">
@@ -371,7 +371,18 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 <!-- NEWS: UPCOMING COURSE -->
 <style>
 .news-band{padding:34px 0}
-.news-card{display:grid;grid-template-columns:150px 1fr auto;gap:26px;align-items:center;background:var(--card);border:1px solid var(--teal);border-radius:20px;padding:22px 30px;box-shadow:0 14px 40px rgba(15,154,168,.14)}
+.news-card{position:relative;display:grid;grid-template-columns:150px 1fr auto;grid-template-areas:"pic body cta" "pic meta cta";
+ column-gap:26px;row-gap:12px;align-items:center;background:var(--card);border:1px solid var(--teal);border-radius:20px;padding:22px 30px;box-shadow:0 14px 40px rgba(15,154,168,.14);
+ transition:transform .25s ease,box-shadow .25s ease}
+.news-card picture{grid-area:pic}
+.news-body{grid-area:body}
+.news-meta{grid-area:meta}
+.news-ctas{grid-area:cta}
+.news-card:hover{transform:translateY(-3px);box-shadow:0 20px 48px rgba(15,154,168,.24)}
+/* the whole card is one link to the course page; the CTAs sit above it */
+.news-stretch{position:absolute;inset:0;z-index:1;border-radius:20px}
+.news-stretch:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.news-ctas{position:relative;z-index:2}
 .news-card picture{display:block}
 .news-card img{width:150px;height:auto;border-radius:12px;display:block}
 .news-tag{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-deep);background:var(--teal-light);padding:5px 13px;border-radius:999px;margin-bottom:10px}
@@ -381,7 +392,7 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 .news-card h3 em{font-style:italic;color:var(--teal-dark)}
 .news-card p{font-size:.92rem;color:var(--muted);margin:0}
 .news-ctas{display:flex;flex-direction:column;gap:10px;white-space:nowrap}
-.news-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.news-meta{display:flex;flex-wrap:wrap;gap:8px}
 .news-meta span{font-size:.78rem;font-weight:600;color:var(--teal-deep);background:var(--teal-light);border:1px solid var(--border);padding:4px 11px;border-radius:999px}
 .news-foot{text-align:center;margin-top:18px;font-size:.9rem;color:var(--muted)}
 .news-foot p{margin:0}
@@ -390,7 +401,19 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 .btn-request{margin-top:14px;background:var(--card);color:var(--teal-deep);border:1.5px dashed var(--teal);
  letter-spacing:.09em;text-transform:uppercase;font-size:.82rem;font-weight:700}
 .btn-request:hover{background:var(--teal-light);border-style:solid;transform:translateY(-2px)}
-@media(max-width:860px){.news-card{grid-template-columns:1fr;text-align:center}.news-card img{margin:0 auto;width:190px}.news-ctas{flex-direction:row;justify-content:center;flex-wrap:wrap;white-space:normal}.news-meta{justify-content:center}}
+/* phones: one compact card that fits on a single screen — poster beside the title,
+   two facts, and the two buttons. Everything else lives on the course page. */
+@media(max-width:860px){
+ .news-band{padding:24px 0}
+ .news-card{grid-template-columns:100px 1fr;grid-template-areas:"pic body" "meta meta" "cta cta";column-gap:14px;row-gap:12px;padding:16px;border-radius:18px}
+ .news-card img{width:100px}
+ .news-card h3{font-size:1.1rem}
+ .news-card p{font-size:.85rem}
+ .news-tag{font-size:.6rem;letter-spacing:.07em;padding:4px 9px;margin-bottom:8px}
+ .news-card picture{align-self:start}
+ .news-ctas{flex-direction:row;gap:10px;white-space:normal}
+ .news-ctas .btn{flex:1;min-width:0;padding-inline:12px;font-size:.88rem;text-align:center}
+}
 
 /* REQUEST A WORKSHOP: topic picker that hands off to WhatsApp */
 .rw-back{position:fixed;inset:0;z-index:2000;background:rgba(12,28,22,.55);backdrop-filter:blur(3px);
@@ -434,22 +457,20 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
 <section class="news-band" aria-label="News: upcoming course">
   <div class="wrap">
     <div class="news-card">
-      <a href="/montessori-course" aria-label="Montessori Teacher Training Course details"><picture><source type="image/webp" srcset="assets/workshops/montessori-course-poster-500.webp 500w, assets/workshops/montessori-course-poster.webp 1000w" sizes="(max-width: 860px) 190px, 150px"><img src="assets/workshops/montessori-course-poster.jpg" alt="The MindCare Services® three-month online Montessori Teacher Training Course" width="1000" height="1000" loading="lazy"></picture></a>
-      <div>
-        <span class="news-tag"><span class="dot" aria-hidden="true"></span><span data-i18n="news.tag">New · 3-Month Online Course</span></span>
+      <a class="news-stretch" href="/montessori-course" aria-label="Montessori Teacher Training Course — view course details"></a>
+      <picture><source type="image/webp" srcset="assets/workshops/montessori-course-poster-500.webp 500w, assets/workshops/montessori-course-poster.webp 1000w" sizes="(max-width: 860px) 100px, 150px"><img src="assets/workshops/montessori-course-poster.jpg" alt="The MindCare Services® three-month online Montessori Teacher Training Course" width="1000" height="1000" loading="lazy"></picture>
+      <div class="news-body">
+        <span class="news-tag"><span class="dot" aria-hidden="true"></span><span data-i18n="news.tag">New · 3-Month Course</span></span>
         <h3 data-i18n-html="news.title">Montessori <em>Teacher Training</em> Course</h3>
-        <p data-i18n="news.sub">Three months online on the child in front of you: decoding their perspective, the psychology of the first six years, and the Montessori curriculum in practice, hands-on. Live sessions with Miss Nargis Irfan, mentor guidance, assignments and continuous monitoring, with a MindCare Services Certificate. Registration is open and seats are capped.</p>
-        <div class="news-meta">
-          <span data-i18n="news.m0">Month 01 · Decoding the child's perspective</span>
-          <span data-i18n="news.m1">Month 02 · Early childhood psychology</span>
-          <span data-i18n="news.m2">Month 03 · The Montessori curriculum in practice</span>
-          <span data-i18n="news.m3">Starts 15 September 2026 · online</span>
-          <span data-i18n="news.m4">Registration PKR 2,500 · notes &amp; certificate optional</span>
-        </div>
+        <p data-i18n="news.short">Three months online with Miss Nargis Irfan, live sessions and a MindCare Services Certificate.</p>
+      </div>
+      <div class="news-meta">
+        <span data-i18n="news.m3">Starts 15 September 2026 · online</span>
+        <span data-i18n="news.m5">PKR 2,500 · seats capped</span>
       </div>
       <div class="news-ctas">
         <a href="/montessori-course/register" class="btn btn-primary" data-i18n="news.apply">Register &amp; Pay</a>
-        <a href="/montessori-course" class="btn btn-ghost" data-i18n="news.more">Course Details →</a>
+        <a href="/montessori-course" class="btn btn-ghost" data-i18n="news.more">View Details →</a>
       </div>
     </div>
     <div class="news-foot">
@@ -676,7 +697,7 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
 var I18N={
  en:{},
  ur:{
-  "nav.home":"ہوم","nav.services":"خدمات","nav.about":"ہمارے بارے میں","nav.team":"ٹیم","nav.articles":"مضامین","nav.courses":"کورسز","nav.workshops":"ورکشاپس","news.tag":"نیا · تین ماہ کا آن لائن کورس","news.title":"مونٹیسوری <em>ٹیچر ٹریننگ</em> کورس","news.sub":"تین ماہ، آن لائن، بچے کو سمجھنے کے لیے: بچے کے زاویۂ نظر کو جاننا، پہلے چھ برسوں کی نفسیات، اور مونٹیسوری نصاب عملی مشق کے ساتھ۔ مِس نرگس عرفان کے ساتھ لائیو سیشنز، مینٹور رہنمائی، اسائنمنٹس اور مسلسل نگرانی، اور مائنڈ کیئر سروسز کا سرٹیفکیٹ۔ رجسٹریشن کھلی ہے اور نشستیں محدود ہیں۔","news.m0":"ماہ ۱ · بچے کے زاویۂ نظر کو سمجھنا","news.m1":"ماہ ۲ · ابتدائی بچپن کی نفسیات","news.m2":"ماہ ۳ · مونٹیسوری نصاب، عملی طور پر","news.m3":"آغاز ۱۵ ستمبر ۲۰۲۶ · آن لائن","news.m4":"رجسٹریشن فیس ۲۵۰۰ روپے · نوٹس اور سرٹیفکیٹ اختیاری","news.apply":"رجسٹر کریں اور فیس جمع کرائیں","news.more":"کورس کی تفصیلات ←","news.foot":"مائنڈ کیئر کی جانب سے مزید: مختصر ورکشاپس اور اپلائیڈ سائیکالوجی ماسٹر کلاس سیریز۔ <a href=\"/workshops\">تمام ورکشاپس دیکھیں ←</a>","news.request":"ورکشاپ کی درخواست دیں","news.requestnote":"کسی اور موضوع پر ورکشاپ چاہیے، اپنے اسکول، دفتر یا کمیونٹی کے لیے؟ ہمیں موضوع بتائیے، ہم تیار کر دیں گے۔","rw.title":"ورکشاپ کی درخواست","rw.sub":"جو موضوع آپ چاہتے ہیں منتخب کیجیے، یا اپنا لکھیے۔ ہم واٹس ایپ کھول دیں گے، پیغام تیار ہوگا۔","rw.otherlabel":"آپ کا موضوع","rw.cancel":"منسوخ کریں","rw.send":"واٹس ایپ پر بھیجیں","rw.note":"یہ پیغام براہِ راست ‎+92 327 2337631‎ پر جاتا ہے۔ ہماری ٹیم کا ایک اصل فرد جواب دیتا ہے۔","rw.t1":"والدین اور بچوں کا رویہ","rw.t2":"مونٹیسوری اور ابتدائی بچپن","rw.t3":"اسکول اور اساتذہ کی تربیت","rw.t4":"دفتری ذہنی صحت","rw.t5":"دباؤ اور برن آؤٹ","rw.t6":"پریشانی اور اداسی سے آگاہی","rw.t7":"نوجوانوں کی ذہنی صحت","rw.t8":"ازدواجی اور خاندانی زندگی","rw.t9":"صدمے سے آگاہ نگہداشت","rw.t10":"مراقبہ اور ذہنی یکسوئی","rw.tother":"کوئی اور (اپنا لکھیے)","nav.book":"اپائنٹمنٹ",
+  "nav.home":"ہوم","nav.services":"خدمات","nav.about":"ہمارے بارے میں","nav.team":"ٹیم","nav.articles":"مضامین","nav.courses":"کورسز","nav.workshops":"ورکشاپس","news.tag":"نیا · تین ماہ کا کورس","news.title":"مونٹیسوری <em>ٹیچر ٹریننگ</em> کورس","news.short":"تین ماہ آن لائن، مِس نرگس عرفان کے ساتھ لائیو سیشنز اور مائنڈ کیئر سروسز کا سرٹیفکیٹ۔","news.m3":"آغاز ۱۵ ستمبر ۲۰۲۶ · آن لائن","news.m5":"۲۵۰۰ روپے · نشستیں محدود","news.apply":"رجسٹر کریں اور فیس جمع کرائیں","news.more":"تفصیلات دیکھیں ←","news.foot":"مائنڈ کیئر کی جانب سے مزید: مختصر ورکشاپس اور اپلائیڈ سائیکالوجی ماسٹر کلاس سیریز۔ <a href=\"/workshops\">تمام ورکشاپس دیکھیں ←</a>","news.request":"ورکشاپ کی درخواست دیں","news.requestnote":"کسی اور موضوع پر ورکشاپ چاہیے، اپنے اسکول، دفتر یا کمیونٹی کے لیے؟ ہمیں موضوع بتائیے، ہم تیار کر دیں گے۔","rw.title":"ورکشاپ کی درخواست","rw.sub":"جو موضوع آپ چاہتے ہیں منتخب کیجیے، یا اپنا لکھیے۔ ہم واٹس ایپ کھول دیں گے، پیغام تیار ہوگا۔","rw.otherlabel":"آپ کا موضوع","rw.cancel":"منسوخ کریں","rw.send":"واٹس ایپ پر بھیجیں","rw.note":"یہ پیغام براہِ راست ‎+92 327 2337631‎ پر جاتا ہے۔ ہماری ٹیم کا ایک اصل فرد جواب دیتا ہے۔","rw.t1":"والدین اور بچوں کا رویہ","rw.t2":"مونٹیسوری اور ابتدائی بچپن","rw.t3":"اسکول اور اساتذہ کی تربیت","rw.t4":"دفتری ذہنی صحت","rw.t5":"دباؤ اور برن آؤٹ","rw.t6":"پریشانی اور اداسی سے آگاہی","rw.t7":"نوجوانوں کی ذہنی صحت","rw.t8":"ازدواجی اور خاندانی زندگی","rw.t9":"صدمے سے آگاہ نگہداشت","rw.t10":"مراقبہ اور ذہنی یکسوئی","rw.tother":"کوئی اور (اپنا لکھیے)","nav.book":"اپائنٹمنٹ",
   "hero.badge":"کراچی · کلینک · گھر · آن لائن",
   "hero.h1":"خاموشی سے <em>پریشان</em> ہیں؟<br>آئیے بات کرتے ہیں۔",
   "hero.lede":"ایسے لوگ جو واقعی آپ کی بات سنتے ہیں۔ کراچی میں پریشانی، ذہنی دباؤ اور بہت کچھ کے لیے تھراپی۔",

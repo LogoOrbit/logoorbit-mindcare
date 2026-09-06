@@ -164,7 +164,7 @@ if("IntersectionObserver" in window && !reduce){
   setBtn();
   // No start() before a gesture. Autoplay is blocked anyway, and calling play()
   // is what pulls roughly 10 MB of audio down the wire: a visitor who reads the
-  // page and leaves without tapping ENTER should never pay for it.
+  // page and never interacts should never pay for it.
   ["pointerdown","keydown","touchstart"].forEach(function(ev){
     window.addEventListener(ev,function(){ start(); schedule(); },{passive:true});
   });
@@ -190,47 +190,7 @@ if("IntersectionObserver" in window && !reduce){
   });
   window.addEventListener("pagehide",function(){ [bgm,medi].forEach(function(el){ if(el && !el.paused) el.pause(); }); });
 
-  // first-visit prompt so audio can start (browsers block autoplay until a gesture)
-  if(enabled){
-    var ov=document.createElement("div");
-    ov.id="audio-gate";
-    ov.innerHTML='<button type="button" class="ag-btn" aria-label="Enter"><span class="ag-ring"></span><span class="ag-ring ag-ring2"></span><span class="ag-lbl">ENTER</span></button>';
-    var s=document.createElement("style");
-    s.textContent='#audio-gate{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2147483000;'
-      +'display:flex;align-items:center;justify-content:center;'
-      +'background:rgba(5,12,10,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);'
-      +'transition:opacity .7s ease;opacity:1;will-change:opacity}'
-      +'#audio-gate.hide{opacity:0;pointer-events:none}'
-      +'#audio-gate .ag-btn{position:relative;width:180px;height:180px;border-radius:50%;cursor:pointer;'
-      +'background:radial-gradient(circle at 50% 42%,rgba(90,255,206,.5),rgba(20,70,52,.85) 68%);'
-      +'border:2px solid rgba(120,255,214,.85);color:#f2fffb;font:700 1.4rem/1 inherit;letter-spacing:.24em;'
-      +'display:flex;align-items:center;justify-content:center;isolation:isolate;text-shadow:0 0 18px rgba(90,255,206,.7);'
-      +'box-shadow:0 0 70px rgba(47,230,166,.55),inset 0 0 45px rgba(47,230,166,.3);'
-      +'transition:transform .35s cubic-bezier(.2,.9,.25,1),box-shadow .35s ease;'
-      +'will-change:transform;animation:agFloat 3.6s ease-in-out infinite}'
-      +'#audio-gate .ag-btn:hover{transform:scale(1.09);box-shadow:0 0 110px rgba(47,230,166,.8),inset 0 0 60px rgba(47,230,166,.45)}'
-      +'#audio-gate .ag-btn:active{transform:scale(.94)}'
-      +'#audio-gate .ag-lbl{position:relative;z-index:2;padding-left:.24em}'
-      +'#audio-gate .ag-ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(120,255,214,.7);'
-      +'transform:scale(1);opacity:.9;pointer-events:none;animation:agp 2.6s ease-out infinite;will-change:transform,opacity}'
-      +'#audio-gate .ag-ring2{animation-delay:1.3s}'
-      +'@keyframes agp{0%{transform:scale(.92);opacity:.9}100%{transform:scale(1.95);opacity:0}}'
-      +'@keyframes agFloat{0%,100%{transform:translateY(-6px)}50%{transform:translateY(6px)}}'
-      +'@media(prefers-reduced-motion:reduce){#audio-gate .ag-btn{animation:none}#audio-gate .ag-ring{animation:none;opacity:0}}';
-    function gate(){
-      enabled=true; started=false; start(); schedule(); setBtn();
-      ov.classList.add("hide"); setTimeout(function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); },800);
-    }
-    function mount(){
-      document.head.appendChild(s);
-      // append to <html>, not <body>: body has a running animation that would make
-      // position:fixed resolve against the whole page instead of the viewport
-      document.documentElement.appendChild(ov);
-      ov.querySelector(".ag-btn").addEventListener("click",gate);
-    }
-    if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",mount);
-    else mount();
-  }
+  // No entry gate: audio waits for the first real gesture (tap, key, scroll) above.
 })();
 
 /* ---------- subtle UI sound effects (synthesized, no assets) ---------- */
