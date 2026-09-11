@@ -90,6 +90,18 @@
   "path": "/courses"
  },
  {
+  "title": "The First Five Minutes: Crisis Intervention & Grounding Skills | 2-Hour Online Workshop | MindCare Services®",
+  "desc": "The First Five Minutes: a two-hour live online workshop for clinicians and psychology students on handling a client's panic attack or dissociative episode in real time. Rapid crisis triage under the PFA framework, advanced grounding protocols, a guided case simulation and clinical interview prep. PKR 2,000, live on Zoom, with an e-certificate and a PDF protocol toolkit.",
+  "url": "https://themindcareservices.com/crisis-intervention-workshop",
+  "path": "/crisis-intervention-workshop"
+ },
+ {
+  "title": "Register: The First Five Minutes Crisis Intervention Workshop | MindCare Services®",
+  "desc": "Register for The First Five Minutes, the MindCare Services® two-hour live online crisis intervention and grounding skills workshop. PKR 2,000 covers the live Zoom session, the E-Certificate of Completion and the PDF handout and protocol toolkit. Pay by bank transfer and attach your payment screenshot to the form.",
+  "url": "https://themindcareservices.com/crisis-intervention-workshop/register",
+  "path": "/crisis-intervention-workshop/register"
+ },
+ {
   "title": "Depression Treatment & Counseling in Karachi | MindCare Services®",
   "desc": "Compassionate depression treatment and counseling in Karachi. Evidence-based therapy for low mood, hopelessness and loss of motivation. Book a free consultation today.",
   "url": "https://themindcareservices.com/depression-treatment-karachi",
@@ -318,8 +330,8 @@
   "path": "/workplace-mental-health-karachi"
  },
  {
-  "title": "Workshops & Trainings | Montessori Fundamentals Certificate, Karachi | MindCare Services®",
-  "desc": "MindCare workshops and trainings in Karachi: Mind in the Making, our three-day Montessori Fundamentals Certificate for parents and early-years teachers, plus the Applied Psychology Masterclass certification series. See what's open and what we've already run.",
+  "title": "Workshops & Trainings | Crisis Intervention & Montessori Certificates | MindCare Services®",
+  "desc": "MindCare workshops and trainings: The First Five Minutes, a two-hour live online crisis intervention and grounding skills workshop for clinicians, and Mind in the Making, our three-day Montessori Fundamentals Certificate in Karachi, plus the Applied Psychology Masterclass series. See what's open and what we've already run.",
   "url": "https://themindcareservices.com/workshops",
   "path": "/workshops"
  }

@@ -1654,6 +1654,8 @@ def build():
     #   workshops.html                   montessori-course/register.html
     #   telepathy-meditation-*.html      montessori-workshop/index.html
     #                                    montessori-workshop/register.html
+    #                                    crisis-intervention-workshop/index.html
+    #                                    crisis-intervention-workshop/register.html
     #
     # Their builders (workshops_page, montessori_page, telepathy_*) are gone, so
     # running this script can no longer overwrite them. Their shared chrome (nav,
@@ -1673,6 +1675,8 @@ def build():
             (f"{BASE}/montessori-course", "montessori-course/index.html", "0.9"),
             (f"{BASE}/montessori-course/register", "montessori-course/register.html", "0.8"),
             (f"{BASE}/workshops", "workshops.html", "0.8"),
+            (f"{BASE}/crisis-intervention-workshop", "crisis-intervention-workshop/index.html", "0.9"),
+            (f"{BASE}/crisis-intervention-workshop/register", "crisis-intervention-workshop/register.html", "0.8"),
             (f"{BASE}/montessori-workshop", "montessori-workshop/index.html", "0.7"),
             (f"{BASE}/montessori-workshop/register", "montessori-workshop/register.html", "0.6"),
             (f"{BASE}/telepathy-meditation-workshop", "telepathy-meditation-workshop.html", "0.6")]
