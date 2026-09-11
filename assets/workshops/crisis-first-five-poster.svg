@@ -53,12 +53,12 @@
   <text x="452" y="291" text-anchor="middle" font-family="'Trebuchet MS', 'DM Sans', 'Liberation Sans', sans-serif" font-size="15" font-weight="700" letter-spacing="1.6" fill="#0b5f6d">05:00</text>
   <text x="110" y="452" font-family="'Trebuchet MS', 'DM Sans', 'Liberation Sans', sans-serif" font-size="13" font-weight="700" letter-spacing="2.6" fill="#f9c58d">ACUTE DISTRESS</text>
   <text x="790" y="452" text-anchor="end" font-family="'Trebuchet MS', 'DM Sans', 'Liberation Sans', sans-serif" font-size="13" font-weight="700" letter-spacing="2.6" fill="#7fe3a0">REGULATED</text>
-  <text x="450" y="556" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', 'Liberation Serif', serif" font-size="70" font-weight="700" fill="#ffffff">The First</text>
-  <text x="450" y="630" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', 'Liberation Serif', serif" font-size="70" font-weight="700" font-style="italic" fill="#5fd8e0">Five Minutes</text>
-  <rect x="270" y="654" width="360" height="3" fill="url(#ffRule)"/>
-  <text x="450" y="698" text-anchor="middle" font-family="'Trebuchet MS', 'DM Sans', 'Liberation Sans', sans-serif" font-size="25" font-weight="700" letter-spacing=".6" fill="#d9f2f5">Crisis Intervention &amp; Grounding Skills</text>
-  <text x="450" y="742" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', 'Liberation Serif', serif" font-size="22" font-style="italic" fill="#9fc9d0">“A client starts dissociating or panicking in your office&#8202;&#8212;</text>
-  <text x="450" y="772" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', 'Liberation Serif', serif" font-size="22" font-style="italic" fill="#9fc9d0">what do you do in the first five minutes?”</text>
+  <text x="450" y="518" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', 'Liberation Serif', serif" font-size="25" font-style="italic" fill="#cfe9ee">“A client starts dissociating or panicking in your office&#8202;&#8212;</text>
+  <text x="450" y="552" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', 'Liberation Serif', serif" font-size="25" font-style="italic" fill="#cfe9ee">what do you do in the first five minutes?”</text>
+  <text x="450" y="630" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', 'Liberation Serif', serif" font-size="70" font-weight="700" fill="#ffffff">The First</text>
+  <text x="450" y="704" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', 'Liberation Serif', serif" font-size="70" font-weight="700" font-style="italic" fill="#5fd8e0">Five Minutes</text>
+  <rect x="270" y="736" width="360" height="3" fill="url(#ffRule)"/>
+  <text x="450" y="780" text-anchor="middle" font-family="'Trebuchet MS', 'DM Sans', 'Liberation Sans', sans-serif" font-size="25" font-weight="700" letter-spacing=".6" fill="#d9f2f5">Crisis Intervention &amp; Grounding Skills</text>
   <text x="450" y="814" text-anchor="middle" font-family="'Trebuchet MS', 'DM Sans', 'Liberation Sans', sans-serif" font-size="13" font-weight="700" letter-spacing="3.4" fill="#6fb9c4">THE 2-HOUR SESSION BREAKDOWN</text>
   <rect x="74" y="832" width="752" height="46" rx="15" fill="#ffffff" fill-opacity=".06" stroke="#ffffff" stroke-opacity=".13"/>
   <circle cx="102" cy="855" r="5" fill="#ef8354"/>
