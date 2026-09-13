@@ -33,7 +33,7 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 # per-page schema above and this one describe the same business to Google.
 # Hours, phone and email have to match the contact page exactly (NAP consistency
 # is what local ranking is built on), so change them in both places or neither.
-CLINIC_LD = json.dumps({
+_CLINIC = {
     "@context": "https://schema.org",
     "@type": "MedicalClinic",
     "@id": f"{BASE}/#clinic",
@@ -75,7 +75,32 @@ CLINIC_LD = json.dumps({
                    "actionPlatform": ["https://schema.org/DesktopWebPlatform",
                                       "https://schema.org/MobileWebPlatform"]},
         "result": {"@type": "Reservation", "name": "Therapy appointment"}},
-}, ensure_ascii=False, indent=2)
+}
+
+_CLINIC_LD = []
+
+
+def clinic_ld():
+    """The clinic node, with everywhere it actually serves.
+
+    areaServed carries Karachi and its neighbourhoods (clinic, home visits and
+    online) plus every city the online practice covers, so the one node answers
+    both "psychologist near me" in Karachi and "online therapist in <city>"
+    elsewhere.
+    """
+    if not _CLINIC_LD:
+        d = dict(_CLINIC)
+        d["areaServed"] = ([{"@type": "Country", "name": "Pakistan"},
+                            {"@type": "City", "name": "Karachi"}]
+                           + [{"@type": "Place", "name": f"{a}, Karachi"} for a in KARACHI_AREAS]
+                           + [{"@type": "City", "name": c["city"]} for c in CITIES])
+        d["hasOfferCatalog"] = {
+            "@type": "OfferCatalog", "name": "Therapy and rehabilitation services",
+            "itemListElement": [{"@type": "Offer", "itemOffered": {
+                "@type": "MedicalTherapy", "name": sv["name"],
+                "url": f"{BASE}/services/{sv['slug']}"}} for sv in SERVICES]}
+        _CLINIC_LD.append(json.dumps(d, ensure_ascii=False, indent=2))
+    return _CLINIC_LD[0]
 
 
 def head(title, desc, canonical, prefix, schema, og_type="website"):
@@ -100,6 +125,7 @@ def head(title, desc, canonical, prefix, schema, og_type="website"):
 <meta property="og:image" content="{BASE}/mindcare.png">
 <meta property="og:site_name" content="MindCare Services®">
 <meta property="og:locale" content="en_PK">
+<meta property="og:locale:alternate" content="ur_PK">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{html.escape(title)}">
 <meta name="twitter:description" content="{html.escape(desc)}">
@@ -114,7 +140,7 @@ def head(title, desc, canonical, prefix, schema, og_type="website"):
 {json.dumps(schema, indent=2)}
 </script>
 <script type="application/ld+json">
-{CLINIC_LD}
+{clinic_ld()}
 </script>
 </head>
 <body>
@@ -229,6 +255,7 @@ def footer(prefix):
       <li><a href="/team/">Our Team</a></li>
       <li><a href="/articles">Articles</a></li>
       <li><a href="/guides">Help &amp; Guides</a></li>
+      <li><a href="/online-therapy">Online Therapy in Pakistan</a></li>
       <li><a href="/courses">Courses</a></li>
       <li><a href="/workshops">Workshops</a></li>
       <li><a href="/#faq">FAQ</a></li>
@@ -569,7 +596,7 @@ def services_index():
     <div class="ph-badge">{icon(prefix,'i-puzzle')} 10 services · One caring team</div>
     <h1>Comprehensive care for <em>mind &amp; body</em></h1>
     <p class="lede">A holistic range of therapy and clinical services, all under one roof in Karachi, delivered by experienced professionals. Choose a service to learn more.</p>
-    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a></div>
+    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a><a href="/online-therapy" class="btn-secondary">Outside Karachi? Online therapy →</a></div>
   </div>
 </header>
 <section>
@@ -932,15 +959,6 @@ TOPICS = [
    faqs=[("Can anger really be managed?","Yes. With the right tools most people gain real control over how they respond."),
          ("Is this just for extreme cases?","No. Anyone who feels their anger is harming their life or relationships can benefit."),
          ("How do I start?","Book a confidential appointment.")]),
- dict(slug="online-therapy-pakistan", h1="Online Therapy & Counseling in Pakistan", service="individual-psychotherapy",
-   title="Online Therapy & Counseling in Pakistan | MindCare Services®",
-   desc="Access professional therapy from anywhere in Pakistan. MindCare Services® offers confidential online counseling and psychotherapy. Book an appointment.",
-   lede="Can't visit in person? Support shouldn't depend on your postcode. We make professional, confidential therapy accessible across Pakistan.",
-   signs=["You live outside Karachi","A busy schedule makes visits hard","You prefer the comfort of home","You want to start sooner rather than later","Privacy and convenience matter to you"],
-   help=["Reach out to arrange a consultation and we'll discuss the options that work best for your situation and location.","Wherever you are, the same evidence-based, judgment-free care applies."],
-   faqs=[("Do you offer sessions outside Karachi?","Contact us with your location and needs and we'll advise on the best way to support you."),
-         ("Is online therapy effective?","For many concerns, yes. Remote therapy can be just as effective as in-person."),
-         ("How do I book?","Message us on WhatsApp or use the booking form.")]),
  dict(slug="self-esteem-confidence-therapy-karachi", h1="Self-Esteem & Confidence Therapy in Karachi", service="individual-psychotherapy",
    title="Self-Esteem Therapy in Karachi | MindCare Services®",
    desc="Build self-esteem and confidence with therapy in Karachi. Overcome self-doubt and harsh self-criticism at MindCare Services®. Book an appointment.",
@@ -1693,6 +1711,637 @@ def last_modified(path):
         return TODAY
 
 
+# ─────────────────────────── ONLINE THERAPY, CITY BY CITY ───────────────────────────
+# The clinic is in Karachi but the online practice is national, and "online
+# therapist in <city>" is how people outside Karachi actually search. Each page
+# below carries its own copy: the reasons people in that city book, the areas
+# it covers and its own FAQs. Nothing here claims a local office, a local
+# therapist or a language we do not work in — sessions run in English and Urdu,
+# online, from Karachi, and every page says so.
+
+# Conditions linked from every city page. Anchor text is the condition, not the
+# page title, so the internal links read naturally wherever they appear.
+CONDITIONS = [
+    ("Anxiety and constant worry", "anxiety-therapy-karachi"),
+    ("Depression and low mood", "depression-treatment-karachi"),
+    ("Stress and burnout", "stress-management-karachi"),
+    ("Panic attacks", "panic-attack-help-karachi"),
+    ("Trauma and PTSD", "trauma-therapy-karachi"),
+    ("OCD and intrusive thoughts", "ocd-therapy-karachi"),
+    ("Marriage and couples difficulties", "marriage-couples-counseling-karachi"),
+    ("Teenagers and adolescents", "teen-adolescent-therapy-karachi"),
+    ("Grief and bereavement", "grief-loss-counseling-karachi"),
+    ("Anger and irritability", "anger-management-karachi"),
+    ("Self-esteem and confidence", "self-esteem-confidence-therapy-karachi"),
+    ("ADHD in children and adults", "adhd-assessment-therapy-karachi"),
+    ("Workplace mental health", "workplace-mental-health-karachi"),
+    ("CBT (Cognitive Behavioral Therapy)", "cbt-therapy-karachi"),
+]
+
+CITIES = [
+ dict(slug="online-therapy-lahore", city="Lahore", province="Punjab",
+   title="Online Therapy in Lahore | MindCare Services®",
+   desc="Talk to a psychologist from anywhere in Lahore. Confidential online therapy and counseling in English and Urdu, Mon-Sat. Book an appointment with MindCare Services®.",
+   lede="Therapy you can attend from Gulberg, DHA or Johar Town without crossing the city. Confidential online sessions with qualified therapists, in English or Urdu.",
+   intro=[
+     "Lahore is big enough that getting to an appointment can cost you the appointment. A session in Gulberg is an hour each way from Johar Town in traffic, and a weekly commitment that starts with two hours in a car is a commitment most people quietly drop by the third week.",
+     "Online therapy removes that. You keep the same therapist, the same weekly slot and the same evidence-based work, and you attend from wherever you actually are, home, hostel, a parked car or a closed office door.",
+     "MindCare Services® is based in Karachi and works across Pakistan online. Sessions run in English or Urdu, Monday to Saturday, and nothing about the care changes because you are on the other side of the country."],
+   reasons=[
+     "University and exam pressure, and the fear of disappointing a family that has invested in your degree",
+     "Long hours and commute fatigue that has turned into something heavier than tiredness",
+     "Family and marital tension in a joint household where privacy is scarce",
+     "Anxiety or low mood you have been managing alone because asking felt like admitting failure",
+     "Wanting a therapist nobody in your circle is likely to know"],
+   areas=["Gulberg", "DHA Lahore", "Model Town", "Johar Town", "Bahria Town",
+          "Lahore Cantt", "Askari", "Faisal Town", "Wapda Town", "Allama Iqbal Town"],
+   faqs=[
+     ("Do you have a clinic in Lahore?",
+      "No. MindCare Services® is based in Karachi and we see clients in Lahore online. That is exactly why the service exists: you get a qualified therapist without needing one within driving distance."),
+     ("What language are sessions in?",
+      "English or Urdu, whichever you are more comfortable thinking in. Tell us when you book and we will match you accordingly."),
+     ("Is online therapy actually as good as sitting in a room?",
+      "For most of what people come to us with, including anxiety, depression, stress and relationship difficulties, remote therapy works comparably to in-person work. What matters far more is the fit with your therapist and whether you keep showing up."),
+     ("How do I get privacy at home?",
+      "Many clients use headphones and take the session in a bedroom, a parked car or an empty office. If the timing is the problem, we run until 7pm and can usually find a slot after working hours."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-islamabad", city="Islamabad", province="Islamabad Capital Territory",
+   title="Online Therapy in Islamabad | MindCare Services®",
+   desc="Confidential online therapy and counseling for Islamabad, in English and Urdu, Mon-Sat 9am-7pm. Qualified psychologists, no commute. Book with MindCare Services®.",
+   lede="Confidential sessions you can take from F-7, E-11 or your office in the Blue Area, with a therapist nobody in your professional circle is likely to know.",
+   intro=[
+     "Islamabad is a city a lot of people move to for work rather than arrive in with a life already built. That produces a very particular kind of difficulty: a good job, a decent flat, and almost nobody to say the hard thing out loud to.",
+     "It also produces a privacy problem. In a city where professional circles overlap heavily, the nearest therapist can feel uncomfortably close to your workplace. Working with a practice based in Karachi solves that on its own.",
+     "MindCare Services® works with clients across Islamabad and Rawalpindi online, in English or Urdu, Monday to Saturday, with evening slots for people who cannot take an afternoon out of the working day."],
+   reasons=[
+     "Relocation loneliness, being established on paper and unmoored in practice",
+     "Sustained work pressure in government, development-sector or corporate roles",
+     "Wanting distance between your therapist and your professional network",
+     "Anxiety, low mood or sleep that has not improved on its own in months",
+     "Relationship or family strain conducted largely over the phone with another city"],
+   areas=["F-6", "F-7", "F-8", "F-10", "F-11", "G-9", "G-10", "G-11",
+          "E-11", "I-8", "Bahria Town Islamabad", "DHA Islamabad"],
+   faqs=[
+     ("Will my therapist be someone I might run into?",
+      "No. Our team is in Karachi and sees you online, which is precisely the distance a lot of Islamabad clients are looking for."),
+     ("Can I book outside office hours?",
+      "We run Monday to Saturday, 9am to 7pm. Later-afternoon and early-evening slots are the ones working professionals usually take, so ask for those when you book."),
+     ("Do you work with couples remotely?",
+      "Yes. Couples can join from the same room or from two different cities, which is often easier than coordinating an in-person appointment."),
+     ("What if I need medication?",
+      "We are a psychology practice and do not prescribe. If we think a psychiatric opinion would help, we will say so plainly and you can pursue it alongside therapy."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-rawalpindi", city="Rawalpindi", province="Punjab",
+   title="Online Therapy in Rawalpindi | MindCare Services®",
+   desc="Online therapy and counseling for Rawalpindi in English and Urdu. Qualified psychologists, confidential sessions, Mon-Sat. Book with MindCare Services®.",
+   lede="Sessions from Satellite Town, Chaklala or Bahria Town without the twin-city commute, in English or Urdu, with a therapist who is not in your neighbourhood.",
+   intro=[
+     "Plenty of people in Rawalpindi already spend an hour a day crossing into Islamabad for work. Adding a weekly therapy commute on top of that is how good intentions turn into cancelled appointments.",
+     "Online sessions remove the travel entirely, which in practice is the difference between starting therapy and meaning to start therapy. The work itself is unchanged: a qualified therapist, a standing weekly slot, and a plan you build together.",
+     "MindCare Services® is a Karachi practice working nationally online, in English or Urdu, Monday to Saturday."],
+   reasons=[
+     "Commute fatigue and long working weeks that have stopped feeling survivable",
+     "Living in a joint or extended household where a private conversation is hard to arrange",
+     "Family separation, with a spouse, parent or child living in another city or abroad",
+     "Anxiety, anger or low mood that is now showing up at home",
+     "Wanting to talk to someone outside a tightly connected local community"],
+   areas=["Saddar", "Satellite Town", "Chaklala", "Bahria Town Rawalpindi",
+          "Gulraiz", "Westridge", "Peshawar Road", "Rawalpindi Cantt"],
+   faqs=[
+     ("Do I need to travel to Islamabad or Karachi?",
+      "No. Sessions are online, so you attend from wherever you are in Rawalpindi."),
+     ("How private is a video session?",
+      "What you say to your therapist stays between you. On your end, most clients use headphones and a room with a door; if space is genuinely the obstacle, tell us and we will work around it."),
+     ("Can my parents or spouse join a session?",
+      "If it would help and you want it, yes. Family and couples sessions can be arranged, with everyone joining from the same room or separately."),
+     ("Is there a minimum number of sessions?",
+      "No. Some people come for a handful of sessions with a specific problem; others stay longer. You decide, and we will be honest with you about what we think would help."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-faisalabad", city="Faisalabad", province="Punjab",
+   title="Online Therapy in Faisalabad | MindCare Services®",
+   desc="Confidential online therapy and counseling for Faisalabad in English and Urdu, Mon-Sat. Qualified psychologists with no travel. Book with MindCare Services®.",
+   lede="Qualified, confidential therapy from Madina Town, Peoples Colony or D-Ground, without travelling to Lahore for a specialist appointment.",
+   intro=[
+     "Faisalabad runs on shifts, orders and deadlines. Textile and manufacturing work does not leave neat gaps in the week, and the people carrying a business through a bad quarter are rarely the ones who take an afternoon off to look after themselves.",
+     "Online therapy fits around that better than a clinic can. You book a slot that works with your shift or your factory day, and you keep it, because it costs you an hour rather than an afternoon and a round trip to Lahore.",
+     "MindCare Services® is based in Karachi and works with clients in Faisalabad online, in English or Urdu, Monday to Saturday."],
+   reasons=[
+     "Business and financial pressure that has turned into sleeplessness or a permanently short fuse",
+     "Shift work and irregular hours that have pulled your sleep and mood out of shape",
+     "Family or marital strain you would rather not discuss with anyone local",
+     "Anxiety or low mood that has been building quietly for months",
+     "Wanting a specialist without a four-hour round trip to Lahore"],
+   areas=["Madina Town", "Peoples Colony", "Gulberg Faisalabad", "D-Ground",
+          "Susan Road", "Jaranwala Road", "Civil Lines", "Samanabad"],
+   faqs=[
+     ("Do you have a therapist in Faisalabad?",
+      "Our team is in Karachi and works with Faisalabad clients online. That is the point of the service: you get a qualified therapist without needing one locally."),
+     ("Can I book around shift work?",
+      "Tell us your hours when you book. We run 9am to 7pm Monday to Saturday and will find the slot that actually fits, rather than the one that looks convenient on paper."),
+     ("What if my internet is unreliable?",
+      "Sessions can run on audio only, which needs far less bandwidth than video and works perfectly well for talking therapy."),
+     ("Is this confidential?",
+      "Yes. What you share stays between you and your therapist. Nobody from your family, employer or community is contacted."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-multan", city="Multan", province="Punjab",
+   title="Online Therapy in Multan | MindCare Services®",
+   desc="Online therapy and counseling for Multan and south Punjab, in English and Urdu, Mon-Sat. Confidential sessions, no travel. Book with MindCare Services®.",
+   lede="Specialist therapy for south Punjab without the trip to Lahore. Confidential online sessions in English or Urdu, six days a week.",
+   intro=[
+     "South Punjab has far fewer specialist mental health services than the country's largest cities, and for a lot of families in Multan the honest options have been travelling to Lahore or doing nothing.",
+     "Online therapy is the practical third option. A weekly session from home costs you an hour, not a day and a bus fare, and it makes consistent work, which is what actually helps, realistic rather than aspirational.",
+     "MindCare Services® is a Karachi practice working across Pakistan online, in English or Urdu, Monday to Saturday, 9am to 7pm."],
+   reasons=[
+     "Few specialist services locally and no wish to travel to Lahore every week",
+     "Anxiety, low mood or grief that has persisted well past what feels normal",
+     "Concern about a teenager or child and no clear idea who to ask",
+     "Marital or family difficulty you want handled by someone outside the city",
+     "Wanting to start privately, without anyone local knowing"],
+   areas=["Multan Cantt", "Gulgasht Colony", "Shah Rukn-e-Alam", "Bosan Road",
+          "Wapda Town Multan", "Model Town Multan", "New Multan"],
+   faqs=[
+     ("Do I have to travel to Lahore or Karachi?",
+      "No. Sessions are online from wherever you are in Multan, which is the whole reason we offer them."),
+     ("Do your therapists speak Urdu?",
+      "Yes. Sessions run in English or Urdu, whichever you prefer. Let us know when you book."),
+     ("Can you help with a child or teenager?",
+      "Yes. Tell us the age and what you are seeing when you get in touch, and we will advise on whether therapy, an assessment or a parent session is the right first step."),
+     ("Is online therapy effective for depression?",
+      "For many people, yes. Remote therapy for depression works comparably to in-person work; consistency matters more than the medium."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-peshawar", city="Peshawar", province="Khyber Pakhtunkhwa",
+   title="Online Therapy in Peshawar | MindCare Services®",
+   desc="Confidential online therapy and counseling for Peshawar in English and Urdu, Mon-Sat. Qualified psychologists, complete privacy. Book with MindCare Services®.",
+   lede="Private, confidential sessions from University Town, Hayatabad or anywhere in Peshawar, with a practice based hundreds of kilometres away.",
+   intro=[
+     "Privacy is the first question a lot of people in Peshawar ask about therapy, and it is a fair one. In a city where families, workplaces and neighbourhoods are closely connected, the concern is rarely the therapy itself, it is who might find out.",
+     "A practice based in Karachi, seen online, answers that directly. Nobody local is involved, nothing arrives at your door, and what you say stays with your therapist.",
+     "MindCare Services® works with clients in Peshawar online, in English or Urdu, Monday to Saturday."],
+   reasons=[
+     "Wanting therapy without anyone in your family or community knowing",
+     "Long-running stress or anxiety you have carried without naming it",
+     "Grief, or the weight of years of instability in the region",
+     "Family and intergenerational pressure in a large extended household",
+     "Concern about a child's development, behaviour or speech"],
+   areas=["University Town", "Hayatabad", "Peshawar Cantt", "Gulbahar",
+          "Board Bazaar", "Warsak Road", "Regi Model Town"],
+   faqs=[
+     ("Will anyone find out I am in therapy?",
+      "Not from us. There is no local office, no letter and no call to anyone else. What you share stays between you and your therapist."),
+     ("What language are sessions in?",
+      "English or Urdu. We do not offer sessions in Pashto, and we would rather tell you that upfront than have you find out in the first session."),
+     ("Can I use audio only instead of video?",
+      "Yes. Plenty of clients prefer it, and it uses far less data."),
+     ("Do you work with children?",
+      "Yes, including behavioural and developmental concerns. Tell us your child's age and what you are noticing and we will advise on the right starting point."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-quetta", city="Quetta", province="Balochistan",
+   title="Online Therapy in Quetta | MindCare Services®",
+   desc="Online therapy and counseling for Quetta and Balochistan, in English and Urdu, Mon-Sat. Confidential sessions with qualified psychologists. Book with MindCare Services®.",
+   lede="Specialist therapy for Balochistan without leaving the province. Confidential online sessions in English or Urdu, six days a week.",
+   intro=[
+     "Balochistan has the thinnest specialist mental health coverage in the country, and for most people in Quetta the nearest qualified psychologist has historically meant a flight or a very long drive.",
+     "Online therapy closes that gap outright. The distance stops mattering the moment the session is a video call, and weekly, consistent work becomes possible in a way that occasional travel never allowed.",
+     "MindCare Services® is based in Karachi and works with clients across Balochistan online, in English or Urdu, Monday to Saturday, 9am to 7pm."],
+   reasons=[
+     "Almost no specialist services within reach, and no wish to travel out of province",
+     "Anxiety, low mood or sleep problems that have gone unaddressed for years",
+     "Stress from prolonged uncertainty or an unsafe period",
+     "Family or marital difficulty you want handled confidentially and from a distance",
+     "Wanting a professional opinion before deciding what to do next"],
+   areas=["Quetta Cantt", "Jinnah Town", "Samungli Road", "Satellite Town Quetta",
+          "Chaman Housing Scheme", "Sariab Road"],
+   faqs=[
+     ("Do you have anyone in Quetta?",
+      "No, our team is in Karachi. We see Quetta clients online, which is what makes the service work for a city with very few specialists nearby."),
+     ("What if my connection is poor?",
+      "Audio-only sessions work well and need much less bandwidth. Talking therapy does not depend on video."),
+     ("Which languages do you work in?",
+      "English and Urdu. We do not offer sessions in Balochi, Brahui or Pashto, and we would rather be straight with you about that before you book."),
+     ("Can I do a one-off session to see if it helps?",
+      "Yes. Book one, see how it goes, and decide afterwards. There is no commitment to a course of sessions."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-hyderabad", city="Hyderabad", province="Sindh",
+   title="Online Therapy in Hyderabad, Sindh | MindCare Services®",
+   desc="Online therapy and counseling for Hyderabad, Sindh, in English and Urdu, Mon-Sat. Confidential sessions, no travel to Karachi. Book with MindCare Services®.",
+   lede="The care people travel to Karachi for, without the travel. Confidential online sessions from Latifabad, Qasimabad or anywhere in Hyderabad.",
+   intro=[
+     "Hyderabad is close enough to Karachi that travelling for an appointment looks reasonable on a map and stops being reasonable by the third week. A weekly session that costs a day and a fare is a session people eventually skip.",
+     "Seeing the same Karachi practice online removes the journey and keeps the care. You get a standing weekly slot with a qualified therapist and the consistency that makes therapy work in the first place.",
+     "MindCare Services® runs sessions in English or Urdu, Monday to Saturday, 9am to 7pm."],
+   reasons=[
+     "Being near enough to Karachi to consider travelling, and tired of doing it",
+     "University and exam pressure, or uncertainty about what comes after a degree",
+     "Anxiety, low mood or grief that has not lifted with time",
+     "Family and marital difficulty you want discussed away from your own city",
+     "Concern about a child's speech, behaviour or development"],
+   areas=["Latifabad", "Qasimabad", "Hyderabad Cantt", "Gulistan-e-Sarmast",
+          "Hussainabad", "Citizen Colony"],
+   faqs=[
+     ("Should I just travel to your Karachi clinic?",
+      "You are welcome to, and some Hyderabad clients do. But if the travel is what would make you cancel, online is the better choice: the work is the same and you will actually keep the appointments."),
+     ("Do you offer sessions in Sindhi?",
+      "No. Sessions run in English or Urdu. We would rather say so now than surprise you in the first session."),
+     ("Can the whole family be involved?",
+      "Yes, where it would help. Family and couples sessions can be arranged online, together or separately."),
+     ("Do you do assessments?",
+      "We offer psychological and diagnostic assessments; what can be done remotely depends on the assessment. Tell us what you need and we will be straight with you about what is possible online."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-sialkot", city="Sialkot", province="Punjab",
+   title="Online Therapy in Sialkot | MindCare Services®",
+   desc="Confidential online therapy and counseling for Sialkot in English and Urdu, Mon-Sat. Sessions for families here and relatives abroad. Book with MindCare Services®.",
+   lede="Confidential sessions for Sialkot, including families split between here and abroad, in English or Urdu, six days a week.",
+   intro=[
+     "Sialkot exports more than sports goods and surgical instruments. It exports people, and a great many households here are run across time zones, with a husband, son or parent working abroad and the family managing at home.",
+     "That arrangement carries a real cost that nobody itemises: the loneliness of the person who left, and the load on the people who stayed. Online therapy is one of the few formats that can hold both, because it does not care which country anyone is calling from.",
+     "MindCare Services® is a Karachi practice working online across Pakistan, and with Pakistani families overseas, in English or Urdu, Monday to Saturday."],
+   reasons=[
+     "Long separations from a spouse, parent or child working abroad",
+     "Carrying a household alone while someone else earns overseas",
+     "Business and export pressure that has become permanent background stress",
+     "Marital difficulty conducted mostly over video calls",
+     "Anxiety or low mood you have never had the time to address"],
+   areas=["Sialkot Cantt", "Model Town Sialkot", "Kashmir Road", "Defence Road",
+          "Pasrur Road", "Shahabpura"],
+   faqs=[
+     ("Can a family member abroad join the session?",
+      "Yes. Online sessions can include someone in another country, which is often the only practical way for a split family to sit down together."),
+     ("What time zone do you work in?",
+      "Pakistan Standard Time, Monday to Saturday, 9am to 7pm. If someone is joining from abroad we will find the slot that works for both ends."),
+     ("Is couples counseling possible if we are in different countries?",
+      "Yes, and we do it regularly. Both people join the same call from wherever they are."),
+     ("What language are sessions in?",
+      "English or Urdu, whichever you are more comfortable in."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-gujranwala", city="Gujranwala", province="Punjab",
+   title="Online Therapy in Gujranwala | MindCare Services®",
+   desc="Online therapy and counseling for Gujranwala in English and Urdu, Mon-Sat. Confidential sessions with qualified psychologists. Book with MindCare Services®.",
+   lede="Qualified, confidential therapy from Model Town, Satellite Town or anywhere in Gujranwala, without travelling to Lahore.",
+   intro=[
+     "Gujranwala is a business city, and business families carry a particular kind of pressure: the work is the household, the household is the work, and there is no point in the week where one stops and the other begins.",
+     "Add a large joint household and the privacy to talk honestly becomes genuinely hard to find. An online session with a practice in another province solves both problems at once, the distance and the discretion.",
+     "MindCare Services® works with Gujranwala clients online, in English or Urdu, Monday to Saturday, 9am to 7pm."],
+   reasons=[
+     "Business and financial stress that follows you home because home is the business",
+     "Joint-household tension and very little private space",
+     "Anger or irritability that has started costing you relationships",
+     "Anxiety, sleeplessness or low mood carried for a long time",
+     "Wanting a therapist with no connection to anyone local"],
+   areas=["Model Town Gujranwala", "Satellite Town", "Peoples Colony",
+          "Wapda Town Gujranwala", "DC Colony", "Civil Lines"],
+   faqs=[
+     ("Do I need to go to Lahore for a psychologist?",
+      "Not for what we offer. Sessions are online from wherever you are in Gujranwala."),
+     ("How do I keep the session private at home?",
+      "Headphones and a closed door cover most situations. Some clients take the call from a car or an office. If timing is the real obstacle, we run to 7pm."),
+     ("Can you help with anger specifically?",
+      "Yes. Anger management is one of the things we work on most often, and it responds well to structured, practical therapy."),
+     ("Do you treat couples?",
+      "Yes, together or individually, depending on what would help."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-sukkur", city="Sukkur", province="Sindh",
+   title="Online Therapy in Sukkur | MindCare Services®",
+   desc="Online therapy and counseling for Sukkur and upper Sindh, in English and Urdu, Mon-Sat. Confidential sessions, no travel. Book with MindCare Services®.",
+   lede="Specialist therapy for upper Sindh without the journey to Karachi. Confidential online sessions in English or Urdu, six days a week.",
+   intro=[
+     "Upper Sindh has very few qualified psychologists, and for most families in Sukkur the realistic options have been a long trip to Karachi or nothing at all.",
+     "Online therapy makes the third option real. A weekly session from home is an hour, not a journey, and weekly is what actually shifts anxiety, low mood or grief.",
+     "MindCare Services® is based in Karachi and sees clients across Sindh and the rest of Pakistan online, in English or Urdu, Monday to Saturday."],
+   reasons=[
+     "Very few specialist services within reach locally",
+     "Anxiety, low mood or grief that has gone unaddressed for a long time",
+     "Concern about a child's speech, learning or behaviour",
+     "Family or marital difficulty you want handled discreetly",
+     "Wanting a professional view before deciding on next steps"],
+   areas=["Military Road", "Barrage Colony", "Shikarpur Road", "New Sukkur",
+          "Old Sukkur", "Rohri"],
+   faqs=[
+     ("Do I need to travel to Karachi?",
+      "No. Sessions are online, which is precisely why we offer them to clients in upper Sindh."),
+     ("Do you work in Sindhi?",
+      "No. Sessions run in English or Urdu. We would rather be clear about that before you book."),
+     ("What if the connection drops?",
+      "It happens. We switch to audio, or to a phone call, and carry on. The session is not wasted."),
+     ("Can I book a single session first?",
+      "Yes. Try one and decide afterwards. There is no obligation to continue."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+
+ dict(slug="online-therapy-bahawalpur", city="Bahawalpur", province="Punjab",
+   title="Online Therapy in Bahawalpur | MindCare Services®",
+   desc="Online therapy and counseling for Bahawalpur and south Punjab, in English and Urdu, Mon-Sat. Confidential sessions, no travel. Book with MindCare Services®.",
+   lede="Confidential therapy for Bahawalpur and south Punjab, including students, without travelling to Lahore or Multan.",
+   intro=[
+     "Bahawalpur is a university city, and university cities generate a very consistent set of difficulties: exam pressure, uncertainty about what comes next, homesickness, and the particular loneliness of being surrounded by people and known by none of them.",
+     "It is also a city where the nearest specialist is often in another city entirely. Online therapy solves the access problem and the privacy problem in one move, especially for students who would rather not be seen walking into a local clinic.",
+     "MindCare Services® is a Karachi practice working across Pakistan online, in English or Urdu, Monday to Saturday, 9am to 7pm."],
+   reasons=[
+     "Exam stress, academic pressure and uncertainty about what comes after your degree",
+     "Homesickness and isolation after moving for study or work",
+     "Anxiety or low mood that studying through has not fixed",
+     "Family expectations that are hard to talk about at home",
+     "Few specialist services nearby and no wish to travel for them"],
+   areas=["Model Town Bahawalpur", "Satellite Town Bahawalpur", "Bahawalpur Cantt",
+          "Baghdad-ul-Jadeed", "Shahdara Colony"],
+   faqs=[
+     ("Is this suitable for students?",
+      "Yes, and students are a large part of who we see online. Sessions fit around a class timetable far more easily than a clinic appointment does."),
+     ("Will my university or family be told?",
+      "No. Nothing is shared with anyone. What you say stays between you and your therapist."),
+     ("Can I pay for one session at a time?",
+      "Yes. There is no package to commit to."),
+     ("What language are sessions in?",
+      "English or Urdu, whichever you prefer."),
+     ("How do I start?",
+      "Use the booking form, call +92 327 2337631 or message us on WhatsApp. We reply within a few hours during working hours.")]),
+]
+
+# Karachi's own neighbourhoods. Clients come to the clinic, we visit homes, or
+# we work online; these feed the areaServed list and the Karachi coverage block.
+KARACHI_AREAS = [
+    "DHA Karachi", "Clifton", "Gulshan-e-Iqbal", "Gulistan-e-Johar",
+    "North Nazimabad", "Nazimabad", "Bahadurabad", "PECHS", "Tariq Road",
+    "Shahra-e-Faisal", "Saddar", "Federal B Area", "Gulberg Karachi",
+    "Scheme 33", "Malir", "Korangi", "Landhi", "Bahria Town Karachi",
+    "Karachi Cantt", "Garden East",
+]
+
+
+NATIONAL_FAQS = [
+    ("Do you offer therapy outside Karachi?",
+     "Yes. We are based in Karachi and work with clients across Pakistan online, six days a week. Sessions run in English or Urdu."),
+    ("Is online therapy as effective as in person?",
+     "For most of what people bring to us, including anxiety, depression, stress, grief and relationship difficulty, remote therapy works comparably to in-person work. Consistency and the fit with your therapist matter far more than the medium."),
+    ("Which cities do you cover?",
+     "All of them. We have dedicated pages for Lahore, Islamabad, Rawalpindi, Faisalabad, Multan, Peshawar, Quetta, Hyderabad, Sialkot, Gujranwala, Sukkur and Bahawalpur, and we see clients from smaller cities and towns on the same basis."),
+    ("What languages do you work in?",
+     "English and Urdu. We do not currently offer sessions in Pashto, Sindhi, Punjabi, Saraiki, Balochi or Brahui, and we would rather tell you that before you book than after."),
+    ("Do I need a referral?",
+     "No. You can book directly through the form, by phone or on WhatsApp."),
+    ("What if my internet is slow?",
+     "Sessions can run audio-only, which needs very little bandwidth and works perfectly well for talking therapy. If a call drops we pick it back up."),
+    ("Do you prescribe medication?",
+     "No. We are a psychology practice. If we think a psychiatric opinion would help, we will say so and you can pursue it alongside therapy."),
+    ("What are your hours?",
+     "Monday to Saturday, 9am to 7pm Pakistan Standard Time. Later-afternoon and early-evening slots are the ones working clients usually take."),
+]
+
+
+def city_url(c):
+    return f"{BASE}/{c['slug']}"
+
+
+def city_page(c):
+    prefix = ""
+    url = city_url(c)
+    city = c["city"]
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "MedicalWebPage", "@id": url + "#webpage", "url": url,
+         "name": f"Online Therapy & Counseling in {city}",
+         "description": c["desc"], "inLanguage": "en-PK",
+         "about": {"@id": f"{BASE}/#clinic"},
+         "audience": {"@type": "MedicalAudience",
+                      "geographicArea": {"@type": "City", "name": city,
+                                         "containedInPlace": {"@type": "AdministrativeArea", "name": c["province"]}}},
+         "speakable": {"@type": "SpeakableSpecification", "cssSelector": ["h1", ".lede"]}},
+        {"@type": "Service", "@id": url + "#service",
+         "serviceType": "Online psychotherapy and counseling",
+         "name": f"Online Therapy and Counseling in {city}",
+         "description": c["desc"], "url": url,
+         "provider": {"@id": f"{BASE}/#clinic"},
+         "availableChannel": {"@type": "ServiceChannel", "name": "Online video or audio session",
+                              "serviceUrl": f"{BASE}/contact",
+                              "servicePhone": PHONE,
+                              "availableLanguage": ["English", "Urdu"]},
+         "areaServed": [{"@type": "City", "name": city},
+                        {"@type": "AdministrativeArea", "name": c["province"]},
+                        {"@type": "Country", "name": "Pakistan"}],
+         "hasOfferCatalog": {"@type": "OfferCatalog", "name": f"What we help with in {city}",
+                             "itemListElement": [
+                                 {"@type": "Offer", "itemOffered": {
+                                     "@type": "MedicalTherapy", "name": label,
+                                     "url": f"{BASE}/{slug}"}}
+                                 for label, slug in CONDITIONS]}},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Online Therapy", "item": f"{BASE}/online-therapy"},
+            {"@type": "ListItem", "position": 3, "name": city, "item": url}]},
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
+            for q, a in c["faqs"]]},
+    ]}
+    intro_p = "\n".join(f"        <p>{p}</p>" for p in c["intro"])
+    reasons = "\n".join(li(prefix, r) for r in c["reasons"])
+    areas = "".join(f'<li>{a}</li>' for a in c["areas"])
+    conds = "\n".join(
+        f'      <a class="link-card fade-up" href="/{slug}"><div class="fi">{icon(prefix,"i-heart-hands")}</div>'
+        f'<h3>{label}</h3><p>Therapy for {label.lower()}, online from {city} or in clinic in Karachi.</p>'
+        f'<span class="more">Read more →</span></a>'
+        for label, slug in CONDITIONS[:6])
+    others = [x for x in CITIES if x["slug"] != c["slug"]]
+    other_links = " · ".join(f'<a href="/{x["slug"]}">{x["city"]}</a>' for x in others)
+    out = head(c["title"], c["desc"], url, prefix, schema, og_type="article")
+    out += nav(prefix)
+    out += f"""<main id="main">
+<header class="page-hero">
+  <div class="ph-inner">
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/online-therapy">Online Therapy</a></li><li aria-current="page">{city}</li></ol>
+    <div class="ph-badge">{icon(prefix,'i-heart-hands')} Online · English &amp; Urdu · Mon-Sat</div>
+    <h1>Online Therapy &amp; Counseling in <em>{city}</em></h1>
+    <p class="lede">{c['lede']}</p>
+    <div class="ph-actions">
+      <a href="/contact" class="btn-primary">Book Appointment</a>
+      <a href="{WA}" target="_blank" rel="noopener" class="btn-secondary">Ask on WhatsApp</a>
+    </div>
+  </div>
+</header>
+<section>
+  <div class="section-inner">
+    <div class="detail-grid">
+      <div class="detail-body fade-up">
+        <h2>Therapy in {city}, without the journey</h2>
+{intro_p}
+        <h2>What people in {city} come to us for</h2>
+        <ul>
+{reasons}
+        </ul>
+        <h2>How an online session works</h2>
+        <p>You book a time, we send a link, and you join from a phone or laptop. The first session is a conversation: what is going on, what you have already tried, and what you want to be different. By the end of it you will have a plan and a clear sense of whether this is the right fit.</p>
+        <p>After that, most people meet weekly. Sessions run in English or Urdu, and they can be video or audio only if your connection is slow or you would rather not be on camera. Everything you say stays between you and your therapist.</p>
+        <p style="margin-top:6px"><a href="/services/individual-psychotherapy" class="more" style="font-weight:600">Read about our psychotherapy service →</a></p>
+      </div>
+      <aside class="aside-card fade-up">
+        <h3>Booking from {city}</h3>
+        <p>No travel, no waiting room, no local referral needed. Book a time that suits you.</p>
+        <ul class="aside-list">
+          <li>{icon(prefix,'i-shield')} Evidence-based care</li>
+          <li>{icon(prefix,'i-lock')} 100% confidential</li>
+          <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm (PKT)</li>
+          <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
+        </ul>
+        <div class="aside-actions">
+          <a href="/contact" class="btn-primary" style="justify-content:center">Book Appointment</a>
+          <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">What We Help With</span><h2 class="section-title">Common reasons people in {city} get in touch</h2></div>
+    <div class="card-grid">
+{conds}
+    </div>
+    <div style="text-align:center;margin-top:32px" class="fade-up"><a href="/guides" class="btn-secondary">See all help topics →</a></div>
+  </div>
+</section>
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Coverage</span><h2 class="section-title">Areas we work with across {city}</h2><p class="section-sub">Sessions are online, so where you are in the city makes no difference. These are the areas clients most often write in from.</p></div>
+    <ul class="area-list fade-up">{areas}</ul>
+  </div>
+</section>
+{faq_block(prefix, c['faqs'])}
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Across Pakistan</span><h2 class="section-title">We also work with clients in</h2></div>
+    <p class="city-links fade-up">{other_links} · <a href="/online-therapy">All cities →</a></p>
+  </div>
+</section>
+{cta_band(prefix, f"Ready to talk to someone in {city}?", "Book a confidential appointment. Online, in English or Urdu, six days a week.")}
+</main>
+"""
+    out += footer(prefix)
+    return out
+
+
+def cities_index():
+    prefix = ""
+    url = f"{BASE}/online-therapy"
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "CollectionPage", "@id": url + "#webpage", "url": url,
+         "name": "Online Therapy & Counseling Across Pakistan",
+         "description": "Online psychotherapy and counseling from MindCare Services®, available in every major city in Pakistan.",
+         "inLanguage": "en-PK", "about": {"@id": f"{BASE}/#clinic"}},
+        {"@type": "Service", "@id": url + "#service",
+         "serviceType": "Online psychotherapy and counseling",
+         "name": "Online Therapy and Counseling in Pakistan",
+         "url": url, "provider": {"@id": f"{BASE}/#clinic"},
+         "availableChannel": {"@type": "ServiceChannel", "name": "Online video or audio session",
+                              "serviceUrl": f"{BASE}/contact", "servicePhone": PHONE,
+                              "availableLanguage": ["English", "Urdu"]},
+         "areaServed": [{"@type": "Country", "name": "Pakistan"}]
+                       + [{"@type": "City", "name": c["city"]} for c in CITIES]
+                       + [{"@type": "City", "name": "Karachi"}]},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Online Therapy", "item": url}]},
+        {"@type": "ItemList", "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "name": f"Online Therapy in {c['city']}",
+             "url": city_url(c)} for i, c in enumerate(CITIES)]},
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
+            for q, a in NATIONAL_FAQS]},
+    ]}
+    cards = "\n".join(
+        f'''      <a class="link-card fade-up" href="/{c['slug']}"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>{c['city']}</h3><p>{c['province']} · online sessions in English or Urdu, Mon-Sat.</p><span class="more">Online therapy in {c['city']} →</span></a>'''
+        for c in CITIES)
+    kar = "".join(f"<li>{a}</li>" for a in KARACHI_AREAS)
+    out = head("Online Therapy in Pakistan | MindCare Services®",
+               "Online psychotherapy and counseling anywhere in Pakistan, in English and Urdu, Mon-Sat 9am-7pm. Qualified psychologists, no travel. Book an appointment.",
+               url, prefix, schema)
+    out += nav(prefix)
+    out += f"""<main id="main">
+<header class="page-hero">
+  <div class="ph-inner">
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Online Therapy</li></ol>
+    <div class="ph-badge">{icon(prefix,'i-heart-hands')} All of Pakistan · English &amp; Urdu</div>
+    <h1>Online therapy, <em>anywhere in Pakistan</em></h1>
+    <p class="lede">Your postcode should not decide whether you can talk to a qualified psychologist. We are a Karachi clinic with a national online practice, six days a week, in English or Urdu.</p>
+    <div class="ph-actions">
+      <a href="/contact" class="btn-primary">Book Appointment</a>
+      <a href="{WA}" target="_blank" rel="noopener" class="btn-secondary">Ask on WhatsApp</a>
+    </div>
+  </div>
+</header>
+<section>
+  <div class="section-inner">
+    <div class="detail-grid">
+      <div class="detail-body fade-up">
+        <h2>Why we built a national practice</h2>
+        <p>Qualified psychologists in Pakistan are concentrated in a handful of cities. If you live outside them, the options have historically been travelling for care you cannot travel for weekly, or going without.</p>
+        <p>Online therapy fixes the arithmetic. A session costs you an hour rather than a day, which means weekly work becomes realistic, and weekly work is what actually moves anxiety, depression, grief and relationship difficulty.</p>
+        <p>We are based in Karachi. We see clients in clinic and at home here, and everywhere else in the country by video or audio call. The therapist, the methods and the confidentiality are identical either way.</p>
+        <h2>What stays the same online</h2>
+        <ul>
+{li(prefix, "The same qualified therapists, in English or Urdu")}
+{li(prefix, "The same evidence-based methods, including CBT")}
+{li(prefix, "The same confidentiality: nothing leaves the session")}
+{li(prefix, "The same hours: Monday to Saturday, 9am to 7pm PKT")}
+{li(prefix, "Audio-only sessions where the connection or your comfort calls for it")}
+        </ul>
+      </div>
+      <aside class="aside-card fade-up">
+        <h3>Book from anywhere</h3>
+        <p>No referral, no waiting room, no travel. Tell us your city and what is going on.</p>
+        <ul class="aside-list">
+          <li>{icon(prefix,'i-shield')} Evidence-based care</li>
+          <li>{icon(prefix,'i-lock')} 100% confidential</li>
+          <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm (PKT)</li>
+          <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
+        </ul>
+        <div class="aside-actions">
+          <a href="/contact" class="btn-primary" style="justify-content:center">Book Appointment</a>
+          <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Cities</span><h2 class="section-title">Online therapy, city by city</h2><p class="section-sub">Pick your city for what people there most often get in touch about, and how booking works from where you are.</p></div>
+    <div class="card-grid">
+{cards}
+    </div>
+  </div>
+</section>
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Karachi</span><h2 class="section-title">In Karachi, you have all three</h2><p class="section-sub">Clinic appointments, home visits and online sessions. These are the areas we work across.</p></div>
+    <ul class="area-list fade-up">{kar}</ul>
+    <div style="text-align:center;margin-top:32px" class="fade-up"><a href="/services/" class="btn-secondary">See all services in Karachi →</a></div>
+  </div>
+</section>
+{faq_block(prefix, NATIONAL_FAQS)}
+{cta_band(prefix, "Wherever you are, we can start this week.", "Book a confidential appointment. Online, in English or Urdu, six days a week.")}
+</main>
+"""
+    out += footer(prefix)
+    return out
+
+
 def build():
     for s in SERVICES:
         write(f"services/{s['slug']}.html", service_page(s))
@@ -1703,6 +2352,9 @@ def build():
     for t in TOPICS:
         write(f"{t['slug']}.html", seo_page(t))
     write("guides.html", guides_index())
+    for c in CITIES:
+        write(f"{c['slug']}.html", city_page(c))
+    write("online-therapy.html", cities_index())
     for i, a in enumerate(ARTICLES):
         write(f"articles/{a['slug']}.html", article_page(a, i))
     write("articles.html", articles_index())
@@ -1731,6 +2383,7 @@ def build():
             (f"{BASE}/services/", "services/index.html", "0.9"),
             (f"{BASE}/team/", "team/index.html", "0.7"),
             (f"{BASE}/guides", "guides.html", "0.8"),
+            (f"{BASE}/online-therapy", "online-therapy.html", "0.9"),
             (f"{BASE}/articles", "articles.html", "0.7"),
             (f"{BASE}/courses", "courses.html", "0.9"),
             (f"{BASE}/montessori-course", "montessori-course/index.html", "0.9"),
@@ -1744,6 +2397,7 @@ def build():
     urls += [(f"{BASE}/services/{s['slug']}", f"services/{s['slug']}.html", "0.8") for s in SERVICES]
     urls += [(f"{BASE}/team/{m['slug']}", f"team/{m['slug']}.html", "0.6") for m in TEAM]
     urls += [(f"{BASE}/{t['slug']}", f"{t['slug']}.html", "0.8") for t in TOPICS]
+    urls += [(city_url(c), f"{c['slug']}.html", "0.8") for c in CITIES]
     urls += [(art_url(a), f"articles/{a['slug']}.html", "0.7") for a in ARTICLES]
     body = "\n".join(
         f"  <url><loc>{u}</loc><lastmod>{last_modified(f)}</lastmod>"

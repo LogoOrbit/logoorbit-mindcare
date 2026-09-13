@@ -382,3 +382,10 @@ html[data-theme="dark"] .art-share-btn:hover { background: #16301f; }
 }
 @keyframes confirmPop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .confirm-check { animation: none; } }
+
+/* AREA + CITY LISTS (online therapy pages) */
+.area-list { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; margin: 0 auto; padding: 0; }
+.area-list li { background: var(--card); border: 1px solid var(--border); border-radius: 50px; padding: 8px 18px; font-size: 0.86rem; color: var(--muted); }
+.city-links { max-width: 860px; margin: 0 auto; text-align: center; line-height: 2.1; font-size: 0.92rem; color: var(--muted); }
+.city-links a { color: var(--teal-dark); text-decoration: none; font-weight: 500; }
+.city-links a:hover { text-decoration: underline; }
