@@ -3,6 +3,11 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/online-therapy-pakistan",
+      "destination": "/online-therapy",
+      "permanent": true
+    },
+    {
       "source": "/montessori-fundamentals-workshop",
       "destination": "/montessori-course",
       "permanent": true
