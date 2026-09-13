@@ -218,7 +218,7 @@
 
   // parallax layers
   var heroes = [].slice.call(document.querySelectorAll('.page-hero'));
-  var pEls = [].slice.call(document.querySelectorAll('[data-parallax], .detail-art'));
+  var pEls = [].slice.call(document.querySelectorAll('[data-parallax], .detail-art, .ph-art'));
   var ticking = false;
   function onScroll() {
     if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);

@@ -161,7 +161,11 @@ section { padding: 56px 5%; }
 .bg-sand { background: var(--sand); }
 
 /* FOOTER */
-footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5% 28px; }
+/* The call and WhatsApp buttons are fixed to the bottom-right of the viewport,
+   so the footer keeps a clear band at its end: without it they sit on top of
+   the last column of links and the copyright line. */
+footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5% 104px; }
+@media (max-width: 860px) { footer { padding-bottom: 132px; } }
 .footer-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px; margin-bottom: 44px; }
 .footer-brand p { font-size: 0.82rem; line-height: 1.7; max-width: 250px; margin-bottom: 18px; }
 .footer-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 700; color: white; margin-bottom: 4px; }
@@ -209,8 +213,8 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
 .fade-up.visible { opacity: 1; transform: none; }
 /* parallax: hero glow drifts, illustration floats */
 .page-hero::before { transform: translateY(var(--py, 0)); transition: transform .05s linear; will-change: transform; }
-.detail-art { will-change: transform; }
-@media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1 !important; transform: none !important; } .page-hero::before, .detail-art { transform: none !important; } }
+.detail-art, .ph-art { will-change: transform; }
+@media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1 !important; transform: none !important; } .page-hero::before, .detail-art, .ph-art { transform: none !important; } }
 .float-a { animation: floatA 6s ease-in-out infinite; }
 .float-b { animation: floatA 7s ease-in-out .8s infinite; }
 @keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
@@ -242,6 +246,9 @@ html[lang="ur"] .page-hero h1, html[lang="ur"] .section-title, html[lang="ur"] .
 html[dir="rtl"] .breadcrumb li:not(:last-child)::after { content:'‹'; }
 
 /* RESPONSIVE */
+/* Nine primary links need more room than the old eight: hand over to the
+   menu button before Book starts crowding the logo. */
+@media (max-width: 1000px) { .nav-links { display: none; } .hamburger { display: flex; } }
 @media (max-width: 900px) {
   .detail-grid { grid-template-columns: 1fr; gap: 36px; }
   .aside-card { position: static; }
@@ -382,3 +389,52 @@ html[data-theme="dark"] .art-share-btn:hover { background: #16301f; }
 }
 @keyframes confirmPop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .confirm-check { animation: none; } }
+
+/* ═══ ILLUSTRATIONS ═══
+   Flat vector scenes (unDraw, MIT-licensed) re-hued into the MindCare palette
+   and served as <img> from /assets/art. Each drawing carries its own pale
+   backdrop, so every frame below stays light even in dark mode: on a dark page
+   the drawing's own light greys would otherwise float with nothing behind them. */
+.ill { display: block; width: 100%; height: auto; }
+.ill-frame { position: relative; overflow: hidden; display: grid; place-items: center;
+  padding: 26px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: linear-gradient(150deg, #eaf7f7 0%, #f2faf1 55%, #e6f5f6 100%); }
+.ill-frame::before { content: ''; position: absolute; width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(15,154,168,0.12) 0%, transparent 70%); top: -110px; right: -90px; }
+.ill-frame .ill { position: relative; width: 100%; max-width: 100%; max-height: 280px; object-fit: contain; }
+html[data-theme="dark"] .ill-frame { border-color: #2b4a45; }
+
+/* Hero illustration: interior pages lead with a picture next to the headline */
+.ph-inner.with-art { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); gap: 44px; align-items: center; }
+.ph-art .ill { max-height: 300px; width: 100%; object-fit: contain; margin-inline: auto; filter: drop-shadow(0 18px 34px rgba(11,95,109,.16)); }
+@media (max-width: 980px) { .ph-inner.with-art { grid-template-columns: 1fr; gap: 26px; }
+  .ph-art .ill { max-height: 200px; } }
+
+/* Picture-led index cards: the scene does the explaining, the text confirms it */
+.link-card.card-ill { padding: 0; display: flex; flex-direction: column; }
+.card-ill .card-art { display: grid; place-items: center; min-height: 156px; padding: 18px 20px;
+  background: linear-gradient(150deg, #eaf7f7 0%, #f1f9ee 100%); border-bottom: 1px solid var(--border); }
+.card-ill .card-art img { width: 100%; max-width: 100%; max-height: 124px; object-fit: contain; transition: transform .3s ease; }
+.card-ill:hover .card-art img { transform: translateY(-4px) scale(1.03); }
+.card-ill .card-txt { padding: 22px 24px 24px; display: flex; flex-direction: column; flex: 1; }
+.card-ill .card-txt .more { margin-top: auto; padding-top: 10px; }
+html[data-theme="dark"] .card-ill .card-art { border-bottom-color: #2b4a45; }
+
+/* Story band: one picture, one point, sides alternating down the page */
+.story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 46px; align-items: center; }
+.story + .story { margin-top: 48px; }
+.story.rev .story-art { order: 2; }
+.story-copy h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  font-weight: 600; line-height: 1.25; margin-bottom: 10px; }
+.story-copy p { font-size: 1rem; color: var(--gray); line-height: 1.85; }
+.story-copy .story-num { display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%; background: var(--teal-btn); color: #fff;
+  font-weight: 700; font-size: .9rem; margin-bottom: 12px; }
+@media (max-width: 860px) { .story { grid-template-columns: 1fr; gap: 24px; } .story.rev .story-art { order: 0; } }
+
+@media (max-width: 560px) {
+  .ill-frame { padding: 18px; }
+  .ill-frame .ill { max-height: 210px; }
+  .card-ill .card-art { min-height: 124px; padding: 12px 14px; }
+  .card-ill .card-art img { max-height: 100px; }
+}

@@ -219,6 +219,11 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
   font-weight: 600; color: var(--dark); margin-bottom: 12px;
 }
 .page-hero p { font-size: 0.98rem; color: var(--gray); max-width: 520px; margin: 0 auto; line-height: 1.75; }
+/* Deliberately small: the booking form is the point of this page, so the
+   illustration warms the hero without pushing the form off the first screen. */
+.page-hero .hero-ill { display: block; width: 100%; max-width: 176px; height: auto; margin: 20px auto 0;
+  filter: drop-shadow(0 16px 30px rgba(11,95,109,.16)); }
+@media (max-width: 560px) { .page-hero .hero-ill { max-width: 124px; margin-top: 14px; } }
 
 /* CONTACT BODY */
 .contact-body {
@@ -466,6 +471,7 @@ html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; co
   <ul class="nav-links">
     <li><a href="/">Home</a></li>
     <li><a href="/services/">Services</a></li>
+    <li><a href="/guides">Guides</a></li>
     <li><a href="/about">About</a></li>
     <li><a href="/team/">Team</a></li>
     <li><a href="/articles">Articles</a></li>
@@ -484,6 +490,7 @@ html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; co
 <div class="mobile-menu" id="mobileMenu">
   <a href="/" onclick="toggleMenu()">Home</a>
   <a href="/services/" onclick="toggleMenu()">Services</a>
+  <a href="/guides" onclick="toggleMenu()">Guides</a>
   <a href="/about" onclick="toggleMenu()">About</a>
   <a href="/team/" onclick="toggleMenu()">Team</a>
   <a href="/articles" onclick="toggleMenu()">Articles</a>
@@ -506,6 +513,7 @@ html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; co
   <div class="hero-badge">MindCare Services® · Appointments Open Today</div>
   <h1>Book an Appointment</h1>
   <p>Take the first step. We'll listen, guide, and support you, with no pressure, no judgment and 100% confidentiality.</p>
+  <img class="hero-ill" src="assets/art/talking-on-the-phone.svg" alt="Someone picking up the phone to reach out for support" width="743" height="743" decoding="async">
 </div>
 
 <!-- CONTACT BODY -->

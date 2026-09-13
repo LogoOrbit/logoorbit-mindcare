@@ -149,6 +149,72 @@ def icon(prefix, name, w=None):
     return f'<svg{a}><use href="{prefix}assets/sprite.svg#{name}"/></svg>'
 
 
+# ─────────────────────────── ILLUSTRATIONS ───────────────────────────
+# Flat vector scenes from unDraw (MIT, no attribution required), re-hued into
+# the MindCare teal/green palette and parked in /assets/art. Most visitors scan
+# rather than read, so every service, guide and index page leads with one.
+#
+# ART[key] = (file stem, intrinsic width, intrinsic height, alt text)
+# The dimensions are the SVG viewBox and are emitted on the <img> so the page
+# never reflows once the drawing lands.
+ART = {
+ # services
+ "individual-psychotherapy": ("casual-chat", 940, 800, "A therapist and client talking quietly on a bench"),
+ "family-counseling": ("family", 453, 472, "Two parents and a child holding hands together"),
+ "speech-therapy": ("doll-play", 800, 437, "A therapist playing on the floor with a young child"),
+ "physiotherapy": ("personal-trainer", 805, 651, "A physiotherapist guiding a patient through an exercise"),
+ "occupational-therapy": ("artist-at-work", 531, 824, "A person working with their hands at an easel"),
+ "behavioral-therapy": ("children", 865, 439, "Three children playing a skipping game together"),
+ "remedial-home-sessions": ("knocking-on-the-door", 960, 878, "A therapist arriving at a family's front door"),
+ "diagnostic-assessments": ("checklist", 800, 541, "A clinician working through an assessment checklist"),
+ "dental-consultations": ("doctor", 1086, 783, "A clinician examining a patient with a stethoscope"),
+ "awareness-sessions": ("public-speaking", 960, 618, "A speaker addressing an audience from a lectern"),
+ # guide topics
+ "anxiety-therapy-karachi": ("wandering-mind", 678, 504, "A person sitting alone with racing thoughts"),
+ "depression-treatment-karachi": ("feeling-blue", 1100, 811, "A small figure beside a large heavy mood"),
+ "stress-management-karachi": ("a-moment-to-relax", 583, 383, "A person taking a quiet break in a chair"),
+ "trauma-therapy-karachi": ("showing-support", 661, 514, "Two people holding up a heart together"),
+ "ocd-therapy-karachi": ("fitting-pieces", 477, 417, "A person arranging pieces until they fit"),
+ "panic-attack-help-karachi": ("meditation", 959, 703, "A person sitting and steadying their breathing"),
+ "marriage-couples-counseling-karachi": ("couple", 884, 727, "A couple sitting together on a park bench"),
+ "teen-adolescent-therapy-karachi": ("exam-prep", 800, 596, "A teenager studying with their feet up"),
+ "child-psychologist-karachi": ("play-time", 670, 712, "A parent lifting a laughing child in the air"),
+ "adhd-assessment-therapy-karachi": ("distractions", 800, 633, "A person at a laptop surrounded by distractions"),
+ "grief-loss-counseling-karachi": ("holding-flowers", 810, 409, "A person holding a bunch of flowers"),
+ "anger-management-karachi": ("walking-in-rain", 538, 577, "A person walking out a storm under an umbrella"),
+ "online-therapy-pakistan": ("video-call", 800, 619, "A therapy session happening over a video call"),
+ "self-esteem-confidence-therapy-karachi": ("powerful", 929, 635, "A person standing tall in a hero's cape"),
+ "best-psychologist-karachi": ("doctors", 693, 597, "Two clinicians standing side by side"),
+ "mental-health-clinic-karachi": ("medicine", 1105, 783, "A clinical team beside a heartbeat symbol"),
+ "cbt-therapy-karachi": ("mind-map", 800, 517, "A person mapping out linked thoughts on a board"),
+ "workplace-mental-health-karachi": ("co-workers", 715, 604, "Two colleagues working side by side at a desk"),
+ "speech-therapy-for-children-karachi": ("motherhood", 668, 538, "A mother holding and talking to her child"),
+ "physiotherapy-back-pain-karachi": ("pilates", 785, 245, "A person stretching their back on a mat"),
+ # index + utility pages
+ "services-index": ("good-team", 901, 508, "A team presenting the range of care they offer"),
+ "guides-index": ("questions", 960, 677, "Two people considering a large question mark"),
+ "team-index": ("doctors", 693, 597, "Two clinicians standing side by side"),
+ "articles-index": ("book-lover", 800, 622, "A person reading, with a stack of books beside them"),
+ "confirmed": ("i-can-fly", 1031, 697, "Two people leaping happily through the clouds"),
+}
+
+
+def art(key, prefix="", cls="ill", lazy=True, sizes=None):
+    """<img> for one illustration, or empty string if the key has no art."""
+    if key not in ART:
+        return ""
+    stem, w, h, alt = ART[key]
+    load = ' loading="lazy" decoding="async"' if lazy else ' decoding="async"'
+    s = f' sizes="{sizes}"' if sizes else ""
+    return (f'<img class="{cls}" src="{prefix}assets/art/{stem}.svg" alt="{html.escape(alt)}" '
+            f'width="{w}" height="{h}"{s}{load}>')
+
+
+def art_frame(key, prefix="", cls="ill-frame fade-up", lazy=True):
+    """The illustration inside its own pale panel."""
+    return f'<div class="{cls}">{art(key, prefix)}</div>' if key in ART else ""
+
+
 def nav(prefix, active=None):
     def cls(key):
         return ' class="active"' if active == key else ''
@@ -159,6 +225,7 @@ def nav(prefix, active=None):
   <ul class="nav-links">
     <li><a href="/"{cls('home')}>Home</a></li>
     <li><a href="/services/"{cls('services')}>Services</a></li>
+    <li><a href="/guides"{cls('guides')}>Guides</a></li>
     <li><a href="/about"{cls('about')}>About</a></li>
     <li><a href="/team/"{cls('team')}>Team</a></li>
     <li><a href="/articles"{cls('articles')}>Articles</a></li>
@@ -175,6 +242,7 @@ def nav(prefix, active=None):
 <div class="mobile-menu" id="mobileMenu">
   <a href="/">Home</a>
   <a href="/services/">Services</a>
+  <a href="/guides">Guides</a>
   <a href="/about">About</a>
   <a href="/team/">Team</a>
   <a href="/articles">Articles</a>
@@ -440,8 +508,20 @@ SERVICES = [
 SERVICE_BY_SLUG = {s["slug"]: s for s in SERVICES}
 
 
-def detail_art_svg(prefix, ic):
-    return f'<svg width="160" height="160" aria-hidden="true"><use href="{prefix}assets/sprite.svg#{ic}"/></svg>'
+def service_card(s, prefix, trim=120):
+    """Picture-led service card: the scene first, the words second."""
+    return (f'''      <a class="link-card card-ill fade-up" href="/services/{s['slug']}">'''
+            f'''<div class="card-art">{art(s['slug'], prefix)}</div>'''
+            f'''<div class="card-txt"><h3>{s['name']}</h3><p>{s['lede'][:trim]}…</p>'''
+            f'''<span class="more">Learn more →</span></div></a>''')
+
+
+def topic_card(t, prefix, trim=110):
+    """Picture-led guide card."""
+    return (f'''      <a class="link-card card-ill fade-up" href="/{t['slug']}">'''
+            f'''<div class="card-art">{art(t['slug'], prefix)}</div>'''
+            f'''<div class="card-txt"><h3>{t['h1']}</h3><p>{t['lede'][:trim]}…</p>'''
+            f'''<span class="more">Read more →</span></div></a>''')
 
 
 def service_page(s):
@@ -466,15 +546,14 @@ def service_page(s):
         f'''      <div class="feature-card fade-up"><div class="fi">{icon(prefix,ic)}</div><h3>{t}</h3><p>{d}</p></div>'''
         for ic, t, d in s["included"])
     related = [x for x in SERVICES if x["slug"] != s["slug"]][:3]
-    related_cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="/services/{r['slug']}"><div class="fi">{icon(prefix,r['icon'])}</div><h3>{r['name']}</h3><p>{r['lede'][:96]}…</p><span class="more">Learn more →</span></a>'''
-        for r in related)
+    related_cards = "\n".join(service_card(r, prefix, 96) for r in related)
 
     out = head(s["title"], s["desc"], url, prefix, schema)
     out += nav(prefix, "services")
     out += f"""<main id="main">
 <header class="page-hero">
-  <div class="ph-inner">
+  <div class="ph-inner with-art">
+    <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/services/">Services</a></li><li aria-current="page">{s['name']}</li></ol>
     <div class="ph-badge">{icon(prefix,'i-shield')} Evidence-based · Confidential · Karachi</div>
     <h1>{s['name']}</h1>
@@ -483,6 +562,8 @@ def service_page(s):
       <a href="/contact" class="btn-primary">Book Appointment</a>
       <a href="{WA}" target="_blank" rel="noopener" class="btn-secondary">Ask on WhatsApp</a>
     </div>
+    </div>
+    <div class="ph-art">{art(s['slug'], prefix, lazy=False)}</div>
   </div>
 </header>
 
@@ -498,7 +579,6 @@ def service_page(s):
 {approach}
       </div>
       <aside class="aside-card fade-up">
-        <div class="detail-art" style="margin-bottom:20px">{detail_art_svg(prefix,s['icon'])}</div>
         <h3>Quick facts</h3>
         <ul class="aside-list">
           <li>{icon(prefix,'i-shield')} Evidence-based care</li>
@@ -555,21 +635,22 @@ def services_index():
             {"@type": "ListItem", "position": i + 1, "name": s["name"], "url": f"{BASE}/services/{s['slug']}"}
             for i, s in enumerate(SERVICES)]},
     ]}
-    cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="/services/{s['slug']}"><div class="fi">{icon(prefix,s['icon'])}</div><h3>{s['name']}</h3><p>{s['lede'][:120]}…</p><span class="more">Learn more →</span></a>'''
-        for s in SERVICES)
+    cards = "\n".join(service_card(s, prefix) for s in SERVICES)
     out = head("Therapy Services in Karachi | MindCare Services®",
                "Therapy services in Karachi: psychotherapy, family counseling, speech therapy, physiotherapy, occupational and behavioral therapy. Book an appointment.",
                url, prefix, schema)
     out += nav(prefix, "services")
     out += f"""<main id="main">
 <header class="page-hero">
-  <div class="ph-inner">
+  <div class="ph-inner with-art">
+    <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Services</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-puzzle')} 10 services · One caring team</div>
+    <div class="ph-badge">{icon(prefix,'i-puzzle')} {len(SERVICES)} services · One caring team</div>
     <h1>Comprehensive care for <em>mind &amp; body</em></h1>
     <p class="lede">A holistic range of therapy and clinical services, all under one roof in Karachi, delivered by experienced professionals. Choose a service to learn more.</p>
     <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a></div>
+    </div>
+    <div class="ph-art">{art('services-index', prefix, lazy=False)}</div>
   </div>
 </header>
 <section>
@@ -799,12 +880,15 @@ def team_index():
     out += nav(prefix, "team")
     out += f"""<main id="main">
 <header class="page-hero">
-  <div class="ph-inner">
+  <div class="ph-inner with-art">
+    <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Team</li></ol>
     <div class="ph-badge">{icon(prefix,'i-family')} A multidisciplinary team</div>
     <h1>Meet the people behind <em>your care</em></h1>
     <p class="lede">A dedicated group of specialists united by one mission: compassionate, professional, impactful care. Get to know each of them.</p>
     <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a></div>
+    </div>
+    <div class="ph-art">{art('team-index', prefix, lazy=False)}</div>
   </div>
 </header>
 <section>
@@ -1029,14 +1113,13 @@ def seo_page(t):
     signs = "\n".join(li(prefix, s) for s in t["signs"])
     help_p = "\n".join(f"        <p>{p}</p>" for p in t["help"])
     sibs = [x for x in TOPICS if x["slug"] != t["slug"]][:3]
-    sib_cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="/{s['slug']}"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>{s['h1']}</h3><p>{s['lede'][:92]}…</p><span class="more">Read more →</span></a>'''
-        for s in sibs)
+    sib_cards = "\n".join(topic_card(s, prefix, 92) for s in sibs)
     out = head(t["title"], t["desc"], url, prefix, schema, og_type="article")
-    out += nav(prefix)
+    out += nav(prefix, "guides")
     out += f"""<main id="main">
 <header class="page-hero">
-  <div class="ph-inner">
+  <div class="ph-inner with-art">
+    <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/guides">Guides</a></li><li aria-current="page">{t['h1']}</li></ol>
     <div class="ph-badge">{icon(prefix,'i-heart-hands')} Confidential · Judgment-free · Karachi</div>
     <h1>{t['h1']}</h1>
@@ -1045,6 +1128,8 @@ def seo_page(t):
       <a href="/contact" class="btn-primary">Book Appointment</a>
       <a href="{WA}" target="_blank" rel="noopener" class="btn-secondary">Ask on WhatsApp</a>
     </div>
+    </div>
+    <div class="ph-art">{art(t['slug'], prefix, lazy=False)}</div>
   </div>
 </header>
 <section>
@@ -1060,6 +1145,7 @@ def seo_page(t):
         <p style="margin-top:6px"><a href="/services/{svc['slug']}" class="more" style="font-weight:600">Learn about our {svc['name']} service →</a></p>
       </div>
       <aside class="aside-card fade-up">
+        <div class="ill-frame" style="margin-bottom:20px;padding:18px">{art(svc['slug'], prefix)}</div>
         <h3>Take the first step</h3>
         <p>A confidential appointment is the easiest way to begin. No pressure, no judgment.</p>
         <ul class="aside-list">
@@ -1105,21 +1191,22 @@ def guides_index():
         {"@type": "ItemList", "itemListElement": [
             {"@type": "ListItem", "position": i + 1, "name": t["h1"], "url": f"{BASE}/{t['slug']}"}
             for i, t in enumerate(TOPICS)]}]}
-    cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="/{t['slug']}"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>{t['h1']}</h3><p>{t['lede'][:110]}…</p><span class="more">Read more →</span></a>'''
-        for t in TOPICS)
+    cards = "\n".join(topic_card(t, prefix) for t in TOPICS)
     out = head("Mental Health Guides in Karachi | MindCare Services®",
                "Find help for anxiety, depression, stress, trauma, relationships, children's needs and more in Karachi. Practical guides and support from MindCare Services®.",
                url, prefix, schema)
-    out += nav(prefix)
+    out += nav(prefix, "guides")
     out += f"""<main id="main">
 <header class="page-hero">
-  <div class="ph-inner">
+  <div class="ph-inner with-art">
+    <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Guides</li></ol>
     <div class="ph-badge">{icon(prefix,'i-heart-hands')} Whatever you're facing</div>
     <h1>Find the <em>right support</em> for what you're going through</h1>
     <p class="lede">Not sure where to start? Pick what resonates below. Each guide explains the signs and how we can help, right here in Karachi.</p>
     <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a></div>
+    </div>
+    <div class="ph-art">{art('guides-index', prefix, lazy=False)}</div>
   </div>
 </header>
 <section>
@@ -1182,7 +1269,7 @@ MOTIFS = {
 }
 
 ARTICLES = [
-    dict(slug="the-soul-cannot-be-coded",
+    dict(slug="the-soul-cannot-be-coded", ill=("day-dreaming", 960, 816, "A person lost in thought on a cloud of their own"),
          title="The Soul Cannot Be Coded",
          seo_desc="Shaista Tariq on the Chinese Room, instinct and the subconscious: a philosophical case for why human consciousness cannot be replicated by machines.",
          kicker="Man vs. Machine: the Chinese Room and why processing is not consciousness",
@@ -1241,7 +1328,7 @@ ARTICLES = [
              ("quote", "The Chinese Room will always give the correct answer. But it will never give <em>its</em> answer."),
              ("p", "And in that gap, between the correct and the personal, between the programmed and the willed, between the processed and the felt, lives everything that makes a human being human."),
          ]),
-    dict(slug="cost-of-professionalism-vs-reality-of-pay",
+    dict(slug="cost-of-professionalism-vs-reality-of-pay", ill=("in-the-office", 774, 670, "Two people at work in an office"),
          title="The Cost of Professionalism vs. The Reality of Pay",
          seo_title="Professionalism vs. the Reality of Pay",
          seo_desc="Shaista Tariq on why underpaid professionalism burns people out, and what fair pay, recognition and realistic expectations change at work.",
@@ -1276,7 +1363,7 @@ ARTICLES = [
              ("p", "As a psychology student, I think we all should take a step for this. I have seen professionals spending millions on their Masters and MPhil degrees, only to earn 25k? Seriously?"),
              ("p", "In the next part, we will discuss this further. However, anyone can put their thoughts on it now. What do you think?"),
          ]),
-    dict(slug="consistency-vs-correction",
+    dict(slug="consistency-vs-correction", ill=("fatherhood", 1097, 791, "A parent steadying a child learning to balance"),
          title="Consistency vs. Correction",
          seo_desc="Shaista Tariq on consistency versus course correction: when to hold your direction at work, and when changing it is the braver, healthier choice.",
          kicker="Why showing up every day only works when you also check the direction",
@@ -1299,7 +1386,7 @@ ARTICLES = [
              ("quote", "Real progress comes from staying consistent while continuously refining the path."),
              ("p", "That balance is what turns effort into meaningful growth. Of course, this is my personal perspective, and yours may differ."),
          ]),
-    dict(slug="why-people-leave-jobs-and-productivity-drops",
+    dict(slug="why-people-leave-jobs-and-productivity-drops", ill=("deep-work", 801, 686, "Someone working alone, head down"),
          title="Why People Leave Jobs, Productivity Drops &amp; Businesses Struggle",
          seo_title="Why People Leave Their Jobs",
          seo_desc="Shaista Tariq on why good employees resign: rigid routines, ignored work styles, mental fatigue and managers who misread how productivity actually works.",
@@ -1376,6 +1463,17 @@ def art_body(blocks):
 def art_motif(a, cls="art-art"):
     return (f'<div class="{cls}" style="--a1:{a["a1"]};--a2:{a["a2"]}">'
             f'{MOTIFS[a["motif"]]}</div>')
+
+
+def art_ill(a, prefix):
+    """The article's own scene, for the reading aside. Text-only pages are the
+    ones that lose people fastest."""
+    if "ill" not in a:
+        return ""
+    stem, w, h, alt = a["ill"]
+    return (f'<div class="ill-frame" style="margin-bottom:20px;padding:18px">'
+            f'<img class="ill" src="{prefix}assets/art/{stem}.svg" alt="{html.escape(alt)}" '
+            f'width="{w}" height="{h}" loading="lazy" decoding="async"></div>')
 
 
 def art_url(a):
@@ -1458,6 +1556,7 @@ def article_page(a, idx):
         </div>
       </article>
       <aside class="aside-card fade-up">
+        {art_ill(a, prefix)}
         <h3>Article details</h3>
         <ul class="aside-list">
           <li>{icon(prefix,'i-book')} {a['category']}</li>
@@ -1543,13 +1642,16 @@ def articles_index():
     out += nav(prefix, "articles")
     out += f"""<main id="main">
 <header class="page-hero">
-  <div class="ph-inner">
+  <div class="ph-inner with-art">
+    <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Articles</li></ol>
     <div class="ph-badge">{icon(prefix,'i-book')} {len(ARTICLES)} essays &amp; reflections</div>
     <h1>Articles by <em>Shaista Tariq</em></h1>
     <p class="lede">Long-form writing on mental health, the human side of care, workplaces and behaviour, by the founder of MindCare Services®. Every piece is here in full, no login required.</p>
     <div class="art-pills">{topics}</div>
     <div class="ph-actions"><a href="/team/shaista-tariq" class="btn-secondary">About Shaista →</a></div>
+    </div>
+    <div class="ph-art">{art('articles-index', prefix, lazy=False)}</div>
   </div>
 </header>
 <section>
@@ -1613,6 +1715,7 @@ def confirmation_page():
       <a href="{WA}?text=Hi%2C%20I%20just%20booked%20an%20appointment%20and%20wanted%20to%20confirm%20the%20details." target="_blank" rel="noopener" class="btn-primary">{icon(prefix,'i-wa','18')} Message us on WhatsApp</a>
       <a href="/" class="btn-secondary">Back to Home</a>
     </div>
+    <div style="max-width:420px;margin:32px auto 0">{art('confirmed', prefix, lazy=False)}</div>
   </div>
 </header>
 

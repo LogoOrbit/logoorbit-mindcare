@@ -175,6 +175,46 @@ a.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:va
 .card p{font-size:.95rem;color:var(--muted);line-height:1.65}
 .card .more{margin-top:10px;font-size:.85rem;font-weight:600;color:var(--teal-dark)}
 
+/* ILLUSTRATIONS
+   Flat vector scenes from /assets/art, re-hued into the MindCare palette.
+   They ship as <img>, so every frame here keeps a light background in dark
+   mode on purpose: the drawings carry their own pale greys and would
+   otherwise float on a dark page with nothing behind them. */
+.ill{display:block;width:100%;height:auto}
+.ill-frame{position:relative;overflow:hidden;display:grid;place-items:center;padding:26px;
+ border:1px solid var(--border);border-radius:var(--radius);
+ background:linear-gradient(150deg,#eaf7f7 0%,#f2faf1 55%,#e6f5f6 100%)}
+.ill-frame::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;
+ background:radial-gradient(circle,rgba(15,154,168,.12) 0%,transparent 70%);top:-110px;inset-inline-end:-90px}
+.ill-frame .ill{position:relative;width:100%;max-height:280px;object-fit:contain}
+html[data-theme="dark"] .ill-frame{border-color:#2b4a45}
+/* picture-led card: the scene explains, the words confirm */
+.card.card-ill{padding:0;display:flex;flex-direction:column;overflow:hidden}
+.card-ill .card-art{display:grid;place-items:center;min-height:152px;padding:16px 18px;
+ background:linear-gradient(150deg,#eaf7f7 0%,#f1f9ee 100%);border-bottom:1px solid var(--border)}
+.card-ill .card-art img{width:100%;max-height:132px;object-fit:contain;transition:transform .3s ease}
+a.card-ill:hover .card-art img{transform:translateY(-4px) scale(1.03)}
+.card-ill .card-txt{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+.card-ill .card-txt .more{margin-top:auto;padding-top:10px}
+html[data-theme="dark"] .card-ill .card-art{border-bottom-color:#2b4a45}
+/* story band: one picture, one point, sides alternating */
+.story{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:46px;align-items:center}
+.story.rev .story-art{order:2}
+.story-copy .tag{margin-bottom:12px}
+.story-copy h2{margin-bottom:10px}
+.story-copy p{color:var(--muted);line-height:1.85;font-size:1.02rem}
+/* numbered step, now led by a picture */
+.step.step-ill{padding:0;overflow:hidden;display:flex;flex-direction:column}
+.step-ill .card-art{display:grid;place-items:center;min-height:150px;padding:16px;
+ background:linear-gradient(150deg,#eaf7f7 0%,#f1f9ee 100%);border-bottom:1px solid var(--border)}
+.step-ill .card-art img{width:100%;max-height:128px;object-fit:contain}
+.step-ill .step-txt{padding:22px 24px 24px}
+/* the step number rides on the picture, not over the sentence under it */
+.step.step-ill::before{top:12px;inset-inline-end:14px;width:38px;height:38px;display:grid;place-items:center;
+ border-radius:50%;background:var(--card);color:var(--teal-deep);font-size:1.3rem;opacity:1;
+ box-shadow:0 4px 14px rgba(11,95,109,.16)}
+html[data-theme="dark"] .step-ill .card-art{border-bottom-color:#2b4a45}
+
 /* TEAM */
 .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .person{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px 18px;text-align:center;transition:transform .25s,box-shadow .25s,border-color .25s;color:inherit;display:block}
@@ -190,6 +230,13 @@ a.person:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:
 .person .live{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#2eb87a}
 .person .live::before{content:"";width:6px;height:6px;border-radius:50%;background:#2eb87a;animation:blink 2s infinite}
 @keyframes blink{50%{opacity:.35}}
+
+/* TOPIC CHIPS: the guides section, one tap from the home page */
+.topic-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.topic-chips a{display:inline-flex;align-items:center;background:var(--card);border:1px solid var(--border);
+ border-radius:999px;padding:8px 15px;font-size:.87rem;font-weight:600;color:var(--teal-deep);
+ text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+.topic-chips a:hover{background:var(--teal-light);border-color:var(--teal);transform:translateY(-2px)}
 
 /* STEPS */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
@@ -212,6 +259,10 @@ a.person:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:
 
 /* CTA */
 .cta{background:linear-gradient(135deg,#0a7f90,#0b5f6d);border-radius:24px;padding:clamp(32px,6vw,56px);text-align:center;color:#fff;max-width:900px;margin:0 auto}
+/* The scene sits on the deep teal band, so it needs its own light disc to
+   read against: the drawing's pale greys have nothing to sit on otherwise. */
+.cta-ill{display:block;width:150px;height:150px;object-fit:contain;object-position:bottom;
+ margin:0 auto 20px;padding:14px;border-radius:50%;background:rgba(255,255,255,.9)}
 .cta h2{color:#fff}
 .cta p{opacity:.92;margin-top:6px}
 .cta .btn-primary{background:#fff;color:#0b5f6d}
@@ -220,6 +271,10 @@ a.person:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:
 
 /* FOOTER */
 footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin-top:20px}
+/* The call, WhatsApp and music buttons are fixed to the viewport corners, so
+   the end of the footer has to keep clear of them or they land on the links. */
+footer{padding-bottom:104px}
+@media(max-width:860px){footer{padding-bottom:132px}}
 .foot-grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between}
 .foot-brand{max-width:260px}
 .foot-brand .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#fff}
@@ -256,15 +311,22 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 .fade-up.vis{opacity:1;transform:none}
 [data-parallax]{will-change:transform}
 
+/* Nine primary links need more room than the old eight: hand over to the
+   menu button before Book starts crowding the logo. */
+@media (max-width:1000px){.nav-links{display:none}.hamburger{display:flex}}
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr;gap:6px}.brain-wrap{order:-1;max-width:340px}
   .nav-links{display:none}.hamburger{display:flex}
   .grid-3,.team-grid,.feel-grid,.steps{grid-template-columns:1fr}
   .feel-grid{grid-template-columns:1fr 1fr}
+  .story{grid-template-columns:1fr;gap:26px}.story.rev .story-art{order:0}
 }
 @media (max-width:560px){
   .feel-grid{grid-template-columns:1fr}section{padding:40px 0}
   .nav-cta{display:none}
+  .ill-frame{padding:18px}.ill-frame .ill{max-height:210px}
+  .card-ill .card-art,.step-ill .card-art{min-height:124px;padding:12px 14px}
+  .card-ill .card-art img,.step-ill .card-art img{max-height:100px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.fade-up{opacity:1;transform:none}}
 
@@ -310,6 +372,7 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
   <ul class="nav-links">
     <li><a href="/" class="active" data-i18n="nav.home">Home</a></li>
     <li><a href="/services/" data-i18n="nav.services">Services</a></li>
+    <li><a href="/guides" data-i18n="nav.guides">Guides</a></li>
     <li><a href="/about" data-i18n="nav.about">About</a></li>
     <li><a href="/team/" data-i18n="nav.team">Team</a></li>
     <li><a href="/articles" data-i18n="nav.articles">Articles</a></li>
@@ -330,6 +393,7 @@ footer{background:#0b140e;color:rgba(255,255,255,.72);padding:48px 0 28px;margin
 <div class="mobile-menu" id="mobileMenu">
   <a href="/" data-i18n="nav.home">Home</a>
   <a href="/services/" data-i18n="nav.services">Services</a>
+  <a href="/guides" data-i18n="nav.guides">Guides</a>
   <a href="/about" data-i18n="nav.about">About</a>
   <a href="/team/" data-i18n="nav.team">Team</a>
   <a href="/articles" data-i18n="nav.articles">Articles</a>
@@ -533,9 +597,13 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
 <!-- FEELINGS -->
 <section id="feelings">
   <div class="wrap">
-    <div class="sec-head center">
-      <span class="tag" data-i18n="feel.tag">You're not alone</span>
-      <h2 data-i18n="feel.title">Does this sound like you?</h2>
+    <div class="story fade-up" style="margin-bottom:36px">
+      <div class="story-art"><div class="ill-frame"><img class="ill" src="assets/art/wandering-mind.svg" alt="A person sitting alone with thoughts they can't switch off" width="678" height="504" loading="lazy" decoding="async"></div></div>
+      <div class="story-copy">
+        <span class="tag" data-i18n="feel.tag">You're not alone</span>
+        <h2 data-i18n="feel.title">Does this sound like you?</h2>
+        <p data-i18n="feel.lede">Most people carry it quietly for years before they say anything. You don't have to wait that long.</p>
+      </div>
     </div>
     <div class="feel-grid">
       <div class="feel-card fade-up"><span class="dot"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 1 6 6c0 4-3 5-3 8H9c0-3-3-4-3-8a6 6 0 0 1 6-6Z"/></svg></span><span data-i18n="feel.1">Worries you can't switch off</span></div>
@@ -610,14 +678,39 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
       <h2 data-i18n="svc.title">Care for mind and body</h2>
     </div>
     <div class="grid-3">
-      <a class="card fade-up" href="/services/individual-psychotherapy"><div class="ic"><svg fill="none" stroke-width="1.7" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 1 6 6c0 4-3 5-3 8H9c0-3-3-4-3-8a6 6 0 0 1 6-6Z"/></svg></div><h3 data-i18n="svc.1t">Therapy</h3><p data-i18n="svc.1d">For anxiety, low mood, trauma and stress.</p><span class="more" data-i18n="svc.more">Learn more →</span></a>
-      <a class="card fade-up" href="/services/family-counseling"><div class="ic"><svg fill="none" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="8" cy="9" r="3"/><circle cx="16" cy="10" r="2.5"/><path d="M3 20c.5-4 2.5-6 5-6s4.5 2 5 6M14 20c.4-3 1.6-4.5 3-4.5s2.6 1.5 3 4.5"/></svg></div><h3 data-i18n="svc.2t">Family Counseling</h3><p data-i18n="svc.2d">Sort things out together, couples and parents.</p><span class="more" data-i18n="svc.more">Learn more →</span></a>
-      <a class="card fade-up" href="/services/speech-therapy"><div class="ic"><svg fill="none" stroke-width="1.7" viewBox="0 0 24 24"><path d="M12 4c4.4 0 8 2.6 8 5.8s-3.6 5.8-8 5.8c-.9 0-1.7-.1-2.5-.3L6 17l.8-2.6C5.1 13.3 4 11.7 4 9.8 4 6.6 7.6 4 12 4Z"/></svg></div><h3 data-i18n="svc.3t">Speech Therapy</h3><p data-i18n="svc.3d">Help children find their words.</p><span class="more" data-i18n="svc.more">Learn more →</span></a>
-      <a class="card fade-up" href="/services/physiotherapy"><div class="ic"><svg fill="none" stroke-width="1.7" viewBox="0 0 24 24"><path d="M12 3v18M12 7c2 0 3-1 3-1M12 7c-2 0-3-1-3-1M12 12c2.4 0 3.6-1 3.6-1M12 12c-2.4 0-3.6-1-3.6-1"/></svg></div><h3 data-i18n="svc.4t">Physiotherapy</h3><p data-i18n="svc.4d">Move without pain again.</p><span class="more" data-i18n="svc.more">Learn more →</span></a>
-      <a class="card fade-up" href="/services/behavioral-therapy"><div class="ic"><svg fill="none" stroke-width="1.7" viewBox="0 0 24 24"><path d="M5 8h5V4h4v4h5v6h-4v6h-6v-6H5V8Z"/></svg></div><h3 data-i18n="svc.5t">Behavioral Therapy</h3><p data-i18n="svc.5d">Support for ADHD, autism and habits.</p><span class="more" data-i18n="svc.more">Learn more →</span></a>
-      <a class="card fade-up" href="/services/remedial-home-sessions"><div class="ic"><svg fill="none" stroke-width="1.7" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7M6 10v9h12v-9"/></svg></div><h3 data-i18n="svc.6t">Home Sessions</h3><p data-i18n="svc.6d">We come to you, across Karachi.</p><span class="more" data-i18n="svc.more">Learn more →</span></a>
+      <a class="card card-ill fade-up" href="/services/individual-psychotherapy"><div class="card-art"><img src="assets/art/casual-chat.svg" alt="A therapist and client talking quietly on a bench" width="940" height="800" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.1t">Therapy</h3><p data-i18n="svc.1d">For anxiety, low mood, trauma and stress.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
+      <a class="card card-ill fade-up" href="/services/family-counseling"><div class="card-art"><img src="assets/art/family.svg" alt="Two parents and a child holding hands together" width="453" height="472" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.2t">Family Counseling</h3><p data-i18n="svc.2d">Sort things out together, couples and parents.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
+      <a class="card card-ill fade-up" href="/services/speech-therapy"><div class="card-art"><img src="assets/art/doll-play.svg" alt="A therapist playing on the floor with a young child" width="800" height="437" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.3t">Speech Therapy</h3><p data-i18n="svc.3d">Help children find their words.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
+      <a class="card card-ill fade-up" href="/services/physiotherapy"><div class="card-art"><img src="assets/art/personal-trainer.svg" alt="A physiotherapist guiding a patient through an exercise" width="805" height="651" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.4t">Physiotherapy</h3><p data-i18n="svc.4d">Move without pain again.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
+      <a class="card card-ill fade-up" href="/services/behavioral-therapy"><div class="card-art"><img src="assets/art/children.svg" alt="Three children playing a skipping game together" width="865" height="439" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.5t">Behavioral Therapy</h3><p data-i18n="svc.5d">Support for ADHD, autism and habits.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
+      <a class="card card-ill fade-up" href="/services/remedial-home-sessions"><div class="card-art"><img src="assets/art/knocking-on-the-door.svg" alt="A therapist arriving at a family's front door" width="960" height="878" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.6t">Home Sessions</h3><p data-i18n="svc.6d">We come to you, across Karachi.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
     </div>
     <div class="center" style="margin-top:26px"><a href="/services/" class="btn btn-primary" data-i18n="svc.all">All services</a></div>
+  </div>
+</section>
+
+<!-- FIND HELP BY TOPIC -->
+<section id="topics">
+  <div class="wrap">
+    <div class="story fade-up rev">
+      <div class="story-art"><div class="ill-frame"><img class="ill" src="assets/art/questions.svg" alt="Two people working out which kind of help they need" width="960" height="677" loading="lazy" decoding="async"></div></div>
+      <div class="story-copy">
+        <span class="tag" data-i18n="gd.tag">Help &amp; guides</span>
+        <h2 data-i18n="gd.title">Find help for what you're going through</h2>
+        <p data-i18n="gd.sub">Twenty plain-language guides on what the signs look like and what treatment actually involves, written for Karachi.</p>
+        <div class="topic-chips">
+          <a href="/anxiety-therapy-karachi" data-i18n="gd.1">Anxiety</a>
+          <a href="/depression-treatment-karachi" data-i18n="gd.2">Depression</a>
+          <a href="/stress-management-karachi" data-i18n="gd.3">Stress &amp; burnout</a>
+          <a href="/child-psychologist-karachi" data-i18n="gd.4">Children</a>
+          <a href="/marriage-couples-counseling-karachi" data-i18n="gd.5">Marriage</a>
+          <a href="/teen-adolescent-therapy-karachi" data-i18n="gd.6">Teenagers</a>
+          <a href="/adhd-assessment-therapy-karachi" data-i18n="gd.7">ADHD</a>
+          <a href="/online-therapy-pakistan" data-i18n="gd.8">Online therapy</a>
+        </div>
+        <div style="margin-top:22px"><a href="/guides" class="btn btn-primary" data-i18n="gd.all">Browse all guides</a></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -629,9 +722,9 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
       <h2 data-i18n="step.title">Start in 3 steps</h2>
     </div>
     <div class="steps">
-      <div class="step fade-up"><h3 data-i18n="step.1t">Message us</h3><p data-i18n="step.1d">Tell us what's going on. A line or two is enough.</p></div>
-      <div class="step fade-up"><h3 data-i18n="step.2t">Get matched</h3><p data-i18n="step.2d">We pick the right specialist and a good time.</p></div>
-      <div class="step fade-up"><h3 data-i18n="step.3t">Start sessions</h3><p data-i18n="step.3d">Clinic, home, or online, you choose.</p></div>
+      <div class="step step-ill fade-up"><div class="card-art"><img src="assets/art/begin-chat.svg" alt="A person sending a first message" width="653" height="738" loading="lazy" decoding="async"></div><div class="step-txt"><h3 data-i18n="step.1t">Message us</h3><p data-i18n="step.1d">Tell us what's going on. A line or two is enough.</p></div></div>
+      <div class="step step-ill fade-up"><div class="card-art"><img src="assets/art/good-team.svg" alt="A team choosing the right specialist for you" width="901" height="508" loading="lazy" decoding="async"></div><div class="step-txt"><h3 data-i18n="step.2t">Get matched</h3><p data-i18n="step.2d">We pick the right specialist and a good time.</p></div></div>
+      <div class="step step-ill fade-up"><div class="card-art"><img src="assets/art/video-call.svg" alt="A therapy session in progress over a video call" width="800" height="619" loading="lazy" decoding="async"></div><div class="step-txt"><h3 data-i18n="step.3t">Start sessions</h3><p data-i18n="step.3d">Clinic, home, or online, you choose.</p></div></div>
     </div>
   </div>
 </section>
@@ -639,11 +732,14 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
 <!-- ABOUT -->
 <section>
   <div class="wrap">
-    <div class="about-wrap fade-up">
-      <span class="tag" data-i18n="ab.tag">About</span>
-      <h2 data-i18n="ab.title">Warm, honest care</h2>
-      <p class="lead" style="margin:12px auto 0;max-width:52ch" data-i18n="ab.body">MindCare is a Karachi clinic for mind and body. One caring team for therapy, counseling and rehab, all in one place. Founded and led by Shaista Tariq.</p>
-      <div style="margin-top:22px"><a href="/about" class="btn btn-ghost" data-i18n="ab.more">Read our story</a></div>
+    <div class="story fade-up rev">
+      <div class="story-art"><div class="ill-frame"><img class="ill" src="assets/art/showing-support.svg" alt="Two people holding up a heart between them" width="661" height="514" loading="lazy" decoding="async"></div></div>
+      <div class="story-copy">
+        <span class="tag" data-i18n="ab.tag">About</span>
+        <h2 data-i18n="ab.title">Warm, honest care</h2>
+        <p data-i18n="ab.body">MindCare is a Karachi clinic for mind and body. One caring team for therapy, counseling and rehab, all in one place. Founded and led by Shaista Tariq.</p>
+        <div style="margin-top:22px"><a href="/about" class="btn btn-ghost" data-i18n="ab.more">Read our story</a></div>
+      </div>
     </div>
   </div>
 </section>
@@ -651,9 +747,13 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
 <!-- FAQ -->
 <section id="faq" style="background:var(--surface)">
   <div class="wrap">
-    <div class="sec-head center">
-      <span class="tag" data-i18n="faq.tag">Questions</span>
-      <h2 data-i18n="faq.title">Common questions</h2>
+    <div class="story fade-up" style="margin-bottom:34px">
+      <div class="story-art"><div class="ill-frame"><img class="ill" src="assets/art/checklist.svg" alt="Someone working through a list of things they want to know" width="800" height="541" loading="lazy" decoding="async"></div></div>
+      <div class="story-copy">
+        <span class="tag" data-i18n="faq.tag">Questions</span>
+        <h2 data-i18n="faq.title">Common questions</h2>
+        <p data-i18n="faq.lede">The things people usually want to know before they book. Anything else, just ask.</p>
+      </div>
     </div>
     <div class="faq">
       <div class="faq-item"><button class="faq-q" type="button" data-i18n="faq.1q">Do you offer online sessions?</button><div class="faq-a"><p data-i18n="faq.1a">Yes, online therapy across Pakistan, plus clinic appointments and home visits in Karachi.</p></div></div>
@@ -670,6 +770,7 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
 <section>
   <div class="wrap">
     <div class="cta fade-up">
+      <img class="cta-ill" src="assets/art/blooming.svg" alt="Someone sitting among sunflowers in bloom" width="598" height="582" loading="lazy" decoding="async">
       <h2 data-i18n="cta.title">Today is a good day to start.</h2>
       <p data-i18n="cta.sub">Monday-Saturday, 9am to 7pm.</p>
       <div class="cta-actions">
@@ -691,6 +792,7 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
     <nav aria-label="Footer">
       <a href="/about" data-i18n="nav.about">About</a>
       <a href="/services/" data-i18n="nav.services">Services</a>
+      <a href="/guides" data-i18n="nav.guides">Guides</a>
       <a href="/team/" data-i18n="nav.team">Team</a>
       <a href="/articles" data-i18n="nav.articles">Articles</a>
       <a href="/courses" data-i18n="nav.courses">Courses</a>
@@ -707,12 +809,13 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
 var I18N={
  en:{},
  ur:{
-  "nav.home":"ہوم","nav.services":"خدمات","nav.about":"ہمارے بارے میں","nav.team":"ٹیم","nav.articles":"مضامین","nav.courses":"کورسز","nav.workshops":"ورکشاپس","news.tag":"نیا · تین ماہ کا کورس","news.title":"مونٹیسوری <em>ٹیچر ٹریننگ</em> کورس","news.short":"تین ماہ آن لائن، مِس نرگس عرفان کے ساتھ لائیو سیشنز اور مائنڈ کیئر سروسز کا سرٹیفکیٹ۔","news.m3":"آغاز ۱۵ ستمبر ۲۰۲۶ · آن لائن","news.m5":"۲۵۰۰ روپے · نشستیں محدود","news.apply":"رجسٹر کریں اور فیس جمع کرائیں","news.more":"تفصیلات دیکھیں ←","news.foot":"مائنڈ کیئر کی جانب سے مزید: مختصر ورکشاپس اور اپلائیڈ سائیکالوجی ماسٹر کلاس سیریز۔ <a href=\"/workshops\">تمام ورکشاپس دیکھیں ←</a>","news.request":"ورکشاپ کی درخواست دیں","news.requestnote":"کسی اور موضوع پر ورکشاپ چاہیے، اپنے اسکول، دفتر یا کمیونٹی کے لیے؟ ہمیں موضوع بتائیے، ہم تیار کر دیں گے۔","rw.title":"ورکشاپ کی درخواست","rw.sub":"جو موضوع آپ چاہتے ہیں منتخب کیجیے، یا اپنا لکھیے۔ ہم واٹس ایپ کھول دیں گے، پیغام تیار ہوگا۔","rw.otherlabel":"آپ کا موضوع","rw.cancel":"منسوخ کریں","rw.send":"واٹس ایپ پر بھیجیں","rw.note":"یہ پیغام براہِ راست ‎+92 327 2337631‎ پر جاتا ہے۔ ہماری ٹیم کا ایک اصل فرد جواب دیتا ہے۔","rw.t1":"والدین اور بچوں کا رویہ","rw.t2":"مونٹیسوری اور ابتدائی بچپن","rw.t3":"اسکول اور اساتذہ کی تربیت","rw.t4":"دفتری ذہنی صحت","rw.t5":"دباؤ اور برن آؤٹ","rw.t6":"پریشانی اور اداسی سے آگاہی","rw.t7":"نوجوانوں کی ذہنی صحت","rw.t8":"ازدواجی اور خاندانی زندگی","rw.t9":"صدمے سے آگاہ نگہداشت","rw.t10":"مراقبہ اور ذہنی یکسوئی","rw.tother":"کوئی اور (اپنا لکھیے)","nav.book":"اپائنٹمنٹ","nav.bookfull":"اپائنٹمنٹ بُک کریں",
+  "nav.home":"ہوم","nav.services":"خدمات","nav.guides":"رہنمائی","nav.about":"ہمارے بارے میں","nav.team":"ٹیم","nav.articles":"مضامین","nav.courses":"کورسز","nav.workshops":"ورکشاپس","news.tag":"نیا · تین ماہ کا کورس","news.title":"مونٹیسوری <em>ٹیچر ٹریننگ</em> کورس","news.short":"تین ماہ آن لائن، مِس نرگس عرفان کے ساتھ لائیو سیشنز اور مائنڈ کیئر سروسز کا سرٹیفکیٹ۔","news.m3":"آغاز ۱۵ ستمبر ۲۰۲۶ · آن لائن","news.m5":"۲۵۰۰ روپے · نشستیں محدود","news.apply":"رجسٹر کریں اور فیس جمع کرائیں","news.more":"تفصیلات دیکھیں ←","news.foot":"مائنڈ کیئر کی جانب سے مزید: مختصر ورکشاپس اور اپلائیڈ سائیکالوجی ماسٹر کلاس سیریز۔ <a href=\"/workshops\">تمام ورکشاپس دیکھیں ←</a>","news.request":"ورکشاپ کی درخواست دیں","news.requestnote":"کسی اور موضوع پر ورکشاپ چاہیے، اپنے اسکول، دفتر یا کمیونٹی کے لیے؟ ہمیں موضوع بتائیے، ہم تیار کر دیں گے۔","rw.title":"ورکشاپ کی درخواست","rw.sub":"جو موضوع آپ چاہتے ہیں منتخب کیجیے، یا اپنا لکھیے۔ ہم واٹس ایپ کھول دیں گے، پیغام تیار ہوگا۔","rw.otherlabel":"آپ کا موضوع","rw.cancel":"منسوخ کریں","rw.send":"واٹس ایپ پر بھیجیں","rw.note":"یہ پیغام براہِ راست ‎+92 327 2337631‎ پر جاتا ہے۔ ہماری ٹیم کا ایک اصل فرد جواب دیتا ہے۔","rw.t1":"والدین اور بچوں کا رویہ","rw.t2":"مونٹیسوری اور ابتدائی بچپن","rw.t3":"اسکول اور اساتذہ کی تربیت","rw.t4":"دفتری ذہنی صحت","rw.t5":"دباؤ اور برن آؤٹ","rw.t6":"پریشانی اور اداسی سے آگاہی","rw.t7":"نوجوانوں کی ذہنی صحت","rw.t8":"ازدواجی اور خاندانی زندگی","rw.t9":"صدمے سے آگاہ نگہداشت","rw.t10":"مراقبہ اور ذہنی یکسوئی","rw.tother":"کوئی اور (اپنا لکھیے)","nav.book":"اپائنٹمنٹ","nav.bookfull":"اپائنٹمنٹ بُک کریں",
   "hero.badge":"کراچی · کلینک · گھر · آن لائن",
   "hero.h1":"خاموشی سے <em>پریشان</em> ہیں؟<br>آئیے بات کرتے ہیں۔",
   "hero.lede":"ایسے لوگ جو واقعی آپ کی بات سنتے ہیں۔ کراچی میں پریشانی، ذہنی دباؤ اور بہت کچھ کے لیے تھراپی۔",
   "hero.book":"اپائنٹمنٹ بُک کریں","hero.meet":"ہماری ٹیم سے ملیں","hero.hint":"گھمانے کے لیے کھینچیں",
   "feel.tag":"آپ اکیلے نہیں ہیں","feel.title":"کیا آپ کے ساتھ بھی ایسا ہے؟",
+  "feel.lede":"زیادہ تر لوگ برسوں یہ بوجھ خاموشی سے اٹھاتے رہتے ہیں۔ آپ کو اتنا انتظار کرنے کی ضرورت نہیں۔",
   "feel.1":"پریشانیاں ذہن سے نہیں جاتیں","feel.2":"ہر وقت اداسی یا تھکن","feel.3":"گھر یا کام کا دباؤ",
   "feel.4":"آپ کے بچے کو مدد کی ضرورت ہے","feel.5":"نیند یا توجہ کے مسائل","feel.6":"مشکل وقت جو گزر نہیں رہا",
   "feel.foot":"یہ جو بھی ہو، ہم مدد کر سکتے ہیں۔",
@@ -727,6 +830,10 @@ var I18N={
   "svc.4t":"فزیو تھراپی","svc.4d":"درد کے بغیر دوبارہ چلیں پھریں۔",
   "svc.5t":"رویّہ جاتی تھراپی","svc.5d":"اے ڈی ایچ ڈی، آٹزم اور عادات کے لیے مدد۔",
   "svc.6t":"گھر پر سیشن","svc.6d":"ہم آپ کے پاس آتے ہیں، پورے کراچی میں۔",
+  "gd.tag":"رہنمائی و مضامین","gd.title":"جس مسئلے سے گزر رہے ہیں، اس کے لیے مدد تلاش کریں",
+  "gd.sub":"بیس آسان زبان میں لکھی گئی رہنمائیاں: علامات کیا ہوتی ہیں اور علاج میں دراصل کیا ہوتا ہے، کراچی کے لیے۔",
+  "gd.1":"پریشانی","gd.2":"اداسی","gd.3":"دباؤ اور برن آؤٹ","gd.4":"بچے","gd.5":"ازدواجی زندگی",
+  "gd.6":"نوجوان","gd.7":"اے ڈی ایچ ڈی","gd.8":"آن لائن تھراپی","gd.all":"تمام رہنمائیاں دیکھیں",
   "step.tag":"شروعات","step.title":"تین آسان مرحلوں میں شروع کریں",
   "step.1t":"ہمیں پیغام بھیجیں","step.1d":"بتائیں کیا ہو رہا ہے، ایک دو جملے کافی ہیں۔",
   "step.2t":"صحیح ماہر سے رابطہ","step.2d":"ہم صحیح ماہر اور مناسب وقت منتخب کرتے ہیں۔",
@@ -735,6 +842,7 @@ var I18N={
   "ab.body":"مائنڈ کیئر کراچی میں دماغی و جسمانی صحت کا کلینک ہے۔ ایک مخلص ٹیم: تھراپی، کاؤنسلنگ اور بحالی، سب ایک جگہ۔ بانی و سربراہ شائستہ طارق۔",
   "ab.more":"ہماری کہانی پڑھیں",
   "faq.tag":"سوالات","faq.title":"عام سوالات",
+  "faq.lede":"بُک کرنے سے پہلے لوگ عموماً یہی جاننا چاہتے ہیں۔ اس کے علاوہ کچھ بھی پوچھ لیجیے۔",
   "faq.1q":"کیا آپ آن لائن سیشن دیتے ہیں؟","faq.1a":"جی ہاں، پورے پاکستان میں آن لائن، اور کراچی میں کلینک و گھر پر۔",
   "faq.2q":"کیا یہ نجی رہے گا؟","faq.2a":"ہمیشہ۔ آپ کی بات ہمارے درمیان رہتی ہے۔",
   "faq.3q":"شروع کیسے کروں؟","faq.3a":"ہمارے رابطہ صفحے پر فارم بھریں، ‎+92 327 2337631‎ پر کال کریں، یا واٹس ایپ پر پیغام بھیجیں۔ ہم عموماً چند گھنٹوں میں جواب دیتے ہیں۔","faq.4q":"آپ کہاں واقع ہیں؟","faq.4a":"مائنڈ کیئر سروسز® کراچی، پاکستان میں ہے۔ ہم کلینک میں، کراچی بھر میں گھر پر، اور پاکستان بھر میں آن لائن سیشن فراہم کرتے ہیں۔","faq.5q":"آپ کے اوقاتِ کار کیا ہیں؟","faq.5a":"پیر تا ہفتہ، صبح ۹ سے شام ۷ بجے تک۔","faq.6q":"مائنڈ کیئر سروسز کن مسائل کا علاج کرتی ہے؟","faq.6a":"پریشانی، اداسی، دباؤ اور برن آؤٹ، او سی ڈی، پینک اٹیک، صدمہ، غم، غصہ، اے ڈی ایچ ڈی، تعلقات اور خاندانی مسائل، نیز بچوں اور بالغوں کے لیے اسپیچ، فزیو، آکوپیشنل اور رویّہ جاتی تھراپی۔",
