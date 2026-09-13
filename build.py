@@ -29,6 +29,55 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">')
 
 
+# One clinic node, emitted on every generated page under a stable @id so the
+# per-page schema above and this one describe the same business to Google.
+# Hours, phone and email have to match the contact page exactly (NAP consistency
+# is what local ranking is built on), so change them in both places or neither.
+CLINIC_LD = json.dumps({
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    "@id": f"{BASE}/#clinic",
+    "name": "MindCare Services®",
+    "alternateName": "MindCare Services Karachi",
+    "description": ("A multidisciplinary psychotherapy and rehabilitation clinic in Karachi "
+                    "offering individual therapy, family and couples counseling, speech therapy, "
+                    "physiotherapy, occupational therapy, behavioral therapy and diagnostic "
+                    "assessments, in clinic, at home or online across Pakistan."),
+    "url": f"{BASE}/",
+    "logo": f"{BASE}/mindcare.png",
+    "image": f"{BASE}/mindcare.png",
+    "telephone": PHONE,
+    "email": "shaistatariq2002@gmail.com",
+    "priceRange": "$$",
+    "currenciesAccepted": "PKR",
+    "medicalSpecialty": "Psychiatric",
+    "slogan": "Keeping Your Peace ®",
+    "availableLanguage": [{"@type": "Language", "name": "English"},
+                          {"@type": "Language", "name": "Urdu"}],
+    "address": {"@type": "PostalAddress", "addressLocality": "Karachi",
+                "addressRegion": "Sindh", "addressCountry": "PK"},
+    "areaServed": [{"@type": "City", "name": "Karachi"},
+                   {"@type": "Country", "name": "Pakistan"}],
+    "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "09:00", "closes": "19:00"}],
+    "contactPoint": [{"@type": "ContactPoint", "contactType": "Appointments",
+                      "telephone": PHONE, "email": "shaistatariq2002@gmail.com",
+                      "availableLanguage": ["English", "Urdu"], "areaServed": "PK"}],
+    "founder": {"@type": "Person", "name": "Shaista Tariq",
+                "jobTitle": "Founder & Associate Psychologist"},
+    "sameAs": ["https://www.instagram.com/mindcare.services/",
+               "https://www.linkedin.com/company/mindcare-services/"],
+    "potentialAction": {
+        "@type": "ReserveAction", "name": "Book Appointment",
+        "target": {"@type": "EntryPoint", "urlTemplate": f"{BASE}/contact",
+                   "actionPlatform": ["https://schema.org/DesktopWebPlatform",
+                                      "https://schema.org/MobileWebPlatform"]},
+        "result": {"@type": "Reservation", "name": "Therapy appointment"}},
+}, ensure_ascii=False, indent=2)
+
+
 def head(title, desc, canonical, prefix, schema, og_type="website"):
     return f"""<!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -63,6 +112,9 @@ def head(title, desc, canonical, prefix, schema, og_type="website"):
 <link rel="stylesheet" href="{prefix}assets/styles.css">
 <script type="application/ld+json">
 {json.dumps(schema, indent=2)}
+</script>
+<script type="application/ld+json">
+{CLINIC_LD}
 </script>
 </head>
 <body>
@@ -128,21 +180,22 @@ def nav(prefix, active=None):
   <a href="/articles">Articles</a>
   <a href="/courses">Courses</a>
   <a href="/workshops">Workshops</a>
-  <a href="/contact" class="m-cta">Book a Consultation</a>
+  <a href="/contact" class="m-cta">Book Appointment</a>
 </div>
 <div class="wa-float">
+  <a href="tel:+92-327-2337631" class="call-float-btn" aria-label="Call MindCare Services on +92 327 2337631"><svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
   <div class="wa-tooltip">Chat on WhatsApp</div>
-  <a href="{WA}?text=Hi%2C%20I%27d%20like%20to%20book%20a%20consultation%20with%20MindCare%20Services." target="_blank" rel="noopener" class="wa-float-btn" aria-label="Chat with MindCare on WhatsApp">{icon(prefix,'i-wa')}</a>
+  <a href="{WA}?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20with%20MindCare%20Services." target="_blank" rel="noopener" class="wa-float-btn" aria-label="Chat with MindCare on WhatsApp">{icon(prefix,'i-wa')}</a>
 </div>
 """
 
 
 def cta_band(prefix, heading, sub):
-    return f"""<section class="cta-band" aria-label="Book a consultation">
+    return f"""<section class="cta-band" aria-label="Book an appointment">
   <div class="cta-band-inner fade-up">
     <div><h2>{heading}</h2><p>{sub}</p></div>
     <div class="cta-band-btns">
-      <a href="/contact" class="btn-white">Book Free Consultation</a>
+      <a href="/contact" class="btn-white">Book Appointment</a>
       <a href="{WA}" target="_blank" rel="noopener" class="btn-white wa">{icon(prefix,'i-wa','18')} WhatsApp Us</a>
     </div>
   </div>
@@ -185,7 +238,7 @@ def footer(prefix):
       <li><a href="tel:{PHONE}">{PHONE_H}</a></li>
       <li><a href="https://www.instagram.com/mindcare.services/" target="_blank" rel="noopener">@mindcare.services</a></li>
       <li><a href="mailto:shaistatariq2002@gmail.com">shaistatariq2002@gmail.com</a></li>
-      <li><a href="/contact">Book Consultation</a></li>
+      <li><a href="/contact">Book Appointment</a></li>
       <li><span>Karachi, Pakistan</span></li>
     </ul></div>
   </div>
@@ -223,8 +276,8 @@ def faq_block(prefix, faqs):
 # ─────────────────────────── SERVICE DATA ───────────────────────────
 SERVICES = [
     dict(slug="individual-psychotherapy", icon="i-brain", name="Individual Psychotherapy",
-         title="Individual Psychotherapy in Karachi | CBT for Anxiety & Depression | MindCare Services®",
-         desc="One-on-one psychotherapy in Karachi for anxiety, depression, stress and trauma. Evidence-based CBT and talk therapy for adults and adolescents. Book a free consultation.",
+         title="Psychotherapy in Karachi | MindCare Services®",
+         desc="One-on-one psychotherapy in Karachi for anxiety, depression, stress and trauma. Evidence-based CBT and talk therapy for adults and adolescents. Book an appointment.",
          lede="Confidential, one-on-one talk therapy for adults and adolescents, using proven methods like CBT to work through anxiety, depression, stress and trauma at a pace that feels right for you.",
          helps=["Anxiety, panic and constant worry", "Depression, low mood and loss of motivation",
                 "Stress, burnout and overwhelm", "Trauma and difficult past experiences",
@@ -239,8 +292,8 @@ SERVICES = [
                ("How long does psychotherapy take?","It varies from person to person. Some concerns ease in a handful of sessions; others benefit from longer support. Your therapist will discuss a realistic plan with you and review it as you progress."),
                ("Is what I share really confidential?","Yes. Your sessions are 100% confidential and never disclosed to anyone. Confidentiality is central to how MindCare works.")]),
     dict(slug="family-counseling", icon="i-family", name="Family & Relationship Counseling",
-         title="Family & Relationship Counseling in Karachi | MindCare Services®",
-         desc="Family and couples counseling in Karachi to rebuild communication, resolve conflict and navigate change together. Guided, confidential sessions. Book a free consultation.",
+         title="Family Counseling in Karachi | MindCare Services®",
+         desc="Family and couples counseling in Karachi to rebuild communication, resolve conflict and navigate change together. Guided, confidential sessions. Book an appointment.",
          lede="Guided sessions that help families and couples rebuild communication, resolve recurring conflict, and navigate big life transitions together, with a neutral, caring professional in the room.",
          helps=["Communication breakdowns and repeated arguments", "Parent-child and teenager conflict",
                 "Marital and relationship strain", "Adjusting to major life changes together",
@@ -255,8 +308,8 @@ SERVICES = [
                ("Can you help with couples as well as families?","Yes. We support couples and married partners as well as parents, children and extended-family relationships."),
                ("What if my family has never done counseling before?","That's completely normal and most families haven't. Your first session is a gentle introduction, with nothing to prepare and no pressure.")]),
     dict(slug="speech-therapy", icon="i-speech", name="Speech Therapy",
-         title="Speech Therapy in Karachi for Children & Adults | MindCare Services®",
-         desc="Expert speech therapy in Karachi for language delays, articulation, stammering and communication disorders in children and adults. Book a free assessment today.",
+         title="Speech Therapy in Karachi | MindCare Services®",
+         desc="Expert speech therapy in Karachi for language delays, articulation, stammering and communication disorders in children and adults. Book an assessment today.",
          lede="Expert support for communication, from children's language delays and articulation to adult fluency and speech recovery, with warm, structured therapy that builds real confidence.",
          helps=["Speech and language delays in children", "Articulation and pronunciation difficulties",
                 "Stammering and fluency challenges", "Autism-related communication support",
@@ -271,7 +324,7 @@ SERVICES = [
                ("Do you offer speech therapy for adults?","Yes. We support adults with fluency, articulation and speech recovery needs, including after illness or injury."),
                ("How is progress tracked?","Your therapist sets clear, measurable goals and reviews them regularly, so you can see improvement over time.")]),
     dict(slug="physiotherapy", icon="i-physio", name="Physiotherapy",
-         title="Physiotherapy in Karachi | Pain Relief & Rehabilitation | MindCare Services®",
+         title="Physiotherapy in Karachi | MindCare Services®",
          desc="Physiotherapy in Karachi for pain relief, rehabilitation and improved mobility. Musculoskeletal and neuro-physiotherapy by experienced physiotherapists. Book today.",
          lede="Rehabilitation, pain management and mobility improvement, assessed and treated by experienced physiotherapists who help you move, recover and feel like yourself again.",
          helps=["Back, neck and joint pain", "Post-injury and post-surgery rehabilitation",
@@ -287,8 +340,8 @@ SERVICES = [
                ("What conditions do you treat?","Musculoskeletal pain, sports and post-surgical injuries, neurological conditions, posture issues and chronic pain, among others."),
                ("How many sessions will I need?","It depends on your condition and goals. After your assessment, your physiotherapist will give you a realistic estimate and review it as you improve.")]),
     dict(slug="occupational-therapy", icon="i-hand", name="Occupational Therapy",
-         title="Occupational Therapy in Karachi for All Ages | MindCare Services®",
-         desc="Occupational therapy in Karachi helping children and adults regain independence in daily activities and life skills. Personalized OT programs. Book a free consultation.",
+         title="Occupational Therapy in Karachi | MindCare Services®",
+         desc="Occupational therapy in Karachi helping children and adults regain independence in daily activities and life skills. Personalized OT programs. Book an appointment.",
          lede="Helping individuals of all ages regain independence in the daily activities that matter most, from a child's fine-motor skills to an adult's return to everyday routines.",
          helps=["Children's fine-motor and sensory development", "Daily-living skills and independence",
                 "Support for autism, ADHD and developmental needs", "Rehabilitation after injury or illness",
@@ -303,8 +356,8 @@ SERVICES = [
                ("How is OT different from physiotherapy?","Physiotherapy focuses on movement and physical function; occupational therapy focuses on the practical skills and activities of daily living. They often work well together."),
                ("Do you support children with autism or ADHD?","Yes. We provide structured, individualized OT support for children with autism, ADHD and related developmental needs.")]),
     dict(slug="behavioral-therapy", icon="i-cycle", name="Behavioral Therapy",
-         title="Behavioral Therapy in Karachi | ASD & ADHD Support | MindCare Services®",
-         desc="Structured behavioral therapy in Karachi for ASD support, ADHD and social-skills development using proven frameworks. Individualized programs. Book a free consultation.",
+         title="Behavioral Therapy in Karachi | MindCare Services®",
+         desc="Structured behavioral therapy in Karachi for ASD support, ADHD and social-skills development using proven frameworks. Individualized programs. Book an appointment.",
          lede="Structured, evidence-based interventions for autism spectrum support, ADHD and social-skills development, building positive behaviors and skills through proven frameworks.",
          helps=["Autism spectrum (ASD) support", "ADHD and attention-related challenges",
                 "Social-skills and communication development", "Managing challenging behaviors",
@@ -319,7 +372,7 @@ SERVICES = [
                ("Do you coordinate with schools or families?","Yes. Consistency matters, so we work closely with families and, where helpful, caregivers and educators."),
                ("Is behavioral therapy evidence-based?","Yes. We use structured, well-researched frameworks and adapt them to each individual.")]),
     dict(slug="remedial-home-sessions", icon="i-home", name="Remedial Home Sessions",
-         title="Remedial Home Therapy Sessions in Karachi (Special Needs) | MindCare Services®",
+         title="Home Therapy Sessions in Karachi | MindCare Services®",
          desc="Specialized home-based remedial therapy in Karachi for individuals with special needs. Professional, one-on-one care delivered to your doorstep. Book a consultation.",
          lede="Specialized, one-on-one therapy for individuals with special needs, delivered in the comfort and familiarity of your own home, by professionals who bring the clinic to you.",
          helps=["Special-needs support in a familiar setting", "Individuals who find clinic visits difficult",
@@ -335,7 +388,7 @@ SERVICES = [
                ("Who are home sessions best suited for?","Individuals with special needs who benefit from a familiar environment or find travelling to a clinic difficult."),
                ("Are home sessions as effective as clinic sessions?","For many individuals they're more effective, because skills are practiced directly within daily routines and the home environment.")]),
     dict(slug="diagnostic-assessments", icon="i-clipboard", name="Diagnostic Assessments",
-         title="Psychological & Diagnostic Assessments in Karachi | MindCare Services®",
+         title="Diagnostic Assessments in Karachi | MindCare Services®",
          desc="Professional psychological and cognitive diagnostic assessments in Karachi to guide accurate diagnosis and personalized treatment planning. Book an assessment today.",
          lede="Cognitive and psychological evaluations that bring clarity, guiding accurate diagnosis and a personalized, effective treatment plan built around real understanding.",
          helps=["Clarity when symptoms are confusing or overlapping", "Cognitive and psychological evaluation",
@@ -351,7 +404,7 @@ SERVICES = [
                ("Will I understand the results?","Yes. We explain everything in plain language and give you practical, personalized next steps, with no jargon and no confusion."),
                ("Is an assessment confidential?","Absolutely. Your assessment and results are kept strictly confidential.")]),
     dict(slug="dental-consultations", icon="i-tooth", name="Dental Consultations",
-         title="Dental Consultations in Karachi | Oral Health Advice | MindCare Services®",
+         title="Dental Consultations in Karachi | MindCare Services®",
          desc="Professional dental consultations in Karachi, with expert advice on oral health, treatment planning and preventive care from a qualified dental consultant. Book today.",
          lede="Expert advice on oral health, treatment planning and preventive care, from a qualified dental consultant, as part of MindCare's whole-person approach to wellbeing.",
          helps=["Oral health check-ups and advice", "Preventive and restorative care guidance",
@@ -367,7 +420,7 @@ SERVICES = [
                ("Do you focus on preventive care?","Yes. Our emphasis is on preventive advice and long-term oral health, alongside treatment planning where needed."),
                ("Can I get a second opinion here?","Yes. If you'd like clarity on an existing treatment plan, our consultant can provide a professional second opinion.")]),
     dict(slug="awareness-sessions", icon="i-grad", name="Awareness Sessions & Trainings",
-         title="Mental Health Awareness Sessions & Corporate Trainings in Karachi | MindCare Services®",
+         title="Mental Health Awareness Sessions | MindCare Karachi",
          desc="Certified mental health awareness sessions and trainings in Karachi for workplaces, schools and institutions. Reduce stigma and build resilience. Enquire today.",
          lede="Certified mental health workshops for workplaces, schools and institutions, designed to reduce stigma, build resilience and equip your community with practical wellbeing tools.",
          helps=["Corporate wellness and employee wellbeing", "School and university awareness programs",
@@ -427,7 +480,7 @@ def service_page(s):
     <h1>{s['name']}</h1>
     <p class="lede">{s['lede']}</p>
     <div class="ph-actions">
-      <a href="/contact" class="btn-primary">Book Free Consultation</a>
+      <a href="/contact" class="btn-primary">Book Appointment</a>
       <a href="{WA}" target="_blank" rel="noopener" class="btn-secondary">Ask on WhatsApp</a>
     </div>
   </div>
@@ -454,7 +507,7 @@ def service_page(s):
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
         </ul>
         <div class="aside-actions">
-          <a href="/contact" class="btn-primary" style="justify-content:center">Book a Consultation</a>
+          <a href="/contact" class="btn-primary" style="justify-content:center">Book Appointment</a>
           <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
         </div>
       </aside>
@@ -482,7 +535,7 @@ def service_page(s):
   </div>
 </section>
 
-{cta_band(prefix, "Not sure if this is right for you?", "That's okay. A free, confidential consultation will help you decide. No pressure.")}
+{cta_band(prefix, "Not sure if this is right for you?", "That's okay. A confidential appointment will help you decide. No pressure.")}
 </main>
 """
     out += footer(prefix)
@@ -505,8 +558,8 @@ def services_index():
     cards = "\n".join(
         f'''      <a class="link-card fade-up" href="/services/{s['slug']}"><div class="fi">{icon(prefix,s['icon'])}</div><h3>{s['name']}</h3><p>{s['lede'][:120]}…</p><span class="more">Learn more →</span></a>'''
         for s in SERVICES)
-    out = head("Our Services | Psychotherapy, Counseling & Therapy in Karachi | MindCare Services®",
-               "Explore all MindCare Services® offerings in Karachi: psychotherapy, family counseling, speech therapy, physiotherapy, occupational and behavioral therapy, assessments and more.",
+    out = head("Therapy Services in Karachi | MindCare Services®",
+               "Therapy services in Karachi: psychotherapy, family counseling, speech therapy, physiotherapy, occupational and behavioral therapy. Book an appointment.",
                url, prefix, schema)
     out += nav(prefix, "services")
     out += f"""<main id="main">
@@ -516,7 +569,7 @@ def services_index():
     <div class="ph-badge">{icon(prefix,'i-puzzle')} 10 services · One caring team</div>
     <h1>Comprehensive care for <em>mind &amp; body</em></h1>
     <p class="lede">A holistic range of therapy and clinical services, all under one roof in Karachi, delivered by experienced professionals. Choose a service to learn more.</p>
-    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Free Consultation</a></div>
+    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a></div>
   </div>
 </header>
 <section>
@@ -526,7 +579,7 @@ def services_index():
     </div>
   </div>
 </section>
-{cta_band(prefix, "Not sure which service fits?", "Tell us what's going on and we'll guide you to the right support, free and confidential.")}
+{cta_band(prefix, "Not sure which service fits?", "Tell us what's going on and we'll guide you to the right support, privately and without judgment.")}
 </main>
 """
     out += footer(prefix)
@@ -545,8 +598,8 @@ AV = {
 
 TEAM = [
     dict(slug="shaista-tariq", av="shaista", name="Shaista Tariq", role="Founder & Associate Psychologist",
-         title="Shaista Tariq, Founder & Associate Psychologist (PPA Member) | MindCare Services®",
-         desc="Shaista Tariq is the founder of MindCare Services® in Karachi. She is an Associate Psychologist, Counsellor, Behavior Therapist and Mental Health Care Provider, and a personal Member of the Pakistan Psychological Association (PPA).",
+         title="Shaista Tariq, Psychologist in Karachi | MindCare Services®",
+         desc="Shaista Tariq, founder of MindCare Services® in Karachi: Associate Psychologist, Counsellor and Behavior Therapist, and a PPA Member. Book an appointment.",
          tags=["Founder", "PPA Member", "Associate Psychologist", "Behavior Therapist"],
          job="Psychologist",
          headline="Associate Psychologist | Counsellor | Mental Health Care Provider | Behavior Therapist",
@@ -590,7 +643,7 @@ TEAM = [
          knows=["Physiotherapy", "Rehabilitation", "Pain Management"], member=None,
          service="physiotherapy"),
     dict(slug="rimsha-pari", av="rimsha", name="Rimsha Pari", role="Consultant Physiotherapist",
-         title="Rimsha Pari, Consultant Physiotherapist | MindCare Services® Karachi",
+         title="Rimsha Pari, Physiotherapist | MindCare Services® Karachi",
          desc="Rimsha Pari is a consultant physiotherapist at MindCare Services® in Karachi, specialising in musculoskeletal and neurological physiotherapy.",
          tags=["Consultant Physiotherapist", "Musculoskeletal", "Neuro-PT"], job="Consultant Physiotherapist",
          bio=["Rimsha Pari is a consultant physiotherapist with expertise in musculoskeletal and neurological physiotherapy (neuro-PT). She assesses the root cause of movement and pain problems and builds targeted recovery plans.",
@@ -608,7 +661,7 @@ TEAM = [
          knows=["Dentistry", "Preventive Care", "Oral Health"], member=None,
          service="dental-consultations"),
     dict(slug="shafeeq-langhar", av="shafeeq", name="Shafeeq Langhar", role="Psychologist",
-         title="Shafeeq Langhar, Clinical Psychologist | MindCare Services® Karachi",
+         title="Shafeeq Langhar, Clinical Psychologist | MindCare Karachi",
          desc="Shafeeq Langhar is a clinical psychologist at MindCare Services® in Karachi, providing individual and group therapy grounded in clinical psychology.",
          tags=["Psychologist", "Clinical Psychology", "Individual & Group Therapy"], job="Psychologist",
          bio=["Shafeeq Langhar is a clinical psychologist providing individual and group therapy. He supports clients through a range of psychological concerns with an evidence-based, compassionate approach.",
@@ -702,21 +755,21 @@ def team_page(m):
       </div>
       <aside class="aside-card fade-up">
         <h3>Book with {m['name'].split()[0]}</h3>
-        <p>Reach out for a free, confidential consultation. We'll help you find the right time and the right support.</p>
+        <p>Reach out for a confidential appointment. We'll help you find the right time and the right support.</p>
         <ul class="aside-list">
           <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm</li>
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
           <li>{icon(prefix,'i-lock')} 100% confidential</li>
         </ul>
         <div class="aside-actions">
-          <a href="/contact" class="btn-primary" style="justify-content:center">Book a Consultation</a>
+          <a href="/contact" class="btn-primary" style="justify-content:center">Book Appointment</a>
           <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
         </div>
       </aside>
     </div>
   </div>
 </section>
-{cta_band(prefix, "Ready to take the first step?", "A free, confidential consultation is the easiest way to begin. No pressure, no judgment.")}
+{cta_band(prefix, "Ready to take the first step?", "A confidential appointment is the easiest way to begin. No pressure, no judgment.")}
 </main>
 """
     out += footer(prefix)
@@ -740,8 +793,8 @@ def team_index():
         <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px">{AV[m['av']]}</div>
         <h3>{m['name']}</h3><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">{m['role']}</p>
         <span class="more">View profile →</span></a>''' for m in TEAM)
-    out = head("Our Team | Psychotherapists & Specialists in Karachi | MindCare Services®",
-               "Meet the MindCare Services® team in Karachi: psychotherapists, physiotherapists, a psychologist, dental consultant and coordinators led by founder Shaista Tariq (PPA Member).",
+    out = head("Our Team | Psychologists in Karachi | MindCare Services®",
+               "Meet the MindCare Services® team in Karachi: psychologists, psychotherapists and physiotherapists led by founder Shaista Tariq, PPA Member.",
                url, prefix, schema)
     out += nav(prefix, "team")
     out += f"""<main id="main">
@@ -751,7 +804,7 @@ def team_index():
     <div class="ph-badge">{icon(prefix,'i-family')} A multidisciplinary team</div>
     <h1>Meet the people behind <em>your care</em></h1>
     <p class="lede">A dedicated group of specialists united by one mission: compassionate, professional, impactful care. Get to know each of them.</p>
-    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Free Consultation</a></div>
+    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a></div>
   </div>
 </header>
 <section>
@@ -761,7 +814,7 @@ def team_index():
     </div>
   </div>
 </section>
-{cta_band(prefix, "Want to work with one of our specialists?", "Book a free, confidential consultation and we'll match you with the right person.")}
+{cta_band(prefix, "Want to work with one of our specialists?", "Book a confidential appointment and we'll match you with the right person.")}
 </main>
 """
     out += footer(prefix)
@@ -772,8 +825,8 @@ def team_index():
 # service = related service slug. sib links auto-generated.
 TOPICS = [
  dict(slug="anxiety-therapy-karachi", h1="Anxiety Therapy in Karachi", service="individual-psychotherapy",
-   title="Anxiety Therapy in Karachi | Treatment for Anxiety & Panic | MindCare Services®",
-   desc="Struggling with anxiety in Karachi? MindCare Services® offers evidence-based anxiety therapy and CBT for worry, panic and overthinking. Book a free consultation.",
+   title="Anxiety Therapy in Karachi | MindCare Services®",
+   desc="Struggling with anxiety in Karachi? MindCare Services® offers evidence-based anxiety therapy and CBT for worry, panic and overthinking. Book an appointment.",
    lede="If worry, racing thoughts or panic are running your life, you're not alone, and it's highly treatable. Our therapists in Karachi help you calm the noise with proven, evidence-based methods.",
    signs=["Constant worry you can't switch off","Racing thoughts, restlessness or feeling on edge","Panic attacks or a pounding heart","Trouble sleeping or concentrating","Avoiding people, places or situations"],
    help=["Anxiety responds very well to therapy, especially Cognitive Behavioral Therapy (CBT), which helps you understand and gradually retrain the thought patterns that keep anxiety going.","At MindCare, your first session is a calm, confidential conversation. Together we build a practical plan to help you feel in control again, at a pace that suits you."],
@@ -781,17 +834,17 @@ TOPICS = [
          ("How soon will I feel better?","Many people notice relief within a few sessions as they learn tools to manage symptoms, though lasting change builds over time."),
          ("Is it confidential?","Completely. Everything you share stays private.")]),
  dict(slug="depression-treatment-karachi", h1="Depression Treatment in Karachi", service="individual-psychotherapy",
-   title="Depression Treatment & Counseling in Karachi | MindCare Services®",
-   desc="Compassionate depression treatment and counseling in Karachi. Evidence-based therapy for low mood, hopelessness and loss of motivation. Book a free consultation today.",
+   title="Depression Treatment in Karachi | MindCare Services®",
+   desc="Compassionate depression treatment and counseling in Karachi. Evidence-based therapy for low mood, hopelessness and loss of motivation. Book an appointment today.",
    lede="When everything feels heavy and joy feels far away, that's not weakness or laziness. It can be depression, and help genuinely works. We're here in Karachi when you're ready.",
    signs=["Persistent low mood or sadness","Loss of interest in things you used to enjoy","Low energy, motivation or focus","Changes in sleep or appetite","Feeling hopeless, worthless or numb"],
-   help=["Depression is one of the most treatable mental health conditions. Our therapists use evidence-based approaches to help you gently rebuild energy, motivation and hope.","There's nothing you need to 'prove' to deserve support. A free, confidential consultation is a safe first step toward feeling like yourself again."],
+   help=["Depression is one of the most treatable mental health conditions. Our therapists use evidence-based approaches to help you gently rebuild energy, motivation and hope.","There's nothing you need to 'prove' to deserve support. A confidential appointment is a safe first step toward feeling like yourself again."],
    faqs=[("How do I know if it's depression or just a bad phase?","If low mood has lasted more than a couple of weeks and affects daily life, it's worth talking to someone. A consultation can bring clarity, and no diagnosis is needed to start."),
          ("Do you treat severe depression?","Yes, and where needed we coordinate appropriate care. Please reach out, or in an emergency, contact local emergency services."),
          ("Is therapy really effective for depression?","Yes. Evidence-based talk therapy is a proven, effective treatment for depression.")]),
  dict(slug="stress-management-karachi", h1="Stress & Burnout Therapy in Karachi", service="individual-psychotherapy",
-   title="Stress Management & Burnout Therapy in Karachi | MindCare Services®",
-   desc="Overwhelmed by stress or burnout in Karachi? Learn practical, evidence-based tools to manage stress and recover balance with MindCare Services®. Book a free consultation.",
+   title="Stress Management in Karachi | MindCare Services®",
+   desc="Overwhelmed by stress or burnout in Karachi? Learn practical, evidence-based tools to manage stress and recover balance with MindCare Services®. Book an appointment.",
    lede="Chronic stress and burnout don't just 'go away', but the right tools change everything. We help you understand your stress and build a calmer, more sustainable balance.",
    signs=["Feeling constantly overwhelmed or on edge","Exhaustion that rest doesn't fix","Irritability, tension or trouble switching off","Headaches, poor sleep or low focus","Losing motivation at work or home"],
    help=["We help you identify what's driving your stress and teach practical, proven techniques to regulate it, from thought strategies to healthier boundaries and routines.","Whether it's work, study, family or everything at once, you'll leave with real tools, not just talk."],
@@ -799,7 +852,7 @@ TOPICS = [
          ("Do you offer corporate stress programs?","Yes. See our awareness sessions and trainings for teams and organizations."),
          ("How many sessions will I need?","It varies. Many people gain useful tools quickly; your therapist will suggest a realistic plan.")]),
  dict(slug="trauma-therapy-karachi", h1="Trauma Therapy in Karachi", service="individual-psychotherapy",
-   title="Trauma Therapy & PTSD Support in Karachi | MindCare Services®",
+   title="Trauma Therapy & PTSD in Karachi | MindCare Services®",
    desc="Gentle, evidence-based trauma therapy in Karachi for difficult past experiences and PTSD symptoms. Safe, confidential support at MindCare Services®. Book today.",
    lede="Difficult experiences can leave a lasting mark, but healing is possible. Our trauma-informed therapists offer a safe, steady space to process the past at your own pace.",
    signs=["Flashbacks, nightmares or intrusive memories","Feeling on guard, jumpy or unsafe","Avoiding reminders of what happened","Emotional numbness or feeling disconnected","Difficulty trusting or feeling calm"],
@@ -809,16 +862,16 @@ TOPICS = [
          ("Is it confidential?","Absolutely. Your story is yours, and stays private.")]),
  dict(slug="ocd-therapy-karachi", h1="OCD Therapy in Karachi", service="individual-psychotherapy",
    title="OCD Therapy & Treatment in Karachi | MindCare Services®",
-   desc="Evidence-based OCD therapy in Karachi for intrusive thoughts and compulsions. Confidential, professional support at MindCare Services®. Book a free consultation.",
+   desc="Evidence-based OCD therapy in Karachi for intrusive thoughts and compulsions. Confidential, professional support at MindCare Services®. Book an appointment.",
    lede="Obsessive thoughts and compulsions can be exhausting and isolating, but they respond well to the right therapy. We help you break the cycle in Karachi.",
    signs=["Unwanted, intrusive or distressing thoughts","Repetitive checking, washing or counting","Rituals that feel impossible to resist","Significant time lost to obsessions","Anxiety when routines are interrupted"],
    help=["OCD is treatable with structured, evidence-based therapy that helps you respond differently to intrusive thoughts and reduce compulsions over time.","We create a supportive, non-judgmental plan tailored to you, with small steps that add up to real relief."],
    faqs=[("Is OCD curable?","OCD is very manageable with the right therapy. Many people reduce symptoms dramatically and regain control of their time and peace of mind."),
          ("Do you treat 'pure O' (intrusive thoughts without visible rituals)?","Yes. Intrusive thoughts alone are a recognized form of OCD and are treatable."),
-         ("Where do I start?","With a free, confidential consultation, and no pressure.")]),
+         ("Where do I start?","With a confidential appointment, and no pressure.")]),
  dict(slug="panic-attack-help-karachi", h1="Panic Attack Help in Karachi", service="individual-psychotherapy",
-   title="Panic Attack Help & Treatment in Karachi | MindCare Services®",
-   desc="Frightening panic attacks? MindCare Services® in Karachi offers effective therapy to understand and reduce panic attacks. Confidential support. Book a free consultation.",
+   title="Panic Attack Treatment in Karachi | MindCare Services®",
+   desc="Frightening panic attacks? MindCare Services® in Karachi offers effective therapy to understand and reduce panic attacks. Confidential support. Book an appointment.",
    lede="Panic attacks can feel terrifying and come out of nowhere, but they're not dangerous, and therapy can dramatically reduce them. Help is here in Karachi.",
    signs=["Sudden racing heart or chest tightness","Shortness of breath or dizziness","A wave of intense fear or dread","Fear of losing control or 'going crazy'","Avoiding places where panic struck before"],
    help=["We help you understand what happens in your body during a panic attack, which itself reduces fear, then teach proven techniques to calm and prevent them.","Over time, most people gain real confidence that they can handle and reduce panic."],
@@ -826,8 +879,8 @@ TOPICS = [
          ("Can therapy stop panic attacks?","Yes. Evidence-based therapy is highly effective at reducing and often stopping panic attacks."),
          ("How quickly can I get help?","Reach out today via WhatsApp or the booking form, and we typically respond within a few hours.")]),
  dict(slug="marriage-couples-counseling-karachi", h1="Marriage & Couples Counseling in Karachi", service="family-counseling",
-   title="Marriage & Couples Counseling in Karachi | MindCare Services®",
-   desc="Rebuild communication and connection with marriage and couples counseling in Karachi. Neutral, confidential guidance at MindCare Services®. Book a free consultation.",
+   title="Marriage Counseling in Karachi | MindCare Services®",
+   desc="Rebuild communication and connection with marriage and couples counseling in Karachi. Neutral, confidential guidance at MindCare Services®. Book an appointment.",
    lede="Every relationship hits hard patches. Couples counseling gives you a neutral, caring space to be heard, understand each other, and rebuild connection.",
    signs=["The same arguments on repeat","Feeling unheard or distant","Trust or communication breakdowns","Struggling through a major life change","Wanting to reconnect but not knowing how"],
    help=["Our counselors help both partners feel heard, then gently surface the patterns behind the conflict so you can change them together.","Sessions are fair, warm and practical, and you'll learn real communication skills you can use at home."],
@@ -835,35 +888,35 @@ TOPICS = [
          ("Do you take sides?","Never. Our role is neutral: to help both of you feel understood."),
          ("Is it confidential?","Yes, completely.")]),
  dict(slug="teen-adolescent-therapy-karachi", h1="Teen & Adolescent Therapy in Karachi", service="individual-psychotherapy",
-   title="Teenage & Adolescent Therapy in Karachi | MindCare Services®",
+   title="Teen & Adolescent Therapy in Karachi | MindCare Services®",
    desc="Supportive therapy for teenagers in Karachi for anxiety, low mood, exam stress, self-esteem and more. Confidential, teen-friendly care at MindCare Services®.",
    lede="The teenage years can be overwhelming. We offer teen-friendly, confidential therapy in Karachi that helps young people feel understood and supported.",
    signs=["Anxiety, low mood or mood swings","Exam or academic pressure","Withdrawal from family or friends","Low self-esteem or identity struggles","Anger, irritability or acting out"],
    help=["We meet teens where they are, with no lectures and no judgment. Therapy helps them build confidence, coping skills and emotional resilience.","We also guide parents on how to support their teenager, while respecting the young person's privacy."],
    faqs=[("Will you tell my parents what I say?","We explain confidentiality clearly to every teen. Your trust matters, and we handle it with care."),
          ("What ages do you work with?","We support adolescents and young people; contact us with your child's age and we'll advise."),
-         ("How do we start?","Book a free consultation and we'll take it from there, gently.")]),
+         ("How do we start?","Book an appointment and we'll take it from there, gently.")]),
  dict(slug="child-psychologist-karachi", h1="Child Psychologist in Karachi", service="behavioral-therapy",
-   title="Child Psychologist in Karachi | Support for Children | MindCare Services®",
+   title="Child Psychologist in Karachi | MindCare Services®",
    desc="Looking for a child psychologist in Karachi? MindCare Services® supports children with behavior, emotions, development and learning. Caring, expert help. Book today.",
    lede="Every child deserves to be understood. Our specialists in Karachi support children's emotional, behavioral and developmental needs with warmth and expertise.",
    signs=["Big or frequent behavior challenges","Difficulty focusing or sitting still","Struggles with friendships or emotions","Developmental or learning concerns","Anxiety, fears or low mood in your child"],
    help=["We assess what's really going on, then build a caring, structured plan, often through play and positive, evidence-based methods children respond to.","Families are part of the process, so progress continues at home and school."],
    faqs=[("At what age can my child see a specialist?","Support is available from early childhood upward. If you've noticed a concern at any age, an assessment can help."),
          ("Do you support autism and ADHD?","Yes. See our behavioral therapy and occupational therapy services for structured, individualized support."),
-         ("How do we begin?","Start with a free consultation. We'll listen and guide you.")]),
+         ("How do we begin?","Start with an appointment. We'll listen and guide you.")]),
  dict(slug="adhd-assessment-therapy-karachi", h1="ADHD Support & Therapy in Karachi", service="behavioral-therapy",
-   title="ADHD Support, Assessment & Therapy in Karachi | MindCare Services®",
-   desc="ADHD support in Karachi for children and adults: assessment, behavioral therapy and practical strategies at MindCare Services®. Book a free consultation.",
+   title="ADHD Assessment & Therapy in Karachi | MindCare Services®",
+   desc="ADHD support in Karachi for children and adults: assessment, behavioral therapy and practical strategies at MindCare Services®. Book an appointment.",
    lede="ADHD isn't a lack of effort. It's how a brain is wired. We offer assessment and practical, evidence-based support in Karachi for children and adults.",
    signs=["Difficulty focusing or finishing tasks","Restlessness or impulsivity","Disorganization and forgetfulness","Struggles at school or work","Emotional overwhelm or frustration"],
    help=["We provide diagnostic assessment for clarity, then structured behavioral strategies and skills that help manage attention, organization and impulsivity.","Support is tailored to each person, with guidance for families, schools or workplaces where helpful."],
    faqs=[("Do you assess adults as well as children?","Yes. ADHD affects adults too, and assessment plus practical strategies can be life-changing."),
          ("Is behavioral therapy effective for ADHD?","Yes. Structured, evidence-based behavioral approaches are a core part of managing ADHD."),
-         ("Where do we start?","With an assessment or a free consultation, whichever suits you.")]),
+         ("Where do we start?","With an assessment or an appointment, whichever suits you.")]),
  dict(slug="grief-loss-counseling-karachi", h1="Grief & Loss Counseling in Karachi", service="individual-psychotherapy",
-   title="Grief & Bereavement Counseling in Karachi | MindCare Services®",
-   desc="Compassionate grief and bereavement counseling in Karachi. A safe space to process loss at your own pace with MindCare Services®. Book a free consultation.",
+   title="Grief Counseling in Karachi | MindCare Services®",
+   desc="Compassionate grief and bereavement counseling in Karachi. A safe space to process loss at your own pace with MindCare Services®. Book an appointment.",
    lede="Grief has no timetable and no 'right' way to feel. We offer a gentle, understanding space in Karachi to carry loss and slowly find your footing again.",
    signs=["Overwhelming sadness or waves of grief","Feeling numb, lost or disconnected","Trouble sleeping, eating or functioning","Guilt, anger or difficult emotions","Struggling to move forward"],
    help=["There's no pressure to 'get over' anything. We simply walk beside you, helping you process loss in a way that honors what, or who, you've lost.","Support is patient, warm and entirely led by you."],
@@ -872,16 +925,16 @@ TOPICS = [
          ("Is it confidential?","Yes, always.")]),
  dict(slug="anger-management-karachi", h1="Anger Management in Karachi", service="individual-psychotherapy",
    title="Anger Management Therapy in Karachi | MindCare Services®",
-   desc="Anger management therapy in Karachi to understand triggers and respond calmly. Practical, confidential support at MindCare Services®. Book a free consultation.",
+   desc="Anger management therapy in Karachi to understand triggers and respond calmly. Practical, confidential support at MindCare Services®. Book an appointment.",
    lede="Anger is a normal emotion, but when it runs the show, it damages relationships and wellbeing. We help you understand and manage it in Karachi.",
    signs=["Frequent or intense outbursts","Regret after losing your temper","Tension in relationships or at work","Feeling like anger controls you","Physical signs like a racing heart or clenching"],
    help=["We help you spot your triggers and early warning signs, then build practical tools to respond calmly instead of reacting.","This isn't about suppressing anger. It's about being in control of it."],
    faqs=[("Can anger really be managed?","Yes. With the right tools most people gain real control over how they respond."),
          ("Is this just for extreme cases?","No. Anyone who feels their anger is harming their life or relationships can benefit."),
-         ("How do I start?","Book a free, confidential consultation.")]),
+         ("How do I start?","Book a confidential appointment.")]),
  dict(slug="online-therapy-pakistan", h1="Online Therapy & Counseling in Pakistan", service="individual-psychotherapy",
    title="Online Therapy & Counseling in Pakistan | MindCare Services®",
-   desc="Access professional therapy from anywhere in Pakistan. MindCare Services® offers confidential online counseling and psychotherapy. Book a free consultation.",
+   desc="Access professional therapy from anywhere in Pakistan. MindCare Services® offers confidential online counseling and psychotherapy. Book an appointment.",
    lede="Can't visit in person? Support shouldn't depend on your postcode. We make professional, confidential therapy accessible across Pakistan.",
    signs=["You live outside Karachi","A busy schedule makes visits hard","You prefer the comfort of home","You want to start sooner rather than later","Privacy and convenience matter to you"],
    help=["Reach out to arrange a consultation and we'll discuss the options that work best for your situation and location.","Wherever you are, the same evidence-based, judgment-free care applies."],
@@ -889,8 +942,8 @@ TOPICS = [
          ("Is online therapy effective?","For many concerns, yes. Remote therapy can be just as effective as in-person."),
          ("How do I book?","Message us on WhatsApp or use the booking form.")]),
  dict(slug="self-esteem-confidence-therapy-karachi", h1="Self-Esteem & Confidence Therapy in Karachi", service="individual-psychotherapy",
-   title="Self-Esteem & Confidence Therapy in Karachi | MindCare Services®",
-   desc="Build self-esteem and confidence with therapy in Karachi. Overcome self-doubt and harsh self-criticism at MindCare Services®. Book a free consultation.",
+   title="Self-Esteem Therapy in Karachi | MindCare Services®",
+   desc="Build self-esteem and confidence with therapy in Karachi. Overcome self-doubt and harsh self-criticism at MindCare Services®. Book an appointment.",
    lede="The way you talk to yourself shapes everything. Therapy helps you quiet the harsh inner critic and build genuine, lasting confidence.",
    signs=["Constant self-criticism or self-doubt","Feeling 'not good enough'","Fear of judgment or failure","Difficulty setting boundaries","Comparing yourself to others"],
    help=["We help you understand where low self-esteem comes from and gently build a kinder, stronger relationship with yourself.","Confidence isn't something you're born with. It's something you can build, and we'll show you how."],
@@ -898,26 +951,26 @@ TOPICS = [
          ("How long does it take?","It varies, but many people feel a shift within a few sessions."),
          ("Is it confidential?","Completely.")]),
  dict(slug="best-psychologist-karachi", h1="Looking for a Psychologist in Karachi?", service="individual-psychotherapy",
-   title="Psychologist in Karachi | Trusted Mental Health Care | MindCare Services®",
+   title="Best Psychologist in Karachi | MindCare Services®",
    desc="Searching for a trusted psychologist in Karachi? MindCare Services®, founded by PPA member Shaista Tariq, offers evidence-based, confidential care. Book today.",
    lede="Choosing the right support matters. MindCare Services® is a multidisciplinary mental health clinic in Karachi, founded by Shaista Tariq, a Member of the Pakistan Psychological Association (PPA).",
-   signs=["You want evidence-based, professional care","You value confidentiality and warmth","You'd like a team, not just one option","You want a free first consultation","You're ready to feel better"],
+   signs=["You want evidence-based, professional care","You value confidentiality and warmth","You'd like a team, not just one option","You want a straightforward first appointment","You're ready to feel better"],
    help=["Our team includes psychotherapists and a clinical psychologist, offering individual, family and specialized therapy, all under one roof.","Founded on the belief that no one should struggle alone, we make quality mental health care approachable and judgment-free."],
    faqs=[("What's the difference between a psychologist and psychotherapist?","Both provide talk therapy. Our clinic offers both, and we'll match you with the right professional for your needs."),
          ("Is the founder qualified?","Shaista Tariq is a Psychotherapist and personal Member of the Pakistan Psychological Association (PPA)."),
-         ("How do I book?","Use the booking form or WhatsApp. The first consultation is free.")]),
+         ("How do I book?","Use the booking form or WhatsApp to request an appointment.")]),
  dict(slug="mental-health-clinic-karachi", h1="Mental Health Clinic in Karachi", service="individual-psychotherapy",
-   title="Mental Health Clinic in Karachi | Therapy & Counseling | MindCare Services®",
-   desc="MindCare Services® is a trusted mental health clinic in Karachi offering psychotherapy, counseling, and multidisciplinary therapy under one roof. Book a free consultation.",
+   title="Mental Health Clinic in Karachi | MindCare Services®",
+   desc="MindCare Services® is a trusted mental health clinic in Karachi offering psychotherapy, counseling, and multidisciplinary therapy under one roof. Book an appointment.",
    lede="A calm, professional place to get the support you need. MindCare Services® brings psychotherapy, counseling and multidisciplinary therapy together under one roof in Karachi.",
-   signs=["You want everything in one trusted place","Individual, family or specialized therapy","A confidential, judgment-free environment","Evidence-based, professional care","A free first consultation"],
-   help=["From psychotherapy and family counseling to speech, physio, occupational and behavioral therapy, our multidisciplinary team coordinates holistic care.","Whatever you're facing, there's a professional here who can help, and a first step that's free and confidential."],
+   signs=["You want everything in one trusted place","Individual, family or specialized therapy","A confidential, judgment-free environment","Evidence-based, professional care","A straightforward first appointment"],
+   help=["From psychotherapy and family counseling to speech, physio, occupational and behavioral therapy, our multidisciplinary team coordinates holistic care.","Whatever you're facing, there's a professional here who can help, and a first step that's simple and confidential."],
    faqs=[("What services do you offer?","Psychotherapy, family counseling, speech and physiotherapy, occupational and behavioral therapy, assessments, dental consultations and more."),
          ("Do I need a referral?","No referral is needed. You can book directly."),
          ("Where are you located?","We're based in Karachi. Contact us for details and to book.")]),
  dict(slug="cbt-therapy-karachi", h1="CBT (Cognitive Behavioral Therapy) in Karachi", service="individual-psychotherapy",
-   title="CBT: Cognitive Behavioral Therapy in Karachi | MindCare Services®",
-   desc="Evidence-based CBT (Cognitive Behavioral Therapy) in Karachi for anxiety, depression, OCD and more at MindCare Services®. Practical, proven. Book a free consultation.",
+   title="CBT Therapy in Karachi | MindCare Services®",
+   desc="Evidence-based CBT (Cognitive Behavioral Therapy) in Karachi for anxiety, depression, OCD and more at MindCare Services®. Practical, proven. Book an appointment.",
    lede="CBT is one of the most researched, effective therapies in the world. It helps you change the thought and behavior patterns that keep you stuck. It is practical, structured and proven.",
    signs=["Anxiety, worry or panic","Depression or low mood","OCD or intrusive thoughts","Stress and overwhelm","Unhelpful thinking patterns"],
    help=["CBT is practical and goal-focused. You'll learn to notice unhelpful thoughts, test them, and replace them with more balanced, useful ones, with real tools between sessions.","Our therapists tailor CBT to you, so it fits your life and your goals."],
@@ -925,7 +978,7 @@ TOPICS = [
          ("How long does CBT take?","It's often shorter-term and structured; your therapist will outline a realistic plan."),
          ("Is CBT evidence-based?","Yes. It's one of the most well-researched, proven talk therapies available.")]),
  dict(slug="workplace-mental-health-karachi", h1="Workplace & Corporate Mental Health in Karachi", service="awareness-sessions",
-   title="Corporate & Workplace Mental Health Programs in Karachi | MindCare Services®",
+   title="Workplace Mental Health in Karachi | MindCare Services®",
    desc="Boost employee wellbeing with corporate mental health awareness sessions and trainings in Karachi from MindCare Services®. Reduce stigma, build resilience. Enquire now.",
    lede="Healthy teams start with mental wellbeing. We deliver certified workplace mental health workshops in Karachi that reduce stigma and build resilience.",
    signs=["Rising stress or burnout in your team","High absenteeism or low morale","You want a supportive workplace culture","Leadership wants practical wellbeing tools","You're planning a wellness initiative"],
@@ -934,16 +987,16 @@ TOPICS = [
          ("Who leads the sessions?","Experienced professionals including our founder, Shaista Tariq (PPA Member)."),
          ("How do we arrange one?","Contact us with a little about your organization and we'll design a program with you.")]),
  dict(slug="speech-therapy-for-children-karachi", h1="Speech Therapy for Children in Karachi", service="speech-therapy",
-   title="Speech Therapy for Children in Karachi | Language Delay Help | MindCare Services®",
+   title="Speech Therapy for Children in Karachi | MindCare Services®",
    desc="Children's speech therapy in Karachi for language delays, articulation and stammering. Warm, structured, play-based support at MindCare Services®. Book an assessment.",
    lede="If your child is struggling to communicate, early support makes a huge difference. Our speech therapists in Karachi help children find their voice through playful, structured therapy.",
    signs=["Speech or language delay","Difficulty pronouncing sounds","Stammering or fluency issues","Trouble being understood","Autism-related communication needs"],
    help=["We start with a careful assessment, then build a fun, personalized plan of goal-driven exercises, often through play, that children respond to.","Parents get simple coaching to reinforce progress at home, so gains carry into everyday life."],
    faqs=[("What age should my child start?","Earlier is better, but it's never too late. An assessment will tell you if therapy would help."),
          ("How is progress measured?","Your therapist sets clear goals and reviews them regularly so you can see improvement."),
-         ("How do we begin?","Book a speech therapy assessment or a free consultation.")]),
+         ("How do we begin?","Book a speech therapy assessment or an appointment.")]),
  dict(slug="physiotherapy-back-pain-karachi", h1="Physiotherapy for Back & Joint Pain in Karachi", service="physiotherapy",
-   title="Physiotherapy for Back & Joint Pain in Karachi | MindCare Services®",
+   title="Physiotherapy for Back Pain in Karachi | MindCare Services®",
    desc="Relieve back, neck and joint pain with physiotherapy in Karachi. Hands-on treatment and tailored exercise from experienced physiotherapists. Book an assessment today.",
    lede="Persistent back, neck or joint pain shouldn't run your life. Our physiotherapists in Karachi find the real cause and build a plan to get you moving freely again.",
    signs=["Back, neck or joint pain","Stiffness or reduced mobility","Pain after injury or surgery","Poor posture or recurring strain","Chronic or nagging discomfort"],
@@ -989,7 +1042,7 @@ def seo_page(t):
     <h1>{t['h1']}</h1>
     <p class="lede">{t['lede']}</p>
     <div class="ph-actions">
-      <a href="/contact" class="btn-primary">Book Free Consultation</a>
+      <a href="/contact" class="btn-primary">Book Appointment</a>
       <a href="{WA}" target="_blank" rel="noopener" class="btn-secondary">Ask on WhatsApp</a>
     </div>
   </div>
@@ -1008,7 +1061,7 @@ def seo_page(t):
       </div>
       <aside class="aside-card fade-up">
         <h3>Take the first step</h3>
-        <p>A free, confidential consultation is the easiest way to begin. No pressure, no judgment.</p>
+        <p>A confidential appointment is the easiest way to begin. No pressure, no judgment.</p>
         <ul class="aside-list">
           <li>{icon(prefix,'i-shield')} Evidence-based care</li>
           <li>{icon(prefix,'i-lock')} 100% confidential</li>
@@ -1016,7 +1069,7 @@ def seo_page(t):
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
         </ul>
         <div class="aside-actions">
-          <a href="/contact" class="btn-primary" style="justify-content:center">Book a Consultation</a>
+          <a href="/contact" class="btn-primary" style="justify-content:center">Book Appointment</a>
           <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
         </div>
       </aside>
@@ -1033,7 +1086,7 @@ def seo_page(t):
     <div style="text-align:center;margin-top:32px" class="fade-up"><a href="/guides" class="btn-secondary">See all help topics →</a></div>
   </div>
 </section>
-{cta_band(prefix, "You don't have to figure this out alone.", "Reach out today. A free, confidential consultation is the first step.")}
+{cta_band(prefix, "You don't have to figure this out alone.", "Reach out today. A confidential appointment is the first step.")}
 </main>
 """
     out += footer(prefix)
@@ -1055,7 +1108,7 @@ def guides_index():
     cards = "\n".join(
         f'''      <a class="link-card fade-up" href="/{t['slug']}"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>{t['h1']}</h3><p>{t['lede'][:110]}…</p><span class="more">Read more →</span></a>'''
         for t in TOPICS)
-    out = head("Mental Health Help & Guides in Karachi | Anxiety, Depression & More | MindCare Services®",
+    out = head("Mental Health Guides in Karachi | MindCare Services®",
                "Find help for anxiety, depression, stress, trauma, relationships, children's needs and more in Karachi. Practical guides and support from MindCare Services®.",
                url, prefix, schema)
     out += nav(prefix)
@@ -1066,7 +1119,7 @@ def guides_index():
     <div class="ph-badge">{icon(prefix,'i-heart-hands')} Whatever you're facing</div>
     <h1>Find the <em>right support</em> for what you're going through</h1>
     <p class="lede">Not sure where to start? Pick what resonates below. Each guide explains the signs and how we can help, right here in Karachi.</p>
-    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Free Consultation</a></div>
+    <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a></div>
   </div>
 </header>
 <section>
@@ -1076,7 +1129,7 @@ def guides_index():
     </div>
   </div>
 </section>
-{cta_band(prefix, "Still not sure what you need?", "That's completely okay. Tell us what's going on and we'll guide you, free and confidential.")}
+{cta_band(prefix, "Still not sure what you need?", "That's completely okay. Tell us what's going on and we'll guide you, privately and without judgment.")}
 </main>
 """
     out += footer(prefix)
@@ -1131,6 +1184,7 @@ MOTIFS = {
 ARTICLES = [
     dict(slug="the-soul-cannot-be-coded",
          title="The Soul Cannot Be Coded",
+         seo_desc="Shaista Tariq on the Chinese Room, instinct and the subconscious: a philosophical case for why human consciousness cannot be replicated by machines.",
          kicker="Man vs. Machine: the Chinese Room and why processing is not consciousness",
          category="Philosophy of Mind",
          motif="soul", a1="#0f9aa8", a2="#5c58c9",
@@ -1189,6 +1243,8 @@ ARTICLES = [
          ]),
     dict(slug="cost-of-professionalism-vs-reality-of-pay",
          title="The Cost of Professionalism vs. The Reality of Pay",
+         seo_title="Professionalism vs. the Reality of Pay",
+         seo_desc="Shaista Tariq on why underpaid professionalism burns people out, and what fair pay, recognition and realistic expectations change at work.",
          kicker="What psychology graduates are offered, and what the law says they are owed",
          category="Work & Ethics",
          motif="pay", a1="#d9743a", a2="#a03418",
@@ -1222,6 +1278,7 @@ ARTICLES = [
          ]),
     dict(slug="consistency-vs-correction",
          title="Consistency vs. Correction",
+         seo_desc="Shaista Tariq on consistency versus course correction: when to hold your direction at work, and when changing it is the braver, healthier choice.",
          kicker="Why showing up every day only works when you also check the direction",
          category="Growth & Practice",
          motif="consistency", a1="#2D6A1F", a2="#0f9aa8",
@@ -1244,6 +1301,8 @@ ARTICLES = [
          ]),
     dict(slug="why-people-leave-jobs-and-productivity-drops",
          title="Why People Leave Jobs, Productivity Drops &amp; Businesses Struggle",
+         seo_title="Why People Leave Their Jobs",
+         seo_desc="Shaista Tariq on why good employees resign: rigid routines, ignored work styles, mental fatigue and managers who misread how productivity actually works.",
          kicker="Low productivity is rarely laziness. It is biology, rhythm and rigid hiring",
          category="Workplace Psychology",
          motif="work", a1="#4a63cf", a2="#0b5f6d",
@@ -1358,8 +1417,10 @@ def article_page(a, idx):
     others = [x for x in ARTICLES if x["slug"] != a["slug"]][:3]
     more = "\n".join(art_card(x) for x in others)
 
-    out = head(f"{plain_title} | Shaista Tariq | MindCare Services®", a["desc"], url, prefix,
-               schema, og_type="article")
+    # Search engines render roughly 60 characters of a title, so long headlines
+    # get a short `seo_title` and everything drops the author from the suffix.
+    out = head(f"{a.get('seo_title', plain_title)} | MindCare Services®",
+               a.get("seo_desc", a["desc"]), url, prefix, schema, og_type="article")
     out += nav(prefix, "articles")
     out += f"""<main id="main">
 <header class="page-hero art-hero" style="--a1:{a['a1']};--a2:{a['a2']}">
@@ -1411,9 +1472,9 @@ def article_page(a, idx):
           <button type="button" class="art-share-btn" data-copy="{url}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy link</span></button>
         </div>
         <h3>Talk to someone</h3>
-        <p>If anything here resonated, a free and confidential consultation is a good place to start.</p>
+        <p>If anything here resonated, a confidential appointment is a good place to start.</p>
         <div class="aside-actions">
-          <a href="/contact" class="btn-primary" style="justify-content:center">Book a Consultation</a>
+          <a href="/contact" class="btn-primary" style="justify-content:center">Book Appointment</a>
           <a href="{WA}" target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} WhatsApp Us</a>
         </div>
       </aside>
@@ -1432,7 +1493,7 @@ def article_page(a, idx):
   </div>
 </section>
 
-{cta_band(prefix, "Have something on your mind?", "Whether it's for you or someone you care about, we're here. Reach out for a free, confidential consultation.")}
+{cta_band(prefix, "Have something on your mind?", "Whether it's for you or someone you care about, we're here. Reach out for a confidential appointment.")}
 </main>
 """
     out += footer(prefix)
@@ -1476,8 +1537,8 @@ def articles_index():
             for i, a in enumerate(ARTICLES)]}]}
     cards = "\n".join(art_card(a) for a in rest)
     topics = "".join(f'<span class="art-pill">{a["category"]}</span>' for a in ARTICLES)
-    out = head("Articles by Shaista Tariq | Mental Health, Care & Workplaces | MindCare Services®",
-               "Articles and reflections by Shaista Tariq, founder of MindCare Services® in Karachi, on mental health, the human side of care, workplaces and behaviour. Read them in full here.",
+    out = head("Mental Health Articles | MindCare Services® Karachi",
+               "Articles by Shaista Tariq, founder of MindCare Services® in Karachi, on mental health, the human side of care, workplaces and behaviour.",
                url, prefix, schema)
     out += nav(prefix, "articles")
     out += f"""<main id="main">
@@ -1513,7 +1574,7 @@ def articles_index():
     <p class="art-foot-note fade-up">Each article is also published on LinkedIn, and links to the original posts sit at the end of every piece.</p>
   </div>
 </section>
-{cta_band(prefix, "Have something on your mind?", "Whether it's for you or someone you care about, we're here. Reach out for a free, confidential consultation.")}
+{cta_band(prefix, "Have something on your mind?", "Whether it's for you or someone you care about, we're here. Reach out for a confidential appointment.")}
 </main>
 """
     out += footer(prefix)

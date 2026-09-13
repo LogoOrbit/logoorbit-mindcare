@@ -53,7 +53,7 @@
     { t: "Depression Treatment", d: "Evidence-based support for low mood and depression.", h: "/depression-treatment-karachi" },
     { t: "Child Psychologist", d: "Assessment and therapy for children and teens.", h: "/child-psychologist-karachi" },
     { t: "Workshops", d: "Live online sessions and masterclasses.", h: "/workshops" },
-    { t: "Book a Free Consultation", d: "Talk to us about what you need, no cost.", h: "/contact" }
+    { t: "Book Appointment", d: "Book a time that suits you, in clinic or online.", h: "/contact" }
   ];
 
   function browseHtml(heading) {

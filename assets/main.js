@@ -55,8 +55,8 @@
   var UR = {
     // --- nav / common ---
     "Home":"ہوم","Services":"خدمات","Team":"ٹیم","About":"ہمارے بارے میں","Contact":"رابطہ",
-    "Book Consultation":"اپائنٹمنٹ","Book a Consultation":"مشورہ بُک کریں","Book Free Consultation":"مفت مشورہ بُک کریں",
-    "Book a Free Consultation":"مفت مشورہ بُک کریں","Book Appointment":"اپائنٹمنٹ","Book Free Consultation »":"مفت مشورہ بُک کریں",
+    "Book Appointment":"اپائنٹمنٹ بُک کریں","Book Appointment »":"اپائنٹمنٹ بُک کریں",
+    "Book Appointment →":"اپائنٹمنٹ بُک کریں","Appointment request":"اپائنٹمنٹ کی درخواست",
     "FAQ":"سوالات","All Services":"تمام خدمات","About Us":"ہمارے بارے میں","Our Team":"ہماری ٹیم",
     "Company":"ادارہ","Help & Guides":"مدد و رہنمائی","Meet the Team":"ہماری ٹیم سے ملیں",
     "Read her profile":"پروفائل دیکھیں","View profile →":"پروفائل دیکھیں ←","Learn more →":"مزید جانیں ←",
@@ -91,12 +91,12 @@
     "Expert advice on oral health, treatment planning and preventive care, from a qualified dental consultant, as part of Min…":"دانتوں کی صحت، علاج کی منصوبہ بندی اور احتیاطی نگہداشت پر ماہرانہ مشورہ، ایک ماہر ڈینٹل کنسلٹنٹ کی جانب سے…",
     "Certified mental health workshops for workplaces, schools and institutions, designed to reduce stigma, build resilience …":"دفاتر، اسکولوں اور اداروں کے لیے مستند ذہنی صحت ورکشاپس، بدنامی کم کرنے اور حوصلہ بڑھانے کے لیے…",
     "Not sure which service fits?":"یقین نہیں کون سی خدمت مناسب ہے؟",
-    "Tell us what's going on and we'll guide you to the right support, free and confidential.":"ہمیں بتائیں کیا مسئلہ ہے، ہم آپ کو صحیح مدد کی طرف رہنمائی کریں گے، مفت اور خفیہ۔",
+    "Tell us what's going on and we'll guide you to the right support, privately and without judgment.":"ہمیں بتائیں کیا مسئلہ ہے، ہم آپ کو صحیح مدد کی طرف رہنمائی کریں گے، مکمل رازداری کے ساتھ۔",
     // --- team index ---
     "Meet the people behind":"ملیں اُن ماہرین سے جو ہیں","your care":"آپ کی دیکھ بھال کے پیچھے",
     "A dedicated group of specialists united by one mission: compassionate, professional, impactful care. Get to know each of them.":"ماہرین کا ایک پُرعزم گروہ، ایک مشن پر متحد: ہمدرد، پیشہ ورانہ اور مؤثر دیکھ بھال۔ ہر ایک کو جانیں۔",
     "Want to work with one of our specialists?":"ہمارے کسی ماہر کے ساتھ کام کرنا چاہتے ہیں؟",
-    "Book a free, confidential consultation and we'll match you with the right person.":"ایک مفت، خفیہ مشورہ بُک کریں اور ہم آپ کو صحیح ماہر سے ملا دیں گے۔",
+    "Book a confidential appointment and we'll match you with the right person.":"ایک خفیہ اپائنٹمنٹ بُک کریں اور ہم آپ کو صحیح ماہر سے ملا دیں گے۔",
     // roles
     "Founder & Associate Psychologist":"بانی و ایسوسی ایٹ سائیکالوجسٹ","Team Coordinator":"ٹیم کوآرڈینیٹر",
     "Psychologist":"ماہرِ نفسیات","Physiotherapist":"فزیو تھراپسٹ","Consultant Physiotherapist":"کنسلٹنٹ فزیو تھراپسٹ",
@@ -123,9 +123,9 @@
     "Services for mind & body":"دماغ و جسم کی خدمات","Specialists on the team":"ٹیم کے ماہرین",
     "6 days":"6 دن","Open Monday-Saturday":"پیر تا ہفتہ کھلا","Confidential care":"خفیہ دیکھ بھال",
     "Ready when you are.":"جب آپ تیار ہوں۔",
-    "A free, confidential consultation is the easiest way to begin. No pressure, no judgment.":"ایک مفت، خفیہ مشورہ شروعات کا آسان ترین طریقہ ہے۔ کوئی دباؤ نہیں، کوئی تنقید نہیں۔",
+    "A confidential appointment is the easiest way to begin. No pressure, no judgment.":"ایک خفیہ اپائنٹمنٹ شروعات کا آسان ترین طریقہ ہے۔ کوئی دباؤ نہیں، کوئی تنقید نہیں۔",
     // --- contact ---
-    "Book a Consultation":"مشورہ بُک کریں",
+    "Book an Appointment":"اپائنٹمنٹ بُک کریں",
     "Take the first step. We'll listen, guide, and support you, with no pressure, no judgment and 100% confidentiality.":"پہلا قدم اٹھائیں۔ ہم سنیں گے، رہنمائی کریں گے اور آپ کا ساتھ دیں گے، کوئی دباؤ نہیں، کوئی تنقید نہیں، 100% خفیہ۔",
     "Get in Touch":"رابطہ کریں","Send a Message":"پیغام بھیجیں",
     "Choose any way that feels comfortable: fill the form, call us, WhatsApp, or email directly. We typically respond within a few hours.":"جو طریقہ آسان لگے اپنائیں، فارم بھریں، کال کریں، واٹس ایپ کریں یا براہِ راست ای میل کریں۔ ہم عموماً چند گھنٹوں میں جواب دیتے ہیں۔",

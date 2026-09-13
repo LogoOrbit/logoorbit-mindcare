@@ -185,6 +185,12 @@ footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 60px 5%
 .wa-float-btn:hover { transform: scale(1.08); }
 .wa-float-btn svg { width: 28px; height: 28px; fill: white; }
 @keyframes waBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+/* Click-to-call sits above WhatsApp: on a phone it is the shortest path from
+   an organic search result to an actual booking. */
+.call-float-btn { width: 52px; height: 52px; border-radius: 50%; background: var(--teal, #0f9aa8); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 22px rgba(15,154,168,0.42); border: none; text-decoration: none; transition: transform 0.2s; }
+.call-float-btn:hover { transform: scale(1.08); }
+.call-float-btn svg { width: 24px; height: 24px; fill: none; stroke: white; stroke-width: 2; }
+@media (max-width: 640px) { .call-float-btn { width: 48px; height: 48px; } .call-float-btn svg { width: 22px; height: 22px; } }
 
 /* FAQ */
 .faq-list { max-width: 780px; margin: 0 auto; }

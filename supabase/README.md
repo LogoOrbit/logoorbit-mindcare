@@ -10,7 +10,7 @@ of it, never replace it.
 | --- | --- | --- |
 | Course registration (paid, with receipt) | `/montessori-course/register` | `workshop` |
 | Workshop registration (free seat) | `/montessori-workshop/register` | `workshop` |
-| Free consultation request | `/contact` | `consultation` |
+| Appointment request | `/contact` | `consultation` |
 | Appointment request | `/contact` | `appointment` |
 | General question | `/contact` | `question` |
 
