@@ -411,6 +411,10 @@ html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; co
 /* MOBILE */
 @media (max-width: 860px) {
   .contact-body { grid-template-columns: 1fr; gap: 40px; }
+  /* Once the two columns stack, the form is what the page is for, so it goes
+     first and the phone/email/hours block follows it. */
+  .booking-form-box { order: 1; }
+  .contact-info { order: 2; }
   .booking-form-box { position: static; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
@@ -466,8 +470,7 @@ html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; co
     <li><a href="/team/">Team</a></li>
     <li><a href="/articles">Articles</a></li>
     <li><a href="/courses">Courses</a></li>
-    <li><a href="/courses">Courses</a></li>
-      <li><a href="/workshops">Workshops</a></li>
+    <li><a href="/workshops">Workshops</a></li>
     <li><a href="/contact" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
