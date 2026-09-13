@@ -273,6 +273,10 @@
 .mf-fact strong{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}
 .mf-fact span{font-size:1.02rem;font-weight:600;color:var(--dark)}
 .mf-day{position:relative;display:flex;flex-direction:column;align-items:flex-start}
+/* Each month leads with a picture of what that month is actually about. */
+.mf-ill{align-self:stretch;width:100%;max-height:132px;object-fit:contain;margin:-6px 0 14px;
+ padding:12px;border-radius:16px;background:linear-gradient(150deg,#eaf7f7 0%,#f1f9ee 100%);border:1px solid var(--border)}
+@media(max-width:560px){.mf-ill{max-height:106px}}
 .mf-day .section-tag{align-self:flex-start}
 .mf-day h3{min-height:2.6em;align-self:stretch}
 .mf-day>p,.mf-day .aside-list{align-self:stretch}
@@ -406,6 +410,7 @@ html[data-theme="dark"] .mf-poster{background:#f7fdfd}
     <div class="section-header centered fade-up"><span class="section-tag">The Three Months</span><h2 class="section-title">One question per month, answered properly</h2><p class="section-sub">Each month stands on the one before it: see the child, understand the child, then set up the environment the child can actually work in.</p></div>
     <div class="feature-grid">
       <article class="feature-card fade-up mf-day">
+        <img class="mf-ill" src="../assets/art/doll-play.svg" alt="An adult sitting on the floor, watching a child play" width="800" height="437" loading="lazy" decoding="async">
         <span class="mf-num">01</span>
         <span class="section-tag">Month One</span>
         <h3 style="margin-top:10px">Decoding the Child&#39;s Perspective</h3>
@@ -419,6 +424,7 @@ html[data-theme="dark"] .mf-poster{background:#f7fdfd}
         </ul>
       </article>
       <article class="feature-card fade-up mf-day">
+        <img class="mf-ill" src="../assets/art/motherhood.svg" alt="A parent holding and talking to a small child" width="668" height="538" loading="lazy" decoding="async">
         <span class="mf-num">02</span>
         <span class="section-tag">Month Two</span>
         <h3 style="margin-top:10px">Early Childhood Psychology</h3>
@@ -432,6 +438,7 @@ html[data-theme="dark"] .mf-poster{background:#f7fdfd}
         </ul>
       </article>
       <article class="feature-card fade-up mf-day">
+        <img class="mf-ill" src="../assets/art/teacher.svg" alt="A teacher presenting a lesson at the board" width="960" height="621" loading="lazy" decoding="async">
         <span class="mf-num">03</span>
         <span class="section-tag">Month Three</span>
         <h3 style="margin-top:10px">The Montessori Curriculum in Practice</h3>

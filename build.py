@@ -707,7 +707,7 @@ AV = {
 }
 
 TEAM = [
-    dict(slug="shaista-tariq", av="shaista", name="Shaista Tariq", role="Founder & Associate Psychologist",
+    dict(slug="shaista-tariq", ill=('casual-chat', 940, 800, 'A therapist and client talking side by side'), av="shaista", name="Shaista Tariq", role="Founder & Associate Psychologist",
          title="Shaista Tariq, Psychologist in Karachi | MindCare Services®",
          desc="Shaista Tariq, founder of MindCare Services® in Karachi: Associate Psychologist, Counsellor and Behavior Therapist, and a PPA Member. Book an appointment.",
          tags=["Founder", "PPA Member", "Associate Psychologist", "Behavior Therapist"],
@@ -735,7 +735,7 @@ TEAM = [
          skills=["Business Ownership", "Early-Stage Ventures", "Start-up Leadership", "Cognitive Behavioral Therapy (CBT)",
                  "Applied Behavior Analysis (ABA)", "Behavioral Therapy", "Counselling", "Child Mental Health", "Mental Health Awareness"],
          member="PPA"),
-    dict(slug="ribqah-arshad", av="ribqah", name="Ribqah Arshad", role="Team Coordinator",
+    dict(slug="ribqah-arshad", ill=('good-team', 901, 508, 'A coordinator matching people to the right specialist'), av="ribqah", name="Ribqah Arshad", role="Team Coordinator",
          title="Ribqah Arshad, Team Coordinator | MindCare Services® Karachi",
          desc="Ribqah Arshad is the Team Coordinator at MindCare Services® in Karachi, managing operations and client relations so every client's experience is smooth and supportive.",
          tags=["Operations", "Client Relations"], job="Team Coordinator",
@@ -743,7 +743,7 @@ TEAM = [
               "Her focus is making sure every client's experience, from the first enquiry to booking the right specialist, feels easy, warm and well-organized."],
          focus=["Client onboarding and support", "Appointment coordination", "Operations and scheduling", "Care continuity across the team"],
          knows=["Operations", "Client Relations", "Coordination"], member=None),
-    dict(slug="ejaz-fatima", av="ejaz", name="Ejaz Fatima", role="Physiotherapist",
+    dict(slug="ejaz-fatima", ill=('personal-trainer', 805, 651, 'A physiotherapist guiding a patient through an exercise'), av="ejaz", name="Ejaz Fatima", role="Physiotherapist",
          title="Ejaz Fatima, Physiotherapist | MindCare Services® Karachi",
          desc="Ejaz Fatima is a physiotherapist at MindCare Services® in Karachi, specialising in rehabilitation and pain management to help clients move and recover.",
          tags=["Physiotherapy", "Rehabilitation", "Pain Management"], job="Physiotherapist",
@@ -752,7 +752,7 @@ TEAM = [
          focus=["Pain management", "Post-injury and post-surgery rehabilitation", "Musculoskeletal conditions", "Mobility and strength recovery"],
          knows=["Physiotherapy", "Rehabilitation", "Pain Management"], member=None,
          service="physiotherapy"),
-    dict(slug="rimsha-pari", av="rimsha", name="Rimsha Pari", role="Consultant Physiotherapist",
+    dict(slug="rimsha-pari", ill=('pilates', 785, 245, "A patient stretching under a physiotherapist's plan"), av="rimsha", name="Rimsha Pari", role="Consultant Physiotherapist",
          title="Rimsha Pari, Physiotherapist | MindCare Services® Karachi",
          desc="Rimsha Pari is a consultant physiotherapist at MindCare Services® in Karachi, specialising in musculoskeletal and neurological physiotherapy.",
          tags=["Consultant Physiotherapist", "Musculoskeletal", "Neuro-PT"], job="Consultant Physiotherapist",
@@ -761,7 +761,7 @@ TEAM = [
          focus=["Musculoskeletal physiotherapy", "Neurological rehabilitation", "Posture and movement correction", "Chronic pain management"],
          knows=["Physiotherapy", "Musculoskeletal Therapy", "Neurological Rehabilitation"], member=None,
          service="physiotherapy"),
-    dict(slug="hareem-tariq", av="hareem", name="Hareem Tariq", role="Dental Consultant",
+    dict(slug="hareem-tariq", ill=('doctor', 1086, 783, 'A clinician examining a patient'), av="hareem", name="Hareem Tariq", role="Dental Consultant",
          title="Hareem Tariq, Dental Consultant | MindCare Services® Karachi",
          desc="Hareem Tariq is the dental consultant at MindCare Services® in Karachi, offering preventive and restorative oral-health advice and treatment planning.",
          tags=["Dental Consultant", "Preventive Care", "Restorative Care"], job="Dental Consultant",
@@ -770,7 +770,7 @@ TEAM = [
          focus=["Oral health check-ups and advice", "Preventive care", "Restorative treatment planning", "Second opinions"],
          knows=["Dentistry", "Preventive Care", "Oral Health"], member=None,
          service="dental-consultations"),
-    dict(slug="shafeeq-langhar", av="shafeeq", name="Shafeeq Langhar", role="Psychologist",
+    dict(slug="shafeeq-langhar", ill=('mind-map', 800, 517, 'A psychologist mapping out linked thoughts'), av="shafeeq", name="Shafeeq Langhar", role="Psychologist",
          title="Shafeeq Langhar, Clinical Psychologist | MindCare Karachi",
          desc="Shafeeq Langhar is a clinical psychologist at MindCare Services® in Karachi, providing individual and group therapy grounded in clinical psychology.",
          tags=["Psychologist", "Clinical Psychology", "Individual & Group Therapy"], job="Psychologist",
@@ -780,6 +780,17 @@ TEAM = [
          knows=["Clinical Psychology", "Psychotherapy", "Group Therapy"], member=None,
          service="individual-psychotherapy"),
 ]
+
+
+def member_ill(m, prefix):
+    """The scene for what this person actually does, for their booking aside.
+    Their avatar says who they are; this says what a session with them is."""
+    if "ill" not in m:
+        return ""
+    stem, w, h, alt = m["ill"]
+    return (f'<div class="ill-frame" style="margin-bottom:20px;padding:18px">'
+            f'<img class="ill" src="{prefix}assets/art/{stem}.svg" alt="{html.escape(alt)}" '
+            f'width="{w}" height="{h}" loading="lazy" decoding="async"></div>')
 
 
 def team_page(m):
@@ -864,6 +875,7 @@ def team_page(m):
 {extra}        {svc_link}
       </div>
       <aside class="aside-card fade-up">
+        {member_ill(m, prefix)}
         <h3>Book with {m['name'].split()[0]}</h3>
         <p>Reach out for a confidential appointment. We'll help you find the right time and the right support.</p>
         <ul class="aside-list">

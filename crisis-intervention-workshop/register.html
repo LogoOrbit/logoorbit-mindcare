@@ -89,6 +89,13 @@
   ]
 }
 </script>
+<style>
+/* Small on purpose: the form is the point of this page, so the drawing
+   warms the top without pushing the first field off the screen. */
+.reg-ill{display:block;width:100%;max-width:190px;height:auto;margin:0 auto 18px;
+ filter:drop-shadow(0 14px 28px rgba(11,95,109,.14))}
+@media (max-width:560px){.reg-ill{max-width:132px;margin-bottom:14px}}
+</style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
@@ -217,6 +224,7 @@ html[data-theme="dark"] .tm-alert{background:#3a1c1c;border-color:#5e2b2b;color:
   <div class="section-inner">
     <div class="tm-reg-wrap">
       <div class="section-header centered" style="margin-bottom:26px">
+        <img class="reg-ill" src="../assets/art/checklist.svg" alt="Filling in a short registration form" width="800" height="541" decoding="async">
         <span class="section-tag">Registration Open</span>
         <h1 class="section-title" style="font-size:2.1rem">Register for The First Five Minutes</h1>
         <p class="cf-hook">&ldquo;A client starts dissociating or panicking in your office&mdash;what do you do in the first five minutes?&rdquo;</p>
