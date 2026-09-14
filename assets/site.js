@@ -102,53 +102,6 @@ if("IntersectionObserver" in window && !reduce){
   revealEls.forEach(function(el){el.classList.add("vis");});
 }
 
-/* ---------- vector art motion ----------
-   Two jobs, both cheap. First, an observer that runs the idle float only
-   while a frame is actually on screen: the CSS keeps every loop paused
-   until `art-live` lands, so scrolled-past illustrations stop animating
-   instead of burning frames behind the viewport. Second, a pointer tilt
-   that is bound on enter and unbound on leave, so an idle page carries no
-   pointermove listener at all. Both sit out entirely when the visitor has
-   asked for reduced motion. */
-(function () {
-  if (reduce) return;
-  var frames = [].slice.call(document.querySelectorAll('.ill-frame, .ph-art'));
-  if (!frames.length) return;
-
-  if ('IntersectionObserver' in window) {
-    var live = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { e.target.classList.toggle('art-live', e.isIntersecting); });
-    }, { rootMargin: '150px 0px' });
-    frames.forEach(function (f) { live.observe(f); });
-  } else {
-    frames.forEach(function (f) { f.classList.add('art-live'); });
-  }
-
-  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  frames.forEach(function (frame) {
-    var art = frame.querySelector('.ill');
-    if (!art) return;
-    var raf = 0, x = 0, y = 0;
-    function paint() { raf = 0; art.style.transform = 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0)'; }
-    function queue() { if (!raf) raf = requestAnimationFrame(paint); }
-    function move(ev) {
-      var r = frame.getBoundingClientRect();
-      x = ((ev.clientX - r.left) / r.width - 0.5) * 14;
-      y = ((ev.clientY - r.top) / r.height - 0.5) * 10;
-      queue();
-    }
-    frame.addEventListener('pointerenter', function () {
-      frame.classList.add('art-tilt');
-      frame.addEventListener('pointermove', move, { passive: true });
-    });
-    frame.addEventListener('pointerleave', function () {
-      frame.removeEventListener('pointermove', move);
-      frame.classList.remove('art-tilt');
-      x = y = 0; queue();
-    });
-  });
-})();
-
 /* ---------- audio: hero background music crossfades to the orb meditation,
    then everything fades out below the orb section. Never both at full. ---------- */
 (function(){
