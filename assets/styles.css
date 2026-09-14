@@ -444,3 +444,55 @@ html[data-theme="dark"] .card-ill .card-art { border-bottom-color: #2b4a45; }
 .city-links { max-width: 860px; margin: 0 auto; text-align: center; line-height: 2.1; font-size: 0.92rem; color: var(--muted); }
 .city-links a { color: var(--teal-dark); text-decoration: none; font-weight: 500; }
 .city-links a:hover { text-decoration: underline; }
+
+/* ===== VECTOR ART MOTION ================================================
+   The drawings ship as <img>, so nothing here reaches inside the SVG — and
+   nothing needs to. Every rule below moves only `translate`, `rotate`,
+   `scale`, `opacity` or `transform`, which the compositor runs on its own
+   thread: no layout, no repaint, and no re-rasterising of the drawing.
+
+   Idle loops stay `paused` until the observer in main.js puts `art-live` on
+   the frame, so art that is off screen costs nothing at all, and the
+   `will-change` hint is granted and withdrawn with that same class rather
+   than left standing on every illustration on the page.
+
+   `translate`/`rotate` are used as their own properties, not inside
+   `transform`, so the idle float composes with the pointer tilt and the
+   scroll parallax instead of fighting them for the one `transform` slot. */
+@supports (translate: 0px) {
+  .ill-frame .ill, .ph-art .ill { animation: illFloat 7.5s ease-in-out infinite; animation-play-state: paused; }
+  .ph-art .ill { animation-duration: 8.5s; }
+  .story .ill-frame .ill { animation-duration: 9.5s; animation-delay: -2.6s; }
+  .art-live .ill { animation-play-state: running; will-change: translate, rotate; }
+  @keyframes illFloat {
+    0%, 100% { translate: 0 0; rotate: 0deg; }
+    50%      { translate: 0 -10px; rotate: .5deg; }
+  }
+}
+
+/* the glow behind a framed scene breathes with it, half a beat slower */
+.ill-frame::before { animation: illGlow 11s ease-in-out infinite; animation-play-state: paused; }
+.ill-frame.art-live::before { animation-play-state: running; will-change: transform, opacity; }
+@keyframes illGlow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.14); opacity: .6; }
+}
+
+/* pointer tilt: the scene leans a little towards the cursor, then settles
+   back slowly when the pointer leaves. Bound per frame by main.js only on
+   fine pointers, so touch and keyboard users pay nothing for it. */
+.ill-frame .ill, .ph-art .ill { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.art-tilt .ill { transition: transform .1s linear; }
+
+/* framed scenes lift on hover, matching the picture cards */
+.ill-frame { transition: box-shadow .35s ease, border-color .35s ease; }
+.ill-frame:hover { box-shadow: var(--shadow-soft); }
+
+/* Reveal hygiene: the reveal is a one-shot, so drop the compositor hint the
+   moment it has played. Without this every revealed block on a long page
+   keeps its own layer alive for the life of the tab. */
+.fade-up.visible, .fade-up.vis { will-change: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ill-frame .ill, .ph-art .ill, .ill-frame::before { animation: none !important; transform: none !important; translate: none !important; rotate: none !important; }
+}

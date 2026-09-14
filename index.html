@@ -194,6 +194,27 @@ a.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:va
  background:radial-gradient(circle,rgba(15,154,168,.12) 0%,transparent 70%);top:-110px;inset-inline-end:-90px}
 .ill-frame .ill{position:relative;width:100%;max-height:280px;object-fit:contain}
 html[data-theme="dark"] .ill-frame{border-color:#2b4a45}
+/* vector art motion: the scenes ship as <img>, so this moves the picture as a
+   whole rather than anything inside it. Only translate/rotate/scale/opacity
+   are touched, which the compositor handles without layout or repaint, and
+   every loop stays paused until site.js marks the frame `art-live` on entry,
+   so art below the fold burns no frames. `translate`/`rotate` are used as
+   their own properties so the idle float composes with the pointer tilt
+   instead of fighting it for the single `transform` slot. */
+@supports (translate:0px){
+ .ill-frame .ill,.ph-art .ill{animation:illFloat 7.5s ease-in-out infinite;animation-play-state:paused}
+ .ph-art .ill{animation-duration:8.5s}
+ .story .ill-frame .ill{animation-duration:9.5s;animation-delay:-2.6s}
+ .art-live .ill{animation-play-state:running;will-change:translate,rotate}
+ @keyframes illFloat{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -10px;rotate:.5deg}}
+}
+.ill-frame::before{animation:illGlow 11s ease-in-out infinite;animation-play-state:paused}
+.ill-frame.art-live::before{animation-play-state:running;will-change:transform,opacity}
+@keyframes illGlow{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.14);opacity:.6}}
+.ill-frame .ill,.ph-art .ill{transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.art-tilt .ill{transition:transform .1s linear}
+.ill-frame{transition:box-shadow .35s ease,border-color .35s ease}
+.ill-frame:hover{box-shadow:var(--shadow-soft)}
 /* picture-led card: the scene explains, the words confirm */
 .card.card-ill{padding:0;display:flex;flex-direction:column;overflow:hidden}
 .card-ill .card-art{display:grid;place-items:center;min-height:152px;padding:16px 18px;
@@ -314,7 +335,7 @@ footer{padding-bottom:104px}
 .fade-up.rv-left{transform:translateX(-42px)}
 .fade-up.rv-right{transform:translateX(42px)}
 .fade-up.rv-scale{transform:scale(.9)}
-.fade-up.vis{opacity:1;transform:none}
+.fade-up.vis{opacity:1;transform:none;will-change:auto}
 [data-parallax]{will-change:transform}
 
 /* Nine primary links need more room than the old eight: hand over to the

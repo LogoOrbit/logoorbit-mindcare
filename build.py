@@ -232,7 +232,11 @@ def art(key, prefix="", cls="ill", lazy=True, sizes=None):
     if key not in ART:
         return ""
     stem, w, h, alt = ART[key]
-    load = ' loading="lazy" decoding="async"' if lazy else ' decoding="async"'
+    # The eager one is the hero next to the H1, i.e. the LCP candidate on most
+    # interior pages: give it a high fetch priority so it is not queued behind
+    # the lazy card art further down the document.
+    load = (' loading="lazy" decoding="async"' if lazy
+            else ' decoding="async" fetchpriority="high"')
     s = f' sizes="{sizes}"' if sizes else ""
     return (f'<img class="{cls}" src="{prefix}assets/art/{stem}.svg" alt="{html.escape(alt)}" '
             f'width="{w}" height="{h}"{s}{load}>')
