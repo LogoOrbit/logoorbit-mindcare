@@ -16,7 +16,15 @@
   if (lowPerf) dpr = Math.min(dpr, 1.5);
 
   // ---- renderer / scene / camera ----
-  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !lowPerf, alpha: true, premultipliedAlpha: false });
+  // No WebGL (an old browser, a blocked context, a headless crawler) means no
+  // orb. three.js throws from the constructor in that case, and an uncaught
+  // error here would be the only thing in the page's console, so bail quietly
+  // and leave the section as the empty transparent canvas it starts as.
+  var renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !lowPerf, alpha: true, premultipliedAlpha: false });
+  } catch (e) { return; }
+  if (!renderer) return;
   renderer.setPixelRatio(dpr);
   renderer.setClearColor(0x000000, 0); // fully transparent, blends with page in light & dark
   var scene = new THREE.Scene();

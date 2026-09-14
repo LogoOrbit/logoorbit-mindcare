@@ -47,7 +47,31 @@ cv.addEventListener("pointerup", function(){ dragging=false; });
 cv.addEventListener("pointercancel", function(){ dragging=false; });
 
 var pr=[];
-function frame(){
+
+// The loop only has to run while the hero is on screen and the tab is in front.
+// Scrolling past it used to leave a full-rate canvas animation burning the main
+// thread for the whole visit.
+var onScreen=true, running=false;
+try{
+  new IntersectionObserver(function(es){
+    onScreen=es[es.length-1].isIntersecting;
+    if(onScreen)start();
+  },{rootMargin:"120px 0px"}).observe(cv);
+}catch(e){}
+document.addEventListener("visibilitychange",function(){ if(!document.hidden)start(); });
+
+// Every line and dot used to be its own stroke()/fill(): around 2000 canvas
+// calls a frame. Alpha is quantised into a handful of buckets instead, so each
+// frame is a couple of dozen calls over pre-built paths. Ten steps is finer
+// than the eye can pick out at these opacities.
+var STEPS=10, MAXA=0.4;
+function bucket(a){ return Math.min(STEPS-1, Math.max(0, Math.round(a/MAXA*(STEPS-1)))); }
+
+// 30fps unless a finger or pointer is actually on it, where the extra
+// smoothness is worth the frames.
+var MIN_DT=1000/30, last=0;
+
+function draw(){
   var dy=window.scrollY-lastScroll; lastScroll=window.scrollY;
   velY+=dy*0.00002; velY=Math.max(0.002, Math.min(0.02, Math.abs(velY)))*(velY<0?-1:1);
   if(!dragging) rotY+=velY;
@@ -67,23 +91,44 @@ function frame(){
   }
   // teal / green / coral psychology palette on light background
   var cA="43,189,201", cB="45,106,31", cC="239,131,84", cL="26,154,170";
+  var k, lines=[], dots=[[],[],[]];
   ctx.lineWidth=1;
   for(i=0;i<links.length;i++){
     var a=pr[links[i][0]], b=pr[links[i][1]];
     var al=0.22*((a.d+b.d)/2-0.6); if(al<=0.01) continue;
-    ctx.strokeStyle="rgba("+cL+","+Math.min(al,0.4).toFixed(3)+")";
-    ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+    k=bucket(Math.min(al,MAXA));
+    (lines[k]||(lines[k]=new Path2D())).moveTo(a.x,a.y);
+    lines[k].lineTo(b.x,b.y);
+  }
+  for(k=0;k<STEPS;k++){
+    if(!lines[k]) continue;
+    ctx.strokeStyle="rgba("+cL+","+(k/(STEPS-1)*MAXA).toFixed(3)+")";
+    ctx.stroke(lines[k]);
   }
   for(i=0;i<pr.length;i++){
     var q=pr[i];
     var r2=Math.max(0.5, 2.5*q.d-1);
-    ctx.fillStyle = q.h===1 ? "rgba("+cA+","+Math.min(q.o*q.d,1).toFixed(3)+")"
-                  : q.h===0 ? "rgba("+cB+","+Math.min(q.o*q.d,1).toFixed(3)+")"
-                  :           "rgba("+cC+","+Math.min(q.o*q.d*0.9,1).toFixed(3)+")";
-    ctx.beginPath(); ctx.arc(q.x,q.y,r2,0,6.284); ctx.fill();
+    var alpha=Math.min(q.o*q.d*(q.h===2?0.9:1),1);
+    k=Math.min(STEPS-1, Math.max(0, Math.round(alpha*(STEPS-1))));
+    var slot=dots[q.h], pth=slot[k]||(slot[k]=new Path2D());
+    pth.moveTo(q.x+r2, q.y);
+    pth.arc(q.x,q.y,r2,0,6.284);
   }
+  var hue=[cB,cA,cC];   // h: 0 = green, 1 = teal, 2 = coral stem
+  for(var h=0;h<3;h++) for(k=0;k<STEPS;k++){
+    if(!dots[h][k]) continue;
+    ctx.fillStyle="rgba("+hue[h]+","+(k/(STEPS-1)).toFixed(3)+")";
+    ctx.fill(dots[h][k]);
+  }
+}
+
+function frame(now){
+  running=true;
+  if(!onScreen||document.hidden){ running=false; return; }
+  if(dragging||now-last>=MIN_DT-1){ last=now; draw(); }
   requestAnimationFrame(frame);
 }
+function start(){ if(!running&&!reduce){ running=true; requestAnimationFrame(frame); } }
 if(reduce){
   // draw one static frame
   frame = (function(f){ return function(){ /* no loop */ }; })();
@@ -93,6 +138,8 @@ if(reduce){
     for(i=0;i<pr.length;i++){var q=pr[i];ctx.fillStyle="rgba(43,189,201,"+Math.min(q.o*q.d,1).toFixed(3)+")";ctx.beginPath();ctx.arc(q.x,q.y,Math.max(.5,2.5*q.d-1),0,6.284);ctx.fill();}
   })();
 } else {
-  requestAnimationFrame(frame);
+  // Let the page paint and settle first; the hero is decorative until then.
+  if(document.readyState==="complete") start();
+  else addEventListener("load", start);
 }
 })();

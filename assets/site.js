@@ -37,7 +37,12 @@ function applyLang(lang){
     }
   }
   var lb=document.getElementById("langBtn");
-  if(lb) lb.textContent = lang==="ur" ? "EN" : "اردو";
+  // The accessible name has to start with what the button actually says, or
+  // voice control cannot reach it by the word on screen.
+  if(lb){
+    lb.textContent = lang==="ur" ? "EN" : "اردو";
+    lb.setAttribute("aria-label", lang==="ur" ? "EN, switch to English" : "اردو, switch to Urdu");
+  }
   try{localStorage.setItem("mc-lang",lang);}catch(e){}
 }
 var startLang=doc.getAttribute("lang")||"en";
@@ -264,18 +269,23 @@ var hero=document.querySelector(".hero");
 var pEls=[].slice.call(document.querySelectorAll("[data-parallax]"));
 var ticking=false;
 window.addEventListener("scroll",function(){
-  var h=document.documentElement, s=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
-  if(prog) prog.style.width=Math.min(s*100,100)+"%";
-  if(reduce||ticking) return;
+  if(ticking) return;
   ticking=true;
+  // Everything here reads layout, so it all waits for the frame, and the reads
+  // are batched ahead of the writes: measuring and then moving one element at a
+  // time forced a reflow per parallax element, on every frame of every scroll.
   requestAnimationFrame(function(){
-    var y=window.scrollY;
-    if(hero) hero.style.setProperty("--py",(y*0.3).toFixed(1)+"px");
-    pEls.forEach(function(el){
-      var r=el.getBoundingClientRect();
-      var off=(r.top+r.height/2)-window.innerHeight/2;
-      el.style.transform="translateY("+(off*parseFloat(el.getAttribute("data-parallax")||"-0.05")).toFixed(1)+"px)";
-    });
+    var h=document.documentElement, s=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
+    if(prog) prog.style.width=Math.min(s*100,100)+"%";
+    if(!reduce){
+      var y=window.scrollY, vh=window.innerHeight, rects=[];
+      for(var i=0;i<pEls.length;i++) rects[i]=pEls[i].getBoundingClientRect();
+      if(hero) hero.style.setProperty("--py",(y*0.3).toFixed(1)+"px");
+      for(i=0;i<pEls.length;i++){
+        var r=rects[i], off=(r.top+r.height/2)-vh/2;
+        pEls[i].style.transform="translateY("+(off*parseFloat(pEls[i].getAttribute("data-parallax")||"-0.05")).toFixed(1)+"px)";
+      }
+    }
     ticking=false;
   });
 },{passive:true});

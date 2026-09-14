@@ -177,7 +177,12 @@
     doc.setAttribute('lang', lang);
     doc.setAttribute('dir', ur ? 'rtl' : 'ltr');
     var lb = document.getElementById('langBtn');
-    if (lb) lb.textContent = ur ? 'EN' : 'اردو';
+    // The accessible name has to start with what the button actually says, or
+    // voice control cannot reach it by the word on screen.
+    if (lb) {
+      lb.textContent = ur ? 'EN' : 'اردو';
+      lb.setAttribute('aria-label', ur ? 'EN, switch to English' : 'اردو, switch to Urdu');
+    }
     try { localStorage.setItem('mc-lang', lang); } catch (e) {}
   }
   applyLang(doc.getAttribute('lang') === 'ur' ? 'ur' : 'en');
@@ -221,26 +226,30 @@
   var pEls = [].slice.call(document.querySelectorAll('[data-parallax], .detail-art, .ph-art'));
   var ticking = false;
   function onScroll() {
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
-    if (progressBar) {
-      var h = document.documentElement;
-      progressBar.style.width = Math.min((h.scrollTop / (h.scrollHeight - h.clientHeight || 1)) * 100, 100) + '%';
-    }
-    if (reduce) return;
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(function () {
-        var y = window.scrollY;
+    if (ticking) return;
+    ticking = true;
+    // All of this reads layout, so it waits for the frame, and every rect is
+    // measured before anything moves: measure-then-move one element at a time
+    // forced a reflow per parallax element on every frame of every scroll.
+    requestAnimationFrame(function () {
+      if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
+      if (progressBar) {
+        var h = document.documentElement;
+        progressBar.style.width = Math.min((h.scrollTop / (h.scrollHeight - h.clientHeight || 1)) * 100, 100) + '%';
+      }
+      if (!reduce) {
+        var y = window.scrollY, vh = window.innerHeight, rects = [], i;
+        for (i = 0; i < pEls.length; i++) rects[i] = pEls[i].getBoundingClientRect();
         heroes.forEach(function (hEl) { hEl.style.setProperty('--py', (y * 0.28).toFixed(1) + 'px'); });
-        pEls.forEach(function (el) {
-          var r = el.getBoundingClientRect();
-          var off = (r.top + r.height / 2) - window.innerHeight / 2;
-          var f = parseFloat(el.getAttribute('data-parallax') || '-0.06');
-          el.style.transform = 'translateY(' + (off * f).toFixed(1) + 'px)';
-        });
-        ticking = false;
-      });
-    }
+        for (i = 0; i < pEls.length; i++) {
+          var r = rects[i];
+          var off = (r.top + r.height / 2) - vh / 2;
+          var f = parseFloat(pEls[i].getAttribute('data-parallax') || '-0.06');
+          pEls[i].style.transform = 'translateY(' + (off * f).toFixed(1) + 'px)';
+        }
+      }
+      ticking = false;
+    });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();

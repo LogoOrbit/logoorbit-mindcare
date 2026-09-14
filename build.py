@@ -24,9 +24,17 @@ GTAG = """<!-- Google tag (gtag.js) -->
   gtag('config', 'G-QZFCFZT32R');
 </script>"""
 
+# Google's stylesheet is the one render-blocking request left in the head, and
+# it costs close to two seconds of first paint on a slow connection. Loading it
+# as print media and flipping it to all on load takes it off the critical path;
+# every face is already display=swap, so text paints in the fallback and
+# re-renders once the webfont lands.
+_FONT_CSS = ("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap")
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">')
+         f'<link rel="preload" as="style" href="{_FONT_CSS}">'
+         f'<link rel="stylesheet" href="{_FONT_CSS}" media="print" onload="this.media=\'all\'">'
+         f'<noscript><link rel="stylesheet" href="{_FONT_CSS}"></noscript>')
 
 
 # One clinic node, emitted on every generated page under a stable @id so the
@@ -130,7 +138,7 @@ def head(title, desc, canonical, prefix, schema, og_type="website"):
 <meta name="twitter:title" content="{html.escape(title)}">
 <meta name="twitter:description" content="{html.escape(desc)}">
 <meta name="twitter:image" content="{BASE}/mindcare.png">
-<link rel="icon" href="{prefix}mindcare.png" type="image/png">
+<link rel="icon" href="{prefix}assets/icons/favicon-48.png" type="image/png" sizes="48x48">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="{prefix}site.webmanifest">
 {GTAG}
@@ -248,7 +256,10 @@ def nav(prefix, active=None):
         return ' class="active"' if active == key else ''
     return f"""<nav id="navbar" aria-label="Primary navigation">
   <a href="/" class="nav-logo" aria-label="MindCare Services home">
-    <img src="{prefix}mindcare.png" width="790" height="316" alt="MindCare Services®, a psychotherapy and mental health clinic in Karachi">
+    <picture>
+      <source type="image/webp" srcset="{prefix}assets/logo/mindcare-logo-150.webp 150w, {prefix}assets/logo/mindcare-logo-280.webp 280w, {prefix}assets/logo/mindcare-logo-420.webp 420w" sizes="140px">
+      <img src="{prefix}assets/logo/mindcare-logo-280.png" srcset="{prefix}assets/logo/mindcare-logo-150.png 150w, {prefix}assets/logo/mindcare-logo-280.png 280w, {prefix}assets/logo/mindcare-logo-420.png 420w" sizes="140px" width="790" height="316" alt="MindCare Services®, a psychotherapy and mental health clinic in Karachi" fetchpriority="high">
+    </picture>
   </a>
   <ul class="nav-links">
     <li><a href="/"{cls('home')}>Home</a></li>
@@ -262,7 +273,7 @@ def nav(prefix, active=None):
     <li><a href="/contact" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
-    <button class="icon-btn" id="langBtn" type="button" aria-label="Change language">اردو</button>
+    <button class="icon-btn" id="langBtn" type="button" aria-label="اردو, switch to Urdu">اردو</button>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></svg></button>
     <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
   </div>
@@ -278,7 +289,7 @@ def nav(prefix, active=None):
   <a href="/workshops">Workshops</a>
   <a href="/contact" class="m-cta">Book Appointment</a>
 </div>
-<div class="wa-float">
+<div class="wa-float" role="navigation" aria-label="Quick contact">
   <a href="tel:+92-327-2337631" class="call-float-btn" aria-label="Call MindCare Services on +92 327 2337631"><svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
   <div class="wa-tooltip">Chat on WhatsApp</div>
   <a href="{WA}?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20with%20MindCare%20Services." target="_blank" rel="noopener" class="wa-float-btn" aria-label="Chat with MindCare on WhatsApp">{icon(prefix,'i-wa')}</a>
@@ -311,7 +322,7 @@ def footer(prefix):
         <a href="{WA}" target="_blank" rel="noopener" aria-label="MindCare on WhatsApp"><svg width="15" height="15" fill="currentColor"><use href="{prefix}assets/sprite.svg#i-wa"/></svg></a>
       </div>
     </div>
-    <div class="footer-col"><h4>Services</h4><ul>
+    <div class="footer-col"><h2>Services</h2><ul>
       <li><a href="/services/individual-psychotherapy">Psychotherapy</a></li>
       <li><a href="/services/family-counseling">Family Counseling</a></li>
       <li><a href="/services/speech-therapy">Speech Therapy</a></li>
@@ -319,7 +330,7 @@ def footer(prefix):
       <li><a href="/services/behavioral-therapy">Behavioral Therapy</a></li>
       <li><a href="/services/">All Services</a></li>
     </ul></div>
-    <div class="footer-col"><h4>Company</h4><ul>
+    <div class="footer-col"><h2>Company</h2><ul>
       <li><a href="/#about">About Us</a></li>
       <li><a href="/#journey">How It Works</a></li>
       <li><a href="/team/">Our Team</a></li>
@@ -331,7 +342,7 @@ def footer(prefix):
       <li><a href="/#faq">FAQ</a></li>
       <li><a href="/contact">Book Appointment</a></li>
     </ul></div>
-    <div class="footer-col"><h4>Contact</h4><ul>
+    <div class="footer-col"><h2>Contact</h2><ul>
       <li><a href="tel:{PHONE}">{PHONE_H}</a></li>
       <li><a href="https://www.instagram.com/mindcare.services/" target="_blank" rel="noopener">@mindcare.services</a></li>
       <li><a href="mailto:shaistatariq2002@gmail.com">shaistatariq2002@gmail.com</a></li>
@@ -541,7 +552,7 @@ def service_card(s, prefix, trim=120):
     """Picture-led service card: the scene first, the words second."""
     return (f'''      <a class="link-card card-ill fade-up" href="/services/{s['slug']}">'''
             f'''<div class="card-art">{art(s['slug'], prefix)}</div>'''
-            f'''<div class="card-txt"><h3>{s['name']}</h3><p>{s['lede'][:trim]}…</p>'''
+            f'''<div class="card-txt"><h2>{s['name']}</h2><p>{s['lede'][:trim]}…</p>'''
             f'''<span class="more">Learn more →</span></div></a>''')
 
 
@@ -549,7 +560,7 @@ def topic_card(t, prefix, trim=110):
     """Picture-led guide card."""
     return (f'''      <a class="link-card card-ill fade-up" href="/{t['slug']}">'''
             f'''<div class="card-art">{art(t['slug'], prefix)}</div>'''
-            f'''<div class="card-txt"><h3>{t['h1']}</h3><p>{t['lede'][:trim]}…</p>'''
+            f'''<div class="card-txt"><h2>{t['h1']}</h2><p>{t['lede'][:trim]}…</p>'''
             f'''<span class="more">Read more →</span></div></a>''')
 
 
@@ -913,7 +924,7 @@ def team_index():
     cards = "\n".join(
         f'''      <a class="link-card fade-up" href="/team/{m['slug']}" style="text-align:center">
         <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px">{AV[m['av']]}</div>
-        <h3>{m['name']}</h3><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">{m['role']}</p>
+        <h2>{m['name']}</h2><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">{m['role']}</p>
         <span class="more">View profile →</span></a>''' for m in TEAM)
     out = head("Our Team | Psychologists in Karachi | MindCare Services®",
                "Meet the MindCare Services® team in Karachi: psychologists, psychotherapists and physiotherapists led by founder Shaista Tariq, PPA Member.",

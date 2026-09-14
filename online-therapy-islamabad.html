@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="Online Therapy in Islamabad | MindCare Services®">
 <meta name="twitter:description" content="Confidential online therapy and counseling for Islamabad, in English and Urdu, Mon-Sat 9am-7pm. Qualified psychologists, no commute. Book with MindCare Services®.">
 <meta name="twitter:image" content="https://themindcareservices.com/mindcare.png">
-<link rel="icon" href="mindcare.png" type="image/png">
+<link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <!-- Google tag (gtag.js) -->
@@ -35,7 +35,7 @@
   gtag('js', new Date());
   gtag('config', 'G-QZFCFZT32R');
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="assets/styles.css">
 <script type="application/ld+json">
 {
@@ -612,7 +612,10 @@
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 <nav id="navbar" aria-label="Primary navigation">
   <a href="/" class="nav-logo" aria-label="MindCare Services home">
-    <img src="mindcare.png" width="790" height="316" alt="MindCare Services®, a psychotherapy and mental health clinic in Karachi">
+    <picture>
+      <source type="image/webp" srcset="assets/logo/mindcare-logo-150.webp 150w, assets/logo/mindcare-logo-280.webp 280w, assets/logo/mindcare-logo-420.webp 420w" sizes="140px">
+      <img src="assets/logo/mindcare-logo-280.png" srcset="assets/logo/mindcare-logo-150.png 150w, assets/logo/mindcare-logo-280.png 280w, assets/logo/mindcare-logo-420.png 420w" sizes="140px" width="790" height="316" alt="MindCare Services®, a psychotherapy and mental health clinic in Karachi" fetchpriority="high">
+    </picture>
   </a>
   <ul class="nav-links">
     <li><a href="/">Home</a></li>
@@ -626,7 +629,7 @@
     <li><a href="/contact" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
-    <button class="icon-btn" id="langBtn" type="button" aria-label="Change language">اردو</button>
+    <button class="icon-btn" id="langBtn" type="button" aria-label="اردو, switch to Urdu">اردو</button>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></svg></button>
     <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
   </div>
@@ -642,7 +645,7 @@
   <a href="/workshops">Workshops</a>
   <a href="/contact" class="m-cta">Book Appointment</a>
 </div>
-<div class="wa-float">
+<div class="wa-float" role="navigation" aria-label="Quick contact">
   <a href="tel:+92-327-2337631" class="call-float-btn" aria-label="Call MindCare Services on +92 327 2337631"><svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
   <div class="wa-tooltip">Chat on WhatsApp</div>
   <a href="https://wa.me/923272337631?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20with%20MindCare%20Services." target="_blank" rel="noopener" class="wa-float-btn" aria-label="Chat with MindCare on WhatsApp"><svg><use href="assets/sprite.svg#i-wa"/></svg></a>
@@ -776,7 +779,7 @@
         <a href="https://wa.me/923272337631" target="_blank" rel="noopener" aria-label="MindCare on WhatsApp"><svg width="15" height="15" fill="currentColor"><use href="assets/sprite.svg#i-wa"/></svg></a>
       </div>
     </div>
-    <div class="footer-col"><h4>Services</h4><ul>
+    <div class="footer-col"><h2>Services</h2><ul>
       <li><a href="/services/individual-psychotherapy">Psychotherapy</a></li>
       <li><a href="/services/family-counseling">Family Counseling</a></li>
       <li><a href="/services/speech-therapy">Speech Therapy</a></li>
@@ -784,7 +787,7 @@
       <li><a href="/services/behavioral-therapy">Behavioral Therapy</a></li>
       <li><a href="/services/">All Services</a></li>
     </ul></div>
-    <div class="footer-col"><h4>Company</h4><ul>
+    <div class="footer-col"><h2>Company</h2><ul>
       <li><a href="/#about">About Us</a></li>
       <li><a href="/#journey">How It Works</a></li>
       <li><a href="/team/">Our Team</a></li>
@@ -796,7 +799,7 @@
       <li><a href="/#faq">FAQ</a></li>
       <li><a href="/contact">Book Appointment</a></li>
     </ul></div>
-    <div class="footer-col"><h4>Contact</h4><ul>
+    <div class="footer-col"><h2>Contact</h2><ul>
       <li><a href="tel:+92-327-2337631">+92 327 2337631</a></li>
       <li><a href="https://www.instagram.com/mindcare.services/" target="_blank" rel="noopener">@mindcare.services</a></li>
       <li><a href="mailto:shaistatariq2002@gmail.com">shaistatariq2002@gmail.com</a></li>
