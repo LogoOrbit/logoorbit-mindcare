@@ -1,3 +1,7 @@
+# https://themindcareservices.com/robots.txt
+# Search crawlers and AI assistants are both welcome here. A clinic that is
+# invisible to the place people now ask their questions is invisible.
+
 User-agent: *
 Allow: /
 Disallow: /submissions
@@ -5,30 +9,284 @@ Disallow: /api/
 Disallow: /confirmed
 Disallow: /search?
 
-# Reputable AI crawlers welcome (E-E-A-T / AI Overview visibility)
+# ── AI assistants and answer engines ──
+# Allowed deliberately, one named group each. See /llms.txt for a map of the
+# site and /llms-full.txt for the whole thing as plain text in one request.
+
+# OpenAI: model training
 User-agent: GPTBot
 Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# ChatGPT: search index
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# ChatGPT: live browsing on a user's request
 User-agent: ChatGPT-User
 Allow: /
-User-agent: Google-Extended
-Allow: /
-User-agent: PerplexityBot
-Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Anthropic: index and training
 User-agent: ClaudeBot
 Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Claude: live browsing on a user's request
+User-agent: Claude-User
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Claude: search index
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Anthropic: legacy agent string
 User-agent: anthropic-ai
 Allow: /
-User-agent: Applebot
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Google Search and AI Overviews
+User-agent: Googlebot
 Allow: /
-User-agent: Applebot-Extended
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Gemini and Vertex AI grounding
+User-agent: Google-Extended
 Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Google: research and product crawls
+User-agent: GoogleOther
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Vertex AI agent grounding
+User-agent: Google-CloudVertexBot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# NotebookLM source fetching
+User-agent: Google-NotebookLM
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Bing and Microsoft Copilot
 User-agent: Bingbot
 Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Perplexity: search index
+User-agent: PerplexityBot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Perplexity: live fetch for an answer
+User-agent: Perplexity-User
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# xAI: Grok training crawl
+User-agent: xAI-Bot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Grok: web retrieval
+User-agent: GrokBot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Siri and Spotlight
+User-agent: Applebot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Meta AI: live fetch
+User-agent: meta-externalfetcher
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Meta: language model corpus
+User-agent: FacebookBot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Alexa and Amazon assistants
+User-agent: Amazonbot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# DuckDuckGo AI answers
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Le Chat: live fetch
+User-agent: MistralAI-User
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Cohere: retrieval
+User-agent: cohere-ai
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Cohere: training corpus
+User-agent: cohere-training-data-crawler
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# You.com
+User-agent: YouBot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Allen Institute: OLMo corpus
+User-agent: AI2Bot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# knowledge graph used for grounding
+User-agent: Diffbot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Timpi index
+User-agent: Timpibot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# ByteDance: Doubao and TikTok search
+User-agent: Bytespider
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Petal / Huawei assistant
+User-agent: PetalBot
+Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Common Crawl, the corpus behind most open models
 User-agent: CCBot
 Allow: /
+Disallow: /submissions
+Disallow: /api/
+Disallow: /confirmed
+Disallow: /search?
+
+# Plain-text corpus for language models
+# https://themindcareservices.com/llms.txt
+# https://themindcareservices.com/llms-full.txt
 
 Sitemap: https://themindcareservices.com/sitemap.xml

@@ -445,3 +445,28 @@ html[data-theme="dark"] .card-ill .card-art { border-bottom-color: #2b4a45; }
 .city-links { max-width: 860px; margin: 0 auto; text-align: center; line-height: 2.1; font-size: 0.92rem; color: var(--muted); }
 .city-links a { color: var(--teal-dark); text-decoration: none; font-weight: 500; }
 .city-links a:hover { text-decoration: underline; }
+
+/* ── /answers ──────────────────────────────────────────────────────────────
+   Every Q&A on the site in one page. The answers are laid out open rather
+   than in the accordion the per-page FAQ uses: an assistant that fetches this
+   page without running JavaScript still sees the answer text, and a reader
+   scanning for one fact does not have to click twelve headings to find it. */
+.qa-facts { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 30px; box-shadow: var(--shadow-soft); }
+.qa-facts h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 14px; color: var(--dark); }
+.qa-facts ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px 32px; padding: 0; }
+.qa-facts li { font-size: 0.93rem; color: var(--gray); line-height: 1.65; }
+.qa-facts strong { color: var(--dark); font-weight: 600; }
+.qa-toc { margin-top: 28px; }
+.qa-toc h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 600; margin-bottom: 12px; color: var(--dark); }
+.qa-toc ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; }
+.qa-toc li a { display: inline-block; background: var(--card); border: 1px solid var(--border); border-radius: 50px; padding: 7px 16px; font-size: 0.84rem; color: var(--teal-dark); text-decoration: none; font-weight: 500; transition: border-color .2s, transform .2s; }
+.qa-toc li a:hover { border-color: var(--teal); transform: translateY(-2px); }
+.qa-group { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 30px; margin-bottom: 20px; scroll-margin-top: 90px; }
+.qa-group > h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
+.qa { padding: 16px 0; border-bottom: 1px solid var(--border); }
+.qa:last-of-type { border-bottom: none; }
+.qa h3 { font-size: 1rem; font-weight: 600; color: var(--dark); line-height: 1.55; margin-bottom: 7px; }
+.qa p { font-size: 0.96rem; color: var(--gray); line-height: 1.8; margin: 0; }
+.qa-src { display: inline-block; margin-top: 10px; font-size: 0.84rem; font-weight: 600; color: var(--teal-dark); text-decoration: none; }
+.qa-src:hover { text-decoration: underline; }
+@media (max-width: 640px) { .qa-facts, .qa-group { padding: 22px 20px; } }

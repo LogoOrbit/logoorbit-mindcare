@@ -69,6 +69,36 @@
       ]
     },
     {
+      "source": "/(llms|llms-full).txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
+      "source": "/answers",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow, max-snippet:-1, max-image-preview:large"
+        }
+      ]
+    },
+    {
       "source": "/assets/icons/(.*)",
       "headers": [
         {
