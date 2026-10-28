@@ -467,9 +467,35 @@ footer{padding-bottom:104px}
   <svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V38C240 8 480 0 720 16s480 44 720 22v32H0Z"/></svg>
 </section>
 
+<!-- NEWS: HOME SESSIONS -->
+<section class="news-band home-band" aria-label="New: home therapy sessions in Karachi">
+  <div class="wrap">
+    <div class="news-card">
+      <a class="news-stretch" href="/home-therapy-karachi" aria-label="Home therapy sessions in Karachi — see details"></a>
+      <picture><img src="assets/art/knocking-on-the-door.svg" alt="A MindCare therapist arriving at a family's front door" width="960" height="878" loading="lazy" decoding="async"></picture>
+      <div class="news-body">
+        <span class="news-tag"><span class="dot" aria-hidden="true"></span><span data-i18n="home.tag">New · Onsite Sessions</span></span>
+        <h2 data-i18n-html="home.title">MindCare now comes <em>to your home</em></h2>
+        <p data-i18n="home.short">A psychologist or therapist at your doorstep, anywhere in Karachi. For adults, children, teens, couples and elderly parents.</p>
+      </div>
+      <div class="news-meta">
+        <span data-i18n="home.m1">All areas of Karachi</span>
+        <span data-i18n="home.m2">Discreet &amp; confidential</span>
+        <span data-i18n="home.m3">English &amp; Urdu</span>
+      </div>
+      <div class="news-ctas">
+        <a href="https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20book%20a%20home%20session%20in%20Karachi." target="_blank" rel="noopener" class="btn btn-primary" data-i18n="home.book">Book a Home Session</a>
+        <a href="/home-therapy-karachi" class="btn btn-ghost" data-i18n="home.more">How It Works →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- NEWS: UPCOMING COURSE -->
 <style>
 .news-band{padding:34px 0}
+.home-band{padding-bottom:0}
+.home-band .news-card img{background:#fff}
 .news-card{position:relative;display:grid;grid-template-columns:150px 1fr auto;grid-template-areas:"pic body cta" "pic meta cta";
  column-gap:26px;row-gap:12px;align-items:center;background:var(--card);border:1px solid var(--teal);border-radius:20px;padding:22px 30px;box-shadow:0 14px 40px rgba(15,154,168,.14);
  transition:transform .25s ease,box-shadow .25s ease}
@@ -711,7 +737,7 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
       <a class="card card-ill fade-up" href="/services/speech-therapy"><div class="card-art"><img src="assets/art/doll-play.svg" alt="A therapist playing on the floor with a young child" width="800" height="437" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.3t">Speech Therapy</h3><p data-i18n="svc.3d">Help children find their words.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
       <a class="card card-ill fade-up" href="/services/physiotherapy"><div class="card-art"><img src="assets/art/personal-trainer.svg" alt="A physiotherapist guiding a patient through an exercise" width="805" height="651" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.4t">Physiotherapy</h3><p data-i18n="svc.4d">Move without pain again.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
       <a class="card card-ill fade-up" href="/services/behavioral-therapy"><div class="card-art"><img src="assets/art/children.svg" alt="Three children playing a skipping game together" width="865" height="439" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.5t">Behavioral Therapy</h3><p data-i18n="svc.5d">Support for ADHD, autism and habits.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
-      <a class="card card-ill fade-up" href="/services/remedial-home-sessions"><div class="card-art"><img src="assets/art/knocking-on-the-door.svg" alt="A therapist arriving at a family's front door" width="960" height="878" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.6t">Home Sessions</h3><p data-i18n="svc.6d">We come to you, across Karachi.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
+      <a class="card card-ill fade-up" href="/home-therapy-karachi"><div class="card-art"><img src="assets/art/knocking-on-the-door.svg" alt="A therapist arriving at a family's front door" width="960" height="878" loading="lazy" decoding="async"></div><div class="card-txt"><h3 data-i18n="svc.6t">Home Sessions</h3><p data-i18n="svc.6d">We come to you, across Karachi.</p><span class="more" data-i18n="svc.more">Learn more →</span></div></a>
     </div>
     <div class="center" style="margin-top:26px"><a href="/services/" class="btn btn-primary" data-i18n="svc.all">All services</a></div>
   </div>
@@ -849,6 +875,7 @@ html[data-theme="dark"] .rw-err{background:#3a1c1c;border-color:#5e2b2b;color:#f
     <nav aria-label="Footer">
       <a href="/about" data-i18n="nav.about">About</a>
       <a href="/services/" data-i18n="nav.services">Services</a>
+      <a href="/home-therapy-karachi" data-i18n="home.foot">Home Sessions</a>
       <a href="/guides" data-i18n="nav.guides">Guides</a>
       <a href="/answers" data-i18n="nav.answers">Answers</a>
       <a href="/team/" data-i18n="nav.team">Team</a>
@@ -887,7 +914,7 @@ var I18N={
   "svc.3t":"اسپیچ تھراپی","svc.3d":"بچوں کو بولنے میں مدد۔",
   "svc.4t":"فزیو تھراپی","svc.4d":"درد کے بغیر دوبارہ چلیں پھریں۔",
   "svc.5t":"رویّہ جاتی تھراپی","svc.5d":"اے ڈی ایچ ڈی، آٹزم اور عادات کے لیے مدد۔",
-  "svc.6t":"گھر پر سیشن","svc.6d":"ہم آپ کے پاس آتے ہیں، پورے کراچی میں۔",
+  "home.tag":"نیا · گھر پر سیشنز","home.title":"مائنڈ کیئر اب <em>آپ کے گھر</em> آتا ہے","home.short":"ماہرِ نفسیات یا تھراپسٹ آپ کی دہلیز پر، کراچی میں کہیں بھی۔ بڑوں، بچوں، نوجوانوں، جوڑوں اور بزرگ والدین کے لیے۔","home.m1":"کراچی کے تمام علاقے","home.m2":"رازدارانہ اور محفوظ","home.m3":"انگریزی اور اردو","home.book":"گھر پر سیشن بُک کریں","home.more":"تفصیل دیکھیں ←","home.foot":"گھر پر سیشنز","svc.6t":"گھر پر سیشن","svc.6d":"ہم آپ کے پاس آتے ہیں، پورے کراچی میں۔",
   "gd.tag":"رہنمائی و مضامین","gd.title":"جس مسئلے سے گزر رہے ہیں، اس کے لیے مدد تلاش کریں",
   "gd.sub":"بیس آسان زبان میں لکھی گئی رہنمائیاں: علامات کیا ہوتی ہیں اور علاج میں دراصل کیا ہوتا ہے، کراچی کے لیے۔",
   "gd.1":"پریشانی","gd.2":"اداسی","gd.3":"دباؤ اور برن آؤٹ","gd.4":"بچے","gd.5":"ازدواجی زندگی",

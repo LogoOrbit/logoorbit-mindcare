@@ -1,5 +1,5 @@
 # MindCare Services® — full text corpus
-# Source: https://themindcareservices.com/ · generated 2026-09-15 · canonical index: https://themindcareservices.com/llms.txt
+# Source: https://themindcareservices.com/ · generated 2026-10-28 · canonical index: https://themindcareservices.com/llms.txt
 
 MindCare Services® is a multidisciplinary psychotherapy and rehabilitation
 clinic in Karachi, Pakistan, seeing clients in clinic, at home and online
@@ -130,7 +130,7 @@ What it helps with:
 - Family involvement and coaching
 - Continuity of care between clinic and home
 
-For many individuals with special needs, home is where they feel safest, and where learning sticks best. Our remedial home sessions bring professional, structured therapy directly to that environment.
+For many individuals with special needs, home is where they feel safest, and where learning sticks best. Our remedial home sessions bring professional, structured therapy directly to that environment. MindCare now offers home sessions across Karachi for every service, not only special needs.
 Working in the home lets us build skills into real daily routines and coach families in the moment, creating consistent, meaningful progress that's hard to replicate in a clinic alone.
 
 ### Diagnostic Assessments

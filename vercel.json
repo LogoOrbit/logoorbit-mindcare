@@ -26,6 +26,36 @@
       "source": "/montessori-teacher-training-register",
       "destination": "/montessori-course/register",
       "permanent": true
+    },
+    {
+      "source": "/home-sessions",
+      "destination": "/home-therapy-karachi",
+      "permanent": true
+    },
+    {
+      "source": "/home-session",
+      "destination": "/home-therapy-karachi",
+      "permanent": true
+    },
+    {
+      "source": "/home-therapy",
+      "destination": "/home-therapy-karachi",
+      "permanent": true
+    },
+    {
+      "source": "/home-psychologist-karachi",
+      "destination": "/home-therapy-karachi",
+      "permanent": true
+    },
+    {
+      "source": "/therapist-home-visit-karachi",
+      "destination": "/home-therapy-karachi",
+      "permanent": true
+    },
+    {
+      "source": "/psychologist-at-home-karachi",
+      "destination": "/home-therapy-karachi",
+      "permanent": true
     }
   ],
   "rewrites": [

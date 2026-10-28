@@ -218,6 +218,7 @@ ART = {
  "grief-loss-counseling-karachi": ("holding-flowers", 810, 409, "A person holding a bunch of flowers"),
  "anger-management-karachi": ("walking-in-rain", 538, 577, "A person walking out a storm under an umbrella"),
  "self-esteem-confidence-therapy-karachi": ("powerful", 929, 635, "A person standing tall in a hero's cape"),
+ "home-therapy-karachi": ("knocking-on-the-door", 960, 878, "A MindCare therapist arriving at a family's front door in Karachi"),
  "best-psychologist-karachi": ("doctors", 693, 597, "Two clinicians standing side by side"),
  "mental-health-clinic-karachi": ("medicine", 1105, 783, "A clinical team beside a heartbeat symbol"),
  "cbt-therapy-karachi": ("mind-map", 800, 517, "A person mapping out linked thoughts on a board"),
@@ -329,6 +330,7 @@ def footer(prefix):
       <li><a href="/services/speech-therapy">Speech Therapy</a></li>
       <li><a href="/services/physiotherapy">Physiotherapy</a></li>
       <li><a href="/services/behavioral-therapy">Behavioral Therapy</a></li>
+      <li><a href="/home-therapy-karachi">Home Sessions (Karachi)</a></li>
       <li><a href="/services/">All Services</a></li>
     </ul></div>
     <div class="footer-col"><h2>Company</h2><ul>
@@ -487,7 +489,7 @@ SERVICES = [
          helps=["Special-needs support in a familiar setting", "Individuals who find clinic visits difficult",
                 "Consistent one-on-one attention", "Skill-building within daily home routines",
                 "Family involvement and coaching", "Continuity of care between clinic and home"],
-         approach=["For many individuals with special needs, home is where they feel safest, and where learning sticks best. Our remedial home sessions bring professional, structured therapy directly to that environment.",
+         approach=["For many individuals with special needs, home is where they feel safest, and where learning sticks best. Our remedial home sessions bring professional, structured therapy directly to that environment. MindCare now offers <a href=\"/home-therapy-karachi\">home sessions across Karachi</a> for every service, not only special needs.",
                    "Working in the home lets us build skills into real daily routines and coach families in the moment, creating consistent, meaningful progress that's hard to replicate in a clinic alone."],
          included=[("i-home","Care at Your Door","Professional therapy in a familiar setting."),
                    ("i-heart-hands","One-on-One","Focused, individualized attention every session."),
@@ -1218,6 +1220,185 @@ def seo_page(t):
 </section>
 {cta_band(prefix, "You don't have to figure this out alone.", "Reach out today. A confidential appointment is the first step.")}
 </main>
+"""
+    out += footer(prefix)
+    return out
+
+
+# ─────────────────────────── HOME SESSIONS LANDING ───────────────────────────
+# The onsite / home-visit offer has its own page because that is how people in
+# Karachi search for it ("home therapy", "psychologist home visit", "ghar par
+# therapist"), not under a service name. Linked from the home page banner.
+HOME = dict(
+    slug="home-therapy-karachi",
+    h1="Home Therapy Sessions in Karachi",
+    title="Home Therapy & Psychologist Home Visits in Karachi | MindCare Services®",
+    desc=("MindCare Services® now comes to you. Home therapy sessions in Karachi with a qualified "
+          "psychologist or therapist at your doorstep, for adults, children, teens, couples and elderly parents. Book today."),
+    lede=("Can't make it to a clinic, or don't want to? Our psychologists and therapists now visit you at home, "
+          "anywhere in Karachi. The same confidential, evidence-based care, in the place you feel safest."),
+    who=[("i-brain", "Adults", "Anxiety, depression, stress, panic, OCD, grief or burnout, without the commute or the waiting room."),
+         ("i-puzzle", "Children", "Behavior, ADHD, autism support, speech and learning concerns, worked on where your child plays and learns."),
+         ("i-school", "Teenagers", "Exam pressure, low mood, anger or withdrawal, with a therapist who meets them on their own ground."),
+         ("i-family", "Couples & families", "Conflict, distance or a hard life change, worked through together at your own table."),
+         ("i-heart-hands", "Elderly parents", "Loneliness, low mood, memory worries or loss, for parents who can't easily travel."),
+         ("i-home", "Special needs", "Structured remedial, occupational and behavioral therapy built into daily home routines.")],
+    services=[("Psychotherapy & counseling", "/services/individual-psychotherapy"),
+              ("Child psychologist", "/child-psychologist-karachi"),
+              ("Family & couples counseling", "/services/family-counseling"),
+              ("Speech therapy", "/services/speech-therapy"),
+              ("Physiotherapy", "/services/physiotherapy"),
+              ("Occupational therapy", "/services/occupational-therapy"),
+              ("Behavioral therapy (ADHD, autism)", "/services/behavioral-therapy"),
+              ("Remedial home sessions", "/services/remedial-home-sessions"),
+              ("Diagnostic assessments", "/services/diagnostic-assessments")],
+    steps=[("i-wa", "1. Message or call", "Tell us who the session is for, what's going on and your area. WhatsApp is quickest."),
+           ("i-clipboard", "2. We match a specialist", "We pair you with the right psychologist or therapist and agree a time that suits your home."),
+           ("i-home", "3. We come to you", "Your therapist arrives on time, discreetly, with no signage, no uniform and no fuss."),
+           ("i-cycle", "4. Keep going your way", "Continue at home, switch to clinic or online, or mix all three as life changes.")],
+    why=["No traffic, no travel, no waiting room",
+         "Ideal for children, elderly parents and anyone who finds clinics hard",
+         "Discreet visits: nobody needs to know who is coming or why",
+         "Therapy built into real life, where change has to stick",
+         "Qualified psychologists and therapists, English or Urdu",
+         "Monday to Saturday, 9am to 7pm, across Karachi"],
+    faqs=[("Do you really offer therapy sessions at home in Karachi?",
+           "Yes. MindCare Services® now offers onsite home sessions across Karachi. A qualified psychologist or therapist visits your home for the session, with the same confidential, evidence-based care as the clinic."),
+          ("Which areas of Karachi do you cover for home visits?",
+           "All of Karachi, including DHA, Clifton, Gulshan-e-Iqbal, Gulistan-e-Johar, North Nazimabad, PECHS, Bahadurabad, Federal B Area, Scheme 33, Malir, Korangi and Bahria Town. Message us your area and we will confirm a slot."),
+          ("Who are home sessions for?",
+           "Anyone who would rather be seen at home: adults with anxiety or depression, children with behavioral, speech or learning needs, teenagers, couples and families, elderly parents, and people with special needs or limited mobility."),
+          ("Is a home session confidential?",
+           "Completely. Our therapists arrive discreetly, without branded uniforms or vehicles, and everything said in the session stays between you and your therapist."),
+          ("How much does a home therapy session cost?",
+           "Fees depend on the service and your area of Karachi. Message us on WhatsApp or call +92 327 2337631 and we will give you a clear quote before you book."),
+          ("Can a psychologist come home for my child?",
+           "Yes. Many families choose home sessions for children because they are calmer and more themselves at home. We cover child psychology, speech, occupational and behavioral therapy at home."),
+          ("Can I switch between home, clinic and online sessions?",
+           "Yes. Many clients mix them, for example starting at home and moving online later. Your therapist and plan stay the same."),
+          ("Is this an emergency service?",
+           "No. If you or someone at home is in immediate danger, call 1122 or 115, or go to the nearest hospital emergency department.")],
+)
+
+
+def home_page():
+    t = HOME
+    prefix = ""
+    url = f"{BASE}/{t['slug']}"
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "MedicalWebPage", "@id": url + "#webpage", "url": url, "name": t["h1"],
+         "description": t["desc"], "inLanguage": "en-PK",
+         "about": {"@id": f"{BASE}/#clinic"},
+         "audience": {"@type": "MedicalAudience", "geographicArea": {"@type": "City", "name": "Karachi"}},
+         "speakable": {"@type": "SpeakableSpecification", "cssSelector": ["h1", ".lede"]}},
+        {"@type": "Service", "@id": url + "#service",
+         "serviceType": "Home therapy and psychologist home visits",
+         "name": "Home Therapy Sessions in Karachi",
+         "alternateName": ["Home psychologist Karachi", "Therapist home visit Karachi",
+                           "In-home counseling Karachi", "Onsite therapy sessions Karachi"],
+         "description": t["desc"], "url": url,
+         "provider": {"@id": f"{BASE}/#clinic"},
+         "availableChannel": {"@type": "ServiceChannel", "name": "Home visit by a therapist",
+                              "serviceUrl": f"{BASE}/contact", "servicePhone": PHONE,
+                              "availableLanguage": ["English", "Urdu"]},
+         "areaServed": [{"@type": "City", "name": "Karachi"}] +
+                       [{"@type": "Place", "name": f"{a}, Karachi"} for a in KARACHI_AREAS],
+         "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Therapy available at home in Karachi",
+                             "itemListElement": [
+                                 {"@type": "Offer", "itemOffered": {"@type": "MedicalTherapy",
+                                                                     "name": n, "url": BASE + u}}
+                                 for n, u in t["services"]]}},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Services", "item": f"{BASE}/services/"},
+            {"@type": "ListItem", "position": 3, "name": "Home Therapy in Karachi", "item": url}]},
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
+            for q, a in t["faqs"]]},
+    ]}
+    who = "\n".join(f'      <div class="feature-card fade-up"><div class="fi">{icon(prefix,ic)}</div><h3>{n}</h3><p>{d}</p></div>'
+                    for ic, n, d in t["who"])
+    steps = "\n".join(f'      <div class="feature-card fade-up"><div class="fi">{icon(prefix,ic)}</div><h3>{n}</h3><p>{d}</p></div>'
+                      for ic, n, d in t["steps"])
+    why = "\n".join(li(prefix, w) for w in t["why"])
+    svcs = "".join(f'<li><a href="{u}">{n}</a></li>' for n, u in t["services"])
+    areas = "".join(f'<li>Home therapy in {a}</li>' for a in KARACHI_AREAS)
+    out = head(t["title"], t["desc"], url, prefix, schema)
+    out += nav(prefix, "services")
+    out += f"""<main id="main">
+<header class="page-hero">
+  <div class="ph-inner with-art">
+    <div class="ph-copy">
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/services/">Services</a></li><li aria-current="page">Home Therapy in Karachi</li></ol>
+    <div class="ph-badge">{icon(prefix,'i-home')} New · We now come to you · All of Karachi</div>
+    <h1>Therapy at your doorstep. <em>Home sessions across Karachi.</em></h1>
+    <p class="lede">{t['lede']}</p>
+    <p class="hs-ur" lang="ur" dir="rtl">اب مائنڈ کیئر آپ کے گھر آتا ہے۔ کراچی بھر میں ماہرِ نفسیات اور تھراپسٹ کے گھریلو سیشنز۔</p>
+    <div class="ph-actions">
+      <a href="{WA}?text=Hi%20MindCare%2C%20I%27d%20like%20to%20book%20a%20home%20session%20in%20Karachi." target="_blank" rel="noopener" class="btn-primary">Book a Home Session</a>
+      <a href="tel:{PHONE}" class="btn-secondary">Call {PHONE_H}</a>
+    </div>
+    </div>
+    <div class="ph-art">{art(t['slug'], prefix, lazy=False)}</div>
+  </div>
+</header>
+<section>
+  <div class="section-inner">
+    <div class="detail-grid">
+      <div class="detail-body fade-up">
+        <h2>A psychologist who comes home</h2>
+        <p>Sometimes the hardest part of getting help is getting out of the door. Traffic, a child who melts down in waiting rooms, a parent who can no longer travel, or simply not wanting anyone to see you walk into a clinic. So MindCare Services® now brings therapy to you.</p>
+        <p>Whether you searched for <strong>home therapy</strong>, a <strong>home psychologist</strong>, a <strong>therapist home visit</strong> or <strong>in-home counseling</strong> in Karachi, this is it: a qualified MindCare psychologist or therapist, at your home, at a time that suits your family.</p>
+        <h2>Why families choose home sessions</h2>
+        <ul>
+{why}
+        </ul>
+        <h2>Therapy available at home</h2>
+        <ul class="area-list">{svcs}</ul>
+      </div>
+      <aside class="aside-card fade-up">
+        <h3>Book a home visit</h3>
+        <p>Tell us who it's for and your area. We'll confirm a specialist and a time, usually within a few hours.</p>
+        <ul class="aside-list">
+          <li>{icon(prefix,'i-home')} All areas of Karachi</li>
+          <li>{icon(prefix,'i-lock')} Discreet &amp; confidential</li>
+          <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm</li>
+          <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
+        </ul>
+        <div class="aside-actions">
+          <a href="{WA}?text=Hi%20MindCare%2C%20I%27d%20like%20to%20book%20a%20home%20session%20in%20Karachi." target="_blank" rel="noopener" class="btn-wa-block">{icon(prefix,'i-wa')} Book on WhatsApp</a>
+          <a href="/contact" class="btn-primary" style="justify-content:center">Booking Form</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Who It's For</span><h2 class="section-title">Home sessions for every member of the family</h2></div>
+    <div class="feature-grid">
+{who}
+    </div>
+  </div>
+</section>
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">How It Works</span><h2 class="section-title">From message to first home session</h2></div>
+    <div class="feature-grid">
+{steps}
+    </div>
+  </div>
+</section>
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Coverage</span><h2 class="section-title">Home therapy across Karachi</h2><p class="section-sub">We visit homes all over the city. These are the areas families most often book from; if yours isn't listed, just ask.</p></div>
+    <ul class="area-list fade-up">{areas}</ul>
+  </div>
+</section>
+{faq_block(prefix, t['faqs'])}
+{cta_band(prefix, "Help that comes home.", "Book a confidential home session anywhere in Karachi. Message us on WhatsApp and we'll take it from there.")}
+</main>
+<style>.hs-ur{{font-size:1.02rem;color:var(--teal-deep);margin:-4px 0 18px;line-height:1.9}}</style>
 """
     out += footer(prefix)
     return out
@@ -2662,6 +2843,7 @@ question this site answers in one place.
 - [About the practice]({BASE}/about): who runs it, how it works, what it does and does not do.
 - [All services]({BASE}/services/): the full clinical offering.
 - [Online therapy across Pakistan]({BASE}/online-therapy): how remote sessions work and which cities are covered.
+- [Home therapy sessions in Karachi]({BASE}/{HOME['slug']}): psychologists and therapists visit clients at home anywhere in Karachi, for adults, children, teens, couples and elderly parents.
 
 ## Services
 
@@ -2870,6 +3052,7 @@ def build():
     for t in TOPICS:
         write(f"{t['slug']}.html", seo_page(t))
     write("guides.html", guides_index())
+    write(f"{HOME['slug']}.html", home_page())
     for c in CITIES:
         write(f"{c['slug']}.html", city_page(c))
     write("online-therapy.html", cities_index())
@@ -2902,6 +3085,7 @@ def build():
             (f"{BASE}/services/", "services/index.html", "0.9"),
             (f"{BASE}/team/", "team/index.html", "0.7"),
             (f"{BASE}/guides", "guides.html", "0.8"),
+            (f"{BASE}/{HOME['slug']}", f"{HOME['slug']}.html", "0.9"),
             (f"{BASE}/online-therapy", "online-therapy.html", "0.9"),
             (f"{BASE}/articles", "articles.html", "0.7"),
             (f"{BASE}/answers", "answers.html", "0.9"),
