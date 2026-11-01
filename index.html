@@ -398,6 +398,19 @@ footer{padding-bottom:104px}
 .vp-track:hover .vp-knob,.vplayer.playing .vp-track .vp-knob{opacity:1}
 .vp-time{color:#fff;font-size:.8rem;font-variant-numeric:tabular-nums;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.5)}
 @media (max-width:560px){.vp-big{width:64px;height:64px}.vp-big svg{width:28px;height:28px}.vp-time{display:none}}
+/* BADGES: written as a margin note, not a pill. Sentence case, a short
+   rule on the leading edge, no dot, no glow, nothing that pulses. */
+html body :is(.ph-badge,.hero-badge,.ws-kick,.tk-stamp,.nov-open,.news-tag,.nb .o,.x-nov .o,.person .live,.hb .k,.section-tag,.tag,.mini-tk .info em,.psy-pill,.x-psy .p,.pb .pl){display:inline-block;background:none;border:0;border-inline-start:3px solid var(--teal,#0f9aa8);border-radius:0;box-shadow:none;padding:2px 0 2px 10px;font-size:.86rem;font-weight:600;letter-spacing:normal;text-transform:none;line-height:1.4;color:inherit;font-style:normal;animation:none}
+html body :is(.ph-badge,.hero-badge,.ws-kick,.tk-stamp,.nov-open,.news-tag,.nb .o,.x-nov .o,.person .live,.hb .k,.section-tag,.tag,.mini-tk .info em,.psy-pill,.x-psy .p,.pb .pl) :is(i,.dot,svg),html body :is(.hero-badge,.person .live,.hb .k,.section-tag,.tag,.mini-tk .info em,.psy-pill,.x-psy .p,.pb .pl)::before,html body .online{display:none}
+html body .tk-stamp.open{border-inline-start-color:#2fbf71}
+html body :is(.psy-pill,.x-psy .p,.pb .pl){border-inline-start-color:var(--green,#2d6a1f)}
+html body .tk-stamp.done{border-inline-start-color:#9aa8a1;color:#5c6b64}
+html[data-theme="dark"] body .tk-stamp.done{color:#a7bcb0}
+/* BUTTONS: slim, sized to their label, never stretched to fill a row. */
+html body :is(.hero-actions .btn,.promo .ctas a,.news-ctas .btn){flex:0 0 auto;min-width:0;padding:10px 18px;border-radius:10px;font-size:.9rem;line-height:1.2;white-space:nowrap;box-shadow:none}
+html body .pb .ctas a.a1{padding:10px 18px 10px 10px;gap:8px}
+html body .pb .ctas a.a1 span{width:24px;height:24px}
+@media(max-width:560px){html body :is(.hero-actions .btn,.promo .ctas a,.news-ctas .btn){padding:9px 15px;font-size:.86rem}html body .hero-actions,html body .promo .ctas,html body .news-ctas{flex-wrap:wrap;gap:8px}}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZFCFZT32R"></script>
@@ -618,7 +631,7 @@ html[data-theme="dark"] .pb .kk{color:#8fd66f}
       <svg class="neuro" viewBox="0 0 320 340" aria-hidden="true" focusable="false"><path class="nh-swoosh" d="M96 318C30 262 18 150 74 82C120 26 200 8 262 38C200 28 140 52 110 100C78 152 80 236 128 300Z"/><path class="nh-head" d="M132 332V280C86 264 56 220 56 162C56 94 108 44 176 44C242 44 286 92 286 152C286 170 282 180 290 196L304 220C307 226 304 232 297 233L285 235L286 258C286 272 276 280 262 278L236 274L234 332Z"/><g class="nh-net"><path d="M132 112L162 122L178 92L222 116L246 162M162 122L152 152L122 176M162 122L202 152L222 116M202 152L246 162M152 152L176 192L202 152L226 202L176 192M132 112L152 152M202 152L226 202"/><circle cx="132" cy="112" r="9"/><circle cx="178" cy="92" r="11"/><circle cx="222" cy="116" r="8"/><circle cx="162" cy="122" r="6"/><circle cx="152" cy="152" r="10"/><circle cx="202" cy="152" r="12"/><circle cx="246" cy="162" r="9"/><circle cx="122" cy="176" r="8"/><circle cx="176" cy="192" r="9"/><circle cx="226" cy="202" r="7"/></g></svg><svg class="neuro r" viewBox="0 0 320 340" aria-hidden="true" focusable="false"><path class="nh-swoosh" d="M96 318C30 262 18 150 74 82C120 26 200 8 262 38C200 28 140 52 110 100C78 152 80 236 128 300Z"/><path class="nh-head" d="M132 332V280C86 264 56 220 56 162C56 94 108 44 176 44C242 44 286 92 286 152C286 170 282 180 290 196L304 220C307 226 304 232 297 233L285 235L286 258C286 272 276 280 262 278L236 274L234 332Z"/><g class="nh-net"><path d="M132 112L162 122L178 92L222 116L246 162M162 122L152 152L122 176M162 122L202 152L222 116M202 152L246 162M152 152L176 192L202 152L226 202L176 192M132 112L152 152M202 152L226 202"/><circle cx="132" cy="112" r="9"/><circle cx="178" cy="92" r="11"/><circle cx="222" cy="116" r="8"/><circle cx="162" cy="122" r="6"/><circle cx="152" cy="152" r="10"/><circle cx="202" cy="152" r="12"/><circle cx="246" cy="162" r="9"/><circle cx="122" cy="176" r="8"/><circle cx="176" cy="192" r="9"/><circle cx="226" cy="202" r="7"/></g></svg>
       <div class="m" data-i18n="nov.m">November</div>
       <h2 data-i18n-html="nov.title"><svg class="spark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>Online Internships<svg class="spark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg></h2>
-      <div class="o"><i aria-hidden="true"></i><span data-i18n="nov.open">OPEN</span></div>
+      <div class="o"><i aria-hidden="true"></i><span data-i18n="nov.open">Open</span></div>
       <p data-i18n="nov.short">Applications for our November 2026 online internships are open. Learn from practising psychologists, from anywhere in Pakistan.</p>
       <div class="ctas">
         <a class="a1" href="https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20apply%20for%20the%20November%20online%20internship." target="_blank" rel="noopener" data-i18n="nov.apply">Apply on WhatsApp</a>
