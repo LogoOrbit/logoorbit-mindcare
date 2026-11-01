@@ -265,14 +265,14 @@ def nav(prefix, active=None):
   </a>
   <ul class="nav-links">
     <li><a href="/"{cls('home')}>Home</a></li>
+    <li><a href="/workshops"{cls('workshops')}>Workshops</a></li>
+    <li><a href="/internships"{cls('internships')}>Internships</a></li>
+    <li><a href="/courses"{cls('courses')}>Courses</a></li>
+    <li><a href="/team/"{cls('team')}>Team</a></li>
     <li><a href="/services/"{cls('services')}>Services</a></li>
     <li><a href="/guides"{cls('guides')}>Guides</a></li>
     <li><a href="/about"{cls('about')}>About</a></li>
-    <li><a href="/team/"{cls('team')}>Team</a></li>
     <li><a href="/articles"{cls('articles')}>Articles</a></li>
-    <li><a href="/courses"{cls('courses')}>Courses</a></li>
-    <li><a href="/workshops"{cls('workshops')}>Workshops</a></li>
-    <li><a href="/internships"{cls('internships')}>Internships</a></li>
     <li><a href="/contact" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
@@ -283,14 +283,14 @@ def nav(prefix, active=None):
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="/">Home</a>
+  <a href="/workshops">Workshops</a>
+  <a href="/internships">Internships</a>
+  <a href="/courses">Courses</a>
+  <a href="/team/">Team</a>
   <a href="/services/">Services</a>
   <a href="/guides">Guides</a>
   <a href="/about">About</a>
-  <a href="/team/">Team</a>
   <a href="/articles">Articles</a>
-  <a href="/courses">Courses</a>
-  <a href="/workshops">Workshops</a>
-  <a href="/internships">Internships</a>
   <a href="/contact" class="m-cta">Book Appointment</a>
 </div>
 <div class="wa-float" role="navigation" aria-label="Quick contact">
