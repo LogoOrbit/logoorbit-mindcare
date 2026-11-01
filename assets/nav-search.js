@@ -64,7 +64,7 @@
     ".ns-overlay.is-open{display:flex}",
     ".ns-panel{width:100%;max-width:620px;background:" + CARD + ";border:1px solid " + LINE + ";",
     "border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.28);overflow:hidden;",
-    "font-family:'DM Sans',system-ui,sans-serif}",
+    "font-family:'Schibsted Grotesk',system-ui,sans-serif}",
     ".ns-form{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid " + LINE + "}",
     ".ns-icon{width:20px !important;height:20px !important;flex:0 0 20px;color:var(--teal,#0f9aa8)}",
     ".ns-input{flex:1;min-width:0;border:0;background:none;color:" + TXT + ";",

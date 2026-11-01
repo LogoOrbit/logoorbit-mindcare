@@ -1,5 +1,5 @@
 # MindCare Services® — full text corpus
-# Source: https://themindcareservices.com/ · generated 2026-11-01 · canonical index: https://themindcareservices.com/llms.txt
+# Source: https://themindcareservices.com/, generated 2026-11-01, canonical index: https://themindcareservices.com/llms.txt
 
 MindCare Services® is a multidisciplinary psychotherapy and rehabilitation
 clinic in Karachi, Pakistan, seeing clients in clinic, at home and online
@@ -34,8 +34,8 @@ What it helps with:
 - Self-esteem, identity and life transitions
 - Sleep problems linked to your mental state
 
-Therapy here is a partnership, not a lecture. Your first session is a relaxed conversation where we listen to what's going on and answer your questions. There is nothing you have to prepare and no pressure.
-From there, your therapist draws on evidence-based approaches (Cognitive Behavioral Therapy, psychodynamic therapy and motivational techniques) chosen to fit you, not a one-size-fits-all script. You set the goals; we bring the tools and the steady support.
+You and your therapist set the goals together. Your first session is a relaxed conversation where we listen to what's going on and answer your questions. There is nothing you have to prepare and no pressure.
+From there, your therapist draws on evidence-based approaches (Cognitive Behavioral Therapy, psychodynamic therapy and motivational techniques) chosen to fit you. You set the goals; we bring the tools and the steady support.
 
 ### Family & Relationship Counseling
 URL: https://themindcareservices.com/services/family-counseling
@@ -226,7 +226,7 @@ Signs people come to us with:
 - Losing motivation at work or home
 
 We help you identify what's driving your stress and teach practical, proven techniques to regulate it, from thought strategies to healthier boundaries and routines.
-Whether it's work, study, family or everything at once, you'll leave with real tools, not just talk.
+Whether it's work, study, family or everything at once, you'll leave with tools you can use that week.
 
 ### Trauma Therapy in Karachi
 URL: https://themindcareservices.com/trauma-therapy-karachi
@@ -386,7 +386,7 @@ Choosing the right support matters. MindCare Services® is a multidisciplinary m
 Signs people come to us with:
 - You want evidence-based, professional care
 - You value confidentiality and warmth
-- You'd like a team, not just one option
+- You'd like a whole team to draw on
 - You want a straightforward first appointment
 - You're ready to feel better
 
@@ -520,7 +520,7 @@ URL: https://themindcareservices.com/online-therapy-multan
 Specialist therapy for south Punjab without the trip to Lahore. Confidential online sessions in English or Urdu, six days a week.
 
 South Punjab has far fewer specialist mental health services than the country's largest cities, and for a lot of families in Multan the honest options have been travelling to Lahore or doing nothing.
-Online therapy is the practical third option. A weekly session from home costs you an hour, not a day and a bus fare, and it makes consistent work, which is what actually helps, realistic rather than aspirational.
+Online therapy is the practical third option. A weekly session from home costs you an hour of your day, and it makes consistent work, which is what actually helps, realistic rather than aspirational.
 MindCare Services® is a Karachi practice working across Pakistan online, in English or Urdu, Monday to Saturday, 9am to 7pm.
 
 Areas: Multan Cantt, Gulgasht Colony, Shah Rukn-e-Alam, Bosan Road, Wapda Town Multan, Model Town Multan, New Multan.
@@ -586,7 +586,7 @@ URL: https://themindcareservices.com/online-therapy-sukkur
 Specialist therapy for upper Sindh without the journey to Karachi. Confidential online sessions in English or Urdu, six days a week.
 
 Upper Sindh has very few qualified psychologists, and for most families in Sukkur the realistic options have been a long trip to Karachi or nothing at all.
-Online therapy makes the third option real. A weekly session from home is an hour, not a journey, and weekly is what actually shifts anxiety, low mood or grief.
+Online therapy makes the third option real. A weekly session from home takes an hour, and weekly is what actually shifts anxiety, low mood or grief.
 MindCare Services® is based in Karachi and sees clients across Sindh and the rest of Pakistan online, in English or Urdu, Monday to Saturday.
 
 Areas: Military Road, Barrage Colony, Shikarpur Road, New Sukkur, Old Sukkur, Rohri.
@@ -685,7 +685,7 @@ Q: How long does psychotherapy take?
 A: It varies from person to person. Some concerns ease in a handful of sessions; others benefit from longer support. Your therapist will discuss a realistic plan with you and review it as you progress.
 
 Q: Is what I share really confidential?
-A: Yes. Your sessions are 100% confidential and never disclosed to anyone. Confidentiality is central to how MindCare works.
+A: Yes. Your sessions are confidential and never disclosed to anyone. Confidentiality is central to how MindCare works.
 
 ### Family & Relationship Counseling
 Source: https://themindcareservices.com/services/family-counseling
@@ -1243,7 +1243,7 @@ A: Use the booking form, call +92 327 2337631 or message us on WhatsApp. We repl
 
 ### The Soul Cannot Be Coded
 URL: https://themindcareservices.com/articles/the-soul-cannot-be-coded
-By Shaista Tariq · 3 March 2026
+By Shaista Tariq, 3 March 2026
 
 A philosophical dialogue on consciousness, machines and the irreducible human, and why empathy, presence and the human soul can never truly be coded.
 
@@ -1254,7 +1254,7 @@ A philosophical dialogue on consciousness, machines and the irreducible human, a
 
 ### The Cost of Professionalism vs. The Reality of Pay
 URL: https://themindcareservices.com/articles/cost-of-professionalism-vs-reality-of-pay
-By Shaista Tariq · 16 February 2026
+By Shaista Tariq, 16 February 2026
 
 Burnout is common, but we rarely ask why. An honest look at the gap between the professionalism expected of care workers and the reality of how that work is paid.
 
@@ -1265,7 +1265,7 @@ Burnout is common, but we rarely ask why. An honest look at the gap between the 
 
 ### Consistency vs. Correction
 URL: https://themindcareservices.com/articles/consistency-vs-correction
-By Shaista Tariq · 22 January 2026
+By Shaista Tariq, 22 January 2026
 
 What matters more: consistency, or correcting your direction? For me it isn't a debate: consistency only works when it is paired with regular self-correction.
 
@@ -1276,12 +1276,12 @@ What matters more: consistency, or correcting your direction? For me it isn't a 
 
 ### Why People Leave Jobs, Productivity Drops &amp; Businesses Struggle
 URL: https://themindcareservices.com/articles/why-people-leave-jobs-and-productivity-drops
-By Shaista Tariq · 21 January 2026
+By Shaista Tariq, 21 January 2026
 
 The psychological and human factors behind disengagement, burnout and turnover at work, and what leaders can do to genuinely support their people.
 
 - Of 6-8 active hours a day, only about 3-5 are genuinely productive.
-- Deep focus lasts 60-90 minutes; breaks are essential, not a luxury.
+- Deep focus lasts 60-90 minutes; breaks are essential.
 - Rigid schedules assume time spent equals work done.
 - Responsibility for low productivity is shared by managers and employees.
 

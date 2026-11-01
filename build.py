@@ -29,7 +29,7 @@ GTAG = """<!-- Google tag (gtag.js) -->
 # as print media and flipping it to all on load takes it off the critical path;
 # every face is already display=swap, so text paints in the fallback and
 # re-renders once the webfont lands.
-_FONT_CSS = ("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap")
+_FONT_CSS = ("https://fonts.googleapis.com/css2?family=Young+Serif&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap")
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          f'<link rel="preload" as="style" href="{_FONT_CSS}">'
@@ -358,7 +358,7 @@ def footer(prefix):
   </div>
   <div class="footer-bottom">
     <span>© 2026 MindCare Services®. All rights reserved.</span>
-    <span>Keeping Your Peace · Karachi, Pakistan</span>
+    <span>Karachi, Pakistan</span>
   </div>
 </footer>
 <script src="{prefix}assets/main.js" defer></script>
@@ -396,15 +396,15 @@ SERVICES = [
          helps=["Anxiety, panic and constant worry", "Depression, low mood and loss of motivation",
                 "Stress, burnout and overwhelm", "Trauma and difficult past experiences",
                 "Self-esteem, identity and life transitions", "Sleep problems linked to your mental state"],
-         approach=["Therapy here is a partnership, not a lecture. Your first session is a relaxed conversation where we listen to what's going on and answer your questions. There is nothing you have to prepare and no pressure.",
-                   "From there, your therapist draws on evidence-based approaches (Cognitive Behavioral Therapy, psychodynamic therapy and motivational techniques) chosen to fit you, not a one-size-fits-all script. You set the goals; we bring the tools and the steady support."],
+         approach=["You and your therapist set the goals together. Your first session is a relaxed conversation where we listen to what's going on and answer your questions. There is nothing you have to prepare and no pressure.",
+                   "From there, your therapist draws on evidence-based approaches (Cognitive Behavioral Therapy, psychodynamic therapy and motivational techniques) chosen to fit you. You set the goals; we bring the tools and the steady support."],
          included=[("i-brain","Evidence-Based Methods","CBT, psychodynamic and motivational therapy, tailored to your needs."),
                    ("i-lock","Total Confidentiality","Everything you share stays private, always."),
                    ("i-heart-hands","Judgment-Free Space","Come as you are. No problem is too small to bring."),
                    ("i-clock","Flexible Sessions","In-clinic appointments Mon-Sat, scheduled around you.")],
          faqs=[("Do I need a diagnosis to start therapy?","No. You don't need a referral or a diagnosis to begin. Many people come simply because something feels off, and that's reason enough. We'll figure out the rest together."),
                ("How long does psychotherapy take?","It varies from person to person. Some concerns ease in a handful of sessions; others benefit from longer support. Your therapist will discuss a realistic plan with you and review it as you progress."),
-               ("Is what I share really confidential?","Yes. Your sessions are 100% confidential and never disclosed to anyone. Confidentiality is central to how MindCare works.")]),
+               ("Is what I share really confidential?","Yes. Your sessions are confidential and never disclosed to anyone. Confidentiality is central to how MindCare works.")]),
     dict(slug="family-counseling", icon="i-family", name="Family & Relationship Counseling",
          title="Family Counseling in Karachi | MindCare Services®",
          desc="Family and couples counseling in Karachi to rebuild communication, resolve conflict and navigate change together. Guided, confidential sessions. Book an appointment.",
@@ -414,7 +414,7 @@ SERVICES = [
                 "Blended-family and in-law dynamics", "Grief and loss within the family"],
          approach=["Most family conflict isn't about who's right. It's about patterns that keep repeating. Our counselors help everyone feel heard, then gently surface those patterns so the whole family can change them together.",
                    "Sessions are structured but warm. We set shared goals, teach practical communication skills, and give each person space to be understood, building trust and connection that lasts beyond the room."],
-         included=[("i-family","Whole-Family View","We work with the relationships, not against any one person."),
+         included=[("i-family","Whole-Family View","We work on the relationship as a whole, without taking sides."),
                    ("i-heart-hands","Neutral & Fair","Everyone gets heard. No sides, no blame."),
                    ("i-lock","Private & Safe","A confidential space for honest conversations."),
                    ("i-check","Practical Skills","Communication tools you can actually use at home.")],
@@ -446,7 +446,7 @@ SERVICES = [
                 "Posture and movement correction", "Chronic pain management"],
          approach=["Pain and stiffness shouldn't run your life. Our physiotherapists start with a thorough assessment to find the real source of the problem, then build a hands-on treatment and exercise plan around your goals.",
                    "Treatment combines manual therapy, guided exercise and education so you don't just feel better in the session. You keep improving between them, and learn how to prevent the problem returning."],
-         included=[("i-clipboard","Thorough Assessment","We diagnose the cause, not just the symptom."),
+         included=[("i-clipboard","Thorough Assessment","We look for what is causing the symptoms."),
                    ("i-physio","Hands-On Treatment","Manual therapy plus a tailored exercise plan."),
                    ("i-home","Home Programs","Simple exercises to keep progress going at home."),
                    ("i-check","Recovery Focused","Clear goals to get you back to full function.")],
@@ -481,7 +481,7 @@ SERVICES = [
          included=[("i-cycle","Proven Frameworks","Structured, evidence-based intervention plans."),
                    ("i-puzzle","Individualized","Tailored to each person's strengths and needs."),
                    ("i-family","Family Partnership","Consistent strategies for home and school."),
-                   ("i-check","Positive Focus","Building skills, not just reducing behaviors.")],
+                   ("i-check","Positive Focus","Building new skills to replace difficult behaviors.")],
          faqs=[("What ages do you work with?","We primarily support children and adolescents, with programs individualized to each person's developmental level and goals."),
                ("Do you coordinate with schools or families?","Yes. Consistency matters, so we work closely with families and, where helpful, caregivers and educators."),
                ("Is behavioral therapy evidence-based?","Yes. We use structured, well-researched frameworks and adapt them to each individual.")]),
@@ -601,7 +601,7 @@ def service_page(s):
   <div class="ph-inner with-art">
     <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/services/">Services</a></li><li aria-current="page">{s['name']}</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-shield')} Evidence-based · Confidential · Karachi</div>
+    <div class="ph-badge">{icon(prefix,'i-shield')} Evidence-based, confidential care in Karachi</div>
     <h1>{s['name']}</h1>
     <p class="lede">{s['lede']}</p>
     <div class="ph-actions">
@@ -628,7 +628,7 @@ def service_page(s):
         <h3>Quick facts</h3>
         <ul class="aside-list">
           <li>{icon(prefix,'i-shield')} Evidence-based care</li>
-          <li>{icon(prefix,'i-lock')} 100% confidential</li>
+          <li>{icon(prefix,'i-lock')} Confidential</li>
           <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm</li>
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
         </ul>
@@ -692,7 +692,7 @@ def services_index():
   <div class="ph-inner with-art">
     <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Services</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-puzzle')} {len(SERVICES)} services · One caring team</div>
+    <div class="ph-badge">{icon(prefix,'i-puzzle')} {len(SERVICES)} services from one team</div>
     <h1>Comprehensive care for <em>mind &amp; body</em></h1>
     <p class="lede">A holistic range of therapy and clinical services, all under one roof in Karachi, delivered by experienced professionals. Jump straight to what you need.</p>
     <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a><a href="/online-therapy" class="btn-secondary">Outside Karachi? Online therapy →</a></div>
@@ -904,7 +904,7 @@ def team_page(m):
         <ul class="aside-list">
           <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm</li>
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
-          <li>{icon(prefix,'i-lock')} 100% confidential</li>
+          <li>{icon(prefix,'i-lock')} Confidential</li>
         </ul>
         <div class="aside-actions">
           <a href="/contact" class="btn-primary" style="justify-content:center">Book Appointment</a>
@@ -995,7 +995,7 @@ TOPICS = [
    desc="Overwhelmed by stress or burnout in Karachi? Learn practical, evidence-based tools to manage stress and recover balance with MindCare Services®. Book an appointment.",
    lede="Chronic stress and burnout don't just 'go away', but the right tools change everything. We help you understand your stress and build a calmer, more sustainable balance.",
    signs=["Feeling constantly overwhelmed or on edge","Exhaustion that rest doesn't fix","Irritability, tension or trouble switching off","Headaches, poor sleep or low focus","Losing motivation at work or home"],
-   help=["We help you identify what's driving your stress and teach practical, proven techniques to regulate it, from thought strategies to healthier boundaries and routines.","Whether it's work, study, family or everything at once, you'll leave with real tools, not just talk."],
+   help=["We help you identify what's driving your stress and teach practical, proven techniques to regulate it, from thought strategies to healthier boundaries and routines.","Whether it's work, study, family or everything at once, you'll leave with tools you can use that week."],
    faqs=[("Is burnout different from stress?","Burnout is what happens when stress goes unaddressed for too long, leading to deep exhaustion. Both respond well to support."),
          ("Do you offer corporate stress programs?","Yes. See our awareness sessions and trainings for teams and organizations."),
          ("How many sessions will I need?","It varies. Many people gain useful tools quickly; your therapist will suggest a realistic plan.")]),
@@ -1093,7 +1093,7 @@ TOPICS = [
    title="Best Psychologist in Karachi | MindCare Services®",
    desc="Searching for a trusted psychologist in Karachi? MindCare Services®, founded by PPA member Shaista Tariq, offers evidence-based, confidential care. Book today.",
    lede="Choosing the right support matters. MindCare Services® is a multidisciplinary mental health clinic in Karachi, founded by Shaista Tariq, a Member of the Pakistan Psychological Association (PPA).",
-   signs=["You want evidence-based, professional care","You value confidentiality and warmth","You'd like a team, not just one option","You want a straightforward first appointment","You're ready to feel better"],
+   signs=["You want evidence-based, professional care","You value confidentiality and warmth","You'd like a whole team to draw on","You want a straightforward first appointment","You're ready to feel better"],
    help=["Our team includes psychotherapists and a clinical psychologist, offering individual, family and specialized therapy, all under one roof.","Founded on the belief that no one should struggle alone, we make quality mental health care approachable and judgment-free."],
    faqs=[("What's the difference between a psychologist and psychotherapist?","Both provide talk therapy. Our clinic offers both, and we'll match you with the right professional for your needs."),
          ("Is the founder qualified?","Shaista Tariq is a Psychotherapist and personal Member of the Pakistan Psychological Association (PPA)."),
@@ -1176,7 +1176,7 @@ def seo_page(t):
   <div class="ph-inner with-art">
     <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/guides">Guides</a></li><li aria-current="page">{t['h1']}</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-heart-hands')} Confidential · Judgment-free · Karachi</div>
+    <div class="ph-badge">{icon(prefix,'i-heart-hands')} Confidential care in Karachi</div>
     <h1>{t['h1']}</h1>
     <p class="lede">{t['lede']}</p>
     <div class="ph-actions">
@@ -1205,7 +1205,7 @@ def seo_page(t):
         <p>A confidential appointment is the easiest way to begin. No pressure, no judgment.</p>
         <ul class="aside-list">
           <li>{icon(prefix,'i-shield')} Evidence-based care</li>
-          <li>{icon(prefix,'i-lock')} 100% confidential</li>
+          <li>{icon(prefix,'i-lock')} Confidential</li>
           <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm</li>
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
         </ul>
@@ -1339,7 +1339,7 @@ def home_page():
   <div class="ph-inner with-art">
     <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/services/">Services</a></li><li aria-current="page">Home Therapy in Karachi</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-home')} New · We now come to you · All of Karachi</div>
+    <div class="ph-badge">{icon(prefix,'i-home')} New: we now come to you, anywhere in Karachi</div>
     <h1>Therapy at your doorstep. <em>Home sessions across Karachi.</em></h1>
     <p class="lede">{t['lede']}</p>
     <p class="hs-ur" lang="ur" dir="rtl">اب مائنڈ کیئر آپ کے گھر آتا ہے۔ کراچی بھر میں ماہرِ نفسیات اور تھراپسٹ کے گھریلو سیشنز۔</p>
@@ -1453,8 +1453,8 @@ INTERN_CSS = """<style>
 .nov-hero .neuro{position:absolute;width:min(520px,80vw);right:-60px;top:50%;transform:translateY(-50%);opacity:.22;pointer-events:none}
 .nov-hero .breadcrumb{justify-content:center}
 .nov-hero .ph-inner{max-width:860px}
-.nov-month{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(3rem,9vw,5.6rem);line-height:1;color:#3b1d2e;margin:6px 0 4px}
-.nov-h1{font-family:'Cormorant Garamond',serif;font-weight:400;text-transform:uppercase;letter-spacing:.02em;
+.nov-month{font-family:'Young Serif',serif;font-style:italic;font-weight:600;font-size:clamp(3rem,9vw,5.6rem);line-height:1;color:#3b1d2e;margin:6px 0 4px}
+.nov-h1{font-family:'Young Serif',serif;font-weight:400;text-transform:uppercase;letter-spacing:.02em;
  font-size:clamp(2.6rem,9.5vw,6rem);line-height:.92;color:#3b1d2e;margin:0}
 .nov-h1 .spark{width:.32em;height:.32em;vertical-align:middle;margin:0 .14em}
 .nov-open{display:inline-flex;align-items:center;gap:10px;margin:22px 0 16px;padding:8px 22px;border:1.5px solid #3b1d2e;border-radius:999px;
@@ -1467,7 +1467,7 @@ INTERN_CSS = """<style>
 .btn-plum:hover{background:#56293f;transform:translateY(-2px)}
 .btn-plum svg{width:18px;height:18px;fill:currentColor}
 .nov-contact{margin-top:26px;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:#5c4250}
-.nov-contact b{display:block;margin-top:6px;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:0;text-transform:none;font-size:1.5rem;color:#3b1d2e}
+.nov-contact b{display:block;margin-top:6px;font-family:'Young Serif',serif;font-style:italic;letter-spacing:0;text-transform:none;font-size:1.5rem;color:#3b1d2e}
 .nov-contact a{color:inherit;text-decoration:none}
 /* key facts */
 .in-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:16px;max-width:980px;margin:0 auto}
@@ -1481,15 +1481,15 @@ INTERN_CSS = """<style>
 .in-steps li{position:relative;padding:0 0 28px 70px}
 .in-steps li:last-child{padding-bottom:0}
 .in-steps b.n{position:absolute;left:0;top:0;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
- font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:#fff;background:var(--teal-btn)}
+ font-family:'Young Serif',serif;font-size:1.4rem;color:#fff;background:var(--teal-btn)}
 .in-steps.plum b.n{background:#3b1d2e}
 .in-steps h3{margin:4px 0 4px;font-size:1.15rem}
 .in-steps p{margin:0;color:var(--gray)}
 /* Psychology: the clean white programme card with green accents */
 .psy-hero{position:relative;overflow:hidden;padding:110px 5% 0;background:linear-gradient(160deg,#ffffff 0%,#f2f8f1 60%,#eaf6f7 100%)}
 .psy-grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
-.psy-kick{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.4vw,2.1rem);color:var(--green);margin:0}
-.psy-h1{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacing:-.01em;text-transform:uppercase;font-size:clamp(2.7rem,8vw,5rem);line-height:.95;color:#14243a;margin:2px 0 14px}
+.psy-kick{font-family:'Young Serif',serif;font-size:clamp(1.5rem,3.4vw,2.1rem);color:var(--green);margin:0}
+.psy-h1{font-family:'Schibsted Grotesk',sans-serif;font-weight:800;letter-spacing:-.01em;text-transform:uppercase;font-size:clamp(2.7rem,8vw,5rem);line-height:.95;color:#14243a;margin:2px 0 14px}
 .psy-pill{display:inline-block;background:var(--green);color:#fff;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.82rem;padding:7px 16px;border-radius:8px;margin-bottom:16px}
 .psy-lede{font-size:1.08rem;color:var(--gray);max-width:520px;margin:0 0 22px}
 .psy-list{list-style:none;padding:0 0 0 18px;margin:0 0 26px;border-left:2px solid var(--green);display:grid;gap:12px}
@@ -1500,7 +1500,7 @@ INTERN_CSS = """<style>
 .btn-green:hover{background:var(--green-dark);transform:translateY(-2px)}
 .btn-green .arr{width:36px;height:36px;border-radius:50%;background:#fff;color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
 .psy-art{position:relative}
-.psy-quote{position:absolute;right:0;bottom:6%;max-width:220px;font-family:'Cormorant Garamond',serif;font-size:1.22rem;line-height:1.35;color:var(--dark);background:rgba(255,255,255,.86);padding:12px 16px;border-radius:14px;box-shadow:0 10px 30px rgba(30,45,40,.1)}
+.psy-quote{position:absolute;right:0;bottom:6%;max-width:220px;font-family:'Young Serif',serif;font-size:1.22rem;line-height:1.35;color:var(--dark);background:rgba(255,255,255,.86);padding:12px 16px;border-radius:14px;box-shadow:0 10px 30px rgba(30,45,40,.1)}
 .psy-strip{margin:46px -5.556% 0;background:var(--green);color:#fff;text-align:center;padding:13px 5%;font-weight:600;letter-spacing:.24em;text-transform:uppercase;font-size:.84rem}
 .pillar{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:26px;border-top:4px solid var(--green)}
 .pillar:nth-child(2n){border-top-color:#38b6d8}
@@ -1508,18 +1508,18 @@ INTERN_CSS = """<style>
 .pillar ul{margin:12px 0 0;padding-left:18px;color:var(--gray);font-size:.94rem}
 .pillar ul li{margin-bottom:4px}
 .in-quote{max-width:820px;margin:0 auto;text-align:center}
-.in-quote blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.35;color:var(--dark);margin:0}
+.in-quote blockquote{font-family:'Young Serif',serif;font-style:italic;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.35;color:var(--dark);margin:0}
 /* cross-links between the two pages */
 .in-cross{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:24px;max-width:1000px;margin:0 auto}
 .x-card{position:relative;display:block;border-radius:22px;overflow:hidden;text-decoration:none;padding:30px 28px;min-height:250px;transition:transform .25s,box-shadow .25s;box-shadow:0 14px 40px rgba(30,45,40,.12)}
 .x-card:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(30,45,40,.18)}
 .x-nov{background:repeating-linear-gradient(90deg,#e4f4f4 0 46px,#fbf4f3 46px 92px);color:#3b1d2e;text-align:center}
-.x-nov .m{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:2.6rem;line-height:1}
-.x-nov .t{font-family:'Cormorant Garamond',serif;text-transform:uppercase;font-size:2.3rem;line-height:.95;margin:4px 0 12px}
+.x-nov .m{font-family:'Young Serif',serif;font-style:italic;font-weight:600;font-size:2.6rem;line-height:1}
+.x-nov .t{font-family:'Young Serif',serif;text-transform:uppercase;font-size:2.3rem;line-height:.95;margin:4px 0 12px}
 .x-nov .o{display:inline-block;border:1.5px solid #3b1d2e;border-radius:999px;padding:4px 16px;letter-spacing:.3em;font-weight:700;font-size:.78rem}
 .x-nov p{color:#4b3340;margin:14px auto 0;max-width:340px;font-size:.95rem}
 .x-psy{background:var(--card);border:1px solid var(--border);color:var(--dark);display:grid;grid-template-columns:1fr 120px;gap:14px;align-items:center}
-.x-psy .k{font-family:'Cormorant Garamond',serif;color:var(--green);font-size:1.3rem}
+.x-psy .k{font-family:'Young Serif',serif;color:var(--green);font-size:1.3rem}
 .x-psy .t{font-weight:800;text-transform:uppercase;font-size:2.1rem;line-height:1;color:#14243a;margin:2px 0 10px}
 .x-psy .p{display:inline-block;background:var(--green);color:#fff;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:6px}
 .x-psy p{color:var(--gray);margin:12px 0 0;font-size:.95rem}
@@ -1575,7 +1575,7 @@ NOV = dict(
     title="November Online Internships 2026 Open | MindCare Services®",
     desc=("MindCare Services® November 2026 online internships are open. Learn from practising psychologists, "
           "from anywhere in Pakistan. Call or WhatsApp 0327 2337631 to apply."),
-    facts=[("Intake", "November 2026"), ("Format", "100% online"), ("Open to", "Psychology students & graduates"),
+    facts=[("Intake", "November 2026"), ("Format", "Fully online"), ("Open to", "Psychology students & graduates"),
            ("Apply", "WhatsApp 0327 2337631")],
     gets=[("i-globe", "Join from anywhere", "No travel and no relocation. Take part from Karachi, Lahore, Islamabad or any city in Pakistan."),
           ("i-handshake", "Guided by experts", "Learn directly from MindCare's psychologists and therapists, with mentorship throughout."),
@@ -1768,9 +1768,8 @@ def psy_page():
         <a href="/{NOV['slug']}" class="btn-secondary">November intake →</a>
       </div>
     </div>
-    <div class="psy-art">{NEURO_SVG}<p class="psy-quote">&ldquo;Learn deeply. Grow meaningfully. Make a difference.&rdquo;</p></div>
+    <div class="psy-art">{NEURO_SVG}</div>
   </div>
-  <div class="psy-strip">Learn. Grow. Heal. Lead.</div>
 </header>
 <section>
   <div class="section-inner">
@@ -1821,7 +1820,7 @@ def intern_hub():
 <header class="page-hero">
   <div class="ph-inner">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Internships</li></ol>
-    <div class="ph-badge">{icon("","i-grad")} November 2026 intake · Applications open</div>
+    <div class="ph-badge">{icon("","i-grad")} Applications are open for the November 2026 intake</div>
     <h1>Internships at <em>MindCare</em></h1>
     <p class="lede">Start your career in psychology alongside practising psychologists. Pick where to begin: the programme itself, or the November online intake that's open right now.</p>
   </div>
@@ -1885,8 +1884,8 @@ def guides_index():
 # Articles written by Shaista Tariq. Each one gets a dedicated page under
 # /articles/<slug>.html; the original LinkedIn post is linked as the source.
 #
-# Body blocks: ("lead"|"p"|"h2", text) · ("ask", question) · ("quote", text)
-#              ("ul", [items]) · ("kv", [(term, definition)]) · ("note", title, text)
+# Body blocks: ("lead"|"p"|"h2", text), ("ask", question), ("quote", text)
+#              ("ul", [items]), ("kv", [(term, definition)]), ("note", title, text)
 
 MOTIFS = {
     # Mind vs. machine: a rule-following grid wired to an organic form
@@ -2057,7 +2056,7 @@ ARTICLES = [
          desc="Shaista Tariq on why productivity drops and people leave jobs: focus cycles, individual working rhythms, rigid schedules, and the shared responsibility of managers and employees.",
          takeaways=[
              "Of 6-8 active hours a day, only about 3-5 are genuinely productive.",
-             "Deep focus lasts 60-90 minutes; breaks are essential, not a luxury.",
+             "Deep focus lasts 60-90 minutes; breaks are essential.",
              "Rigid schedules assume time spent equals work done.",
              "Responsibility for low productivity is shared by managers and employees.",
          ],
@@ -2190,9 +2189,9 @@ def article_page(a, idx):
       <span class="art-avatar">{AV['shaista']}</span>
       <span class="art-by-who">
         <a class="art-by-name" href="/team/shaista-tariq">Shaista Tariq</a>
-        <span class="art-by-role">Founder &amp; Associate Psychologist · PPA Member</span>
+        <span class="art-by-role">Founder and Associate Psychologist, PPA member</span>
       </span>
-      <span class="art-by-meta"><time datetime="{a['date']}">{a['date_h']}</time> · {mins} min read</span>
+      <span class="art-by-meta"><time datetime="{a['date']}">{a['date_h']}</time>, {mins} min read</span>
     </div>
   </div>
 </header>
@@ -2267,7 +2266,7 @@ def art_card(a):
           <h3><a href="{href}">{a['title']}</a></h3>
           <p>{a['blurb']}</p>
           <div class="art-card-foot">
-            <span class="art-date"><time datetime="{a['date']}">{a['date_h']}</time> · {read_time(a)} min</span>
+            <span class="art-date"><time datetime="{a['date']}">{a['date_h']}</time>, {read_time(a)} min</span>
             <span class="more">Read →</span>
           </div>
         </div>
@@ -2321,7 +2320,7 @@ def articles_index():
         <p class="art-kicker">{lead['kicker']}</p>
         <p>{lead['blurb']}</p>
         <div class="art-card-foot">
-          <span class="art-date"><time datetime="{lead['date']}">{lead['date_h']}</time> · {read_time(lead)} min read</span>
+          <span class="art-date"><time datetime="{lead['date']}">{lead['date_h']}</time>, {read_time(lead)} min read</span>
           <span class="more">Read the essay →</span>
         </div>
       </div>
@@ -2597,7 +2596,7 @@ CITIES = [
    lede="Specialist therapy for south Punjab without the trip to Lahore. Confidential online sessions in English or Urdu, six days a week.",
    intro=[
      "South Punjab has far fewer specialist mental health services than the country's largest cities, and for a lot of families in Multan the honest options have been travelling to Lahore or doing nothing.",
-     "Online therapy is the practical third option. A weekly session from home costs you an hour, not a day and a bus fare, and it makes consistent work, which is what actually helps, realistic rather than aspirational.",
+     "Online therapy is the practical third option. A weekly session from home costs you an hour of your day, and it makes consistent work, which is what actually helps, realistic rather than aspirational.",
      "MindCare Services® is a Karachi practice working across Pakistan online, in English or Urdu, Monday to Saturday, 9am to 7pm."],
    reasons=[
      "Few specialist services locally and no wish to travel to Lahore every week",
@@ -2765,7 +2764,7 @@ CITIES = [
    lede="Specialist therapy for upper Sindh without the journey to Karachi. Confidential online sessions in English or Urdu, six days a week.",
    intro=[
      "Upper Sindh has very few qualified psychologists, and for most families in Sukkur the realistic options have been a long trip to Karachi or nothing at all.",
-     "Online therapy makes the third option real. A weekly session from home is an hour, not a journey, and weekly is what actually shifts anxiety, low mood or grief.",
+     "Online therapy makes the third option real. A weekly session from home takes an hour, and weekly is what actually shifts anxiety, low mood or grief.",
      "MindCare Services® is based in Karachi and sees clients across Sindh and the rest of Pakistan online, in English or Urdu, Monday to Saturday."],
    reasons=[
      "Very few specialist services within reach locally",
@@ -2900,7 +2899,7 @@ def city_page(c):
         f'<span class="more">Read more →</span></div></a>'
         for label, slug in CONDITIONS[:6])
     others = [x for x in CITIES if x["slug"] != c["slug"]]
-    other_links = " · ".join(f'<a href="/{x["slug"]}">{x["city"]}</a>' for x in others)
+    other_links = ", ".join(f'<a href="/{x["slug"]}">{x["city"]}</a>' for x in others)
     out = head(c["title"], c["desc"], url, prefix, schema, og_type="article")
     out += nav(prefix)
     out += f"""<main id="main">
@@ -2908,7 +2907,7 @@ def city_page(c):
   <div class="ph-inner with-art">
     <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/online-therapy">Online Therapy</a></li><li aria-current="page">{city}</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-heart-hands')} Online · English &amp; Urdu · Mon-Sat</div>
+    <div class="ph-badge">{icon(prefix,'i-heart-hands')} Online, in English or Urdu, Monday to Saturday</div>
     <h1>Online Therapy &amp; Counseling in <em>{city}</em></h1>
     <p class="lede">{c['lede']}</p>
     <div class="ph-actions">
@@ -2939,7 +2938,7 @@ def city_page(c):
         <p>No travel, no waiting room, no local referral needed. Book a time that suits you.</p>
         <ul class="aside-list">
           <li>{icon(prefix,'i-shield')} Evidence-based care</li>
-          <li>{icon(prefix,'i-lock')} 100% confidential</li>
+          <li>{icon(prefix,'i-lock')} Confidential</li>
           <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm (PKT)</li>
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
         </ul>
@@ -2970,7 +2969,7 @@ def city_page(c):
 <section class="bg-off">
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">Across Pakistan</span><h2 class="section-title">We also work with clients in</h2></div>
-    <p class="city-links fade-up">{other_links} · <a href="/online-therapy">All cities →</a></p>
+    <p class="city-links fade-up">{other_links}, <a href="/online-therapy">All cities →</a></p>
   </div>
 </section>
 {cta_band(prefix, f"Ready to talk to someone in {city}?", "Book a confidential appointment. Online, in English or Urdu, six days a week.")}
@@ -3009,7 +3008,7 @@ def cities_index():
             for q, a in NATIONAL_FAQS]},
     ]}
     cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="/{c['slug']}"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>{c['city']}</h3><p>{c['province']} · online sessions in English or Urdu, Mon-Sat.</p><span class="more">Online therapy in {c['city']} →</span></a>'''
+        f'''      <a class="link-card fade-up" href="/{c['slug']}"><div class="fi">{icon(prefix,'i-heart-hands')}</div><h3>{c['city']}</h3><p>{c['province']}, online sessions in English or Urdu, Mon-Sat.</p><span class="more">Online therapy in {c['city']} →</span></a>'''
         for c in CITIES)
     kar = "".join(f"<li>{a}</li>" for a in KARACHI_AREAS)
     out = head("Online Therapy in Pakistan | MindCare Services®",
@@ -3021,7 +3020,7 @@ def cities_index():
   <div class="ph-inner with-art">
     <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Online Therapy</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-heart-hands')} All of Pakistan · English &amp; Urdu</div>
+    <div class="ph-badge">{icon(prefix,'i-heart-hands')} Anywhere in Pakistan, in English or Urdu</div>
     <h1>Online therapy, <em>anywhere in Pakistan</em></h1>
     <p class="lede">Your postcode should not decide whether you can talk to a qualified psychologist. We are a Karachi clinic with a national online practice, six days a week, in English or Urdu.</p>
     <div class="ph-actions">
@@ -3054,7 +3053,7 @@ def cities_index():
         <p>No referral, no waiting room, no travel. Tell us your city and what is going on.</p>
         <ul class="aside-list">
           <li>{icon(prefix,'i-shield')} Evidence-based care</li>
-          <li>{icon(prefix,'i-lock')} 100% confidential</li>
+          <li>{icon(prefix,'i-lock')} Confidential</li>
           <li>{icon(prefix,'i-clock')} Mon-Sat, 9am-7pm (PKT)</li>
           <li>{icon(prefix,'i-phone')} {PHONE_H}</li>
         </ul>
@@ -3320,7 +3319,7 @@ def llms_full_txt():
     or executing any of the site's JavaScript.
     """
     out = [f"# MindCare Services® — full text corpus",
-           f"# Source: {BASE}/ · generated {TODAY} · canonical index: {BASE}/llms.txt",
+           f"# Source: {BASE}/, generated {TODAY}, canonical index: {BASE}/llms.txt",
            "",
            "MindCare Services® is a multidisciplinary psychotherapy and rehabilitation",
            "clinic in Karachi, Pakistan, seeing clients in clinic, at home and online",
@@ -3367,7 +3366,7 @@ def llms_full_txt():
     out += ["## Writing", ""]
     for a in ARTICLES:
         out += [f"### {a['title']}", f"URL: {art_url(a)}",
-                f"By Shaista Tariq · {a['date_h']}", "", _txt(a["blurb"]), ""]
+                f"By Shaista Tariq, {a['date_h']}", "", _txt(a["blurb"]), ""]
         out += [f"- {_txt(k)}" for k in a.get("takeaways", [])] + [""]
 
     out += ["## Contact", "",
