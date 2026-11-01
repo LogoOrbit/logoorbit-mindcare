@@ -209,6 +209,9 @@
     });
   }
 
+  // Cards inside sideways-swipe rows are never "in view" until slid to, so
+  // they would pop in mid-swipe. Show them straight away instead.
+  document.querySelectorAll('.day5 .fade-up, .ws-next .fade-up, .svc-jump .fade-up').forEach(function (el) { el.classList.remove('fade-up'); });
   var revealEls = [].slice.call(document.querySelectorAll('.fade-up'));
   if ('IntersectionObserver' in window && !reduce) {
     var io = new IntersectionObserver(function (entries) {
