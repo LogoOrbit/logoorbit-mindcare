@@ -362,6 +362,7 @@ def footer(prefix):
   </div>
 </footer>
 <script src="{prefix}assets/main.js" defer></script>
+<script src="{prefix}assets/smooth.js" defer></script>
 </body>
 </html>
 """
