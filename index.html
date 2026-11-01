@@ -468,49 +468,135 @@ footer{padding-bottom:104px}
 </section>
 
 <!-- NEWS: HOME SESSIONS -->
-<section class="news-band home-band" aria-label="New: home therapy sessions in Karachi">
-  <div class="wrap">
-    <div class="news-card">
-      <a class="news-stretch" href="/home-therapy-karachi" aria-label="Home therapy sessions in Karachi — see details"></a>
-      <picture><img src="assets/art/knocking-on-the-door.svg" alt="A MindCare therapist arriving at a family's front door" width="960" height="878" loading="lazy" decoding="async"></picture>
-      <div class="news-body">
-        <span class="news-tag"><span class="dot" aria-hidden="true"></span><span data-i18n="home.tag">New · Onsite Sessions</span></span>
+<style>
+.promo{padding:34px 0 0}
+.promo .wrap>a.stretch{position:absolute;inset:0;z-index:1;border-radius:24px}
+.promo .wrap>a.stretch:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.promo-in{position:relative;border-radius:24px;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease}
+.promo .wrap:hover .promo-in{transform:translateY(-3px)}
+.promo .ctas{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:10px}
+.promo .ctas a{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;border-radius:999px;font-weight:600;text-decoration:none;font-size:.95rem;transition:transform .2s}
+.promo .ctas a:hover{transform:translateY(-2px)}
+/* 1. home sessions: deep teal, white type, illustration in a circle */
+.hb .promo-in{background:linear-gradient(120deg,#0b5f6d 0%,#0f8f9c 60%,#1aa9b5 100%);color:#fff;display:grid;grid-template-columns:1fr 250px;gap:30px;align-items:center;padding:34px 40px;box-shadow:0 18px 44px rgba(11,95,109,.28)}
+.hb .k{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:rgba(255,255,255,.16);padding:6px 14px;border-radius:999px}
+.hb .k svg{width:15px;height:15px}
+.hb h2{color:#fff;font-size:clamp(1.6rem,3.4vw,2.2rem);margin:12px 0 8px}
+.hb h2 em{color:#bff3f6}
+.hb p{color:rgba(255,255,255,.88);margin:0 0 16px;max-width:560px}
+.hb .chips2{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.hb .chips2 span{font-size:.8rem;font-weight:600;border:1px solid rgba(255,255,255,.35);padding:4px 12px;border-radius:999px}
+.hb .ctas a.a1{background:#fff;color:#0b5f6d}
+.hb .ctas a.a2{border:1.5px solid rgba(255,255,255,.6);color:#fff}
+.hb .art{width:250px;height:250px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;padding:34px;box-shadow:0 0 0 12px rgba(255,255,255,.12)}
+.hb .art img{width:100%;height:auto}
+/* 2. november: pastel stripes, plum serif type */
+.nb .promo-in{background:repeating-linear-gradient(90deg,#e4f4f4 0 60px,#fbf4f3 60px 120px);color:#3b1d2e;text-align:center;padding:38px 30px 34px;box-shadow:0 18px 44px rgba(59,29,46,.12);border:1px solid #eadfe2}
+.nb .neuro{position:absolute;width:360px;left:-70px;top:50%;transform:translateY(-50%);opacity:.18;pointer-events:none}
+.nb .neuro.r{left:auto;right:-70px;transform:translateY(-50%) scaleX(-1)}
+.nb .m{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(2.4rem,6vw,3.6rem);line-height:1;color:#3b1d2e}
+.nb h2{font-family:'Cormorant Garamond',serif;font-weight:400;text-transform:uppercase;font-size:clamp(2.1rem,6.4vw,3.9rem);line-height:.95;color:#3b1d2e;margin:4px 0 0}
+.nb h2 .spark{width:.3em;height:.3em;fill:#3b1d2e;vertical-align:middle;margin:0 .15em}
+.nb .o{display:inline-flex;align-items:center;gap:9px;margin:16px 0 12px;padding:6px 20px;border:1.5px solid #3b1d2e;border-radius:999px;font-weight:700;letter-spacing:.3em;font-size:.84rem;background:rgba(255,255,255,.65)}
+.nb .o i{width:8px;height:8px;border-radius:50%;background:#e0564f;animation:newsPulse 1.6s ease-in-out infinite}
+.nb p{color:#4b3340;max-width:520px;margin:0 auto 18px;font-size:.98rem}
+.nb .ctas{justify-content:center}
+.nb .ctas a.a1{background:#3b1d2e;color:#fff}
+.nb .ctas a.a2{border:1.5px solid #3b1d2e;color:#3b1d2e;background:rgba(255,255,255,.6)}
+.nb .c{margin-top:16px;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#5c4250}
+.nb .c b{font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:0;text-transform:none;font-size:1.15rem;color:#3b1d2e;margin-left:6px}
+/* 3. psychology: white programme card, bold type, green accents */
+.pb .promo-in{background:var(--card);border:1px solid var(--border);box-shadow:0 18px 44px rgba(45,106,31,.12)}
+.pb .g{display:grid;grid-template-columns:1fr 240px;gap:24px;align-items:center;padding:32px 40px 26px}
+.pb .kk{font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--green)}
+.pb h2{font-family:'DM Sans',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(2.2rem,5.6vw,3.4rem);line-height:.95;color:#14243a;margin:2px 0 10px;letter-spacing:-.01em}
+.pb .pl{display:inline-block;background:var(--green);color:#fff;font-size:.74rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:7px;margin-bottom:14px}
+.pb ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:9px 18px;padding:0 0 0 14px;margin:0 0 20px;border-left:2px solid var(--green)}
+.pb li{font-size:.9rem;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px}
+.pb li::before{content:'';width:8px;height:8px;border-radius:50%;border:2px solid var(--green);flex:none}
+.pb .ctas a.a1{background:var(--green);color:#fff;padding:7px 22px 7px 7px;gap:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.pb .ctas a.a1 span{width:32px;height:32px;border-radius:50%;background:#fff;color:var(--green);display:flex;align-items:center;justify-content:center}
+.pb .ctas a.a2{border:1.5px solid var(--border);color:var(--ink)}
+.pb .q{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.35;color:var(--muted);text-align:center;margin-top:4px}
+.pb .strip{background:var(--green);color:#fff;text-align:center;padding:10px;font-size:.78rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase}
+.neuro{display:block;width:100%;height:auto}
+.neuro .nh-swoosh{fill:#38b6d8}
+.neuro .nh-head{fill:rgba(15,154,168,.09)}
+.neuro .nh-net path{fill:none;stroke:var(--green);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.neuro .nh-net circle{fill:var(--card);stroke:var(--green);stroke-width:3.2}
+.nb .neuro .nh-net path,.nb .neuro .nh-net circle{stroke:#3b1d2e}
+.nb .neuro .nh-net circle{fill:#fff}
+html[data-theme="dark"] .pb h2{color:#eaf4ee}
+@media(max-width:860px){
+ .promo{padding-top:24px}
+ .hb .promo-in{grid-template-columns:1fr;padding:26px 22px;text-align:left}
+ .hb .art{display:none}
+ .pb .g{grid-template-columns:1fr;padding:24px 22px 20px}
+ .pb .side{display:none}
+ .pb ul{grid-template-columns:1fr}
+ .nb .promo-in{padding:30px 18px 26px}
+ .nb .neuro{width:240px;left:-110px;opacity:.1}.nb .neuro.r{display:none}
+ .promo .ctas a{flex:1;min-width:0;padding-inline:12px;font-size:.88rem;text-align:center}
+}
+@media (prefers-reduced-motion: reduce){.nb .o i{animation:none}}
+</style>
+<section class="promo hb" aria-label="New: home therapy sessions in Karachi">
+  <div class="wrap" style="position:relative">
+    <a class="stretch" href="/home-therapy-karachi" aria-label="Home therapy sessions in Karachi — see details"></a>
+    <div class="promo-in">
+      <div>
+        <span class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span data-i18n="home.tag">New · Onsite Sessions</span></span>
         <h2 data-i18n-html="home.title">MindCare now comes <em>to your home</em></h2>
         <p data-i18n="home.short">A psychologist or therapist at your doorstep, anywhere in Karachi. For adults, children, teens, couples and elderly parents.</p>
+        <div class="chips2"><span data-i18n="home.m1">All areas of Karachi</span><span data-i18n="home.m2">Discreet &amp; confidential</span><span data-i18n="home.m3">English &amp; Urdu</span></div>
+        <div class="ctas">
+          <a class="a1" href="https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20book%20a%20home%20session%20in%20Karachi." target="_blank" rel="noopener" data-i18n="home.book">Book a Home Session</a>
+          <a class="a2" href="/home-therapy-karachi" data-i18n="home.more">How It Works →</a>
+        </div>
       </div>
-      <div class="news-meta">
-        <span data-i18n="home.m1">All areas of Karachi</span>
-        <span data-i18n="home.m2">Discreet &amp; confidential</span>
-        <span data-i18n="home.m3">English &amp; Urdu</span>
-      </div>
-      <div class="news-ctas">
-        <a href="https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20book%20a%20home%20session%20in%20Karachi." target="_blank" rel="noopener" class="btn btn-primary" data-i18n="home.book">Book a Home Session</a>
-        <a href="/home-therapy-karachi" class="btn btn-ghost" data-i18n="home.more">How It Works →</a>
-      </div>
+      <div class="art"><img src="assets/art/knocking-on-the-door.svg" alt="A MindCare therapist arriving at a family's front door" width="960" height="878" loading="lazy" decoding="async"></div>
     </div>
   </div>
 </section>
 
-<!-- NEWS: INTERNSHIPS -->
-<section class="news-band home-band intern-band" aria-label="November online psychology internships open">
-  <div class="wrap">
-    <div class="news-card">
-      <a class="news-stretch" href="/internships" aria-label="Online psychology internships — see details"></a>
-      <picture><source type="image/webp" srcset="assets/workshops/internships-psychology-poster.webp"><img src="assets/workshops/internships-psychology-poster.jpg" alt="Kickstart your career in psychology: MindCare internships that inspire growth" width="679" height="680" loading="lazy" decoding="async"></picture>
-      <div class="news-body">
-        <span class="news-tag"><span class="dot" aria-hidden="true"></span><span data-i18n="intern.tag">November · Internships Open</span></span>
-        <h2 data-i18n-html="intern.title">Kickstart your career in <em>psychology</em></h2>
-        <p data-i18n="intern.short">Online internships that inspire growth: practical learning, expert mentorship and real-world exposure, from anywhere in Pakistan.</p>
+<!-- NEWS: NOVEMBER ONLINE INTERNSHIPS -->
+<section class="promo nb" aria-label="November online internships open">
+  <div class="wrap" style="position:relative">
+    <a class="stretch" href="/november-online-internships" aria-label="November online internships — see details"></a>
+    <div class="promo-in">
+      <svg class="neuro" viewBox="0 0 320 340" aria-hidden="true" focusable="false"><path class="nh-swoosh" d="M96 318C30 262 18 150 74 82C120 26 200 8 262 38C200 28 140 52 110 100C78 152 80 236 128 300Z"/><path class="nh-head" d="M132 332V280C86 264 56 220 56 162C56 94 108 44 176 44C242 44 286 92 286 152C286 170 282 180 290 196L304 220C307 226 304 232 297 233L285 235L286 258C286 272 276 280 262 278L236 274L234 332Z"/><g class="nh-net"><path d="M132 112L162 122L178 92L222 116L246 162M162 122L152 152L122 176M162 122L202 152L222 116M202 152L246 162M152 152L176 192L202 152L226 202L176 192M132 112L152 152M202 152L226 202"/><circle cx="132" cy="112" r="9"/><circle cx="178" cy="92" r="11"/><circle cx="222" cy="116" r="8"/><circle cx="162" cy="122" r="6"/><circle cx="152" cy="152" r="10"/><circle cx="202" cy="152" r="12"/><circle cx="246" cy="162" r="9"/><circle cx="122" cy="176" r="8"/><circle cx="176" cy="192" r="9"/><circle cx="226" cy="202" r="7"/></g></svg><svg class="neuro r" viewBox="0 0 320 340" aria-hidden="true" focusable="false"><path class="nh-swoosh" d="M96 318C30 262 18 150 74 82C120 26 200 8 262 38C200 28 140 52 110 100C78 152 80 236 128 300Z"/><path class="nh-head" d="M132 332V280C86 264 56 220 56 162C56 94 108 44 176 44C242 44 286 92 286 152C286 170 282 180 290 196L304 220C307 226 304 232 297 233L285 235L286 258C286 272 276 280 262 278L236 274L234 332Z"/><g class="nh-net"><path d="M132 112L162 122L178 92L222 116L246 162M162 122L152 152L122 176M162 122L202 152L222 116M202 152L246 162M152 152L176 192L202 152L226 202L176 192M132 112L152 152M202 152L226 202"/><circle cx="132" cy="112" r="9"/><circle cx="178" cy="92" r="11"/><circle cx="222" cy="116" r="8"/><circle cx="162" cy="122" r="6"/><circle cx="152" cy="152" r="10"/><circle cx="202" cy="152" r="12"/><circle cx="246" cy="162" r="9"/><circle cx="122" cy="176" r="8"/><circle cx="176" cy="192" r="9"/><circle cx="226" cy="202" r="7"/></g></svg>
+      <div class="m" data-i18n="nov.m">November</div>
+      <h2 data-i18n-html="nov.title"><svg class="spark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>Online Internships<svg class="spark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg></h2>
+      <div class="o"><i aria-hidden="true"></i><span data-i18n="nov.open">OPEN</span></div>
+      <p data-i18n="nov.short">Applications for our November 2026 online internships are open. Learn from practising psychologists, from anywhere in Pakistan.</p>
+      <div class="ctas">
+        <a class="a1" href="https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20apply%20for%20the%20November%20online%20internship." target="_blank" rel="noopener" data-i18n="nov.apply">Apply on WhatsApp</a>
+        <a class="a2" href="/november-online-internships" data-i18n="nov.more">Details →</a>
       </div>
-      <div class="news-meta">
-        <span data-i18n="intern.m1">Online · November 2026</span>
-        <span data-i18n="intern.m2">Expert mentorship</span>
-        <span data-i18n="intern.m3">Career-ready skills</span>
+      <div class="c"><span data-i18n="nov.c">Contact us at</span><b>0327 2337631</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS: PSYCHOLOGY INTERNSHIPS -->
+<section class="promo pb" aria-label="Psychology internships">
+  <div class="wrap" style="position:relative">
+    <a class="stretch" href="/psychology-internships" aria-label="Psychology internships — see details"></a>
+    <div class="promo-in">
+      <div class="g">
+        <div>
+          <div class="kk" data-i18n="psy.k">Kickstart your career in</div>
+          <h2 data-i18n="psy.title">Psychology</h2>
+          <span class="pl" data-i18n="psy.pill">Internships that inspire growth</span>
+          <ul><li data-i18n="psy.1">Practical Learning</li><li data-i18n="psy.2">Expert Mentorship</li><li data-i18n="psy.3">Real-World Exposure</li><li data-i18n="psy.4">Career-Ready Skills</li></ul>
+          <div class="ctas">
+            <a class="a1" href="https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20apply%20for%20a%20psychology%20internship." target="_blank" rel="noopener"><span aria-hidden="true">→</span><b data-i18n="psy.apply">Apply Now</b></a>
+            <a class="a2" href="/psychology-internships" data-i18n="psy.more">About the Programme →</a>
+          </div>
+        </div>
+        <div class="side"><svg class="neuro" viewBox="0 0 320 340" aria-hidden="true" focusable="false"><path class="nh-swoosh" d="M96 318C30 262 18 150 74 82C120 26 200 8 262 38C200 28 140 52 110 100C78 152 80 236 128 300Z"/><path class="nh-head" d="M132 332V280C86 264 56 220 56 162C56 94 108 44 176 44C242 44 286 92 286 152C286 170 282 180 290 196L304 220C307 226 304 232 297 233L285 235L286 258C286 272 276 280 262 278L236 274L234 332Z"/><g class="nh-net"><path d="M132 112L162 122L178 92L222 116L246 162M162 122L152 152L122 176M162 122L202 152L222 116M202 152L246 162M152 152L176 192L202 152L226 202L176 192M132 112L152 152M202 152L226 202"/><circle cx="132" cy="112" r="9"/><circle cx="178" cy="92" r="11"/><circle cx="222" cy="116" r="8"/><circle cx="162" cy="122" r="6"/><circle cx="152" cy="152" r="10"/><circle cx="202" cy="152" r="12"/><circle cx="246" cy="162" r="9"/><circle cx="122" cy="176" r="8"/><circle cx="176" cy="192" r="9"/><circle cx="226" cy="202" r="7"/></g></svg><p class="q" data-i18n="psy.q">“Learn deeply. Grow meaningfully. Make a difference.”</p></div>
       </div>
-      <div class="news-ctas">
-        <a href="https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20apply%20for%20the%20November%20online%20psychology%20internship." target="_blank" rel="noopener" class="btn btn-primary" data-i18n="intern.apply">Apply Now</a>
-        <a href="/internships" class="btn btn-ghost" data-i18n="intern.more">Details →</a>
-      </div>
+      <div class="strip" data-i18n="psy.strip">Learn. Grow. Heal. Lead.</div>
     </div>
   </div>
 </section>
@@ -518,10 +604,6 @@ footer{padding-bottom:104px}
 <!-- NEWS: UPCOMING COURSE -->
 <style>
 .news-band{padding:34px 0}
-.home-band{padding-bottom:0}
-.home-band .news-card img{background:#fff}
-.intern-band .news-card{border-color:var(--green)}
-.intern-band .news-card img{border-radius:12px}
 .news-card{position:relative;display:grid;grid-template-columns:150px 1fr auto;grid-template-areas:"pic body cta" "pic meta cta";
  column-gap:26px;row-gap:12px;align-items:center;background:var(--card);border:1px solid var(--teal);border-radius:20px;padding:22px 30px;box-shadow:0 14px 40px rgba(15,154,168,.14);
  transition:transform .25s ease,box-shadow .25s ease}
@@ -941,7 +1023,7 @@ var I18N={
   "svc.3t":"اسپیچ تھراپی","svc.3d":"بچوں کو بولنے میں مدد۔",
   "svc.4t":"فزیو تھراپی","svc.4d":"درد کے بغیر دوبارہ چلیں پھریں۔",
   "svc.5t":"رویّہ جاتی تھراپی","svc.5d":"اے ڈی ایچ ڈی، آٹزم اور عادات کے لیے مدد۔",
-  "intern.tag":"نومبر · انٹرن شپس جاری","intern.title":"<em>سائیکالوجی</em> میں اپنے کیریئر کا آغاز کریں","intern.short":"آن لائن انٹرن شپس: عملی تعلیم، ماہرین کی رہنمائی اور حقیقی تجربہ، پاکستان میں کہیں سے بھی۔","intern.m1":"آن لائن · نومبر ۲۰۲۶","intern.m2":"ماہرین کی رہنمائی","intern.m3":"کیریئر کے لیے مہارتیں","intern.apply":"ابھی اپلائی کریں","intern.more":"تفصیل دیکھیں ←","intern.foot":"انٹرن شپس","home.tag":"نیا · گھر پر سیشنز","home.title":"مائنڈ کیئر اب <em>آپ کے گھر</em> آتا ہے","home.short":"ماہرِ نفسیات یا تھراپسٹ آپ کی دہلیز پر، کراچی میں کہیں بھی۔ بڑوں، بچوں، نوجوانوں، جوڑوں اور بزرگ والدین کے لیے۔","home.m1":"کراچی کے تمام علاقے","home.m2":"رازدارانہ اور محفوظ","home.m3":"انگریزی اور اردو","home.book":"گھر پر سیشن بُک کریں","home.more":"تفصیل دیکھیں ←","home.foot":"گھر پر سیشنز","svc.6t":"گھر پر سیشن","svc.6d":"ہم آپ کے پاس آتے ہیں، پورے کراچی میں۔",
+  "nov.m":"نومبر","nov.title":"آن لائن انٹرن شپس","nov.open":"داخلے جاری","nov.short":"نومبر ۲۰۲۶ کی آن لائن انٹرن شپس کے لیے داخلے جاری ہیں۔ ماہرینِ نفسیات سے سیکھیں، پاکستان میں کہیں سے بھی۔","nov.apply":"واٹس ایپ پر اپلائی کریں","nov.more":"تفصیل ←","nov.c":"رابطہ کریں","psy.k":"اپنے کیریئر کا آغاز کریں","psy.title":"سائیکالوجی","psy.pill":"ترقی کی راہ دکھانے والی انٹرن شپس","psy.1":"عملی تعلیم","psy.2":"ماہرین کی رہنمائی","psy.3":"حقیقی تجربہ","psy.4":"کیریئر کے لیے مہارتیں","psy.apply":"ابھی اپلائی کریں","psy.more":"پروگرام کے بارے میں ←","psy.q":"گہرائی سے سیکھیں۔ بامعنی ترقی کریں۔ فرق پیدا کریں۔","psy.strip":"سیکھیں · بڑھیں · شفا دیں · رہنمائی کریں","intern.foot":"انٹرن شپس","home.tag":"نیا · گھر پر سیشنز","home.title":"مائنڈ کیئر اب <em>آپ کے گھر</em> آتا ہے","home.short":"ماہرِ نفسیات یا تھراپسٹ آپ کی دہلیز پر، کراچی میں کہیں بھی۔ بڑوں، بچوں، نوجوانوں، جوڑوں اور بزرگ والدین کے لیے۔","home.m1":"کراچی کے تمام علاقے","home.m2":"رازدارانہ اور محفوظ","home.m3":"انگریزی اور اردو","home.book":"گھر پر سیشن بُک کریں","home.more":"تفصیل دیکھیں ←","home.foot":"گھر پر سیشنز","svc.6t":"گھر پر سیشن","svc.6d":"ہم آپ کے پاس آتے ہیں، پورے کراچی میں۔",
   "gd.tag":"رہنمائی و مضامین","gd.title":"جس مسئلے سے گزر رہے ہیں، اس کے لیے مدد تلاش کریں",
   "gd.sub":"بیس آسان زبان میں لکھی گئی رہنمائیاں: علامات کیا ہوتی ہیں اور علاج میں دراصل کیا ہوتا ہے، کراچی کے لیے۔",
   "gd.1":"پریشانی","gd.2":"اداسی","gd.3":"دباؤ اور برن آؤٹ","gd.4":"بچے","gd.5":"ازدواجی زندگی",

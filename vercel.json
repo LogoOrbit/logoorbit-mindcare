@@ -64,22 +64,27 @@
     },
     {
       "source": "/psychology-internship",
-      "destination": "/internships",
-      "permanent": true
-    },
-    {
-      "source": "/psychology-internships",
-      "destination": "/internships",
+      "destination": "/psychology-internships",
       "permanent": true
     },
     {
       "source": "/online-internship",
-      "destination": "/internships",
+      "destination": "/november-online-internships",
       "permanent": true
     },
     {
       "source": "/online-internships",
-      "destination": "/internships",
+      "destination": "/november-online-internships",
+      "permanent": true
+    },
+    {
+      "source": "/november-internships",
+      "destination": "/november-online-internships",
+      "permanent": true
+    },
+    {
+      "source": "/november-internship",
+      "destination": "/november-online-internships",
       "permanent": true
     }
   ],

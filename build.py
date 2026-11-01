@@ -1406,138 +1406,335 @@ def home_page():
 
 
 # ─────────────────────────── INTERNSHIPS ───────────────────────────
-# Built from the two internship posters MindCare shared on Instagram: the
-# November online intake and the "Kickstart your career in psychology" campaign.
+# Two things MindCare announced together: the November online intake (a dated
+# call for applicants) and the psychology internship programme it belongs to.
+# Each gets its own landing page, with /internships as the hub. The visuals are
+# drawn in HTML/SVG in the clinic's own motif, not the social posters pasted in.
 # Duration, schedule and any fee are deliberately not stated: applicants get
-# those on WhatsApp, so the page never contradicts what the team tells them.
-INTERN = dict(
-    slug="internships",
-    h1="Psychology Internships",
-    title="Online Psychology Internships, November 2026 | MindCare Services®",
-    desc=("MindCare Services® online psychology internships are open for November 2026. Practical learning, "
-          "expert mentorship and real-world clinical exposure, from anywhere in Pakistan. Apply on WhatsApp."),
-    lede=("Kickstart your career in psychology with internships that inspire growth: hands-on experience, "
-          "real impact, and guidance from practising psychologists. Our November intake runs online, so you can "
-          "join from anywhere in Pakistan."),
-    wa=("https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20apply%20for%20the%20"
-        "November%20online%20psychology%20internship."),
-    gains=[("i-brain", "Practical Learning", "Move past the textbook. See how assessment, case formulation and therapy actually work in a real practice."),
-           ("i-handshake", "Expert Mentorship", "Learn directly from MindCare's psychologists and therapists, with feedback on your work as you go."),
-           ("i-clipboard", "Real-World Exposure", "Understand the cases, ethics and day-to-day decisions that clinical work involves, not just the theory."),
-           ("i-grad", "Career-Ready Skills", "Build the skills, confidence and experience that make your CV and your next step in psychology stronger.")],
-    who=[("i-school", "Psychology students", "Undergraduate and postgraduate students who want supervised, practical experience alongside their degree."),
-         ("i-grad", "Fresh graduates", "Recent psychology graduates looking to build real clinical experience before their next step."),
-         ("i-globe", "Anywhere in Pakistan", "The November internships are online, so Karachi, Lahore, Islamabad or anywhere else works.")],
-    steps=[("i-wa", "1. Message us", "Send us your name, university, degree and semester on WhatsApp, or call."),
-           ("i-clipboard", "2. Get the details", "We share the November schedule, structure and everything you need to know before you commit."),
-           ("i-check", "3. Start learning", "Confirm your seat and begin your online internship with the MindCare team.")],
-    faqs=[("Are MindCare internships open right now?",
-           "Yes. Applications for the November 2026 online psychology internships are open. Message us on WhatsApp or call +92 327 2337631 to apply."),
-          ("Is the internship online?",
-           "Yes. The November internships run online, so you can take part from any city in Pakistan without travelling to Karachi."),
+# those on WhatsApp, so the pages never contradict what the team tells them.
+NOV_WA = ("https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20apply%20for%20the%20"
+          "November%20online%20internship.")
+PSY_WA = ("https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20apply%20for%20a%20"
+          "psychology%20internship.")
+
+# The head-and-network mark from the MindCare logo, redrawn as inline SVG so it
+# can be recoloured per page and stays sharp at any size.
+NEURO_SVG = ('<svg class="neuro" viewBox="0 0 320 340" aria-hidden="true" focusable="false">'
+    '<path class="nh-swoosh" d="M96 318C30 262 18 150 74 82C120 26 200 8 262 38C200 28 140 52 110 100C78 152 80 236 128 300Z"/>'
+    '<path class="nh-head" d="M132 332V280C86 264 56 220 56 162C56 94 108 44 176 44C242 44 286 92 286 152C286 170 282 180 290 196L304 220C307 226 304 232 297 233L285 235L286 258C286 272 276 280 262 278L236 274L234 332Z"/>'
+    '<g class="nh-net">'
+    '<path d="M132 112L162 122L178 92L222 116L246 162M162 122L152 152L122 176M162 122L202 152L222 116M202 152L246 162M152 152L176 192L202 152L226 202L176 192M132 112L152 152M202 152L226 202"/>'
+    '<circle cx="132" cy="112" r="9"/><circle cx="178" cy="92" r="11"/><circle cx="222" cy="116" r="8"/>'
+    '<circle cx="162" cy="122" r="6"/><circle cx="152" cy="152" r="10"/><circle cx="202" cy="152" r="12"/>'
+    '<circle cx="246" cy="162" r="9"/><circle cx="122" cy="176" r="8"/><circle cx="176" cy="192" r="9"/>'
+    '<circle cx="226" cy="202" r="7"/></g></svg>')
+SPARK = ('<svg class="spark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+         '<path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>')
+
+INTERN_CSS = """<style>
+/* shared mark */
+.neuro{display:block;width:100%;height:auto}
+.neuro .nh-swoosh{fill:#38b6d8}
+.neuro .nh-head{fill:rgba(15,154,168,.09)}
+.neuro .nh-net path{fill:none;stroke:var(--green);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.neuro .nh-net circle{fill:var(--card);stroke:var(--green);stroke-width:3.2}
+.spark{width:22px;height:22px;fill:currentColor;display:inline-block}
+/* November: pastel stripes, plum serif, the feel of an announcement card */
+.nov-hero{position:relative;overflow:hidden;padding:110px 5% 70px;text-align:center;color:#3b1d2e;
+ background:repeating-linear-gradient(90deg,#e4f4f4 0 70px,#fbf4f3 70px 140px)}
+.nov-hero .neuro{position:absolute;width:min(520px,80vw);right:-60px;top:50%;transform:translateY(-50%);opacity:.22;pointer-events:none}
+.nov-hero .breadcrumb{justify-content:center}
+.nov-hero .ph-inner{max-width:860px}
+.nov-month{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(3rem,9vw,5.6rem);line-height:1;color:#3b1d2e;margin:6px 0 4px}
+.nov-h1{font-family:'Cormorant Garamond',serif;font-weight:400;text-transform:uppercase;letter-spacing:.02em;
+ font-size:clamp(2.6rem,9.5vw,6rem);line-height:.92;color:#3b1d2e;margin:0}
+.nov-h1 .spark{width:.32em;height:.32em;vertical-align:middle;margin:0 .14em}
+.nov-open{display:inline-flex;align-items:center;gap:10px;margin:22px 0 16px;padding:8px 22px;border:1.5px solid #3b1d2e;border-radius:999px;
+ font-weight:700;letter-spacing:.32em;text-transform:uppercase;font-size:.92rem;color:#3b1d2e;background:rgba(255,255,255,.6)}
+.nov-open i{width:9px;height:9px;border-radius:50%;background:#e0564f;animation:inPulse 1.6s ease-in-out infinite}
+@keyframes inPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.5}}
+.nov-lede{max-width:640px;margin:0 auto 26px;font-size:1.06rem;color:#4b3340}
+.nov-hero .ph-actions{justify-content:center}
+.btn-plum{display:inline-flex;align-items:center;gap:9px;background:#3b1d2e;color:#fff;padding:14px 26px;border-radius:999px;font-weight:600;text-decoration:none;transition:transform .2s,background .2s}
+.btn-plum:hover{background:#56293f;transform:translateY(-2px)}
+.btn-plum svg{width:18px;height:18px;fill:currentColor}
+.nov-contact{margin-top:26px;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:#5c4250}
+.nov-contact b{display:block;margin-top:6px;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:0;text-transform:none;font-size:1.5rem;color:#3b1d2e}
+.nov-contact a{color:inherit;text-decoration:none}
+/* key facts */
+.in-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:16px;max-width:980px;margin:0 auto}
+.in-fact{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px 20px}
+.in-fact strong{display:block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:6px}
+.in-fact span{font-size:1.05rem;font-weight:600;color:var(--dark)}
+.nov-fact{border-top:4px solid #3b1d2e}
+/* timeline */
+.in-steps{list-style:none;padding:0;margin:0 auto;max-width:760px;position:relative}
+.in-steps::before{content:'';position:absolute;left:23px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.in-steps li{position:relative;padding:0 0 28px 70px}
+.in-steps li:last-child{padding-bottom:0}
+.in-steps b.n{position:absolute;left:0;top:0;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+ font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:#fff;background:var(--teal-btn)}
+.in-steps.plum b.n{background:#3b1d2e}
+.in-steps h3{margin:4px 0 4px;font-size:1.15rem}
+.in-steps p{margin:0;color:var(--gray)}
+/* Psychology: the clean white programme card with green accents */
+.psy-hero{position:relative;overflow:hidden;padding:110px 5% 0;background:linear-gradient(160deg,#ffffff 0%,#f2f8f1 60%,#eaf6f7 100%)}
+.psy-grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
+.psy-kick{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.4vw,2.1rem);color:var(--green);margin:0}
+.psy-h1{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacing:-.01em;text-transform:uppercase;font-size:clamp(2.7rem,8vw,5rem);line-height:.95;color:#14243a;margin:2px 0 14px}
+.psy-pill{display:inline-block;background:var(--green);color:#fff;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.82rem;padding:7px 16px;border-radius:8px;margin-bottom:16px}
+.psy-lede{font-size:1.08rem;color:var(--gray);max-width:520px;margin:0 0 22px}
+.psy-list{list-style:none;padding:0 0 0 18px;margin:0 0 26px;border-left:2px solid var(--green);display:grid;gap:12px}
+.psy-list li{display:flex;align-items:center;gap:12px;font-weight:600;color:var(--dark)}
+.psy-list li span.ic{width:38px;height:38px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--green-light);color:var(--green)}
+.psy-list li span.ic svg{width:20px;height:20px}
+.btn-green{display:inline-flex;align-items:center;gap:12px;background:var(--green);color:#fff;padding:8px 24px 8px 8px;border-radius:999px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:transform .2s,background .2s}
+.btn-green:hover{background:var(--green-dark);transform:translateY(-2px)}
+.btn-green .arr{width:36px;height:36px;border-radius:50%;background:#fff;color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.psy-art{position:relative}
+.psy-quote{position:absolute;right:0;bottom:6%;max-width:220px;font-family:'Cormorant Garamond',serif;font-size:1.22rem;line-height:1.35;color:var(--dark);background:rgba(255,255,255,.86);padding:12px 16px;border-radius:14px;box-shadow:0 10px 30px rgba(30,45,40,.1)}
+.psy-strip{margin:46px -5.556% 0;background:var(--green);color:#fff;text-align:center;padding:13px 5%;font-weight:600;letter-spacing:.24em;text-transform:uppercase;font-size:.84rem}
+.pillar{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:26px;border-top:4px solid var(--green)}
+.pillar:nth-child(2n){border-top-color:#38b6d8}
+.pillar .fi{margin-bottom:12px}
+.pillar ul{margin:12px 0 0;padding-left:18px;color:var(--gray);font-size:.94rem}
+.pillar ul li{margin-bottom:4px}
+.in-quote{max-width:820px;margin:0 auto;text-align:center}
+.in-quote blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.35;color:var(--dark);margin:0}
+/* cross-links between the two pages */
+.in-cross{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:24px;max-width:1000px;margin:0 auto}
+.x-card{position:relative;display:block;border-radius:22px;overflow:hidden;text-decoration:none;padding:30px 28px;min-height:250px;transition:transform .25s,box-shadow .25s;box-shadow:0 14px 40px rgba(30,45,40,.12)}
+.x-card:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(30,45,40,.18)}
+.x-nov{background:repeating-linear-gradient(90deg,#e4f4f4 0 46px,#fbf4f3 46px 92px);color:#3b1d2e;text-align:center}
+.x-nov .m{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:2.6rem;line-height:1}
+.x-nov .t{font-family:'Cormorant Garamond',serif;text-transform:uppercase;font-size:2.3rem;line-height:.95;margin:4px 0 12px}
+.x-nov .o{display:inline-block;border:1.5px solid #3b1d2e;border-radius:999px;padding:4px 16px;letter-spacing:.3em;font-weight:700;font-size:.78rem}
+.x-nov p{color:#4b3340;margin:14px auto 0;max-width:340px;font-size:.95rem}
+.x-psy{background:var(--card);border:1px solid var(--border);color:var(--dark);display:grid;grid-template-columns:1fr 120px;gap:14px;align-items:center}
+.x-psy .k{font-family:'Cormorant Garamond',serif;color:var(--green);font-size:1.3rem}
+.x-psy .t{font-weight:800;text-transform:uppercase;font-size:2.1rem;line-height:1;color:#14243a;margin:2px 0 10px}
+.x-psy .p{display:inline-block;background:var(--green);color:#fff;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:6px}
+.x-psy p{color:var(--gray);margin:12px 0 0;font-size:.95rem}
+.x-go{display:inline-block;margin-top:14px;font-weight:700;font-size:.9rem}
+.x-nov .x-go{color:#3b1d2e}.x-psy .x-go{color:var(--green)}
+@media(max-width:820px){.psy-grid{grid-template-columns:1fr}.psy-art{max-width:340px;margin:0 auto}.psy-quote{position:static;margin:-10px auto 0;max-width:none;text-align:center}
+ .nov-hero{padding-top:96px}.nov-hero .neuro{opacity:.12;right:-120px}}
+@media(max-width:460px){.x-psy{grid-template-columns:1fr}.x-psy .neuro{max-width:120px}}
+html[data-theme="dark"] .psy-hero{background:linear-gradient(160deg,#0e1b13 0%,#12241a 100%)}
+html[data-theme="dark"] .psy-h1,html[data-theme="dark"] .x-psy .t{color:#eaf4ee}
+html[data-theme="dark"] .psy-quote{background:rgba(18,36,26,.9)}
+html[data-theme="dark"] .neuro .nh-head{fill:rgba(63,208,220,.12)}
+@media (prefers-reduced-motion: reduce){.nov-open i{animation:none}}
+</style>
+"""
+
+NOV = dict(
+    slug="november-online-internships",
+    title="November Online Internships 2026 Open | MindCare Services®",
+    desc=("MindCare Services® November 2026 online internships are open. Learn from practising psychologists, "
+          "from anywhere in Pakistan. Call or WhatsApp 0327 2337631 to apply."),
+    facts=[("Intake", "November 2026"), ("Format", "100% online"), ("Open to", "Psychology students & graduates"),
+           ("Apply", "WhatsApp 0327 2337631")],
+    gets=[("i-globe", "Join from anywhere", "No travel and no relocation. Take part from Karachi, Lahore, Islamabad or any city in Pakistan."),
+          ("i-handshake", "Guided by experts", "Learn directly from MindCare's psychologists and therapists, with mentorship throughout."),
+          ("i-brain", "Practical learning", "See how psychology works in a real multidisciplinary practice, beyond the textbook."),
+          ("i-grad", "Career-ready skills", "Build the confidence and experience your next step in psychology needs.")],
+    steps=[("Message us", "Send your name, university, degree and semester on WhatsApp, or call 0327 2337631."),
+           ("Get the November details", "We share the schedule, structure and everything you need before you commit."),
+           ("Start online", "Confirm your seat and begin your internship with the MindCare team in November.")],
+    faqs=[("Are the November online internships open?",
+           "Yes. Applications for MindCare's November 2026 online internships are open now. WhatsApp or call 0327 2337631 to apply."),
+          ("Do I need to be in Karachi?",
+           "No. The November internships are fully online, so you can join from anywhere in Pakistan."),
           ("Who can apply?",
-           "Psychology students and recent psychology graduates who want practical, supervised experience. If you study a related field and aren't sure you qualify, message us and ask."),
-          ("What will I learn?",
-           "Practical learning, expert mentorship, real-world exposure and career-ready skills: how clinical psychology works in practice at a multidisciplinary clinic, guided by our psychologists."),
-          ("How long is the internship and is there a fee?",
+           "Psychology students and recent psychology graduates. If you study a related field and aren't sure you qualify, message us and ask."),
+          ("How long is it and is there a fee?",
            "Message us on WhatsApp and we'll share the duration, schedule and any fee for the November intake before you commit."),
           ("How do I apply?",
-           "Tap 'Apply on WhatsApp' on this page and send your name, university, degree and semester. You can also call +92 327 2337631.")],
+           "Tap 'Apply on WhatsApp' and send your name, university, degree and semester, or call 0327 2337631.")],
+)
+
+PSY = dict(
+    slug="psychology-internships",
+    title="Psychology Internships in Pakistan | Kickstart Your Career | MindCare Services®",
+    desc=("Kickstart your career in psychology with MindCare Services® internships: practical learning, expert "
+          "mentorship, real-world exposure and career-ready skills, guided by practising psychologists."),
+    pillars=[("i-brain", "Practical Learning", "Theory becomes skill when you see it used.",
+              ["How assessment and case formulation work", "How therapy approaches are chosen", "Learning by doing, with guidance"]),
+             ("i-handshake", "Expert Mentorship", "Learn from the people doing the work.",
+              ["Guidance from MindCare psychologists", "Feedback on your work as you go", "Honest advice on your path in psychology"]),
+             ("i-clipboard", "Real-World Exposure", "See what clinical work actually involves.",
+              ["Inside a multidisciplinary clinic", "Ethics and confidentiality in practice", "The day-to-day of client care"]),
+             ("i-grad", "Career-Ready Skills", "Leave more prepared than you arrived.",
+              ["Professional communication", "Confidence for your next role or degree", "Experience that strengthens your CV"])],
+    who=[("i-school", "Psychology students", "Undergraduate and postgraduate students who want practical experience alongside their degree."),
+         ("i-grad", "Fresh graduates", "Recent graduates building real experience before their next step."),
+         ("i-heart-hands", "Future clinicians", "Anyone serious about clinical, counselling or child psychology as a career.")],
+    steps=[("Message us", "Send your name, university, degree and semester on WhatsApp, or call 0327 2337631."),
+           ("Talk to the team", "We tell you about the current intake and answer your questions."),
+           ("Start your internship", "Confirm your seat and start learning with MindCare's psychologists.")],
+    faqs=[("Does MindCare offer psychology internships?",
+           "Yes. MindCare Services® runs psychology internships guided by its practising psychologists. The current intake is the November 2026 online internship."),
+          ("What will I learn?",
+           "Practical learning, expert mentorship, real-world exposure and career-ready skills: how psychology works in practice at a multidisciplinary clinic."),
+          ("Who can apply?",
+           "Psychology students and recent graduates. If you study a related field, message us and ask."),
+          ("Is the internship online?",
+           "The current November 2026 intake is online, so you can join from anywhere in Pakistan."),
+          ("How do I apply?",
+           "WhatsApp or call 0327 2337631 with your name, university, degree and semester.")],
 )
 
 
-def intern_page():
-    t = INTERN
-    prefix = ""
+def _in_schema(url, name, desc, crumbs, faqs, extra=None):
+    g = [{"@type": "WebPage", "@id": url + "#webpage", "url": url, "name": name,
+          "description": desc, "inLanguage": "en-PK", "isPartOf": {"@type": "WebSite", "url": BASE}},
+         {"@type": "BreadcrumbList", "itemListElement": [
+             {"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(crumbs)]}]
+    if extra:
+        g.append(extra)
+    if faqs:
+        g.append({"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs]})
+    return {"@context": "https://schema.org", "@graph": g}
+
+
+def _program(url, name, desc, wa, start=None):
+    p = {"@type": "EducationalOccupationalProgram", "@id": url + "#program", "name": name,
+         "description": desc, "url": url, "programType": "Internship",
+         "occupationalCategory": "19-3039.00 Psychologists", "provider": {"@id": f"{BASE}/#clinic"},
+         "offers": {"@type": "Offer", "url": wa, "availability": "https://schema.org/InStock"}}
+    if start:
+        p.update({"educationalProgramMode": "online", "startDate": start, "applicationStartDate": "2026-11-01"})
+    return p
+
+
+def _in_head(title, desc, url, schema, og):
+    out = head(title, desc, url, "", schema)
+    return out.replace(f'<meta property="og:image" content="{BASE}/mindcare.png">',
+                       f'<meta property="og:image" content="{BASE}/assets/workshops/{og}">', 1)
+
+
+def _steps(steps, cls=""):
+    return (f'<ol class="in-steps {cls}">' + "".join(
+        f'<li class="fade-up"><b class="n">{i}</b><h3>{h}</h3><p>{d}</p></li>'
+        for i, (h, d) in enumerate(steps, 1)) + "</ol>")
+
+
+def _cards(items):
+    return "\n".join(f'      <div class="feature-card fade-up"><div class="fi">{icon("",ic)}</div><h3>{n}</h3><p>{d}</p></div>'
+                     for ic, n, d in items)
+
+
+def _cross(show_nov=True, show_psy=True):
+    nov = f'''<a class="x-card x-nov fade-up" href="/{NOV['slug']}">
+        <div class="m">November</div><div class="t">Online Internships</div><span class="o">Open</span>
+        <p>Applications for the November 2026 online intake are open now. Join from anywhere in Pakistan.</p>
+        <span class="x-go">See the November intake →</span></a>'''
+    psy = f'''<a class="x-card x-psy fade-up" href="/{PSY['slug']}">
+        <div><div class="k">Kickstart your career in</div><div class="t">Psychology</div><span class="p">Internships that inspire growth</span>
+        <p>Practical learning, expert mentorship and real-world exposure with MindCare's psychologists.</p>
+        <span class="x-go">About the programme →</span></div>{NEURO_SVG}</a>'''
+    return f'<div class="in-cross">{nov if show_nov else ""}{psy if show_psy else ""}</div>'
+
+
+def nov_page():
+    t = NOV
     url = f"{BASE}/{t['slug']}"
-    img1 = f"{BASE}/assets/workshops/internships-psychology-poster.jpg"
-    schema = {"@context": "https://schema.org", "@graph": [
-        {"@type": "WebPage", "@id": url + "#webpage", "url": url, "name": t["title"],
-         "description": t["desc"], "inLanguage": "en-PK", "primaryImageOfPage": img1,
-         "about": {"@id": url + "#program"}},
-        {"@type": "EducationalOccupationalProgram", "@id": url + "#program",
-         "name": "MindCare Online Psychology Internship, November 2026",
-         "description": t["desc"], "url": url, "image": img1,
-         "educationalProgramMode": "online", "startDate": "2026-11",
-         "occupationalCategory": "19-3039.00 Psychologists",
-         "provider": {"@id": f"{BASE}/#clinic"},
-         "applicationStartDate": "2026-11-01",
-         "programType": "Internship",
-         "offers": {"@type": "Offer", "url": t["wa"], "availability": "https://schema.org/InStock"}},
-        {"@type": "BreadcrumbList", "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
-            {"@type": "ListItem", "position": 2, "name": "Internships", "item": url}]},
-        {"@type": "FAQPage", "mainEntity": [
-            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
-            for q, a in t["faqs"]]},
-    ]}
-    card = lambda ic, n, d: f'      <div class="feature-card fade-up"><div class="fi">{icon(prefix,ic)}</div><h3>{n}</h3><p>{d}</p></div>'
-    gains = "\n".join(card(*g) for g in t["gains"])
-    who = "\n".join(card(*w) for w in t["who"])
-    steps = "\n".join(card(*s) for s in t["steps"])
-    apply_btn = f'<a href="{t["wa"]}" target="_blank" rel="noopener" class="btn-primary">{icon(prefix,"i-wa","18")} Apply on WhatsApp</a>'
-    out = head(t["title"], t["desc"], url, prefix, schema)
-    out = out.replace(f'<meta property="og:image" content="{BASE}/mindcare.png">',
-                      f'<meta property="og:image" content="{img1}">', 1)
-    out += nav(prefix)
+    schema = _in_schema(url, t["title"], t["desc"],
+                        [("Home", f"{BASE}/"), ("Internships", f"{BASE}/internships"), ("November Online Internships", url)],
+                        t["faqs"], _program(url, "MindCare November 2026 Online Internship", t["desc"], NOV_WA, "2026-11"))
+    facts = "".join(f'<div class="in-fact nov-fact fade-up"><strong>{k}</strong><span>{v}</span></div>' for k, v in t["facts"])
+    out = _in_head(t["title"], t["desc"], url, schema, "november-online-internships-og.jpg")
+    out += nav("")
     out += f"""<main id="main">
-<style>
-.in-posters{{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:32px;align-items:start;max-width:1000px;margin:0 auto}}
-.in-poster{{margin:0}}
-.in-poster picture{{display:block}}
-.in-poster img{{display:block;width:100%;height:auto;border-radius:20px;border:1px solid var(--border);background:#fff;box-shadow:0 18px 46px rgba(30,45,40,.16);transition:transform .3s ease,box-shadow .3s ease}}
-.in-poster img:hover{{transform:translateY(-4px);box-shadow:0 24px 54px rgba(30,45,40,.2)}}
-.in-poster figcaption{{margin-top:14px;text-align:center;font-size:.92rem;color:var(--gray)}}
-.in-poster figcaption strong{{display:block;color:var(--dark);font-size:1.02rem;margin-bottom:2px}}
-.in-quote{{max-width:820px;margin:0 auto;text-align:center}}
-.in-quote blockquote{{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.35;color:var(--dark);margin:0 0 18px}}
-.in-motto{{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}}
-.in-motto span{{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--green);padding:7px 16px;border-radius:999px}}
-.in-motto span:nth-child(2n){{background:var(--teal)}}
-.in-ur{{font-size:1.02rem;color:var(--teal-deep);margin:-4px 0 18px;line-height:1.9}}
-</style>
-<header class="page-hero">
+{INTERN_CSS}
+<header class="nov-hero">
+  {NEURO_SVG}
   <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Internships</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-grad')} November 2026 · Online Internships · Applications Open</div>
-    <h1>Kickstart your career in <em>psychology</em></h1>
-    <p class="lede">{t['lede']}</p>
-    <p class="in-ur" lang="ur" dir="rtl">نومبر کی آن لائن سائیکالوجی انٹرن شپس کے لیے داخلے جاری ہیں۔ عملی تجربہ، ماہرین کی رہنمائی۔</p>
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/internships">Internships</a></li><li aria-current="page">November</li></ol>
+    <p class="nov-month">November</p>
+    <h1 class="nov-h1">{SPARK}Online<br>Internships{SPARK}<span class="sr-only"> open, November 2026</span></h1>
+    <div class="nov-open"><i aria-hidden="true"></i>Open</div>
+    <p class="nov-lede">Applications for MindCare's November 2026 online internships are open. Learn from practising psychologists, from anywhere in Pakistan.</p>
     <div class="ph-actions">
-      {apply_btn}
+      <a href="{NOV_WA}" target="_blank" rel="noopener" class="btn-plum">{icon("","i-wa")} Apply on WhatsApp</a>
       <a href="tel:{PHONE}" class="btn-secondary">Call {PHONE_H}</a>
     </div>
+    <p class="nov-contact">Contact us at<b><a href="tel:{PHONE}">0327 2337631</a></b><b><a href="/">themindcareservices.com</a></b></p>
   </div>
 </header>
 <section>
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">Now Open</span><h2 class="section-title">November online internships</h2><p class="section-sub">Internships that inspire growth. Hands-on experience, real impact, guided by experts.</p></div>
-    <div class="in-posters">
-      <figure class="in-poster fade-up">
-        <picture><source type="image/webp" srcset="assets/workshops/internships-psychology-poster.webp"><img src="assets/workshops/internships-psychology-poster.jpg" alt="Kickstart your career in psychology: MindCare internships that inspire growth, with practical learning, expert mentorship, real-world exposure and career-ready skills" width="679" height="680" fetchpriority="high"></picture>
-        <figcaption><strong>Internships that inspire growth</strong>Practical learning, mentorship and real-world exposure</figcaption>
-      </figure>
-      <figure class="in-poster fade-up">
-        <picture><source type="image/webp" srcset="assets/workshops/internships-november-poster.webp"><img src="assets/workshops/internships-november-poster.jpg" alt="MindCare November online internships open. Contact 0327 2337631" width="681" height="853" loading="lazy" decoding="async"></picture>
-        <figcaption><strong>November intake · Online</strong>Join from anywhere in Pakistan</figcaption>
-      </figure>
-    </div>
-    <div style="text-align:center;margin-top:34px" class="fade-up">{apply_btn}</div>
+    <div class="section-header centered fade-up"><span class="section-tag">Key Details</span><h2 class="section-title">The November intake at a glance</h2></div>
+    <div class="in-facts">{facts}</div>
   </div>
 </section>
 <section class="bg-off">
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">What You Gain</span><h2 class="section-title">Hands-on experience. Real impact.</h2></div>
+    <div class="section-header centered fade-up"><span class="section-tag">Why Join</span><h2 class="section-title">An internship that fits around your life</h2></div>
     <div class="feature-grid">
-{gains}
+{_cards(t['gets'])}
     </div>
   </div>
 </section>
 <section>
   <div class="section-inner">
-    <div class="in-quote fade-up">
-      <blockquote>&ldquo;Learn deeply. Grow meaningfully. Make a difference.&rdquo;</blockquote>
-      <div class="in-motto"><span>Learn</span><span>Grow</span><span>Heal</span><span>Lead</span></div>
+    <div class="section-header centered fade-up"><span class="section-tag">How to Apply</span><h2 class="section-title">From message to first session</h2></div>
+    {_steps(t['steps'], 'plum')}
+    <div style="text-align:center;margin-top:36px" class="fade-up"><a href="{NOV_WA}" target="_blank" rel="noopener" class="btn-plum">{icon("","i-wa")} Apply on WhatsApp</a></div>
+  </div>
+</section>
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">The Programme</span><h2 class="section-title">Part of MindCare's psychology internships</h2></div>
+    {_cross(show_nov=False)}
+  </div>
+</section>
+{faq_block("", t['faqs'])}
+{cta_band("", "November seats are open now.", "Message us on WhatsApp or call 0327 2337631 and our team will share the details.")}
+</main>
+"""
+    return out + footer("")
+
+
+def psy_page():
+    t = PSY
+    url = f"{BASE}/{t['slug']}"
+    schema = _in_schema(url, t["title"], t["desc"],
+                        [("Home", f"{BASE}/"), ("Internships", f"{BASE}/internships"), ("Psychology Internships", url)],
+                        t["faqs"], _program(url, "MindCare Psychology Internship", t["desc"], PSY_WA))
+    lst = "".join(f'<li><span class="ic">{icon("",ic)}</span>{n}</li>' for ic, n, _, _ in t["pillars"])
+    pillars = "\n".join(
+        f'<div class="feature-card pillar fade-up"><div class="fi">{icon("",ic)}</div><h3>{n}</h3><p>{d}</p><ul>'
+        + "".join(f"<li>{b}</li>" for b in bl) + "</ul></div>" for ic, n, d, bl in t["pillars"])
+    out = _in_head(t["title"], t["desc"], url, schema, "psychology-internships-og.jpg")
+    out += nav("")
+    out += f"""<main id="main">
+{INTERN_CSS}
+<header class="psy-hero">
+  <div class="psy-grid">
+    <div>
+      <ol class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/internships">Internships</a></li><li aria-current="page">Psychology</li></ol>
+      <p class="psy-kick">Kickstart your career in</p>
+      <h1 class="psy-h1">Psychology<span class="sr-only"> internships</span></h1>
+      <span class="psy-pill">Internships that inspire growth</span>
+      <p class="psy-lede">Hands-on experience. Real impact. Guided by experts.</p>
+      <ul class="psy-list">{lst}</ul>
+      <div class="ph-actions" style="align-items:center">
+        <a href="{PSY_WA}" target="_blank" rel="noopener" class="btn-green"><span class="arr">→</span>Apply Now</a>
+        <a href="/{NOV['slug']}" class="btn-secondary">November intake →</a>
+      </div>
+    </div>
+    <div class="psy-art">{NEURO_SVG}<p class="psy-quote">&ldquo;Learn deeply. Grow meaningfully. Make a difference.&rdquo;</p></div>
+  </div>
+  <div class="psy-strip">Learn. Grow. Heal. Lead.</div>
+</header>
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">What You Gain</span><h2 class="section-title">Four things every MindCare intern leaves with</h2></div>
+    <div class="feature-grid">
+{pillars}
     </div>
   </div>
 </section>
@@ -1545,25 +1742,57 @@ def intern_page():
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">Who It's For</span><h2 class="section-title">Who should apply</h2></div>
     <div class="feature-grid">
-{who}
+{_cards(t['who'])}
     </div>
   </div>
 </section>
 <section>
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">How to Apply</span><h2 class="section-title">Three steps to your internship</h2></div>
-    <div class="feature-grid">
-{steps}
-    </div>
-    <div style="text-align:center;margin-top:34px" class="fade-up">{apply_btn}</div>
+    <div class="section-header centered fade-up"><span class="section-tag">Now Open</span><h2 class="section-title">Current intake</h2></div>
+    {_cross(show_psy=False)}
   </div>
 </section>
-{faq_block(prefix, t['faqs'])}
-{cta_band(prefix, "Ready to start your career in psychology?", "Applications for the November online internships are open now. Message us on WhatsApp and our team will share the details.")}
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">How to Apply</span><h2 class="section-title">Three steps to your internship</h2></div>
+    {_steps(t['steps'])}
+    <div style="text-align:center;margin-top:36px" class="fade-up"><a href="{PSY_WA}" target="_blank" rel="noopener" class="btn-green"><span class="arr">→</span>Apply Now</a></div>
+  </div>
+</section>
+{faq_block("", t['faqs'])}
+{cta_band("", "Ready to start your career in psychology?", "Message us on WhatsApp or call 0327 2337631 and our team will take it from there.")}
 </main>
 """
-    out += footer(prefix)
-    return out
+    return out + footer("")
+
+
+def intern_hub():
+    url = f"{BASE}/internships"
+    title = "Internships at MindCare Services® | Psychology & Online Internships"
+    desc = ("Internships at MindCare Services®: the psychology internship programme and the November 2026 online "
+            "intake, now open. Practical learning and mentorship from practising psychologists.")
+    schema = _in_schema(url, title, desc, [("Home", f"{BASE}/"), ("Internships", url)], None)
+    out = _in_head(title, desc, url, schema, "psychology-internships-og.jpg")
+    out += nav("")
+    out += f"""<main id="main">
+{INTERN_CSS}
+<header class="page-hero">
+  <div class="ph-inner">
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Internships</li></ol>
+    <div class="ph-badge">{icon("","i-grad")} November 2026 intake · Applications open</div>
+    <h1>Internships at <em>MindCare</em></h1>
+    <p class="lede">Start your career in psychology alongside practising psychologists. Pick where to begin: the programme itself, or the November online intake that's open right now.</p>
+  </div>
+</header>
+<section>
+  <div class="section-inner">
+    {_cross()}
+  </div>
+</section>
+{cta_band("", "Questions about internships?", "Message us on WhatsApp or call 0327 2337631 and a real person from our team will answer.")}
+</main>
+"""
+    return out + footer("")
 
 
 def guides_index():
@@ -3006,7 +3235,9 @@ question this site answers in one place.
 - [All services]({BASE}/services/): the full clinical offering.
 - [Online therapy across Pakistan]({BASE}/online-therapy): how remote sessions work and which cities are covered.
 - [Home therapy sessions in Karachi]({BASE}/{HOME['slug']}): psychologists and therapists visit clients at home anywhere in Karachi, for adults, children, teens, couples and elderly parents.
-- [Psychology internships]({BASE}/{INTERN['slug']}): online psychology internships for students and graduates; the November 2026 intake is open, apply on WhatsApp.
+- [Internships]({BASE}/internships): MindCare's internship hub.
+- [November online internships]({BASE}/{NOV['slug']}): the November 2026 online intake is open; join from anywhere in Pakistan, apply on WhatsApp 0327 2337631.
+- [Psychology internships]({BASE}/{PSY['slug']}): the internship programme for psychology students and graduates: practical learning, expert mentorship, real-world exposure, career-ready skills.
 
 ## Services
 
@@ -3216,7 +3447,9 @@ def build():
         write(f"{t['slug']}.html", seo_page(t))
     write("guides.html", guides_index())
     write(f"{HOME['slug']}.html", home_page())
-    write(f"{INTERN['slug']}.html", intern_page())
+    write("internships.html", intern_hub())
+    write(f"{NOV['slug']}.html", nov_page())
+    write(f"{PSY['slug']}.html", psy_page())
     for c in CITIES:
         write(f"{c['slug']}.html", city_page(c))
     write("online-therapy.html", cities_index())
@@ -3257,7 +3490,9 @@ def build():
             (f"{BASE}/montessori-course", "montessori-course/index.html", "0.9"),
             (f"{BASE}/montessori-course/register", "montessori-course/register.html", "0.8"),
             (f"{BASE}/workshops", "workshops.html", "0.8"),
-            (f"{BASE}/{INTERN['slug']}", f"{INTERN['slug']}.html", "0.8"),
+            (f"{BASE}/internships", "internships.html", "0.8"),
+            (f"{BASE}/{NOV['slug']}", f"{NOV['slug']}.html", "0.9"),
+            (f"{BASE}/{PSY['slug']}", f"{PSY['slug']}.html", "0.9"),
             (f"{BASE}/crisis-intervention-workshop", "crisis-intervention-workshop/index.html", "0.9"),
             (f"{BASE}/crisis-intervention-workshop/register", "crisis-intervention-workshop/register.html", "0.8"),
             (f"{BASE}/montessori-workshop", "montessori-workshop/index.html", "0.7"),
