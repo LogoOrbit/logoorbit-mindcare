@@ -272,6 +272,7 @@ def nav(prefix, active=None):
     <li><a href="/articles"{cls('articles')}>Articles</a></li>
     <li><a href="/courses"{cls('courses')}>Courses</a></li>
     <li><a href="/workshops"{cls('workshops')}>Workshops</a></li>
+    <li><a href="/internships"{cls('internships')}>Internships</a></li>
     <li><a href="/contact" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
@@ -289,6 +290,7 @@ def nav(prefix, active=None):
   <a href="/articles">Articles</a>
   <a href="/courses">Courses</a>
   <a href="/workshops">Workshops</a>
+  <a href="/internships">Internships</a>
   <a href="/contact" class="m-cta">Book Appointment</a>
 </div>
 <div class="wa-float" role="navigation" aria-label="Quick contact">
@@ -680,26 +682,32 @@ def services_index():
             for i, s in enumerate(SERVICES)]},
     ]}
     cards = "\n".join(service_card(s, prefix) for s in SERVICES)
+    jump = "".join(f'<a href="/services/{s["slug"]}">{s["name"].replace("Individual ","").replace(" & Trainings","")}</a>' for s in SERVICES)
     out = head("Therapy Services in Karachi | MindCare Services®",
                "Therapy services in Karachi: psychotherapy, family counseling, speech therapy, physiotherapy, occupational and behavioral therapy. Book an appointment.",
                url, prefix, schema)
     out += nav(prefix, "services")
     out += f"""<main id="main">
-<header class="page-hero">
+<header class="page-hero hx-dark hx-services">
   <div class="ph-inner with-art">
     <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Services</li></ol>
     <div class="ph-badge">{icon(prefix,'i-puzzle')} {len(SERVICES)} services · One caring team</div>
     <h1>Comprehensive care for <em>mind &amp; body</em></h1>
-    <p class="lede">A holistic range of therapy and clinical services, all under one roof in Karachi, delivered by experienced professionals. Choose a service to learn more.</p>
+    <p class="lede">A holistic range of therapy and clinical services, all under one roof in Karachi, delivered by experienced professionals. Jump straight to what you need.</p>
     <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a><a href="/online-therapy" class="btn-secondary">Outside Karachi? Online therapy →</a></div>
+    <div class="svc-jump" role="navigation" aria-label="Jump to a service">{jump}</div>
     </div>
-    <div class="ph-art">{art('services-index', prefix, lazy=False)}</div>
+    <div class="svc-stats">
+      <div class="svc-stat"><b>{len(SERVICES)}</b><span>services for mind &amp; body, one team</span></div>
+      <div class="svc-stat"><b>3</b><span>ways to be seen: clinic, home, online</span></div>
+      <div class="svc-stat"><b>2</b><span>languages: English &amp; Urdu</span></div>
+    </div>
   </div>
 </header>
 <section>
   <div class="section-inner">
-    <div class="card-grid">
+    <div class="svc-bento">
 {cards}
     </div>
   </div>
@@ -926,16 +934,16 @@ def team_index():
             {"@type": "ListItem", "position": i + 1, "name": m["name"], "url": f"{BASE}/team/{m['slug']}"}
             for i, m in enumerate(TEAM)]}]}
     cards = "\n".join(
-        f'''      <a class="link-card fade-up" href="/team/{m['slug']}" style="text-align:center">
-        <div class="profile-avatar" style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px">{AV[m['av']]}</div>
-        <h2>{m['name']}</h2><p style="color:var(--teal-dark);font-weight:600;margin-bottom:4px">{m['role']}</p>
-        <span class="more">View profile →</span></a>''' for m in TEAM)
+        f'''      <a class="team-card fade-up" href="/team/{m['slug']}">
+        <div class="pic">{AV[m['av']]}</div>
+        <div class="tx"><h2>{m['name']}</h2><p class="role">{m['role']}</p><span class="more">View profile →</span></div></a>''' for m in TEAM)
+    stack = "".join(f'<span>{AV[m["av"]]}</span>' for m in TEAM)
     out = head("Our Team | Psychologists in Karachi | MindCare Services®",
                "Meet the MindCare Services® team in Karachi: psychologists, psychotherapists and physiotherapists led by founder Shaista Tariq, PPA Member.",
                url, prefix, schema)
     out += nav(prefix, "team")
     out += f"""<main id="main">
-<header class="page-hero">
+<header class="page-hero hx-dark hx-team">
   <div class="ph-inner with-art">
     <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Team</li></ol>
@@ -944,12 +952,12 @@ def team_index():
     <p class="lede">A dedicated group of specialists united by one mission: compassionate, professional, impactful care. Get to know each of them.</p>
     <div class="ph-actions"><a href="/contact" class="btn-primary">Book Appointment</a></div>
     </div>
-    <div class="ph-art">{art('team-index', prefix, lazy=False)}</div>
+    <div class="team-stack" aria-hidden="true">{stack}</div>
   </div>
 </header>
 <section>
   <div class="section-inner">
-    <div class="card-grid">
+    <div class="team-grid">
 {cards}
     </div>
   </div>
@@ -1646,7 +1654,7 @@ def nov_page():
                         t["faqs"], _program(url, "MindCare November 2026 Online Internship", t["desc"], NOV_WA, "2026-11"))
     facts = "".join(f'<div class="in-fact nov-fact fade-up"><strong>{k}</strong><span>{v}</span></div>' for k, v in t["facts"])
     out = _in_head(t["title"], t["desc"], url, schema, "november-online-internships-og.jpg")
-    out += nav("")
+    out += nav("", "internships")
     out += f"""<main id="main">
 {INTERN_CSS}
 <header class="nov-hero">
@@ -1709,7 +1717,7 @@ def psy_page():
         f'<div class="feature-card pillar fade-up"><div class="fi">{icon("",ic)}</div><h3>{n}</h3><p>{d}</p><ul>'
         + "".join(f"<li>{b}</li>" for b in bl) + "</ul></div>" for ic, n, d, bl in t["pillars"])
     out = _in_head(t["title"], t["desc"], url, schema, "psychology-internships-og.jpg")
-    out += nav("")
+    out += nav("", "internships")
     out += f"""<main id="main">
 {INTERN_CSS}
 <header class="psy-hero">
@@ -1773,7 +1781,7 @@ def intern_hub():
             "intake, now open. Practical learning and mentorship from practising psychologists.")
     schema = _in_schema(url, title, desc, [("Home", f"{BASE}/"), ("Internships", url)], None)
     out = _in_head(title, desc, url, schema, "psychology-internships-og.jpg")
-    out += nav("")
+    out += nav("", "internships")
     out += f"""<main id="main">
 {INTERN_CSS}
 <header class="page-hero">
@@ -1813,7 +1821,7 @@ def guides_index():
                url, prefix, schema)
     out += nav(prefix, "guides")
     out += f"""<main id="main">
-<header class="page-hero">
+<header class="page-hero hx-guides">
   <div class="ph-inner with-art">
     <div class="ph-copy">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Guides</li></ol>
@@ -1827,7 +1835,7 @@ def guides_index():
 </header>
 <section>
   <div class="section-inner">
-    <div class="card-grid">
+    <div class="guide-list">
 {cards}
     </div>
   </div>
@@ -2257,17 +2265,15 @@ def articles_index():
                url, prefix, schema)
     out += nav(prefix, "articles")
     out += f"""<main id="main">
-<header class="page-hero">
-  <div class="ph-inner with-art">
-    <div class="ph-copy">
+<header class="page-hero hx-articles">
+  <div class="ph-inner">
     <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Articles</li></ol>
-    <div class="ph-badge">{icon(prefix,'i-book')} {len(ARTICLES)} essays &amp; reflections</div>
+    <p class="mast-kick">The MindCare Journal</p>
     <h1>Articles by <em>Shaista Tariq</em></h1>
-    <p class="lede">Long-form writing on mental health, the human side of care, workplaces and behaviour, by the founder of MindCare Services®. Every piece is here in full, no login required.</p>
+    <div class="mast-line"><span>Karachi</span><span>{len(ARTICLES)} essays &amp; reflections</span><span>Free to read, no login</span></div>
+    <p class="lede">Long-form writing on mental health, the human side of care, workplaces and behaviour, by the founder of MindCare Services®.</p>
     <div class="art-pills">{topics}</div>
     <div class="ph-actions"><a href="/team/shaista-tariq" class="btn-secondary">About Shaista →</a></div>
-    </div>
-    <div class="ph-art">{art('articles-index', prefix, lazy=False)}</div>
   </div>
 </header>
 <section>

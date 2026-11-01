@@ -135,6 +135,7 @@
     <li><a href="/articles">Articles</a></li>
     <li><a href="/courses" class="active">Courses</a></li>
     <li><a href="/workshops">Workshops</a></li>
+    <li><a href="/internships">Internships</a></li>
     <li><a href="/contact" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
@@ -152,6 +153,7 @@
   <a href="/articles">Articles</a>
   <a href="/courses">Courses</a>
   <a href="/workshops">Workshops</a>
+  <a href="/internships">Internships</a>
   <a href="/contact" class="m-cta">Book Appointment</a>
 </div>
 <div class="wa-float" role="navigation" aria-label="Quick contact">
@@ -161,149 +163,198 @@
 </div>
 <main id="main">
 <style>
-.mf-hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:40px;align-items:center}
-picture:has(>.mf-poster){display:block}
-picture:has(>.mf-poster){display:block}
-.mf-poster{width:100%;height:auto;border-radius:20px;box-shadow:0 18px 46px rgba(30,45,40,.16);border:1px solid var(--border);background:#fff}
-.mf-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:16px;margin-top:6px}
-.mf-fact{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}
-.mf-fact strong{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}
-.mf-fact span{font-size:1.02rem;font-weight:600;color:var(--dark)}
-.mf-day{position:relative;display:flex;flex-direction:column;align-items:flex-start}
-/* Each month leads with a picture of what that month is actually about. */
-.mf-ill{align-self:stretch;width:100%;max-height:132px;object-fit:contain;margin:-6px 0 14px;
- padding:12px;border-radius:16px;background:linear-gradient(150deg,#eaf7f7 0%,#f1f9ee 100%);border:1px solid var(--border)}
-@media(max-width:560px){.mf-ill{max-height:106px}}
-.mf-day .section-tag{align-self:flex-start}
-.mf-day h3{min-height:2.6em;align-self:stretch}
-.mf-day>p,.mf-day .aside-list{align-self:stretch}
-.mf-day>p{flex:1 0 auto}
-.mf-day .aside-list{margin-bottom:0}
-@media(max-width:760px){.mf-day h3{min-height:0}.mf-day>p{flex:0 1 auto}}
-.mf-day .mf-num{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;box-sizing:border-box;width:46px;height:46px;min-width:46px;aspect-ratio:1;border-radius:50%;
- font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:#fff;margin-bottom:12px}
-.mf-day:nth-child(1) .mf-num{background:var(--teal)}
-.mf-day:nth-child(2) .mf-num{background:var(--green)}
-.mf-day:nth-child(3) .mf-num{background:var(--coral)}
-.mf-honest{background:var(--teal-light);border:1px solid var(--border);border-left:5px solid var(--teal);border-radius:16px;padding:24px 28px;max-width:860px;margin:0 auto}
-.mf-honest h3{margin-bottom:10px}
-.mf-badge-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
-.mf-badge-row span{font-size:.8rem;font-weight:600;color:var(--teal-deep);background:var(--teal-light);
- border:1px solid var(--border);padding:5px 13px;border-radius:999px}
-html[data-theme="dark"] .mf-fact{background:#12241a}
-html[data-theme="dark"] .mf-honest{background:rgba(15,154,168,.12)}
-html[data-theme="dark"] .mf-poster{background:#f7fdfd}
-
-.ws-past .ws-shot{filter:saturate(.78);box-shadow:0 14px 36px rgba(6,43,49,.18)}
-.ws-shot{position:relative;display:block;border-radius:18px;overflow:hidden;line-height:0}
-.ws-shot img{display:block;width:100%;height:auto}
-/* A soft fade rather than a hard band: the poster's own call to action sits in
-   the bottom eighth, and a gradient covers it without slicing the line above. */
-.ws-shot::after{content:'Completed · Registration Closed';position:absolute;left:0;right:0;bottom:0;
- height:14%;min-height:44px;display:flex;align-items:flex-end;justify-content:center;
- padding:0 10px 3.2%;background:linear-gradient(180deg,rgba(11,95,109,0) 0%,rgba(11,95,109,.92) 42%,rgba(11,95,109,.97) 100%);
- color:#fff;font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:700;letter-spacing:.14em;
- text-transform:uppercase;text-align:center;line-height:1.3}
-@media(max-width:520px){.ws-shot::after{font-size:.66rem;letter-spacing:.1em}}
-.ws-done-tag{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.14em;
- text-transform:uppercase;color:var(--green);background:var(--green-light);border:1px solid rgba(45,106,31,.22);
- padding:6px 14px;border-radius:50px;margin-bottom:12px}
+/* ── Courses: the "academy" page. Paper, geometry, a certificate-style cover. ── */
+.co-hero{position:relative;overflow:hidden;padding:116px 5% 96px;color:#1f3320;
+ background-color:#fbf7ee;background-image:linear-gradient(rgba(45,106,31,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(45,106,31,.06) 1px,transparent 1px);background-size:28px 28px}
+.co-shape{position:absolute;pointer-events:none;opacity:.9}
+.co-shape.c{width:120px;height:120px;border-radius:50%;background:#f29e8e;left:-40px;top:140px}
+.co-shape.s{width:70px;height:70px;border-radius:12px;background:#7fc4d4;right:6%;bottom:40px;transform:rotate(14deg)}
+.co-shape.t{width:0;height:0;border-left:44px solid transparent;border-right:44px solid transparent;border-bottom:76px solid #f7c873;left:46%;bottom:-20px;transform:rotate(-12deg)}
+.co-grid{position:relative;z-index:1;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
+.co-hero .breadcrumb,.co-hero .breadcrumb a{color:#5b6b52}
+.co-kick{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#2d6a1f;background:#fff;border:1px solid #e3dcc6;padding:6px 14px;border-radius:999px;margin-bottom:16px}
+.co-hero h1{font-size:clamp(2.7rem,6.4vw,4.5rem);line-height:1.03;color:#1f3320;margin-bottom:16px}
+.co-hero h1 em{color:#2d6a1f}
+.co-hero .lede{color:#4a5a44;max-width:540px;margin-bottom:26px}
+.btn-forest{display:inline-flex;align-items:center;gap:9px;background:#2d6a1f;color:#fff;padding:14px 26px;border-radius:999px;font-weight:600;text-decoration:none;transition:transform .2s,background .2s}
+.btn-forest:hover{background:#1e4a14;transform:translateY(-2px)}
+.btn-forest svg{width:18px;height:18px}
+/* certificate-style cover */
+.cert{position:relative;background:#fffdf7;border-radius:22px;padding:30px 30px 26px;box-shadow:0 30px 70px rgba(60,50,20,.18);transform:rotate(1.4deg);transition:transform .3s;text-decoration:none;color:#1f3320;display:block}
+.cert:hover{transform:rotate(0) translateY(-4px)}
+.cert::before{content:'';position:absolute;inset:10px;border:2px solid #d9c99a;border-radius:16px;pointer-events:none}
+.cert::after{content:'';position:absolute;inset:15px;border:1px solid #ebe0bf;border-radius:12px;pointer-events:none}
+.cert .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;position:relative;z-index:1}
+.cert .brand{font-size:.66rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#8a7a4c}
+.cert .seal{width:86px;height:86px;flex:none;border-radius:50%;background:radial-gradient(circle,#2d6a1f 58%,#3f8a2e 60%,#2d6a1f 62%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(45,106,31,.35);transform:rotate(-10deg)}
+.cert .seal b{font-family:'Cormorant Garamond',serif;font-size:2rem;line-height:.9}.cert .seal small{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase}
+.cert h2{position:relative;z-index:1;font-size:clamp(1.8rem,3.6vw,2.4rem);line-height:1.08;margin:10px 0 6px;color:#1f3320}
+.cert h2 em{color:#2d6a1f}
+.cert .sub{position:relative;z-index:1;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:#5b6b52;margin:0 0 16px}
+.cert .blocks{position:relative;z-index:1;display:flex;align-items:flex-end;gap:6px;margin:4px 0 18px;height:60px}
+.cert .blocks i{display:block;border-radius:5px}
+.cert dl{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin:0;border-top:1px dashed #d9c99a;padding-top:14px}
+.cert dt{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8a7a4c}
+.cert dd{margin:0;font-weight:600;font-size:.95rem}
+/* at a glance */
+.co-glance{position:relative;z-index:2;max-width:1100px;margin:-52px auto 0;padding:0 5%}
+.co-glance-in{display:grid;grid-template-columns:repeat(6,1fr);background:var(--card);border:1px solid var(--border);border-radius:22px;box-shadow:0 20px 50px rgba(30,45,40,.12);overflow:hidden}
+.co-glance-in div{padding:18px 16px;border-right:1px solid var(--border)}
+.co-glance-in div:last-child{border-right:0}
+.co-glance-in strong{display:block;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#2d6a1f;margin-bottom:4px}
+.co-glance-in span{font-weight:600;font-size:.95rem;color:var(--dark)}
+/* month path */
+.co-path{position:relative;max-width:1000px;margin:0 auto;display:grid;gap:30px}
+.co-path::before{content:'';position:absolute;left:50%;top:20px;bottom:20px;width:3px;background:repeating-linear-gradient(180deg,#d9c99a 0 10px,transparent 10px 18px);transform:translateX(-50%)}
+.co-step{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.co-step .pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;box-shadow:0 0 0 8px var(--white)}
+.co-step:nth-child(1) .pin{background:#0f8f9c}.co-step:nth-child(2) .pin{background:#2d6a1f}.co-step:nth-child(3) .pin{background:#d2643a}
+.co-step .pic{background:linear-gradient(150deg,#fbf4e6,#eef7ee);border:1px solid var(--border);border-radius:24px;padding:24px;display:flex;align-items:center;justify-content:center;min-height:210px}
+.co-step .pic img{max-height:170px;width:100%;object-fit:contain}
+.co-step .txt small{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#2d6a1f}
+.co-step .txt h3{font-size:1.6rem;margin:6px 0 10px}
+.co-step .txt p{color:var(--gray);margin:0}
+.co-step:nth-child(even) .pic{order:2}
+/* included */
+.co-inc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;margin:0 auto}
+.co-inc div{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px}
+.co-inc svg{width:24px;height:24px;flex:none;color:#2d6a1f;background:#eaf4e6;padding:9px;box-sizing:content-box;border-radius:12px}
+.co-inc h3{font-size:1rem;margin:2px 0 4px}.co-inc p{font-size:.86rem;color:var(--gray);margin:0}
+/* audience tags */
+.co-who{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1100px;margin:0 auto}
+.co-who div{border-radius:22px;padding:24px;color:#1f3320}
+.co-who div:nth-child(1){background:#fde4dd}.co-who div:nth-child(2){background:#fdf0cf}.co-who div:nth-child(3){background:#dff1e8}.co-who div:nth-child(4){background:#ddeff4}
+.co-who svg{width:30px;height:30px;color:#1f3320}
+.co-who h3{font-size:1.1rem;margin:12px 0 6px;color:#1f3320}.co-who p{font-size:.88rem;margin:0;color:#3d4b38}
+/* register */
+.co-reg{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;border-radius:26px;overflow:hidden;box-shadow:0 24px 60px rgba(30,45,40,.14)}
+.co-reg .l{background:#1f3320;color:#fff;padding:34px}
+.co-reg .l h2{color:#fff;font-size:2rem;margin:0 0 10px}.co-reg .l p{color:rgba(255,255,255,.82);margin:0 0 18px}
+.co-reg .l ul{list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:.92rem}
+.co-reg .l li::before{content:'✓';color:#bfe8a4;font-weight:700;margin-right:10px}
+.co-reg .r{background:#fffdf7;padding:34px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:6px;color:#1f3320}
+.co-reg .r small{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8a7a4c}
+.co-reg .r b{font-family:'Cormorant Garamond',serif;font-size:3rem;line-height:1}
+.co-reg .r span{font-size:.86rem;color:#5b6b52;margin-bottom:12px}
+/* more ways */
+.co-more{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1000px;margin:0 auto}
+.co-more a{display:block;text-decoration:none;border-radius:22px;padding:28px;min-height:190px;transition:transform .25s,box-shadow .25s;box-shadow:0 14px 36px rgba(30,45,40,.1)}
+.co-more a:hover{transform:translateY(-4px)}
+.co-more .w{background:linear-gradient(160deg,#031d22,#0b5560);color:#fff}
+.co-more .w small{color:#9ff0f5}.co-more .w h3{color:#fff}
+.co-more .i{background:repeating-linear-gradient(90deg,#e4f4f4 0 46px,#fbf4f3 46px 92px);color:#3b1d2e}
+.co-more .i h3{color:#3b1d2e;font-family:'Cormorant Garamond',serif}
+.co-more small{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.co-more h3{font-size:1.7rem;margin:8px 0 8px}.co-more p{margin:0 0 12px;opacity:.85}
+.co-more b{font-size:.9rem}
+@media(max-width:980px){.co-glance-in{grid-template-columns:repeat(3,1fr)}.co-glance-in div:nth-child(3){border-right:0}.co-glance-in div:nth-child(-n+3){border-bottom:1px solid var(--border)}.co-who{grid-template-columns:1fr 1fr}.co-inc{grid-template-columns:1fr 1fr}}
+@media(max-width:860px){.co-shape.c{display:none}.co-grid{grid-template-columns:1fr;gap:34px}.cert{transform:none;max-width:460px}
+ .co-path::before{left:28px}.co-step{grid-template-columns:1fr;gap:16px;padding-left:76px}.co-step .pin{left:28px;top:0;transform:translateX(-50%)}.co-step:nth-child(even) .pic{order:0}
+ .co-reg,.co-more{grid-template-columns:1fr}}
+@media(max-width:560px){.co-glance-in{grid-template-columns:1fr 1fr}.co-glance-in div{border-right:0!important;border-bottom:1px solid var(--border)}.co-glance-in div:nth-child(odd){border-right:1px solid var(--border)!important}.co-who,.co-inc{grid-template-columns:1fr}.co-hero{padding-bottom:80px}}
+html[data-theme="dark"] .co-hero{background-color:#14140e}
+html[data-theme="dark"] .co-hero,html[data-theme="dark"] .co-hero h1{color:#f1ecd9}
+html[data-theme="dark"] .co-hero h1 em{color:#bfe8a4}html[data-theme="dark"] .co-hero .lede{color:#cfc8b0}
 </style>
 
-<header class="page-hero">
-  <div class="ph-inner">
-    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Courses</li></ol>
-    <div class="ph-badge"><svg><use href="assets/sprite.svg#i-school"/></svg> Open Now · 3-Month Online Course · Starts 15 September 2026</div>
-    <h1>Courses &amp; <em>Certifications</em></h1>
-    <p class="lede">Long-form training from the MindCare clinical team: months rather than days, with live sessions, mentor guidance, assignments and a certificate at the end. Open for registration right now, the <strong>Montessori Teacher Training Course</strong>.</p>
-    <div class="ph-actions">
-      <a href="/montessori-course/register" class="btn-primary"><svg width="18" height="18"><use href="assets/sprite.svg#i-clipboard"/></svg> Register &amp; Pay</a>
-      <a href="/workshops" class="btn-secondary">Short workshops instead →</a>
+<header class="co-hero">
+  <span class="co-shape c" aria-hidden="true"></span><span class="co-shape s" aria-hidden="true"></span><span class="co-shape t" aria-hidden="true"></span>
+  <div class="co-grid">
+    <div>
+      <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Courses</li></ol>
+      <div class="co-kick"><svg width="15" height="15"><use href="assets/sprite.svg#i-school"/></svg> Registration open · 3-month online course</div>
+      <h1>Courses &amp; <em>Certifications</em></h1>
+      <p class="lede">Long-form training from the MindCare clinical team: months, not days. Live sessions, mentor guidance, assignments and a certificate at the end. Open now: the <strong>Montessori Teacher Training Course</strong>.</p>
+      <div class="ph-actions">
+        <a href="/montessori-course/register" class="btn-forest"><svg><use href="assets/sprite.svg#i-clipboard"/></svg> Register &amp; Pay</a>
+        <a href="/montessori-course" class="btn-secondary">Full course details →</a>
+      </div>
     </div>
+    <a class="cert" href="/montessori-course" aria-label="Montessori Teacher Training Course details">
+      <div class="top"><span class="brand">MindCare Services® · Course</span><span class="seal"><b>3</b><small>Months</small></span></div>
+      <h2>Montessori <em>Teacher Training</em> Course</h2>
+      <p class="sub">Watch the child before you correct the child.</p>
+      <div class="blocks" aria-hidden="true"><i style="width:22%;height:100%;background:#f29e8e"></i><i style="width:18%;height:82%;background:#f7c873"></i><i style="width:14%;height:64%;background:#8cc9a8"></i><i style="width:11%;height:48%;background:#7fc4d4"></i><i style="width:8%;height:34%;background:#c3b1e1"></i></div>
+      <dl><div><dt>Format</dt><dd>Live online</dd></div><div><dt>Trainer</dt><dd>Miss Nargis Irfan</dd></div><div><dt>Starts</dt><dd>15 September 2026</dd></div><div><dt>Registration</dt><dd>PKR 2,500</dd></div></dl>
+    </a>
   </div>
 </header>
 
+<div class="co-glance fade-up">
+  <div class="co-glance-in">
+    <div><strong>Duration</strong><span>3 months</span></div>
+    <div><strong>Format</strong><span>Live online</span></div>
+    <div><strong>Trainer</strong><span>Miss Nargis Irfan</span></div>
+    <div><strong>Starts</strong><span>15 Sept 2026</span></div>
+    <div><strong>Registration</strong><span>PKR 2,500</span></div>
+    <div><strong>Certificate</strong><span>Optional</span></div>
+  </div>
+</div>
+
 <section>
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">New · Registration Open</span><h2 class="section-title">Our next course is three months on the child</h2></div>
-    <div class="split-grid fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:36px;align-items:center">
-      <div>
-        <a href="/montessori-course" aria-label="Montessori Teacher Training Course details"><picture><source type="image/webp" srcset="assets/workshops/montessori-course-poster-500.webp 500w, assets/workshops/montessori-course-poster.webp 1000w" sizes="(max-width: 760px) 92vw, 44vw"><img src="assets/workshops/montessori-course-poster.jpg" alt="The MindCare Services® three-month online Montessori Teacher Training Course" width="1000" height="1000" class="mf-poster"></picture></a>
-      </div>
-      <div>
-        <span class="section-tag">3 Months · Online · Certificate</span>
-        <h3 style="font-size:1.7rem;margin:10px 0 12px">Montessori <em>Teacher Training Course</em></h3>
-        <p style="margin-bottom:16px">Watch the child before you correct the child. Three months that teach you to see a small child's world from the inside, explain what is actually happening developmentally in the first six years, and then work through the Montessori curriculum itself, so you can set it up at home or in your classroom.</p>
-        <ul class="aside-list">
-      <li><svg width="22" height="22"><use href="assets/sprite.svg#i-check"/></svg><span>Month 01 · Decoding the child&#39;s perspective</span></li>
-      <li><svg width="22" height="22"><use href="assets/sprite.svg#i-check"/></svg><span>Month 02 · Early childhood psychology</span></li>
-      <li><svg width="22" height="22"><use href="assets/sprite.svg#i-check"/></svg><span>Month 03 · The Montessori curriculum in practice</span></li>
-      <li><svg width="22" height="22"><use href="assets/sprite.svg#i-check"/></svg><span>Live sessions, mentor guidance, assignments &amp; monitoring</span></li>
-      <li><svg width="22" height="22"><use href="assets/sprite.svg#i-check"/></svg><span>Trainer: Miss Nargis Irfan · starts 15 September 2026</span></li>
-      <li><svg width="22" height="22"><use href="assets/sprite.svg#i-check"/></svg><span>Registration PKR 2,500 · notes PDF and certificate optional</span></li>
-        </ul>
-        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
-          <a href="/montessori-course/register" class="btn-primary"><svg width="18" height="18"><use href="assets/sprite.svg#i-clipboard"/></svg> Register &amp; Pay</a>
-          <a href="/montessori-course" class="btn-secondary">Full details →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="bg-off">
-  <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">The Three Months</span><h2 class="section-title">One question per month, answered properly</h2><p class="section-sub">Each month stands on the one before it: see the child, understand the child, then set up the environment the child can actually work in.</p></div>
-    <div class="feature-grid">
-      <article class="feature-card fade-up mf-day">
-        <img class="mf-ill" src="assets/art/doll-play.svg" alt="An adult sitting on the floor, watching a child play" width="800" height="437" loading="lazy" decoding="async">
-        <span class="mf-num">01</span>
-        <span class="section-tag">Month One</span>
-        <h3 style="margin-top:10px">Decoding the Child&#39;s Perspective</h3>
-        <p>Before any method, any material and any correction, there is one skill: seeing the situation the way the child is seeing it. The first month is spent learning to look.</p>
-      </article>
-      <article class="feature-card fade-up mf-day">
-        <img class="mf-ill" src="assets/art/motherhood.svg" alt="A parent holding and talking to a small child" width="668" height="538" loading="lazy" decoding="async">
-        <span class="mf-num">02</span>
-        <span class="section-tag">Month Two</span>
-        <h3 style="margin-top:10px">Early Childhood Psychology</h3>
-        <p>What is actually happening inside a child in the first six years, from attachment and temperament to language, movement and the long work of learning to self-regulate.</p>
-      </article>
-      <article class="feature-card fade-up mf-day">
-        <img class="mf-ill" src="assets/art/teacher.svg" alt="A teacher presenting a lesson at the board" width="960" height="621" loading="lazy" decoding="async">
-        <span class="mf-num">03</span>
-        <span class="section-tag">Month Three</span>
-        <h3 style="margin-top:10px">The Montessori Curriculum in Practice</h3>
-        <p>The hands-on month, starting with practical life, the most underestimated shelf in any Montessori classroom and the easiest to recreate at home. You will present exercises, not just watch them.</p>
-      </article>
-    </div>
-    <div style="text-align:center;margin-top:36px" class="fade-up">
-      <a href="/montessori-course" class="btn-secondary">Read the full three-month breakdown →</a>
-    </div>
-  </div>
-</section>
-<section class="bg-off">
-  <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">Good For</span><h2 class="section-title">Who this course is for</h2></div>
-    <div class="feature-grid">
-      <div class="feature-card fade-up"><div class="fi"><svg><use href="assets/sprite.svg#i-school"/></svg></div><h3>Teachers</h3><p>Montessori directresses, playgroup and daycare staff, and anyone running a room full of three-year-olds with more instinct than training.</p></div>
-      <div class="feature-card fade-up"><div class="fi"><svg><use href="assets/sprite.svg#i-heart-hands"/></svg></div><h3>Caregivers</h3><p>Grandparents, nannies and anyone else who spends whole days with a small child and wants to do it with more understanding.</p></div>
-      <div class="feature-card fade-up"><div class="fi"><svg><use href="assets/sprite.svg#i-family"/></svg></div><h3>Parents</h3><p>Especially of under-sixes, and especially if you would rather understand the behaviour than manage it.</p></div>
-      <div class="feature-card fade-up"><div class="fi"><svg><use href="assets/sprite.svg#i-grad"/></svg></div><h3>Education &amp; psychology students</h3><p>Developmental theory with the practical half attached, and a certificate to show for three months of work.</p></div>
-    </div>
-    <div style="text-align:center;margin-top:40px" class="fade-up">
-      <p style="margin-bottom:16px;font-weight:600">Seats are capped because the final month is hands-on, and the course starts on 15 September 2026.</p>
-      <a href="/montessori-course/register" class="btn-primary"><svg width="18" height="18"><use href="assets/sprite.svg#i-clipboard"/></svg> Register &amp; Pay</a>
-      <p style="margin-top:14px">Looking for something shorter? See our <a href="/workshops" style="font-weight:600">workshops &amp; trainings →</a></p>
+    <div class="section-header centered fade-up"><span class="section-tag">The Three Months</span><h2 class="section-title">One question per month, answered properly</h2><p class="section-sub">See the child, understand the child, then set up the environment the child can actually work in.</p></div>
+    <div class="co-path">
+      <div class="co-step fade-up"><div class="pic"><img src="assets/art/doll-play.svg" alt="An adult sitting on the floor, watching a child play" width="800" height="437" loading="lazy" decoding="async"></div><span class="pin">01</span><div class="txt"><small>Month one</small><h3>Decoding the Child&#39;s Perspective</h3><p>Before any method, material or correction, there is one skill: seeing the situation the way the child sees it. The first month is spent learning to look.</p></div></div>
+      <div class="co-step fade-up"><div class="pic"><img src="assets/art/motherhood.svg" alt="A parent holding and talking to a small child" width="668" height="538" loading="lazy" decoding="async"></div><span class="pin">02</span><div class="txt"><small>Month two</small><h3>Early Childhood Psychology</h3><p>What is actually happening inside a child in the first six years, from attachment and temperament to language, movement and learning to self-regulate.</p></div></div>
+      <div class="co-step fade-up"><div class="pic"><img src="assets/art/teacher.svg" alt="A teacher presenting a lesson at the board" width="960" height="621" loading="lazy" decoding="async"></div><span class="pin">03</span><div class="txt"><small>Month three</small><h3>The Montessori Curriculum in Practice</h3><p>The hands-on month, starting with practical life, the most underestimated shelf in any Montessori classroom and the easiest to recreate at home. You present exercises, not just watch them.</p></div></div>
     </div>
   </div>
 </section>
 
-<section class="cta-band" aria-label="Book an appointment">
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">What's Included</span><h2 class="section-title">Everything you need to finish strong</h2></div>
+    <div class="co-inc">
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-globe"/></svg><span><h3>Live online sessions</h3><p>Learn from home with a real trainer, not recordings.</p></span></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-handshake"/></svg><span><h3>Mentor guidance</h3><p>Questions answered and progress guided throughout.</p></span></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-clipboard"/></svg><span><h3>Assignments</h3><p>Practical tasks that turn theory into skill.</p></span></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-check"/></svg><span><h3>Continuous monitoring</h3><p>Your progress is tracked across all three months.</p></span></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-book"/></svg><span><h3>Notes PDF</h3><p>Optional course notes to keep and revisit.</p></span></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-grad"/></svg><span><h3>MindCare certificate</h3><p>Optional certificate on completion.</p></span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Good For</span><h2 class="section-title">Who this course is for</h2></div>
+    <div class="co-who">
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-school"/></svg><h3>Teachers</h3><p>Montessori directresses, playgroup and daycare staff with more instinct than training.</p></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-heart-hands"/></svg><h3>Caregivers</h3><p>Grandparents, nannies and anyone who spends whole days with a small child.</p></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-family"/></svg><h3>Parents</h3><p>Especially of under-sixes who would rather understand behaviour than manage it.</p></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-grad"/></svg><h3>Students</h3><p>Education and psychology students who want the practical half and a certificate.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="co-reg fade-up">
+      <div class="l"><h2>Save your seat</h2><p>Seats are capped because the final month is hands-on. The course starts on 15 September 2026.</p>
+        <ul><li>Three months of live online sessions</li><li>Mentor guidance and assignments</li><li>Notes PDF and certificate optional</li></ul></div>
+      <div class="r"><small>Registration fee</small><b>PKR 2,500</b><span>Pay online when you register</span>
+        <a href="/montessori-course/register" class="btn-forest"><svg><use href="assets/sprite.svg#i-clipboard"/></svg> Register &amp; Pay</a></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">More Ways to Learn</span><h2 class="section-title">Shorter, or just starting out?</h2></div>
+    <div class="co-more">
+      <a class="w fade-up" href="/workshops"><small>Workshops &amp; trainings</small><h3>Learn it in hours, not months</h3><p>Two workshops open now, including The First Five Minutes, live online.</p><b>See workshops →</b></a>
+      <a class="i fade-up" href="/november-online-internships"><small>Now open · November</small><h3>Online Internships</h3><p>Start your career in psychology with MindCare's psychologists, from anywhere in Pakistan.</p><b>See internships →</b></a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" aria-label="Contact us">
   <div class="cta-band-inner fade-up">
-    <div><h2>Want a workshop we haven't listed?</h2><p>Tell us the topic and who it's for, and we'll build it for your school, workplace or community. Message us on WhatsApp and a real person from our team will answer.</p></div>
+    <div><h2>Questions about the course?</h2><p>Message us on WhatsApp and a real person from our team will answer.</p></div>
     <div class="cta-band-btns">
-      <a href="/contact" class="btn-white">Book Appointment</a>
-      <a href="https://wa.me/923272337631" target="_blank" rel="noopener" class="btn-white wa"><svg width="18" height="18"><use href="assets/sprite.svg#i-wa"/></svg> WhatsApp Us</a>
+      <a href="/montessori-course/register" class="btn-white">Register &amp; Pay</a>
+      <a href="https://wa.me/923272337631?text=Hi%2C%20I%20have%20a%20question%20about%20the%20Montessori%20Teacher%20Training%20Course." target="_blank" rel="noopener" class="btn-white wa"><svg width="18" height="18"><use href="assets/sprite.svg#i-wa"/></svg> WhatsApp Us</a>
     </div>
   </div>
 </section>

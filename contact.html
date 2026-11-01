@@ -486,6 +486,27 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
   filter: drop-shadow(0 16px 30px rgba(11,95,109,.16)); }
 @media (max-width: 560px) { .page-hero .hero-ill { max-width: 124px; margin-top: 14px; } }
 
+.page-hero.ct-hero{text-align:left;padding:112px 5% 60px;position:relative;overflow:hidden;
+ background:radial-gradient(600px 300px at 0% 100%,rgba(239,131,84,.18),transparent 60%),radial-gradient(700px 360px at 100% 0%,rgba(15,154,168,.22),transparent 60%),linear-gradient(135deg,#fffaf6 0%,#eef9f8 100%)}
+.ct-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.ct-hero .hero-badge i{width:8px;height:8px;border-radius:50%;background:#2fbf71;box-shadow:0 0 0 4px rgba(47,191,113,.2)}
+.ct-hero h1{font-size:clamp(2.4rem,5.4vw,3.9rem);line-height:1.08}
+.ct-hero h1 em{color:var(--teal-dark);font-style:italic}
+.ct-hero p{margin:0;max-width:520px;font-size:1.05rem}
+.ct-tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ct-tile{display:flex;flex-direction:column;gap:4px;padding:20px;border-radius:20px;text-decoration:none;color:#fff;box-shadow:0 14px 34px rgba(30,45,40,.14);transition:transform .2s,box-shadow .2s}
+.ct-tile:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(30,45,40,.2)}
+.ct-tile .ic{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.ct-tile .ic svg{width:22px;height:22px}
+.ct-tile b{font-size:1.08rem}
+.ct-tile small{font-size:.82rem;opacity:.88}
+.ct-tile.wa{background:linear-gradient(135deg,#1ebe5d,#128c4a)}
+.ct-tile.call{background:linear-gradient(135deg,#0f9aa8,#0b5f6d)}
+.ct-tile.mail{background:linear-gradient(135deg,#f08a5d,#d2643a)}
+.ct-tile.form{background:var(--card);color:var(--dark);border:1px solid var(--border)}
+.ct-tile.form .ic{background:var(--teal-light,#e8f9fb);color:var(--teal-dark)}
+@media(max-width:820px){.ct-grid{grid-template-columns:1fr;gap:26px}.page-hero.ct-hero{padding-top:96px}}
+html[data-theme="dark"] .page-hero.ct-hero{background:linear-gradient(135deg,#1a1510 0%,#0e1b13 100%)}
 /* CONTACT BODY */
 .contact-body {
   max-width: 1100px; margin: 0 auto;
@@ -741,6 +762,7 @@ html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; co
     <li><a href="/articles">Articles</a></li>
     <li><a href="/courses">Courses</a></li>
     <li><a href="/workshops">Workshops</a></li>
+    <li><a href="/internships">Internships</a></li>
     <li><a href="/contact" class="nav-cta">Book</a></li>
   </ul>
   <div class="nav-tools">
@@ -760,6 +782,7 @@ html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; co
   <a href="/articles" onclick="toggleMenu()">Articles</a>
   <a href="/courses">Courses</a>
   <a href="/workshops" onclick="toggleMenu()">Workshops</a>
+  <a href="/internships">Internships</a>
   <a href="/contact" class="m-cta" onclick="toggleMenu()">Book Appointment</a>
 </div>
 
@@ -775,11 +798,20 @@ html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; co
 </div>
 
 <!-- PAGE HERO -->
-<header class="page-hero">
-  <div class="hero-badge">MindCare Services® · Appointments Open Today</div>
-  <h1>Book an Appointment</h1>
-  <p>Take the first step. We'll listen, guide, and support you, with no pressure, no judgment and 100% confidentiality.</p>
-  <img class="hero-ill" src="assets/art/talking-on-the-phone.svg" alt="Someone picking up the phone to reach out for support" width="743" height="743" decoding="async">
+<header class="page-hero ct-hero">
+  <div class="ct-grid">
+    <div>
+      <div class="hero-badge"><i aria-hidden="true"></i>Appointments open today · Mon–Sat, 9am–7pm</div>
+      <h1>Let's talk. <em>We're listening.</em></h1>
+      <p>Take the first step your way: fill the form below, call, WhatsApp or email. No pressure, no judgment, and 100% confidential.</p>
+    </div>
+    <div class="ct-tiles">
+      <a class="ct-tile wa" href="https://wa.me/923272337631?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment." target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.05 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.1-1.3A9.9 9.9 0 1 0 12.05 2Zm5.8 14c-.25.7-1.43 1.33-2 1.4-.51.08-1.16.11-1.87-.12-.43-.13-.99-.32-1.7-.62-2.98-1.29-4.93-4.29-5.08-4.49-.15-.2-1.21-1.61-1.21-3.07 0-1.46.77-2.18 1.04-2.48.27-.3.6-.37.79-.37h.57c.18 0 .43-.07.67.51.25.6.84 2.06.92 2.21.07.15.12.32.02.52-.1.2-.15.32-.3.5l-.44.52c-.15.15-.3.31-.13.6.17.3.77 1.26 1.65 2.05 1.14 1.01 2.09 1.33 2.39 1.48.3.15.47.12.64-.07.17-.2.74-.87.94-1.16.2-.3.4-.25.67-.15.27.1 1.73.82 2.03.97.3.15.5.22.57.35.07.12.07.72-.17 1.42Z"/></svg></span><b>WhatsApp</b><small>Fastest reply</small></a>
+      <a class="ct-tile call" href="tel:+923272337631"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span><b>Call</b><small>+92 327 2337631</small></a>
+      <a class="ct-tile mail" href="mailto:shaistatariq2002@gmail.com"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><b>Email</b><small>Write to us</small></a>
+      <a class="ct-tile form" href="#booking"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M8 12h8M8 16h5"/></svg></span><b>Booking form</b><small>Below ↓</small></a>
+    </div>
+  </div>
 </header>
 
 <!-- CONTACT BODY -->
@@ -860,7 +892,7 @@ html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; co
   </div>
 
   <!-- RIGHT: Form -->
-  <div class="booking-form-box">
+  <div class="booking-form-box" id="booking" style="scroll-margin-top:90px">
     <h2>Send a Message</h2>
     <p class="form-sub">Fill the form and we'll respond within a few hours.</p>
     <div class="form-note">
