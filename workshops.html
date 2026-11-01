@@ -294,20 +294,21 @@
 .tk[hidden]{display:none}
 .tk::before,.tk::after{content:'';position:absolute;left:318px;width:24px;height:24px;border-radius:50%;background:var(--white);border:1px solid var(--border);z-index:2}
 .tk::before{top:-12px;clip-path:inset(50% 0 0 0)}.tk::after{bottom:-12px;clip-path:inset(0 0 50% 0)}
-.tk-art{position:relative;overflow:hidden;border-radius:27px 0 0 27px;padding:30px 28px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;min-height:420px;color:#fff;text-decoration:none}
+.tk-art{position:relative;overflow:hidden;border-radius:27px 0 0 27px;padding:30px 28px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;min-height:340px;color:#fff;text-decoration:none}
 .tk-art svg.pic{width:100%;max-width:230px;height:auto;margin:0 auto;display:block}
 .tk-art .ttl{font-family:'Cormorant Garamond',serif;line-height:1.02}
 .tk-art .ttl small{display:block;font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.8;margin-bottom:6px}
 .tk-art .ttl b{display:block;font-size:2.3rem;font-weight:600}
 .tk-art .ttl i{font-size:1rem;opacity:.85}
 .tk-art .brand{font-size:.66rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;opacity:.75}
-.tk-body{padding:34px 38px;border-left:2px dashed var(--border)}
+.tk-body{padding:34px 38px;border-left:2px dashed var(--border);display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.tk-meta,.tk-agenda{align-self:stretch}
 .tk-stamp{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:6px 13px;border-radius:999px;margin-bottom:14px}
 .tk-stamp.open{color:#1e7a3e;background:#e6f6ec;border:1px solid #bfe6cc}
 .tk-stamp.open i{width:7px;height:7px;border-radius:50%;background:#2fbf71;animation:wsPulse 1.8s infinite}
 .tk-stamp.done{color:#5c6b64;background:#eef1ef;border:1px solid #d9dfdb}
 .tk-body h3{font-size:clamp(1.55rem,3vw,2rem);margin:0 0 6px;line-height:1.15}
-.tk-body .hook{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--teal-dark);margin:0 0 12px}
+.tk-body .hook{font-size:1.08rem;line-height:1.55;color:var(--gray);margin:0 0 18px}
 .tk-body>p{color:var(--gray);margin:0 0 18px}
 .tk-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px}
 .tk-meta div{background:var(--off-white);border-radius:14px;padding:10px 14px}
@@ -357,58 +358,63 @@ html[data-theme="dark"] .tk-stamp.done{background:#1b2a22;color:#a7bcb0;border-c
  .ws-hero{padding:80px 16px 26px}
  .ws-hero-grid{gap:18px}
  .ws-hero h1{font-size:2.3rem;margin-bottom:8px}
- .ws-hero .lede{font-size:.92rem;margin-bottom:14px}
+ .ws-hero .lede{font-size:1rem;margin-bottom:16px}
  .ws-kick{font-size:.64rem;margin-bottom:8px}
  .ws-hero .ph-actions{flex-direction:row}
  .ws-nums{gap:18px;margin-top:16px}
- .ws-nums b{font-size:1.6rem}.ws-nums span{font-size:.68rem}
+ .ws-nums b{font-size:1.7rem}.ws-nums span{font-size:.76rem}
  .ws-next{display:flex;overflow-x:auto;gap:10px;margin:0 -16px;padding:2px 16px 8px;scroll-snap-type:x mandatory;scrollbar-width:none}
  .ws-next::-webkit-scrollbar{display:none}
  .ws-next-h{display:none}
  .mini-tk,.mini-tk:nth-child(3),.mini-tk:nth-child(3):hover{transform:none;flex:0 0 82%;scroll-snap-align:start;grid-template-columns:62px 1fr;border-radius:14px}
  .mini-tk .stub b{font-size:1.4rem}.mini-tk .stub small{font-size:.54rem}
  .mini-tk .info{padding:10px 12px}
- .mini-tk .info strong{font-size:1.05rem}.mini-tk .info span{font-size:.72rem}
- .mini-tk .info em{font-size:.58rem;margin-top:4px}
+ .mini-tk .info strong{font-size:1.15rem}.mini-tk .info span{font-size:.8rem}
+ .mini-tk .info em{font-size:.64rem;margin-top:4px}
  .ws-filter{flex-wrap:nowrap;overflow-x:auto;justify-content:center;margin:0 -16px 16px;padding:0 16px 4px;scrollbar-width:none}
  .ws-filter::-webkit-scrollbar{display:none}
- .ws-filter button{padding:7px 14px;font-size:.8rem;white-space:nowrap}
+ .ws-filter button{padding:8px 16px;font-size:.9rem;white-space:nowrap}
  .tk-list{gap:20px}
  .tk{border-radius:22px;box-shadow:0 14px 34px rgba(20,40,35,.12)}
  .tk::before,.tk::after{display:block;top:138px;bottom:auto;left:auto;width:22px;height:22px;clip-path:none;border:0;background:var(--white)}
  .tk::before{left:-11px}.tk::after{right:-11px}
  .tk-art{flex-direction:row;align-items:center;justify-content:flex-start;gap:16px;height:150px;min-height:0;padding:18px;border-radius:21px 21px 0 0}
  .tk-art svg.pic{width:96px;max-width:96px;flex:none;margin:0}
- .tk-art .brand{position:absolute;top:12px;right:16px;font-size:.54rem}
- .tk-art .ttl small{font-size:.58rem;margin-bottom:3px}
- .tk-art .ttl b{font-size:1.65rem}
- .tk-art .ttl i{font-size:.8rem;display:block;margin-top:2px}
- .tk-body{padding:18px 16px 16px;border-left:0;border-top:2px dashed var(--border)}
- .tk-stamp{font-size:.58rem;padding:4px 10px;margin-bottom:8px}
- .tk-body h3{font-size:1.25rem}
- .tk-body .hook{font-size:.98rem;margin-bottom:8px;line-height:1.4}
+ .tk-art .brand{display:none}
+ .tk.is-done .tk-meta{display:none}
+ .day ul{margin-top:12px}
+ .tk-art .ttl small{font-size:.64rem;margin-bottom:3px}
+ .tk-art .ttl b{font-size:1.8rem}
+ .tk-art .ttl i{font-size:.9rem;display:block;margin-top:2px}
+ .tk-body{padding:20px 18px 18px;border-left:0;border-top:2px dashed var(--border)}
+ .tk-stamp{font-size:.66rem;padding:5px 11px;margin-bottom:10px}
+ .tk-body h3{font-size:1.5rem}
+ .tk-body .hook{font-size:1.02rem;margin-bottom:14px;line-height:1.5}
  .tk-body>p{font-size:.86rem;line-height:1.6;margin-bottom:12px}
- .tk-meta{grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
- .tk-meta div{padding:8px 8px;border-radius:10px;border:1px solid var(--border);text-align:center}
- .tk-meta strong{font-size:.52rem;letter-spacing:.08em}.tk-meta span{font-size:.76rem;line-height:1.25;display:block;margin-top:2px}
- .tk-agenda{gap:5px;margin-bottom:14px}
- .tk-agenda li{font-size:.8rem;gap:8px}
- .tk-agenda li b{font-size:.62rem;padding:2px 6px}
+ .tk-meta{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+ .tk-meta div{padding:10px 12px;border-radius:12px;border:1px solid var(--border)}
+ .tk-meta strong{font-size:.66rem;letter-spacing:.1em}.tk-meta span{font-size:1rem;line-height:1.3;display:block;margin-top:2px}
+ .tk-agenda{gap:8px;margin-bottom:16px}
+ .tk-agenda li{font-size:.98rem;gap:10px}
+ .tk-agenda li b{font-size:.72rem;padding:3px 8px}
  .tk-ctas{gap:8px}
- .tk-ctas a{flex:1 1 auto;justify-content:center;padding:10px 12px;font-size:.84rem}
+ .tk-ctas a{flex:1 1 auto;justify-content:center;padding:12px 14px;font-size:.95rem}
  .day5{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:0 16px 8px;scrollbar-width:none}
  .day5::-webkit-scrollbar{display:none}
  .day{flex:0 0 72%;scroll-snap-align:start}
  .day .top{padding:12px 14px}.day .top b{font-size:2.3rem}
- .day .bd{padding:12px 14px 14px}
+ .day .bd{padding:14px 16px 16px}
+ .day h3{font-size:1.1rem}
+ .day li{font-size:.92rem}
  .ws-who{grid-template-columns:1fr 1fr;gap:10px}
  .ws-who div{padding:14px}
- .ws-who svg{width:22px;height:22px}
- .ws-who h3{font-size:.9rem;margin:8px 0 4px}
- .ws-who p{font-size:.76rem;line-height:1.45}
+ .ws-who svg{width:26px;height:26px}
+ .ws-who h3{font-size:1.02rem;margin:8px 0 4px}
+ .ws-who p{font-size:.88rem;line-height:1.45}
  .ws-final a{flex:1 1 100%;justify-content:center}
 }
 html[data-theme="dark"] .tk::before,html[data-theme="dark"] .tk::after{background:#0e1b13}
+html[data-theme="dark"] .tk-ctas .btn-secondary,html[data-theme="dark"] .ws-final .btn-secondary{background:transparent;color:#8fe8f0;border-color:#2b4a45}
 }
 
 </style>
@@ -419,7 +425,7 @@ html[data-theme="dark"] .tk::before,html[data-theme="dark"] .tk::after{backgroun
       <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Workshops</li></ol>
       <div class="ws-kick"><i aria-hidden="true"></i>2 workshops open for registration</div>
       <h1>Workshops &amp; <em>Trainings</em></h1>
-      <p class="lede">Short, practical learning from the MindCare clinical team, live online and in person in Karachi. Real tools, real case practice, and a certificate for every participant.</p>
+      <p class="lede">Practical, certified training from the MindCare clinical team. Online and in Karachi.</p>
       <div class="ph-actions">
         <a href="#open" class="btn-primary"><svg width="18" height="18"><use href="assets/sprite.svg#i-clipboard"/></svg> See open workshops</a>
         <a href="/courses" class="btn-secondary">Longer courses →</a>
@@ -453,14 +459,13 @@ html[data-theme="dark"] .tk::before,html[data-theme="dark"] .tk::after{backgroun
         <div class="tk-body">
           <span class="tk-stamp open"><i aria-hidden="true"></i>Open · Registering now</span>
           <h3>The First Five Minutes</h3>
-          <p class="hook">&ldquo;A client starts dissociating or panicking in your office. What do you do?&rdquo;</p>
-          <p>Supervisors and interview panels don&rsquo;t just ask for definitions; they test real-time de-escalation. Two hours on rapid triage, the somatic tools that settle an activated nervous system, and the exact words to say while you use them.</p>
+          <p class="hook">A client starts panicking in your office. What do you do in the first five minutes?</p>
           <div class="tk-meta"><div><strong>Length</strong><span>2 hours</span></div><div><strong>Where</strong><span>Live on Zoom</span></div><div><strong>Fee</strong><span>PKR 2,000</span></div><div><strong>You get</strong><span>E-certificate</span></div></div>
           <ul class="tk-agenda">
-            <li><b>00:00</b>Rapid crisis triage under the PFA framework</li>
-            <li><b>00:30</b>Core grounding protocols and de-escalation scripts</li>
-            <li><b>01:15</b>Guided case simulation of an acute crisis</li>
-            <li><b>01:45</b>Clinical interview prep and open Q&amp;A</li>
+            <li><b>00:00</b>Rapid crisis triage</li>
+            <li><b>00:30</b>Grounding &amp; de-escalation scripts</li>
+            <li><b>01:15</b>Live case simulation</li>
+            <li><b>01:45</b>Interview prep &amp; Q&amp;A</li>
           </ul>
           <div class="tk-ctas">
             <a href="/crisis-intervention-workshop/register" class="btn-primary"><svg width="18" height="18"><use href="assets/sprite.svg#i-clipboard"/></svg> Register · PKR 2,000</a>
@@ -478,13 +483,12 @@ html[data-theme="dark"] .tk::before,html[data-theme="dark"] .tk::after{backgroun
         <div class="tk-body">
           <span class="tk-stamp open"><i aria-hidden="true"></i>Open · Free to register</span>
           <h3>Mind in the Making</h3>
-          <p class="hook">Three days on the child in front of you.</p>
-          <p>In a room together in Karachi: decoding the child&rsquo;s perspective, the psychology of the first six years, and a hands-on day on the practical life area of the Montessori curriculum. Prefer the long form? The same ground runs over three months as our <a href="/courses">Montessori Teacher Training Course</a>.</p>
+          <p class="hook">Three days on understanding the child in front of you.</p>
           <div class="tk-meta"><div><strong>Length</strong><span>3 days</span></div><div><strong>Where</strong><span>In person, Karachi</span></div><div><strong>Register</strong><span>Free</span></div><div><strong>You get</strong><span>Certificate</span></div></div>
           <ul class="tk-agenda">
-            <li><b>Day 01</b>Decoding the child&#39;s perspective</li>
+            <li><b>Day 01</b>The child&#39;s perspective</li>
             <li><b>Day 02</b>Early childhood psychology</li>
-            <li><b>Day 03</b>The practical life area of the Montessori curriculum</li>
+            <li><b>Day 03</b>Practical life, hands-on</li>
           </ul>
           <div class="tk-ctas">
             <a href="/montessori-workshop/register" class="btn-primary"><svg width="18" height="18"><use href="assets/sprite.svg#i-clipboard"/></svg> Reserve My Place</a>
@@ -502,8 +506,7 @@ html[data-theme="dark"] .tk::before,html[data-theme="dark"] .tk::after{backgroun
         <div class="tk-body">
           <span class="tk-stamp done">Completed · Registration closed</span>
           <h3>Applied Psychology Masterclass</h3>
-          <p class="hook">Walk out session-ready, not just certified.</p>
-          <p>Five days, five clinical skill sets, one certification, for students and helping professionals. It ended with a working clinical toolkit: printed templates, worksheets and scripts participants actually use with clients. We do re-run it.</p>
+          <p class="hook">Five days, five clinical skill sets, one toolkit to keep.</p>
           <div class="tk-meta"><div><strong>Length</strong><span>5 days</span></div><div><strong>Where</strong><span>In person, Karachi</span></div><div><strong>Ran</strong><span>27–31 July 2026</span></div><div><strong>You got</strong><span>Toolkit + certificate</span></div></div>
           <div class="tk-ctas">
             <a href="https://wa.me/923272337631?text=Hi%21%20Please%20tell%20me%20when%20the%20Applied%20Psychology%20Masterclass%20runs%20again." target="_blank" rel="noopener" class="btn-secondary"><svg width="18" height="18"><use href="assets/sprite.svg#i-wa"/></svg> Tell me when it runs again</a>
@@ -521,8 +524,7 @@ html[data-theme="dark"] .tk::before,html[data-theme="dark"] .tk::after{backgroun
         <div class="tk-body">
           <span class="tk-stamp done">Completed · Registration closed</span>
           <h3>Telepathy &amp; Meditation</h3>
-          <p class="hook">The Art of Deep Attunement.</p>
-          <p>Two free live evenings on Zoom: the meditation that quiets your own noise, then the listening that lets another person&rsquo;s signal through, with an honest look at the science of empathy and co-regulation. Delivered free as promised, with the guided audio, workbook and recordings sent to every participant.</p>
+          <p class="hook">Two free evenings on meditation and deep listening.</p>
           <div class="tk-ctas"><a href="/telepathy-meditation-workshop" class="btn-secondary">See what it covered →</a></div>
         </div>
       </article>
@@ -532,13 +534,13 @@ html[data-theme="dark"] .tk::before,html[data-theme="dark"] .tk::after{backgroun
 
 <section id="schedule" class="bg-off">
   <div class="section-inner">
-    <div class="section-header centered fade-up"><span class="section-tag">Applied Psychology Masterclass · The 5 Days</span><h2 class="section-title">One skill set per day, one toolkit for life</h2><p class="section-sub">Each day built on the last, and each day participants took home the exact tools professionals use.</p></div>
+    <div class="section-header centered fade-up"><span class="section-tag">Applied Psychology Masterclass · The 5 Days</span><h2 class="section-title">One skill set per day, one toolkit for life</h2></div>
     <div class="day5">
-      <article class="day fade-up"><div class="top"><small>Day · Mon 27 July</small><b>01</b></div><div class="bd"><h3>Case Conceptualization &amp; Diagnostic Reasoning</h3><p>Think like a clinician: turn scattered client information into a clear case map.</p><ul><li>Intake Form Template</li><li>5-Ps Framework Cheat Sheet</li><li>Sample Redacted Case Study</li></ul></div></article>
-      <article class="day fade-up"><div class="top"><small>Day · Tue 28 July</small><b>02</b></div><div class="bd"><h3>The CBT Toolkit: Core Interventions</h3><p>Hands-on practice with the interventions used in real sessions.</p><ul><li>7-Column Thought Records</li><li>Behavioral Experiment Templates</li><li>Photocopy-Ready Worksheets</li></ul></div></article>
-      <article class="day fade-up"><div class="top"><small>Day · Wed 29 July</small><b>03</b></div><div class="bd"><h3>Trauma-Informed Care &amp; Somatic Stabilization</h3><p>The nervous system under stress, and how to guide clients back into their window of tolerance.</p><ul><li>Window of Tolerance Chart</li><li>3 Somatic Grounding Scripts</li><li>5-4-3-2-1 &amp; Box Breathing</li></ul></div></article>
-      <article class="day fade-up"><div class="top"><small>Day · Thu 30 July</small><b>04</b></div><div class="bd"><h3>Ethics, Boundaries &amp; Crisis Management</h3><p>The hardest moments of practice, handled with safety and integrity.</p><ul><li>Suicide Risk Assessment Checklist</li><li>Crisis Safety Plan Template</li><li>Boundary-Setting Frameworks</li></ul></div></article>
-      <article class="day fade-up"><div class="top"><small>Day · Fri 31 July</small><b>05</b></div><div class="bd"><h3>From Student to Practitioner</h3><p>Package your skills, build your presence and step into practice with a roadmap.</p><ul><li>Self-Compassion E-Journal</li><li>Workbook Layout Templates</li><li>Content Packaging Playbook</li></ul></div></article>
+      <article class="day fade-up"><div class="top"><small>Day · Mon 27 July</small><b>01</b></div><div class="bd"><h3>Case Conceptualization &amp; Diagnostic Reasoning</h3><ul><li>Intake Form Template</li><li>5-Ps Framework Cheat Sheet</li><li>Sample Redacted Case Study</li></ul></div></article>
+      <article class="day fade-up"><div class="top"><small>Day · Tue 28 July</small><b>02</b></div><div class="bd"><h3>The CBT Toolkit: Core Interventions</h3><ul><li>7-Column Thought Records</li><li>Behavioral Experiment Templates</li><li>Photocopy-Ready Worksheets</li></ul></div></article>
+      <article class="day fade-up"><div class="top"><small>Day · Wed 29 July</small><b>03</b></div><div class="bd"><h3>Trauma-Informed Care &amp; Somatic Stabilization</h3><ul><li>Window of Tolerance Chart</li><li>3 Somatic Grounding Scripts</li><li>5-4-3-2-1 &amp; Box Breathing</li></ul></div></article>
+      <article class="day fade-up"><div class="top"><small>Day · Thu 30 July</small><b>04</b></div><div class="bd"><h3>Ethics, Boundaries &amp; Crisis Management</h3><ul><li>Suicide Risk Assessment Checklist</li><li>Crisis Safety Plan Template</li><li>Boundary-Setting Frameworks</li></ul></div></article>
+      <article class="day fade-up"><div class="top"><small>Day · Fri 31 July</small><b>05</b></div><div class="bd"><h3>From Student to Practitioner</h3><ul><li>Self-Compassion E-Journal</li><li>Workbook Layout Templates</li><li>Content Packaging Playbook</li></ul></div></article>
     </div>
   </div>
 </section>
@@ -547,11 +549,11 @@ html[data-theme="dark"] .tk::before,html[data-theme="dark"] .tk::after{backgroun
   <div class="section-inner">
     <div class="section-header centered fade-up"><span class="section-tag">Good For</span><h2 class="section-title">Who our workshops are for</h2></div>
     <div class="ws-who">
-      <div class="fade-up"><svg><use href="assets/sprite.svg#i-brain"/></svg><h3>Clinicians in the room</h3><p>Psychologists, therapists and trainees who need a crisis protocol ready before a session destabilises.</p></div>
-      <div class="fade-up"><svg><use href="assets/sprite.svg#i-grad"/></svg><h3>Students &amp; fresh graduates</h3><p>Bridge the gap between the classroom and the real room, with tools already in hand.</p></div>
-      <div class="fade-up"><svg><use href="assets/sprite.svg#i-heart-hands"/></svg><h3>Helping professionals</h3><p>Counselors and community workers who want evidence-based tools they can use responsibly.</p></div>
-      <div class="fade-up"><svg><use href="assets/sprite.svg#i-school"/></svg><h3>Teachers &amp; early-years staff</h3><p>Montessori directresses, playgroup and daycare staff who want the psychology under the method.</p></div>
-      <div class="fade-up"><svg><use href="assets/sprite.svg#i-family"/></svg><h3>Parents &amp; caregivers</h3><p>Understand the child in front of you before you correct them.</p></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-brain"/></svg><h3>Clinicians &amp; trainees</h3><p>Crisis skills before you need them.</p></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-grad"/></svg><h3>Psychology students</h3><p>Tools to take into the real room.</p></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-heart-hands"/></svg><h3>Helping professionals</h3><p>Evidence-based, ready to use.</p></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-school"/></svg><h3>Teachers</h3><p>The psychology under the method.</p></div>
+      <div class="fade-up"><svg><use href="assets/sprite.svg#i-family"/></svg><h3>Parents</h3><p>Understand before you correct.</p></div>
     </div>
     <div class="ws-final fade-up">
       <a href="/crisis-intervention-workshop/register" class="btn-primary"><svg width="18" height="18"><use href="assets/sprite.svg#i-clipboard"/></svg> Register: First Five Minutes</a>
@@ -563,7 +565,7 @@ html[data-theme="dark"] .tk::before,html[data-theme="dark"] .tk::after{backgroun
 
 <section class="cta-band" aria-label="Request a workshop">
   <div class="cta-band-inner fade-up">
-    <div><h2>Want a workshop we haven't listed?</h2><p>Tell us the topic and who it's for, and we'll build it for your school, workplace or community. Message us on WhatsApp and a real person from our team will answer.</p></div>
+    <div><h2>Want a workshop we haven't listed?</h2><p>Tell us the topic. We'll build it for your school, workplace or community.</p></div>
     <div class="cta-band-btns">
       <a href="/contact" class="btn-white">Book Appointment</a>
       <a href="https://wa.me/923272337631?text=Hi%2C%20I%27d%20like%20to%20request%20a%20workshop." target="_blank" rel="noopener" class="btn-white wa"><svg width="18" height="18"><use href="assets/sprite.svg#i-wa"/></svg> WhatsApp Us</a>

@@ -645,7 +645,7 @@ html[data-theme="dark"] .hx-about .ph-badge,html[data-theme="dark"] .about-facts
 
 /* ───────── Phone polish: finer type, compact versions of the desktop details ───────── */
 @media (max-width: 560px) {
-  html { font-size: 14.5px; }
+  html { font-size: 15px; }
   body { line-height: 1.6; }
   .svc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
   .svc-stat, .svc-stat:first-child { grid-column: auto; padding: 10px 10px; border-radius: 14px; }
