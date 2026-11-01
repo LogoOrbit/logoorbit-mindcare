@@ -519,7 +519,7 @@ SERVICES = [
                ("Is an assessment confidential?","Absolutely. Your assessment and results are kept strictly confidential.")]),
     dict(slug="dental-consultations", icon="i-tooth", name="Dental Consultations",
          title="Dental Consultations in Karachi | MindCare Services®",
-         desc="Professional dental consultations in Karachi, with expert advice on oral health, treatment planning and preventive care from a qualified dental consultant. Book today.",
+         desc="Dental consultations in Karachi: expert advice on oral health, treatment planning and preventive care from a qualified dental consultant. Book today.",
          lede="Expert advice on oral health, treatment planning and preventive care, from a qualified dental consultant, as part of MindCare's whole-person approach to wellbeing.",
          helps=["Oral health check-ups and advice", "Preventive and restorative care guidance",
                 "Treatment planning and second opinions", "Understanding your options clearly",
@@ -760,7 +760,7 @@ TEAM = [
          member="PPA"),
     dict(slug="ribqah-arshad", ill=('good-team', 901, 508, 'A coordinator matching people to the right specialist'), av="ribqah", name="Ribqah Arshad", role="Team Coordinator",
          title="Ribqah Arshad, Team Coordinator | MindCare Services® Karachi",
-         desc="Ribqah Arshad is the Team Coordinator at MindCare Services® in Karachi, managing operations and client relations so every client's experience is smooth and supportive.",
+         desc="Ribqah Arshad, Team Coordinator at MindCare Services® in Karachi, runs operations and client relations so every client's experience is smooth and supportive.",
          tags=["Operations", "Client Relations"], job="Team Coordinator",
          bio=["Ribqah Arshad keeps MindCare running smoothly. As Team Coordinator, she oversees day-to-day operations and client relations, and is often the first friendly point of contact when you reach out.",
               "Her focus is making sure every client's experience, from the first enquiry to booking the right specialist, feels easy, warm and well-organized."],
@@ -1100,7 +1100,7 @@ TOPICS = [
          ("How do I book?","Use the booking form or WhatsApp to request an appointment.")]),
  dict(slug="mental-health-clinic-karachi", h1="Mental Health Clinic in Karachi", service="individual-psychotherapy",
    title="Mental Health Clinic in Karachi | MindCare Services®",
-   desc="MindCare Services® is a trusted mental health clinic in Karachi offering psychotherapy, counseling, and multidisciplinary therapy under one roof. Book an appointment.",
+   desc="A trusted mental health clinic in Karachi: psychotherapy, counseling and multidisciplinary therapy under one roof. Book an appointment at MindCare Services®.",
    lede="A calm, professional place to get the support you need. MindCare Services® brings psychotherapy, counseling and multidisciplinary therapy together under one roof in Karachi.",
    signs=["You want everything in one trusted place","Individual, family or specialized therapy","A confidential, judgment-free environment","Evidence-based, professional care","A straightforward first appointment"],
    help=["From psychotherapy and family counseling to speech, physio, occupational and behavioral therapy, our multidisciplinary team coordinates holistic care.","Whatever you're facing, there's a professional here who can help, and a first step that's simple and confidential."],
@@ -1118,7 +1118,7 @@ TOPICS = [
          ("Is CBT evidence-based?","Yes. It's one of the most well-researched, proven talk therapies available.")]),
  dict(slug="workplace-mental-health-karachi", h1="Workplace & Corporate Mental Health in Karachi", service="awareness-sessions",
    title="Workplace Mental Health in Karachi | MindCare Services®",
-   desc="Boost employee wellbeing with corporate mental health awareness sessions and trainings in Karachi from MindCare Services®. Reduce stigma, build resilience. Enquire now.",
+   desc="Corporate mental health sessions and trainings in Karachi from MindCare Services®. Reduce stigma, build resilience and boost employee wellbeing. Enquire now.",
    lede="Healthy teams start with mental wellbeing. We deliver certified workplace mental health workshops in Karachi that reduce stigma and build resilience.",
    signs=["Rising stress or burnout in your team","High absenteeism or low morale","You want a supportive workplace culture","Leadership wants practical wellbeing tools","You're planning a wellness initiative"],
    help=["Our tailored corporate programs, led by experienced professionals including PPA member Shaista Tariq, give your people real understanding and practical tools.","Every session is designed around your organization's goals, audience and context."],
@@ -1127,7 +1127,7 @@ TOPICS = [
          ("How do we arrange one?","Contact us with a little about your organization and we'll design a program with you.")]),
  dict(slug="speech-therapy-for-children-karachi", h1="Speech Therapy for Children in Karachi", service="speech-therapy",
    title="Speech Therapy for Children in Karachi | MindCare Services®",
-   desc="Children's speech therapy in Karachi for language delays, articulation and stammering. Warm, structured, play-based support at MindCare Services®. Book an assessment.",
+   desc="Children's speech therapy in Karachi for language delays, articulation and stammering. Warm, play-based support at MindCare Services®. Book an assessment.",
    lede="If your child is struggling to communicate, early support makes a huge difference. Our speech therapists in Karachi help children find their voice through playful, structured therapy.",
    signs=["Speech or language delay","Difficulty pronouncing sounds","Stammering or fluency issues","Trouble being understood","Autism-related communication needs"],
    help=["We start with a careful assessment, then build a fun, personalized plan of goal-driven exercises, often through play, that children respond to.","Parents get simple coaching to reinforce progress at home, so gains carry into everyday life."],
@@ -1136,7 +1136,7 @@ TOPICS = [
          ("How do we begin?","Book a speech therapy assessment or an appointment.")]),
  dict(slug="physiotherapy-back-pain-karachi", h1="Physiotherapy for Back & Joint Pain in Karachi", service="physiotherapy",
    title="Physiotherapy for Back Pain in Karachi | MindCare Services®",
-   desc="Relieve back, neck and joint pain with physiotherapy in Karachi. Hands-on treatment and tailored exercise from experienced physiotherapists. Book an assessment today.",
+   desc="Relieve back, neck and joint pain with physiotherapy in Karachi: hands-on treatment and tailored exercise from experienced physiotherapists. Book an assessment.",
    lede="Persistent back, neck or joint pain shouldn't run your life. Our physiotherapists in Karachi find the real cause and build a plan to get you moving freely again.",
    signs=["Back, neck or joint pain","Stiffness or reduced mobility","Pain after injury or surgery","Poor posture or recurring strain","Chronic or nagging discomfort"],
    help=["We start with a thorough assessment to find the source of the problem, then combine hands-on treatment with a tailored exercise plan.","You'll also learn simple home exercises so you keep improving, and prevent the problem returning."],
@@ -1241,9 +1241,9 @@ def seo_page(t):
 HOME = dict(
     slug="home-therapy-karachi",
     h1="Home Therapy Sessions in Karachi",
-    title="Home Therapy & Psychologist Home Visits in Karachi | MindCare Services®",
-    desc=("MindCare Services® now comes to you. Home therapy sessions in Karachi with a qualified "
-          "psychologist or therapist at your doorstep, for adults, children, teens, couples and elderly parents. Book today."),
+    title="Home Therapy & Psychologist Visits in Karachi | MindCare®",
+    desc=("Home therapy in Karachi: a qualified psychologist or therapist at your doorstep, for adults, "
+          "children, teens, couples and elderly parents. Book MindCare Services®."),
     lede=("Can't make it to a clinic, or don't want to? Our psychologists and therapists now visit you at home, "
           "anywhere in Karachi. The same confidential, evidence-based care, in the place you feel safest."),
     who=[("i-brain", "Adults", "Anxiety, depression, stress, panic, OCD, grief or burnout, without the commute or the waiting room."),
@@ -1598,9 +1598,9 @@ NOV = dict(
 
 PSY = dict(
     slug="psychology-internships",
-    title="Psychology Internships in Pakistan | Kickstart Your Career | MindCare Services®",
-    desc=("Kickstart your career in psychology with MindCare Services® internships: practical learning, expert "
-          "mentorship, real-world exposure and career-ready skills, guided by practising psychologists."),
+    title="Psychology Internships in Pakistan | MindCare Services®",
+    desc=("Kickstart your career in psychology with MindCare Services® internships: practical learning, "
+          "expert mentorship and real-world exposure with practising psychologists."),
     pillars=[("i-brain", "Practical Learning", "Theory becomes skill when you see it used.",
               ["How assessment and case formulation work", "How therapy approaches are chosen", "Learning by doing, with guidance"]),
              ("i-handshake", "Expert Mentorship", "Learn from the people doing the work.",
@@ -1810,9 +1810,9 @@ def psy_page():
 
 def intern_hub():
     url = f"{BASE}/internships"
-    title = "Internships at MindCare Services® | Psychology & Online Internships"
-    desc = ("Internships at MindCare Services®: the psychology internship programme and the November 2026 online "
-            "intake, now open. Practical learning and mentorship from practising psychologists.")
+    title = "Psychology & Online Internships | MindCare Services®"
+    desc = ("Internships at MindCare Services®: the psychology internship programme and the November 2026 "
+            "online intake, open now. Learn with practising psychologists.")
     schema = _in_schema(url, title, desc, [("Home", f"{BASE}/"), ("Internships", url)], None)
     out = _in_head(title, desc, url, schema, "psychology-internships-og.jpg")
     out += nav("", "internships")
@@ -2355,8 +2355,7 @@ def confirmation_page():
                "Thank you. Your appointment request has been received. Our team will contact you shortly to confirm the details. Keeping Your Peace®.",
                url, prefix, schema)
     # Thank-you pages should not be indexed by search engines.
-    out = out.replace('<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">',
-                      '<meta name="robots" content="noindex, follow">')
+    out = re.sub(r'<meta name="robots" content="[^"]*">', '<meta name="robots" content="noindex, follow">', out, count=1)
     out += nav(prefix)
     out += f"""<main id="main">
 <header class="page-hero confirm-hero">
@@ -2650,7 +2649,7 @@ CITIES = [
 
  dict(slug="online-therapy-quetta", city="Quetta", province="Balochistan",
    title="Online Therapy in Quetta | MindCare Services®",
-   desc="Online therapy and counseling for Quetta and Balochistan, in English and Urdu, Mon-Sat. Confidential sessions with qualified psychologists. Book with MindCare Services®.",
+   desc="Online therapy for Quetta and Balochistan in English and Urdu, Mon-Sat. Confidential sessions with qualified psychologists. Book with MindCare Services®.",
    lede="Specialist therapy for Balochistan without leaving the province. Confidential online sessions in English or Urdu, six days a week.",
    intro=[
      "Balochistan has the thinnest specialist mental health coverage in the country, and for most people in Quetta the nearest qualified psychologist has historically meant a flight or a very long drive.",

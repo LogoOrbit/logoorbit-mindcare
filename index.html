@@ -77,7 +77,7 @@ html[data-theme="dark"]{
   color-scheme: dark;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:clip}
 /* `backwards`, never `both`: a retained fill leaves a transform on <body>,
    which makes it the containing block for every position:fixed descendant
    (the nav, the floating buttons, the workshop-request dialog). */
@@ -550,6 +550,9 @@ footer{padding-bottom:104px}
 .nb .neuro .nh-net path,.nb .neuro .nh-net circle{stroke:#3b1d2e}
 .nb .neuro .nh-net circle{fill:#fff}
 html[data-theme="dark"] .pb h2{color:#eaf4ee}
+html[data-theme="dark"] .pb .pl,html[data-theme="dark"] .pb .strip,html[data-theme="dark"] .pb .ctas a.a1{background:#2d6a1f}
+html[data-theme="dark"] .pb .ctas a.a1 span{color:#2d6a1f}
+html[data-theme="dark"] .pb .kk{color:#8fd66f}
 @media(max-width:860px){
  .promo{padding-top:24px}
  .hb .promo-in{grid-template-columns:1fr;padding:26px 22px;text-align:left}
