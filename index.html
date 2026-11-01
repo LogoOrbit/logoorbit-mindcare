@@ -406,11 +406,17 @@ html body .tk-stamp.open{border-inline-start-color:#2fbf71}
 html body :is(.psy-pill,.x-psy .p,.pb .pl){border-inline-start-color:var(--green,#2d6a1f)}
 html body .tk-stamp.done{border-inline-start-color:#9aa8a1;color:#5c6b64}
 html[data-theme="dark"] body .tk-stamp.done{color:#a7bcb0}
-/* BUTTONS: slim, sized to their label, never stretched to fill a row. */
-html body :is(.hero-actions .btn,.promo .ctas a,.news-ctas .btn){flex:0 0 auto;min-width:0;padding:10px 18px;border-radius:10px;font-size:.9rem;line-height:1.2;white-space:nowrap;box-shadow:none}
-html body .pb .ctas a.a1{padding:10px 18px 10px 10px;gap:8px}
-html body .pb .ctas a.a1 span{width:24px;height:24px}
-@media(max-width:560px){html body :is(.hero-actions .btn,.promo .ctas a,.news-ctas .btn){padding:9px 15px;font-size:.86rem}html body .hero-actions,html body .promo .ctas,html body .news-ctas{flex-wrap:wrap;gap:8px}}
+/* BUTTONS: the original rounded buttons, made clearly pressable: a visible
+   edge on the second button, a lift on hover, a press on tap. Banner buttons
+   keep their label on one line instead of stretching into two. */
+html body :is(.hero-actions .btn,.promo .ctas a,.news-ctas .btn){cursor:pointer;white-space:nowrap;transition:transform .15s ease,box-shadow .2s ease,background .2s,border-color .2s,color .2s}
+html body :is(.hero-actions .btn,.promo .ctas a,.news-ctas .btn):hover{transform:translateY(-2px)}
+html body :is(.hero-actions .btn,.promo .ctas a,.news-ctas .btn):active{transform:translateY(0) scale(.97)}
+html body :is(.hero-actions,.news-ctas) .btn-ghost{background:var(--card);border:1.5px solid var(--teal);color:var(--teal-deep);box-shadow:0 3px 12px rgba(15,154,168,.12)}
+html body :is(.hero-actions,.news-ctas) .btn-ghost:hover{background:var(--teal-light);border-color:var(--teal-dark)}
+html body :is(.hero-actions,.news-ctas) .btn-primary:hover{box-shadow:0 10px 26px rgba(43,189,201,.42)}
+html body .promo .ctas a{flex:0 0 auto;padding:11px 22px}
+@media(max-width:560px){html body .promo .ctas{flex-wrap:wrap;gap:8px}html body .promo .ctas a{padding:10px 18px;font-size:.88rem}html body .news-ctas .btn{white-space:nowrap}}
 /* TYPE: Young Serif for headings (one weight, no italic, so nothing is
    faked), Schibsted Grotesk for text. Headlines are one colour, upright. */
 html{font-synthesis:none}
