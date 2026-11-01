@@ -507,6 +507,22 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
 .ct-tile.form .ic{background:var(--teal-light,#e8f9fb);color:var(--teal-dark)}
 @media(max-width:820px){.ct-grid{grid-template-columns:1fr;gap:26px}.page-hero.ct-hero{padding-top:96px}}
 html[data-theme="dark"] .page-hero.ct-hero{background:linear-gradient(135deg,#1a1510 0%,#0e1b13 100%)}
+@media(max-width:560px){
+ .page-hero.ct-hero{padding:80px 16px 26px}
+ .ct-hero h1{font-size:2rem;margin-bottom:8px}
+ .ct-hero p{font-size:.92rem}
+ .ct-hero .hero-badge{font-size:.66rem;margin-bottom:12px}
+ .ct-grid{gap:18px}
+ .ct-tiles{grid-template-columns:repeat(4,1fr);gap:8px}
+ .ct-tile{padding:10px 6px;align-items:center;text-align:center;border-radius:14px;gap:2px}
+ .ct-tile .ic{width:34px;height:34px;margin-bottom:4px;border-radius:10px}
+ .ct-tile .ic svg{width:18px;height:18px}
+ .ct-tile b{font-size:.74rem}
+ .ct-tile small{display:none}
+ .wa-float{bottom:12px;right:12px}.wa-float-btn{width:46px;height:46px}
+ .call-float{bottom:12px;right:66px;width:46px;height:46px}
+}
+
 /* CONTACT BODY */
 .contact-body {
   max-width: 1100px; margin: 0 auto;

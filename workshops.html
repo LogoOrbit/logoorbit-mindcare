@@ -352,6 +352,51 @@
 html[data-theme="dark"] .mini-tk{background:#12241a;color:#eaf4ee}html[data-theme="dark"] .mini-tk .info span{color:#a7bcb0}
 html[data-theme="dark"] .tk-stamp.done{background:#1b2a22;color:#a7bcb0;border-color:#2b3d33}
 @media (prefers-reduced-motion: reduce){.ws-kick i,.tk-stamp.open i{animation:none}}
+/* phones: short hero, slim ticket banners, swipeable days */
+@media(max-width:560px){
+ .ws-hero{padding:84px 16px 30px}
+ .ws-hero h1{font-size:2.1rem;margin-bottom:10px}
+ .ws-hero .lede{font-size:.94rem;margin-bottom:16px}
+ .ws-kick{font-size:.66rem;margin-bottom:10px}
+ .ws-nums,.ws-next{display:none}
+ .ws-hero .ph-actions{flex-direction:row}
+ .ws-filter{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;margin:0 -16px 18px;padding:0 16px 4px;scrollbar-width:none}
+ .ws-filter::-webkit-scrollbar{display:none}
+ .ws-filter button{padding:8px 14px;font-size:.82rem;white-space:nowrap}
+ .tk-list{gap:18px}
+ .tk{border-radius:20px;box-shadow:0 10px 26px rgba(20,40,35,.09)}
+ .tk-art{flex-direction:row;align-items:center;gap:14px;padding:14px 16px;border-radius:19px 19px 0 0;min-height:0}
+ .tk-art svg.pic{width:62px;max-width:62px;flex:none;margin:0}
+ .tk-art .brand{display:none}
+ .tk-art .ttl small{font-size:.6rem;margin-bottom:2px}
+ .tk-art .ttl b{font-size:1.45rem}
+ .tk-art .ttl i{font-size:.82rem}
+ .tk-body{padding:16px}
+ .tk-stamp{font-size:.62rem;padding:4px 10px;margin-bottom:10px}
+ .tk-body h3{font-size:1.3rem}
+ .tk-body .hook{font-size:1rem;margin-bottom:8px}
+ .tk-body>p{font-size:.88rem;line-height:1.6;margin-bottom:12px}
+ .tk-meta{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+ .tk-meta div{padding:8px 10px;border-radius:10px}
+ .tk-meta strong{font-size:.58rem}.tk-meta span{font-size:.84rem}
+ .tk-agenda{gap:6px;margin-bottom:14px}
+ .tk-agenda li{font-size:.82rem;gap:8px}
+ .tk-agenda li b{font-size:.66rem;padding:2px 7px}
+ .tk-ctas{gap:8px}
+ .tk-ctas a{flex:1 1 auto;justify-content:center;padding:10px 14px;font-size:.86rem}
+ .day5{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:0 16px 8px;scrollbar-width:none}
+ .day5::-webkit-scrollbar{display:none}
+ .day{flex:0 0 78%;scroll-snap-align:start}
+ .day .top{padding:12px 14px}.day .top b{font-size:2.4rem}
+ .day .bd{padding:12px 14px 14px}
+ .ws-who{grid-template-columns:1fr 1fr;gap:10px}
+ .ws-who div{padding:14px}
+ .ws-who svg{width:24px;height:24px}
+ .ws-who h3{font-size:.92rem;margin:8px 0 4px}
+ .ws-who p{font-size:.78rem;line-height:1.45}
+ .ws-final a{flex:1 1 100%;justify-content:center}
+}
+
 </style>
 
 <header class="ws-hero">

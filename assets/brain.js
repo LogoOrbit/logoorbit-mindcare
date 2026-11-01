@@ -31,7 +31,7 @@ for(i=0;i<pts.length;i++) for(var j=i+1;j<pts.length;j++){
 
 function size(){
   var r=cv.parentElement.getBoundingClientRect();
-  W=r.width; H=Math.max(r.height, 300);
+  W=r.width; H=Math.max(r.height, 120);
   cv.width=W*DPR; cv.height=H*DPR; cv.style.height=H+"px";
   ctx.setTransform(DPR,0,0,DPR,0,0);
 }
