@@ -1,5 +1,5 @@
 # MindCare Services® — full text corpus
-# Source: https://themindcareservices.com/ · generated 2026-10-28 · canonical index: https://themindcareservices.com/llms.txt
+# Source: https://themindcareservices.com/ · generated 2026-11-01 · canonical index: https://themindcareservices.com/llms.txt
 
 MindCare Services® is a multidisciplinary psychotherapy and rehabilitation
 clinic in Karachi, Pakistan, seeing clients in clinic, at home and online

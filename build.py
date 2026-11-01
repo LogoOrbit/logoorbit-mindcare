@@ -342,6 +342,7 @@ def footer(prefix):
       <li><a href="/online-therapy">Online Therapy in Pakistan</a></li>
       <li><a href="/courses">Courses</a></li>
       <li><a href="/workshops">Workshops</a></li>
+      <li><a href="/internships">Internships</a></li>
       <li><a href="/answers">Answers &amp; FAQ</a></li>
       <li><a href="/contact">Book Appointment</a></li>
     </ul></div>
@@ -1399,6 +1400,167 @@ def home_page():
 {cta_band(prefix, "Help that comes home.", "Book a confidential home session anywhere in Karachi. Message us on WhatsApp and we'll take it from there.")}
 </main>
 <style>.hs-ur{{font-size:1.02rem;color:var(--teal-deep);margin:-4px 0 18px;line-height:1.9}}</style>
+"""
+    out += footer(prefix)
+    return out
+
+
+# ─────────────────────────── INTERNSHIPS ───────────────────────────
+# Built from the two internship posters MindCare shared on Instagram: the
+# November online intake and the "Kickstart your career in psychology" campaign.
+# Duration, schedule and any fee are deliberately not stated: applicants get
+# those on WhatsApp, so the page never contradicts what the team tells them.
+INTERN = dict(
+    slug="internships",
+    h1="Psychology Internships",
+    title="Online Psychology Internships, November 2026 | MindCare Services®",
+    desc=("MindCare Services® online psychology internships are open for November 2026. Practical learning, "
+          "expert mentorship and real-world clinical exposure, from anywhere in Pakistan. Apply on WhatsApp."),
+    lede=("Kickstart your career in psychology with internships that inspire growth: hands-on experience, "
+          "real impact, and guidance from practising psychologists. Our November intake runs online, so you can "
+          "join from anywhere in Pakistan."),
+    wa=("https://wa.me/923272337631?text=Hi%20MindCare%2C%20I%27d%20like%20to%20apply%20for%20the%20"
+        "November%20online%20psychology%20internship."),
+    gains=[("i-brain", "Practical Learning", "Move past the textbook. See how assessment, case formulation and therapy actually work in a real practice."),
+           ("i-handshake", "Expert Mentorship", "Learn directly from MindCare's psychologists and therapists, with feedback on your work as you go."),
+           ("i-clipboard", "Real-World Exposure", "Understand the cases, ethics and day-to-day decisions that clinical work involves, not just the theory."),
+           ("i-grad", "Career-Ready Skills", "Build the skills, confidence and experience that make your CV and your next step in psychology stronger.")],
+    who=[("i-school", "Psychology students", "Undergraduate and postgraduate students who want supervised, practical experience alongside their degree."),
+         ("i-grad", "Fresh graduates", "Recent psychology graduates looking to build real clinical experience before their next step."),
+         ("i-globe", "Anywhere in Pakistan", "The November internships are online, so Karachi, Lahore, Islamabad or anywhere else works.")],
+    steps=[("i-wa", "1. Message us", "Send us your name, university, degree and semester on WhatsApp, or call."),
+           ("i-clipboard", "2. Get the details", "We share the November schedule, structure and everything you need to know before you commit."),
+           ("i-check", "3. Start learning", "Confirm your seat and begin your online internship with the MindCare team.")],
+    faqs=[("Are MindCare internships open right now?",
+           "Yes. Applications for the November 2026 online psychology internships are open. Message us on WhatsApp or call +92 327 2337631 to apply."),
+          ("Is the internship online?",
+           "Yes. The November internships run online, so you can take part from any city in Pakistan without travelling to Karachi."),
+          ("Who can apply?",
+           "Psychology students and recent psychology graduates who want practical, supervised experience. If you study a related field and aren't sure you qualify, message us and ask."),
+          ("What will I learn?",
+           "Practical learning, expert mentorship, real-world exposure and career-ready skills: how clinical psychology works in practice at a multidisciplinary clinic, guided by our psychologists."),
+          ("How long is the internship and is there a fee?",
+           "Message us on WhatsApp and we'll share the duration, schedule and any fee for the November intake before you commit."),
+          ("How do I apply?",
+           "Tap 'Apply on WhatsApp' on this page and send your name, university, degree and semester. You can also call +92 327 2337631.")],
+)
+
+
+def intern_page():
+    t = INTERN
+    prefix = ""
+    url = f"{BASE}/{t['slug']}"
+    img1 = f"{BASE}/assets/workshops/internships-psychology-poster.jpg"
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "WebPage", "@id": url + "#webpage", "url": url, "name": t["title"],
+         "description": t["desc"], "inLanguage": "en-PK", "primaryImageOfPage": img1,
+         "about": {"@id": url + "#program"}},
+        {"@type": "EducationalOccupationalProgram", "@id": url + "#program",
+         "name": "MindCare Online Psychology Internship, November 2026",
+         "description": t["desc"], "url": url, "image": img1,
+         "educationalProgramMode": "online", "startDate": "2026-11",
+         "occupationalCategory": "19-3039.00 Psychologists",
+         "provider": {"@id": f"{BASE}/#clinic"},
+         "applicationStartDate": "2026-11-01",
+         "programType": "Internship",
+         "offers": {"@type": "Offer", "url": t["wa"], "availability": "https://schema.org/InStock"}},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Internships", "item": url}]},
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
+            for q, a in t["faqs"]]},
+    ]}
+    card = lambda ic, n, d: f'      <div class="feature-card fade-up"><div class="fi">{icon(prefix,ic)}</div><h3>{n}</h3><p>{d}</p></div>'
+    gains = "\n".join(card(*g) for g in t["gains"])
+    who = "\n".join(card(*w) for w in t["who"])
+    steps = "\n".join(card(*s) for s in t["steps"])
+    apply_btn = f'<a href="{t["wa"]}" target="_blank" rel="noopener" class="btn-primary">{icon(prefix,"i-wa","18")} Apply on WhatsApp</a>'
+    out = head(t["title"], t["desc"], url, prefix, schema)
+    out = out.replace(f'<meta property="og:image" content="{BASE}/mindcare.png">',
+                      f'<meta property="og:image" content="{img1}">', 1)
+    out += nav(prefix)
+    out += f"""<main id="main">
+<style>
+.in-posters{{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:32px;align-items:start;max-width:1000px;margin:0 auto}}
+.in-poster{{margin:0}}
+.in-poster picture{{display:block}}
+.in-poster img{{display:block;width:100%;height:auto;border-radius:20px;border:1px solid var(--border);background:#fff;box-shadow:0 18px 46px rgba(30,45,40,.16);transition:transform .3s ease,box-shadow .3s ease}}
+.in-poster img:hover{{transform:translateY(-4px);box-shadow:0 24px 54px rgba(30,45,40,.2)}}
+.in-poster figcaption{{margin-top:14px;text-align:center;font-size:.92rem;color:var(--gray)}}
+.in-poster figcaption strong{{display:block;color:var(--dark);font-size:1.02rem;margin-bottom:2px}}
+.in-quote{{max-width:820px;margin:0 auto;text-align:center}}
+.in-quote blockquote{{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.35;color:var(--dark);margin:0 0 18px}}
+.in-motto{{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}}
+.in-motto span{{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--green);padding:7px 16px;border-radius:999px}}
+.in-motto span:nth-child(2n){{background:var(--teal)}}
+.in-ur{{font-size:1.02rem;color:var(--teal-deep);margin:-4px 0 18px;line-height:1.9}}
+</style>
+<header class="page-hero">
+  <div class="ph-inner">
+    <ol class="breadcrumb"><li><a href="/">Home</a></li><li aria-current="page">Internships</li></ol>
+    <div class="ph-badge">{icon(prefix,'i-grad')} November 2026 · Online Internships · Applications Open</div>
+    <h1>Kickstart your career in <em>psychology</em></h1>
+    <p class="lede">{t['lede']}</p>
+    <p class="in-ur" lang="ur" dir="rtl">نومبر کی آن لائن سائیکالوجی انٹرن شپس کے لیے داخلے جاری ہیں۔ عملی تجربہ، ماہرین کی رہنمائی۔</p>
+    <div class="ph-actions">
+      {apply_btn}
+      <a href="tel:{PHONE}" class="btn-secondary">Call {PHONE_H}</a>
+    </div>
+  </div>
+</header>
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Now Open</span><h2 class="section-title">November online internships</h2><p class="section-sub">Internships that inspire growth. Hands-on experience, real impact, guided by experts.</p></div>
+    <div class="in-posters">
+      <figure class="in-poster fade-up">
+        <picture><source type="image/webp" srcset="assets/workshops/internships-psychology-poster.webp"><img src="assets/workshops/internships-psychology-poster.jpg" alt="Kickstart your career in psychology: MindCare internships that inspire growth, with practical learning, expert mentorship, real-world exposure and career-ready skills" width="679" height="680" fetchpriority="high"></picture>
+        <figcaption><strong>Internships that inspire growth</strong>Practical learning, mentorship and real-world exposure</figcaption>
+      </figure>
+      <figure class="in-poster fade-up">
+        <picture><source type="image/webp" srcset="assets/workshops/internships-november-poster.webp"><img src="assets/workshops/internships-november-poster.jpg" alt="MindCare November online internships open. Contact 0327 2337631" width="681" height="853" loading="lazy" decoding="async"></picture>
+        <figcaption><strong>November intake · Online</strong>Join from anywhere in Pakistan</figcaption>
+      </figure>
+    </div>
+    <div style="text-align:center;margin-top:34px" class="fade-up">{apply_btn}</div>
+  </div>
+</section>
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">What You Gain</span><h2 class="section-title">Hands-on experience. Real impact.</h2></div>
+    <div class="feature-grid">
+{gains}
+    </div>
+  </div>
+</section>
+<section>
+  <div class="section-inner">
+    <div class="in-quote fade-up">
+      <blockquote>&ldquo;Learn deeply. Grow meaningfully. Make a difference.&rdquo;</blockquote>
+      <div class="in-motto"><span>Learn</span><span>Grow</span><span>Heal</span><span>Lead</span></div>
+    </div>
+  </div>
+</section>
+<section class="bg-off">
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">Who It's For</span><h2 class="section-title">Who should apply</h2></div>
+    <div class="feature-grid">
+{who}
+    </div>
+  </div>
+</section>
+<section>
+  <div class="section-inner">
+    <div class="section-header centered fade-up"><span class="section-tag">How to Apply</span><h2 class="section-title">Three steps to your internship</h2></div>
+    <div class="feature-grid">
+{steps}
+    </div>
+    <div style="text-align:center;margin-top:34px" class="fade-up">{apply_btn}</div>
+  </div>
+</section>
+{faq_block(prefix, t['faqs'])}
+{cta_band(prefix, "Ready to start your career in psychology?", "Applications for the November online internships are open now. Message us on WhatsApp and our team will share the details.")}
+</main>
 """
     out += footer(prefix)
     return out
@@ -2844,6 +3006,7 @@ question this site answers in one place.
 - [All services]({BASE}/services/): the full clinical offering.
 - [Online therapy across Pakistan]({BASE}/online-therapy): how remote sessions work and which cities are covered.
 - [Home therapy sessions in Karachi]({BASE}/{HOME['slug']}): psychologists and therapists visit clients at home anywhere in Karachi, for adults, children, teens, couples and elderly parents.
+- [Psychology internships]({BASE}/{INTERN['slug']}): online psychology internships for students and graduates; the November 2026 intake is open, apply on WhatsApp.
 
 ## Services
 
@@ -3053,6 +3216,7 @@ def build():
         write(f"{t['slug']}.html", seo_page(t))
     write("guides.html", guides_index())
     write(f"{HOME['slug']}.html", home_page())
+    write(f"{INTERN['slug']}.html", intern_page())
     for c in CITIES:
         write(f"{c['slug']}.html", city_page(c))
     write("online-therapy.html", cities_index())
@@ -3093,6 +3257,7 @@ def build():
             (f"{BASE}/montessori-course", "montessori-course/index.html", "0.9"),
             (f"{BASE}/montessori-course/register", "montessori-course/register.html", "0.8"),
             (f"{BASE}/workshops", "workshops.html", "0.8"),
+            (f"{BASE}/{INTERN['slug']}", f"{INTERN['slug']}.html", "0.8"),
             (f"{BASE}/crisis-intervention-workshop", "crisis-intervention-workshop/index.html", "0.9"),
             (f"{BASE}/crisis-intervention-workshop/register", "crisis-intervention-workshop/register.html", "0.8"),
             (f"{BASE}/montessori-workshop", "montessori-workshop/index.html", "0.7"),

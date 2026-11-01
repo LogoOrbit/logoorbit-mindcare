@@ -56,6 +56,31 @@
       "source": "/psychologist-at-home-karachi",
       "destination": "/home-therapy-karachi",
       "permanent": true
+    },
+    {
+      "source": "/internship",
+      "destination": "/internships",
+      "permanent": true
+    },
+    {
+      "source": "/psychology-internship",
+      "destination": "/internships",
+      "permanent": true
+    },
+    {
+      "source": "/psychology-internships",
+      "destination": "/internships",
+      "permanent": true
+    },
+    {
+      "source": "/online-internship",
+      "destination": "/internships",
+      "permanent": true
+    },
+    {
+      "source": "/online-internships",
+      "destination": "/internships",
+      "permanent": true
     }
   ],
   "rewrites": [
