@@ -494,7 +494,7 @@ nav.scrolled { box-shadow: 0 2px 24px rgba(43,189,201,0.15); }
 .ct-hero h1 em{color:var(--teal-dark);font-style:italic}
 .ct-hero p{margin:0;max-width:520px;font-size:1.05rem}
 .ct-tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.ct-tile{display:flex;flex-direction:column;gap:4px;padding:20px;border-radius:20px;text-decoration:none;color:#fff;box-shadow:0 14px 34px rgba(30,45,40,.14);transition:transform .2s,box-shadow .2s}
+.ct-tile{display:flex;flex-direction:column;gap:4px;padding:20px;border:1px solid transparent;border-radius:20px;text-decoration:none;color:#fff;box-shadow:0 14px 34px rgba(30,45,40,.14);transition:transform .2s,box-shadow .2s}
 .ct-tile:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(30,45,40,.2)}
 .ct-tile .ic{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin-bottom:8px}
 .ct-tile .ic svg{width:22px;height:22px}
@@ -520,6 +520,9 @@ html[data-theme="dark"] .page-hero.ct-hero{background:linear-gradient(135deg,#1a
  .ct-tile .ic svg{width:18px;height:18px}
  .ct-tile b{font-size:.74rem}
  .ct-tile small{display:none}
+ .ct-tile{justify-content:flex-start}
+ .ct-tile b{white-space:nowrap}
+ .ct-long{display:none}
  .wa-float{bottom:12px;right:12px}.wa-float-btn{width:46px;height:46px}
  .call-float{bottom:12px;right:66px;width:46px;height:46px}
 }
@@ -826,7 +829,7 @@ html[data-theme="dark"] .form-err { background:#3a1c1c; border-color:#5e2b2b; co
       <a class="ct-tile wa" href="https://wa.me/923272337631?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment." target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.05 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.1-1.3A9.9 9.9 0 1 0 12.05 2Zm5.8 14c-.25.7-1.43 1.33-2 1.4-.51.08-1.16.11-1.87-.12-.43-.13-.99-.32-1.7-.62-2.98-1.29-4.93-4.29-5.08-4.49-.15-.2-1.21-1.61-1.21-3.07 0-1.46.77-2.18 1.04-2.48.27-.3.6-.37.79-.37h.57c.18 0 .43-.07.67.51.25.6.84 2.06.92 2.21.07.15.12.32.02.52-.1.2-.15.32-.3.5l-.44.52c-.15.15-.3.31-.13.6.17.3.77 1.26 1.65 2.05 1.14 1.01 2.09 1.33 2.39 1.48.3.15.47.12.64-.07.17-.2.74-.87.94-1.16.2-.3.4-.25.67-.15.27.1 1.73.82 2.03.97.3.15.5.22.57.35.07.12.07.72-.17 1.42Z"/></svg></span><b>WhatsApp</b><small>Fastest reply</small></a>
       <a class="ct-tile call" href="tel:+923272337631"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span><b>Call</b><small>+92 327 2337631</small></a>
       <a class="ct-tile mail" href="mailto:shaistatariq2002@gmail.com"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><b>Email</b><small>Write to us</small></a>
-      <a class="ct-tile form" href="#booking"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M8 12h8M8 16h5"/></svg></span><b>Booking form</b><small>Below ↓</small></a>
+      <a class="ct-tile form" href="#booking"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M8 12h8M8 16h5"/></svg></span><b>Booking<span class="ct-long"> form</span></b><small>Below ↓</small></a>
     </div>
   </div>
 </header>
