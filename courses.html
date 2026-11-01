@@ -257,12 +257,20 @@ html[data-theme="dark"] .co-hero,html[data-theme="dark"] .co-hero h1{color:#f1ec
 html[data-theme="dark"] .co-hero h1 em{color:#bfe8a4}html[data-theme="dark"] .co-hero .lede{color:#cfc8b0}
 /* phones: short hero, compact strip and path */
 @media(max-width:560px){
- .co-hero{padding:84px 16px 52px}
+ .co-hero{padding:80px 16px 50px}
+ .co-grid{gap:20px}
  .co-shape{display:none}
  .co-hero h1{font-size:2.1rem;margin-bottom:10px}
  .co-hero .lede{font-size:.94rem;margin-bottom:16px}
  .co-kick{font-size:.62rem;padding:5px 10px;margin-bottom:12px}
- .cert{display:none}
+ .cert{transform:rotate(.8deg);padding:18px 18px 16px;border-radius:18px;margin-top:4px}
+ .cert::before{inset:7px}.cert::after{inset:11px}
+ .cert .seal{width:58px;height:58px}.cert .seal b{font-size:1.4rem}.cert .seal small{font-size:.48rem}
+ .cert .brand{font-size:.56rem}
+ .cert h2{font-size:1.45rem;margin:4px 0 4px}
+ .cert .sub{font-size:.92rem;margin-bottom:10px}
+ .cert .blocks{height:34px;margin:0 0 4px}
+ .cert dl{display:none}
  .co-hero .ph-actions{flex-direction:row}
  .co-glance{margin-top:-30px;padding:0 16px}
  .co-glance-in{border-radius:16px}
