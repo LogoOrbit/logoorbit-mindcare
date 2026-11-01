@@ -440,6 +440,125 @@ html body :is(.citylinks,.topic-chips) a{background:none;border:0;border-radius:
   gtag('js', new Date());
   gtag('config', 'G-QZFCFZT32R');
 </script>
+<style id="home-palette">
+/* HOME PALETTE: each section gets its own colour from one family
+   (teal and leaf from the logo, plus peach, butter, lilac and coral),
+   with more room between sections. */
+:root{
+ --c-peach:#ffeadf;--c-peach-d:#e8734a;
+ --c-butter:#fff4d4;--c-butter-d:#c99a12;
+ --c-lilac:#efeafd;--c-lilac-d:#7a63d1;
+ --c-mint:#e2f5ee;--c-mint-d:#2e8b62;
+ --c-sky:#e3f1fb;--c-sky-d:#2f7fbf;
+ --c-rose:#fde8ee;--c-rose-d:#c94f75;
+ --c-deep:#0d3b42;--c-coral:#c2502a;
+}
+html[data-theme="dark"]{
+ --c-peach:#2e2019;--c-butter:#2c2614;--c-lilac:#221f33;--c-mint:#14281f;--c-sky:#14222e;--c-rose:#2c1a20;
+ --c-peach-d:#f39a74;--c-butter-d:#f0c75a;--c-lilac-d:#ad9cf2;--c-mint-d:#6fd0a2;--c-sky-d:#7dbbe8;--c-rose-d:#f08aaa;
+ --c-deep:#0a2a30;--c-coral:#b5492a;
+}
+/* rhythm */
+main>section:not(.promo):not(.news-band):not(.hero):not(#orb-scene){padding:84px 0}
+@media(max-width:560px){main>section:not(.promo):not(.news-band):not(.hero):not(#orb-scene){padding:52px 0}}
+.sec-head{margin-bottom:40px}
+html body .promo{padding-top:28px}
+html body .news-band{padding:28px 0 64px}
+.news-foot .news-foot-note{margin:8px auto 0 !important}
+
+/* promos: four different colours */
+html body .pb .promo-in{background:var(--c-butter);border-color:transparent}
+html body .news-card{background:var(--c-peach);border:0}
+html body .news-card .btn-ghost{background:#fff;border-color:var(--c-peach-d);color:#8a3a1c}
+html[data-theme="dark"] body .news-card .btn-ghost{background:transparent;color:var(--c-peach-d)}
+
+/* feelings: a colour per worry */
+#feelings .feel-card{border:0;transition:transform .25s ease}
+#feelings .feel-card:hover{transform:translateY(-3px)}
+#feelings .feel-card:nth-child(6n+1){background:var(--c-peach)}#feelings .feel-card:nth-child(6n+1) .dot svg{stroke:var(--c-peach-d)}
+#feelings .feel-card:nth-child(6n+2){background:var(--c-lilac)}#feelings .feel-card:nth-child(6n+2) .dot svg{stroke:var(--c-lilac-d)}
+#feelings .feel-card:nth-child(6n+3){background:var(--c-butter)}#feelings .feel-card:nth-child(6n+3) .dot svg{stroke:var(--c-butter-d)}
+#feelings .feel-card:nth-child(6n+4){background:var(--c-mint)}#feelings .feel-card:nth-child(6n+4) .dot svg{stroke:var(--c-mint-d)}
+#feelings .feel-card:nth-child(6n+5){background:var(--c-sky)}#feelings .feel-card:nth-child(6n+5) .dot svg{stroke:var(--c-sky-d)}
+#feelings .feel-card:nth-child(6n){background:var(--c-rose)}#feelings .feel-card:nth-child(6n) .dot svg{stroke:var(--c-rose-d)}
+#feelings .feel-card .dot{background:rgba(255,255,255,.75)}
+html[data-theme="dark"] #feelings .feel-card .dot{background:rgba(255,255,255,.08)}
+#feelings .ill-frame{background:var(--c-peach)}
+#feelings .feel-foot{font-family:'Young Serif',serif;font-size:1.35rem;color:var(--ink);margin-top:34px}
+
+/* team: lilac band, a coloured top edge per person */
+#team{background:var(--c-lilac) !important}
+#team .person{border:0;border-top:5px solid var(--c-lilac-d)}
+#team .person:nth-child(2){border-top-color:var(--c-peach-d)}
+#team .person:nth-child(3){border-top-color:var(--c-mint-d)}
+#team .person:nth-child(2) .avatar svg{background:var(--c-peach)}
+#team .person:nth-child(3) .avatar svg{background:var(--c-mint)}
+#team .person:nth-child(1) .avatar svg{background:var(--c-lilac)}
+
+/* video: a deep band so the page changes key */
+#awareness-video{background:var(--c-deep) !important}
+#awareness-video h2{color:#fff}
+#awareness-video .tag{color:#ffd9a8}
+#awareness-video .vplayer{box-shadow:0 24px 60px rgba(0,0,0,.35)}
+
+/* services: each picture on its own colour */
+#services .card{border:0;box-shadow:0 1px 0 var(--border)}
+#services .card-ill .card-art{border-bottom:0}
+#services .card:nth-child(6n+1) .card-art{background:var(--c-peach)}
+#services .card:nth-child(6n+2) .card-art{background:var(--c-sky)}
+#services .card:nth-child(6n+3) .card-art{background:var(--c-butter)}
+#services .card:nth-child(6n+4) .card-art{background:var(--c-mint)}
+#services .card:nth-child(6n+5) .card-art{background:var(--c-lilac)}
+#services .card:nth-child(6n) .card-art{background:var(--c-rose)}
+#services .card:nth-child(6n+1) .more{color:var(--c-peach-d)}#services .card:nth-child(6n+2) .more{color:var(--c-sky-d)}
+#services .card:nth-child(6n+3) .more{color:#9a7408}#services .card:nth-child(6n+4) .more{color:var(--c-mint-d)}
+#services .card:nth-child(6n+5) .more{color:var(--c-lilac-d)}#services .card:nth-child(6n) .more{color:var(--c-rose-d)}
+html[data-theme="dark"] #services .card:nth-child(6n+3) .more{color:var(--c-butter-d)}
+
+/* guides: butter band */
+#topics{background:var(--c-butter) !important}
+#topics .ill-frame{background:#fff;border:0}
+html[data-theme="dark"] #topics .ill-frame{background:#efe9d6}
+#topics .topic-chips a{text-decoration-color:var(--c-butter-d);color:var(--ink)}
+
+/* steps: mint band, coloured pictures and numbers */
+#topics+section{background:var(--c-mint) !important}
+#topics+section .step{border:0}
+#topics+section .step:nth-child(1) .card-art{background:var(--c-peach)}
+#topics+section .step:nth-child(2) .card-art{background:var(--c-lilac)}
+#topics+section .step:nth-child(3) .card-art{background:var(--c-sky)}
+#topics+section .step:nth-child(1)::before{background:var(--c-peach-d);color:#fff}
+#topics+section .step:nth-child(2)::before{background:var(--c-lilac-d);color:#fff}
+#topics+section .step:nth-child(3)::before{background:var(--c-sky-d);color:#fff}
+
+/* about: peach band */
+#topics+section+section{background:var(--c-peach) !important}
+#topics+section+section .ill-frame{background:#fff;border:0}
+html[data-theme="dark"] #topics+section+section .ill-frame{background:#f3e6de}
+
+/* reach: white page, coloured headings */
+#reach .reach-h{color:var(--c-coral)}
+html[data-theme="dark"] #reach .reach-h{color:var(--c-peach-d)}
+
+/* faq: sky band */
+#faq{background:var(--c-sky) !important}
+#faq .ill-frame{background:#fff;border:0}
+html[data-theme="dark"] #faq .ill-frame{background:#e3edf5}
+#faq .faq-item{border:0}
+
+/* closing call to action: warm coral */
+html body .cta{background:var(--c-coral)}
+html body .cta .btn-primary{color:var(--c-coral)}
+html body .cta-ill{background:#fff}
+
+/* footer: deep teal instead of near-black */
+footer{background:var(--c-deep) !important}
+/* outline buttons stay visible on coloured bands */
+main section:not(.promo):not(.news-band) .btn-ghost{background:var(--card);border:1.5px solid var(--teal);color:var(--teal-deep)}
+main section:not(.promo):not(.news-band) .btn-ghost:hover{background:var(--teal-light)}
+html body .cta .btn-ghost{background:transparent;border-color:rgba(255,255,255,.7);color:#fff}
+#feelings .ill-frame::before,#topics .ill-frame::before,#faq .ill-frame::before,#topics+section+section .ill-frame::before{display:none}
+</style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
